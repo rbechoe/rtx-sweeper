@@ -11,6 +11,10 @@ public class Spawner : MonoBehaviour
     [Header("Settings")] 
     public GameObject mainCam;
     public int gridSize;
+    public int bombs = 10;
+
+    [HideInInspector]
+    public bool isDone;
     
     void Start()
     {
@@ -24,10 +28,13 @@ public class Spawner : MonoBehaviour
         {
             for (int z = 0; z < gridSize; z++)
             {
-                Instantiate(emptyTile, new Vector3(x, 0, z), Quaternion.identity);
+                GameObject newTile = Instantiate(emptyTile, new Vector3(x, 0, z), Quaternion.identity);
+                if (Random.Range(0, 10) > 5) newTile.GetComponent<EmptyTile>().isBomb = true;
                 // make tiles fall down anim
             }
         }
+
+        isDone = true;
         yield return new WaitForEndOfFrame();
     }
     
