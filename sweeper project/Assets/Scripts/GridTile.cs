@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class EmptyTile : MonoBehaviour
+public class GridTile : MonoBehaviour
 {
     private Material myMat;
 

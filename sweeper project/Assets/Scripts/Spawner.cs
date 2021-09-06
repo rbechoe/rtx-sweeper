@@ -15,6 +15,8 @@ public class Spawner : MonoBehaviour
 
     [HideInInspector]
     public bool isDone;
+
+    private int bombCount = 0;
     
     void Start()
     {
@@ -29,7 +31,11 @@ public class Spawner : MonoBehaviour
             for (int z = 0; z < gridSize; z++)
             {
                 GameObject newTile = Instantiate(emptyTile, new Vector3(x, 0, z), Quaternion.identity);
-                if (Random.Range(0, 10) > 5) newTile.GetComponent<EmptyTile>().isBomb = true;
+                if (Random.Range(0, 10) > 5 && bombCount < bombs)
+                {
+                    newTile.GetComponent<GridTile>().isBomb = true;
+                    bombCount++;
+                }
                 // make tiles fall down anim
             }
         }

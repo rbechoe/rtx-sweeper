@@ -19,21 +19,27 @@ public class Checker : MonoBehaviour
     void Update()
     {
         isDone = spawner.isDone;
-    }
 
-    private void OnCollisionEnter(Collision other)
-    {
-        // TODO FIX bomb amount etc
         if (isDone)
         {
-            if (!other.gameObject.GetComponent<EmptyTile>().isBomb)
+            // force bomb check
+            // update bomb count in parent
+        }
+    }
+
+    private void OnCollisionStay(Collision other)
+    {
+        // TODO FIX bomb amount etc, force update check
+        if (isDone)
+        {
+            if (!other.gameObject.GetComponent<GridTile>().isBomb && !hasEmpty)
             {
                 hasEmpty = true;
             }
-            if (other.gameObject.GetComponent<EmptyTile>().isBomb)
+            if (other.gameObject.GetComponent<GridTile>().isBomb && !hasBomb)
             {
                 hasBomb = true;
-                transform.parent.GetComponent<EmptyTile>().bombAmount++;
+                transform.parent.GetComponent<GridTile>().bombAmount++;
             }
         }
     }
