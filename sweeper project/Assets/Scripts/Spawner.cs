@@ -5,8 +5,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [Header("Prefabs")]
-    public GameObject emptyTile;
-    public GameObject bombTile;
+    public GameObject tile;
 
     [Header("Settings")] 
     public GameObject mainCam;
@@ -29,11 +28,16 @@ public class Spawner : MonoBehaviour
         {
             for (int z = 0; z < gridSize; z++)
             {
-                GameObject newTile = Instantiate(emptyTile, new Vector3(x, 0, z), Quaternion.identity);
+                GameObject newTile = Instantiate(tile, new Vector3(x, 0, z), Quaternion.identity);
+                // increase/decrease spawn rate based on amount of bombs left vs tiles left
                 if (Random.Range(0, 10) > 5 && bombCount < bombs)
                 {
-                    newTile.GetComponent<GridTile>().isBomb = true;
+                    newTile.AddComponent<Bomb>();
                     bombCount++;
+                }
+                else
+                {
+                    newTile.AddComponent<Empty>();
                 }
                 // make tiles fall down anim or add rigidbodies on Y-axis
             }

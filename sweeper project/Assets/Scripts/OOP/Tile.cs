@@ -8,18 +8,20 @@ public class Tile : Base
     private Material myMat;
 
     [Header("Settings")] 
-    public Color defaultCol = Color.white;
+    public Color defaultCol = Color.grey;
     public Color selectCol  = Color.green;
-    public TextMeshPro bombCountTMP;
+    public TMP_Text bombCountTMP;
 
     protected int bombCount;
     
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         myMat = gameObject.GetComponent<Renderer>().material;
         myMat.EnableKeyword("_EMISSION");
         myMat.color = defaultCol;
         myMat.SetColor("_EmissiveColor", defaultCol);
+        bombCountTMP = GetComponentInChildren<TMP_Text>();
     }
     
     private void OnMouseOver()
@@ -34,7 +36,7 @@ public class Tile : Base
         myMat.SetColor("_EmissiveColor", defaultCol);
     }
 
-    public virtual void OnMouseDown()
+    private void OnMouseDown()
     {
         // do action
     }

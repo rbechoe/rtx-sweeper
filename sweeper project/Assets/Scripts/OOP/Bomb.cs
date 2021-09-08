@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Bomb : Tile
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        
+        base.Start();
+        gameObject.tag = "Bomb";
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    new void Update()
     {
         
     }
