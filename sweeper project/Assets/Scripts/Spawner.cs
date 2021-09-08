@@ -13,10 +13,9 @@ public class Spawner : MonoBehaviour
     public int gridSize;
     public int bombs = 10;
 
-    [HideInInspector]
+    [Header("Statistics")]
     public bool isDone;
-
-    private int bombCount = 0;
+    public int bombCount = 0;
     
     void Start()
     {
@@ -36,7 +35,7 @@ public class Spawner : MonoBehaviour
                     newTile.GetComponent<GridTile>().isBomb = true;
                     bombCount++;
                 }
-                // make tiles fall down anim
+                // make tiles fall down anim or add rigidbodies on Y-axis
             }
         }
 

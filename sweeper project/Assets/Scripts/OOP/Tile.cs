@@ -8,8 +8,11 @@ public class Tile : Base
     private Material myMat;
 
     [Header("Settings")] 
-    public Color defaultCol;
-    public Color selectCol;
+    public Color defaultCol = Color.white;
+    public Color selectCol  = Color.green;
+    public TextMeshPro bombCountTMP;
+
+    protected int bombCount;
     
     private void Start()
     {
@@ -34,5 +37,15 @@ public class Tile : Base
     public virtual void OnMouseDown()
     {
         // do action
+    }
+
+    public void AddBomb()
+    {
+        bombCount++;
+    }
+
+    public void ShowBombAmount()
+    {
+        bombCountTMP.text = "" + bombCount;
     }
 }

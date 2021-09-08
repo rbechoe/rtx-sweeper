@@ -211,11 +211,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6464f1067be17ac418f8767ccdd17f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyTile: {fileID: 503934692439817004, guid: 185887eef97a3b540af9c881db295216, type: 3}
-  bombTile: {fileID: 503934692439817004, guid: 185887eef97a3b540af9c881db295216, type: 3}
+  emptyTile: {fileID: 3661775813548565639, guid: 185887eef97a3b540af9c881db295216, type: 3}
+  bombTile: {fileID: 5653748044787820518, guid: 6dd6ab77f6fc4c7419e083828fd9a629, type: 3}
   mainCam: {fileID: 1790591409}
   gridSize: 10
+  bombs: 10
   isDone: 0
+  bombCount: 0
 --- !u!1 &1790591409
 GameObject:
   m_ObjectHideFlags: 0
