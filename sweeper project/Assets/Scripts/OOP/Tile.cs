@@ -5,15 +5,14 @@ using UnityEngine;
 
 public class Tile : Base
 {
-    private Material myMat;
-
     [Header("Settings")] 
     public Color defaultCol = Color.grey;
     public Color selectCol  = Color.green;
     public TMP_Text bombCountTMP;
 
     protected int bombCount;
-    
+    protected Material myMat;
+
     protected override void Start()
     {
         base.Start();

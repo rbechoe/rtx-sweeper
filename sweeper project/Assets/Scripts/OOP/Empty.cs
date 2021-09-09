@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class Empty : Tile
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        base.Start();
     }
 }

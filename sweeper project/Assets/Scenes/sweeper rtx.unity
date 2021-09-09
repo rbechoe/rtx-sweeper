@@ -214,7 +214,7 @@ MonoBehaviour:
   tile: {fileID: 5318673126723917579, guid: f0759311c5d0df049bf86c99c328b3c8, type: 3}
   mainCam: {fileID: 1790591409}
   gridSize: 10
-  bombs: 10
+  bombAmount: 10
   isDone: 0
   bombCount: 0
 --- !u!1 &1790591409
