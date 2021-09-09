@@ -8,7 +8,7 @@ public class Base : MonoBehaviour
         
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         
     }

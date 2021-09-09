@@ -13,6 +13,7 @@ public class Spawner : Base
 
     private int gridSize;
     private int bombAmount = 10;
+    private List<GameObject> tiles = new List<GameObject>();
 
     GameManager gameManager;
 
@@ -53,11 +54,13 @@ public class Spawner : Base
                 }
 
                 curTile++;
+                tiles.Add(newTile);
                 yield return new WaitForEndOfFrame();
             }
         }
 
         isDone = true;
+        gameManager.SetTiles(tiles.ToArray());
         gameManager.SetCheckers();
     }
 }

@@ -15,20 +15,45 @@ public class GameManager : Base
     [SerializeField]
     private Spawner spawner;
 
+    [SerializeField]
+    private GameObject[] tiles;
+
+    [Header("Debug")]
+    public bool forceCheck;
+
     protected override void Start()
     {
         base.Start();
         SetupGame();
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        if (forceCheck)
+        {
+            forceCheck = false;
+            SetCheckers();
+        }
+    }
+
     private void SetupGame()
     {
         mainCam.transform.position = new Vector3(gridSize / 2f, gridSize, gridSize / 2f - 0.5f);
         spawner.CreateGrid(gridSize, bombAmount, this);
+        tiles = new GameObject[(int)Mathf.Pow(gridSize, 2)];
+    }
+
+    public void SetTiles(GameObject[] _tiles)
+    {
+        tiles = _tiles;
     }
 
     public void SetCheckers()
     {
-
+        foreach(GameObject _tile in tiles)
+        {
+            _tile.GetComponent<Checker>().CheckBombs();
+        }
     }
 }

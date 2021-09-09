@@ -40,9 +40,10 @@ public class Tile : Base
         // do action
     }
 
-    public void AddBomb()
+    public void SetBombCount(int amount)
     {
-        bombCount++;
+        bombCount = amount;
+        ShowBombAmount();
     }
 
     public void ShowBombAmount()

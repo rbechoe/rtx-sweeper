@@ -229,8 +229,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 5318673126723917579, guid: f0759311c5d0df049bf86c99c328b3c8, type: 3}
   mainCam: {fileID: 1790591409}
-  gridSize: 10
-  bombAmount: 10
+  gridSize: 16
+  bombAmount: 40
   spawner: {fileID: 1492304673}
 --- !u!1 &1790591409
 GameObject:

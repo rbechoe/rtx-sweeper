@@ -1,7 +1,23 @@
+using UnityEngine;
+
 public class Checker : Base
 {
-    public void CheckTile()
+    public Collider[] hitColliders;
+    public void CheckBombs()
     {
-        // TODO: cast box to check for collision
+        hitColliders = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
+        int i = 0;
+        int bombCount = 0;
+        while (i < hitColliders.Length - 1)
+        {
+            i++;
+            if (hitColliders[i].gameObject == gameObject) continue;
+            if (hitColliders[i].gameObject.CompareTag("Bomb"))
+            {
+                // doesnt show all bombs somehow
+                bombCount++;
+            }
+        }
+        gameObject.GetComponent<Tile>().SetBombCount(bombCount);
     }
 }
