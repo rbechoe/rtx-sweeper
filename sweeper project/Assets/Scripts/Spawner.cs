@@ -2,28 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class Spawner : Base
 {
     [Header("Prefabs")]
     public GameObject tile;
 
-    [Header("Settings")] 
-    public GameObject mainCam;
-    public int gridSize;
-    public int bombAmount = 10;
-
     [Header("Statistics")]
     public bool isDone;
     public int bombCount = 0;
-    
-    void Start()
+
+    private int gridSize;
+    private int bombAmount = 10;
+
+    GameManager gameManager;
+
+    public void CreateGrid(int _gridSize, int _bombAmount, GameManager _gameManager)
     {
-        mainCam.transform.position = new Vector3(gridSize / 2f, gridSize, gridSize / 2f - 0.5f);
-        Reset();
+        gridSize = _gridSize;
+        bombAmount = _bombAmount;
+        gameManager = _gameManager;
         StartCoroutine(Grid());
     }
 
-    IEnumerator Grid()
+    private IEnumerator Grid()
     {
         int curTile = 0;
         int tilesLeft = 0;
@@ -57,16 +58,6 @@ public class Spawner : MonoBehaviour
         }
 
         isDone = true;
-    }
-
-    private void Reset()
-    {
-        isDone = false;
-        bombCount = 0;
-    }
-
-    private void Update()
-    {
-        
+        gameManager.SetCheckers();
     }
 }
