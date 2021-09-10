@@ -13,12 +13,10 @@ public class Checker : Base
     IEnumerator DoChecks()
     {
         hitColliders = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
-        int i = 0;
         int bombCount = 0;
 
-        while (i < hitColliders.Length - 1)
+        for (int i = 0; i < hitColliders.Length; i++)
         {
-            i++;
             if (hitColliders[i].gameObject == gameObject) continue;
             if (hitColliders[i].gameObject.CompareTag("Bomb"))
             {
