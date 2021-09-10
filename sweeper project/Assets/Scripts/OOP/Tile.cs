@@ -43,7 +43,6 @@ public class Tile : Base
     public void SetBombCount(int amount)
     {
         bombCount = amount;
-        ShowBombAmount();
     }
 
     public void ShowBombAmount()

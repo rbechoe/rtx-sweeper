@@ -232,6 +232,8 @@ MonoBehaviour:
   gridSize: 16
   bombAmount: 40
   spawner: {fileID: 1492304673}
+  tiles: []
+  forceCheck: 0
 --- !u!1 &1790591409
 GameObject:
   m_ObjectHideFlags: 0

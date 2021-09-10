@@ -30,6 +30,7 @@ public class Spawner : Base
         int curTile = 0;
         int tilesLeft = 0;
         int spawnChance = 0;
+        GameObject newTile = null;
 
         for (int x = 0; x < gridSize; x++)
         {
@@ -40,9 +41,9 @@ public class Spawner : Base
                 {
                     tilesLeft = (int)Mathf.Pow(gridSize, 2) - curTile;
                     spawnChance = tilesLeft / (bombAmount - bombCount);
-                }    
+                }
 
-                GameObject newTile = Instantiate(tile, new Vector3(x, 0, z), Quaternion.identity);
+                newTile = Instantiate(tile, new Vector3(x, 0, z), Quaternion.identity);
                 if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
                 {
                     newTile.AddComponent<Bomb>();
@@ -54,13 +55,14 @@ public class Spawner : Base
                 }
 
                 curTile++;
+                newTile.name = "tile " + curTile;
                 tiles.Add(newTile);
                 yield return new WaitForEndOfFrame();
             }
         }
 
         isDone = true;
-        gameManager.SetTiles(tiles.ToArray());
+        gameManager.SetTiles(tiles);
         gameManager.SetCheckers();
     }
 }

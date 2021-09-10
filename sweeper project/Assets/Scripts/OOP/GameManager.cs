@@ -16,7 +16,7 @@ public class GameManager : Base
     private Spawner spawner;
 
     [SerializeField]
-    private GameObject[] tiles;
+    private List<GameObject> tiles;
 
     [Header("Debug")]
     public bool forceCheck;
@@ -41,19 +41,24 @@ public class GameManager : Base
     {
         mainCam.transform.position = new Vector3(gridSize / 2f, gridSize, gridSize / 2f - 0.5f);
         spawner.CreateGrid(gridSize, bombAmount, this);
-        tiles = new GameObject[(int)Mathf.Pow(gridSize, 2)];
     }
 
-    public void SetTiles(GameObject[] _tiles)
+    public void SetTiles(List<GameObject> _tiles)
     {
         tiles = _tiles;
     }
 
     public void SetCheckers()
     {
-        foreach(GameObject _tile in tiles)
+        StartCoroutine(CheckBombs());
+    }
+
+    IEnumerator CheckBombs()
+    {
+        for (int i = 0; i < tiles.Count; i++)
         {
-            _tile.GetComponent<Checker>().CheckBombs();
+            tiles[i].GetComponent<Checker>().CheckBombs();
         }
+        yield return new WaitForEndOfFrame();
     }
 }
