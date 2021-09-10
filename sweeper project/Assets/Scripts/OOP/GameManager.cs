@@ -21,6 +21,8 @@ public class GameManager : Base
     [Header("Debug")]
     public bool forceCheck;
 
+    private int goodTiles;
+
     protected override void Start()
     {
         base.Start();
@@ -51,6 +53,20 @@ public class GameManager : Base
     public void SetCheckers()
     {
         StartCoroutine(CheckBombs());
+    }
+
+    public void AddGoodTile()
+    {
+        goodTiles++;
+        CheckForVictory();
+    }
+
+    void CheckForVictory()
+    {
+        if (goodTiles == Mathf.Pow(gridSize, 2) - bombAmount)
+        {
+            print("Victory!!");
+        }
     }
 
     IEnumerator CheckBombs()

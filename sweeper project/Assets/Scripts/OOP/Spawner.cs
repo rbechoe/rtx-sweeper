@@ -47,11 +47,13 @@ public class Spawner : Base
                 if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
                 {
                     newTile.AddComponent<Bomb>();
+                    newTile.GetComponent<Bomb>().SetGameManager(gameManager);
                     bombCount++;
                 }
                 else
                 {
                     newTile.AddComponent<Empty>();
+                    newTile.GetComponent<Empty>().SetGameManager(gameManager);
                 }
 
                 curTile++;

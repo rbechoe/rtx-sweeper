@@ -20,13 +20,14 @@ public class Checker : Base
             if (hitColliders[i].gameObject == gameObject) continue;
             if (hitColliders[i].gameObject.CompareTag("Bomb"))
             {
-                // doesnt show all bombs somehow
                 bombCount++;
             }
         }
 
-        gameObject.GetComponent<Tile>().SetBombCount(bombCount);
-        gameObject.GetComponent<Tile>().ShowBombAmount();
+        Tile tile = gameObject.GetComponent<Tile>();
+        tile.SetBombCount(bombCount);
+        tile.ShowBombAmount();
+        tile.SetNeighbourTiles(hitColliders);
 
         yield return new WaitForEndOfFrame();
     }

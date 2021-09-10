@@ -13,6 +13,12 @@ public class Tile : Base
     protected int bombCount;
     protected Material myMat;
 
+    private MeshRenderer meshRenderer;
+    private GameManager gameManager;
+    private Collider[] neighbourTiles;
+
+    bool triggered;
+
     protected override void Start()
     {
         base.Start();
@@ -21,6 +27,8 @@ public class Tile : Base
         myMat.color = defaultCol;
         myMat.SetColor("_EmissiveColor", defaultCol);
         bombCountTMP = GetComponentInChildren<TMP_Text>();
+        meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
+        meshRenderer.enabled = false;
     }
     
     private void OnMouseOver()
@@ -37,7 +45,46 @@ public class Tile : Base
 
     private void OnMouseDown()
     {
-        // do action
+        DoAction();
+    }
+
+    public void DoAction()
+    {
+        if (triggered) return;
+
+        meshRenderer.enabled = true;
+        triggered = true;
+
+        defaultCol = Color.black;
+        myMat.color = defaultCol;
+
+        if (bombCount == 0)
+        {
+            for (int i = 0; i < neighbourTiles.Length; i++)
+            {
+                neighbourTiles[i].GetComponent<Tile>().NoBombReveal();
+            }
+        }
+        if (gameObject.CompareTag("Bomb"))
+        {
+            print("Triggered a bomb!");
+            defaultCol = Color.red;
+            myMat.color = defaultCol;
+        }
+        else
+        {
+            gameManager.AddGoodTile();
+        }
+
+        myMat.SetColor("_EmissiveColor", defaultCol);
+    }
+
+    public void NoBombReveal()
+    {
+        if (bombCount == 0)
+        {
+            DoAction();
+        }
     }
 
     public void SetBombCount(int amount)
@@ -45,8 +92,18 @@ public class Tile : Base
         bombCount = amount;
     }
 
+    public void SetGameManager(GameManager _gameManager)
+    {
+        gameManager = _gameManager;
+    }
+
     public void ShowBombAmount()
     {
         bombCountTMP.text = "" + bombCount;
+    }
+
+    public void SetNeighbourTiles(Collider[] _neighbourTiles)
+    {
+        neighbourTiles = _neighbourTiles;
     }
 }
