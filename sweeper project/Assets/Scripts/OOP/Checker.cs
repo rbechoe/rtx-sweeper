@@ -27,7 +27,6 @@ public class Checker : Base
         Tile tile = gameObject.GetComponent<Tile>();
         tile.SetBombCount(bombCount);
         tile.ShowBombAmount();
-        tile.SetNeighbourTiles(hitColliders);
 
         yield return new WaitForEndOfFrame();
     }

@@ -23,11 +23,8 @@ public class GameManager : Base
 
     private int goodTiles;
 
-    protected override void Start()
-    {
-        base.Start();
-        SetupGame();
-    }
+    public float timer { get; private set; }
+    public bool gameActive { get; set; }
 
     protected override void Update()
     {
@@ -37,11 +34,37 @@ public class GameManager : Base
             forceCheck = false;
             SetCheckers();
         }
+
+        if (gameActive)
+        {
+            timer += Time.deltaTime;
+        }
+    }
+
+    public void SetupEasy()
+    {
+        gridSize = 9;
+        bombAmount = 10;
+        SetupGame();
+    }
+
+    public void SetupMedium()
+    {
+        gridSize = 16;
+        bombAmount = 40;
+        SetupGame();
+    }
+
+    public void SetupHard()
+    {
+        gridSize = 30;
+        bombAmount = 130;
+        SetupGame();
     }
 
     private void SetupGame()
     {
-        mainCam.transform.position = new Vector3(gridSize / 2f, gridSize, gridSize / 2f - 0.5f);
+        mainCam.transform.position = new Vector3(gridSize / 2f, gridSize * 1.1f, (gridSize / 2f - 0.5f) * 1.2f);
         spawner.CreateGrid(gridSize, bombAmount, this);
     }
 
@@ -65,6 +88,8 @@ public class GameManager : Base
     {
         if (goodTiles == Mathf.Pow(gridSize, 2) - bombAmount)
         {
+            EndGame();
+            gameObject.GetComponent<UIManager>().ShowVictory();
             print("Victory!!");
         }
     }
@@ -74,6 +99,29 @@ public class GameManager : Base
         for (int i = 0; i < tiles.Count; i++)
         {
             tiles[i].GetComponent<Checker>().CheckBombs();
+            tiles[i].GetComponent<Tile>().Clickable();
+        }
+        yield return new WaitForEndOfFrame();
+        StartGame();
+    }
+
+    public void StartGame()
+    {
+        gameObject.GetComponent<UIManager>().bombs = bombAmount;
+        gameActive = true;
+    }
+
+    public void EndGame()
+    {
+        gameActive = false;
+        StartCoroutine(DisableTiles());
+    }
+
+    IEnumerator DisableTiles()
+    {
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            tiles[i].GetComponent<Tile>().Unclickable();
         }
         yield return new WaitForEndOfFrame();
     }

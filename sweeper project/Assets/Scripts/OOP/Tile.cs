@@ -15,9 +15,9 @@ public class Tile : Base
 
     private MeshRenderer meshRenderer;
     private GameManager gameManager;
-    private Collider[] neighbourTiles;
 
-    bool triggered;
+    private bool triggered;
+    private bool clickable;
 
     protected override void Start()
     {
@@ -33,19 +33,28 @@ public class Tile : Base
     
     private void OnMouseOver()
     {
-        myMat.color = selectCol;
-        myMat.SetColor("_EmissiveColor", selectCol * 10);
+        if (clickable && !triggered)
+        {
+            myMat.color = selectCol;
+            myMat.SetColor("_EmissiveColor", selectCol * 10);
+        }
     }
 
     private void OnMouseExit()
     {
-        myMat.color = defaultCol;
-        myMat.SetColor("_EmissiveColor", defaultCol);
+        if (clickable && !triggered)
+        {
+            myMat.color = defaultCol;
+            myMat.SetColor("_EmissiveColor", defaultCol);
+        }
     }
 
     private void OnMouseDown()
     {
-        DoAction();
+        if (clickable)
+        {
+            DoAction();
+        }
     }
 
     public void DoAction()
@@ -60,14 +69,22 @@ public class Tile : Base
 
         if (bombCount == 0)
         {
-            for (int i = 0; i < neighbourTiles.Length; i++)
+            Collider[] horCol = Physics.OverlapBox(gameObject.transform.position, new Vector3(1, 1, 0.5f) * 1.25f, Quaternion.identity);
+            Collider[] verCol = Physics.OverlapBox(gameObject.transform.position, new Vector3(0.5f, 1, 1) * 1.25f, Quaternion.identity);
+            for (int i = 0; i < horCol.Length; i++)
             {
-                neighbourTiles[i].GetComponent<Tile>().NoBombReveal();
+                horCol[i].GetComponent<Tile>().NoBombReveal();
+            }
+            for (int i = 0; i < verCol.Length; i++)
+            {
+                verCol[i].GetComponent<Tile>().NoBombReveal();
             }
         }
         if (gameObject.CompareTag("Bomb"))
         {
             print("Triggered a bomb!");
+            // TODO show all bombs
+            gameManager.EndGame();
             defaultCol = Color.red;
             myMat.color = defaultCol;
         }
@@ -102,8 +119,13 @@ public class Tile : Base
         bombCountTMP.text = "" + bombCount;
     }
 
-    public void SetNeighbourTiles(Collider[] _neighbourTiles)
+    public void Clickable()
     {
-        neighbourTiles = _neighbourTiles;
+        clickable = true;
+    }
+
+    public void Unclickable()
+    {
+        clickable = false;
     }
 }
