@@ -64,7 +64,7 @@ public class GameManager : Base
 
     private void SetupGame()
     {
-        mainCam.transform.position = new Vector3(gridSize / 2f, gridSize * 1.1f, (gridSize / 2f - 0.5f) * 1.2f);
+        mainCam.transform.position = new Vector3(gridSize / 2f * 0.9f, gridSize * 1.1f, (gridSize / 2f - 0.5f) * 1.2f);
         spawner.CreateGrid(gridSize, bombAmount, this);
     }
 
