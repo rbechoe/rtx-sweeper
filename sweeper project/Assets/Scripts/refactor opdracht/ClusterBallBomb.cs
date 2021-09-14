@@ -8,13 +8,13 @@ public class ClusterBallBomb : Ammo, IBullet
     private AudioHandler AH;
     private GameStatistics GS;
 
-    // set properties when created including the range of this specific bomb
-    private void Start(int range)
+    // set properties when created
+    private void Start()
     {
         damage = 1;
         timeAlive = 5f;
         bulletSpeed = 1000;
-        explosionRadius = range;
+        explosionRadius = GlobalData.WeaponRange;
 
         AH = GameObject.FindGameObjectWithTag("AudioHandler").GetComponent<AudioHandler>();
         GS = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameStatistics>();
