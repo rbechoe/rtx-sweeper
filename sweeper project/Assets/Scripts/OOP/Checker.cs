@@ -10,6 +10,16 @@ public class Checker : Base
         StartCoroutine(DoChecks());
     }
 
+    private void OnEnable()
+    {
+        EventSystem.Subscribe(EventType.COUNT_BOMBS, CheckBombs());
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
     IEnumerator DoChecks()
     {
         hitColliders = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);

@@ -57,6 +57,17 @@ public class Tile : Base
         }
     }
 
+    private void OnEnable()
+    {
+        // sub to event
+        //EventSystem.Subscribe(EventType.COUNT_BOMBS, )
+    }
+
+    private void OnDisable()
+    {
+        // unsub
+    }
+
     public void DoAction()
     {
         if (triggered) return;
