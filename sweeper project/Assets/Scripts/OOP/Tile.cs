@@ -112,15 +112,10 @@ public class Tile : Base
         // only remove empty tiles that are not bombs
         if (bombCount == 0 && !gameObject.CompareTag("Bomb"))
         {
-            Collider[] horCol = Physics.OverlapBox(gameObject.transform.position, new Vector3(1, 1, 0.1f) * 1.25f, Quaternion.identity);
-            Collider[] verCol = Physics.OverlapBox(gameObject.transform.position, new Vector3(0.1f, 1, 1) * 1.25f, Quaternion.identity);
-            for (int i = 0; i < horCol.Length; i++)
+            Collider[] tiles = Physics.OverlapBox(gameObject.transform.position, new Vector3(1, 1, 1) * 1.25f, Quaternion.identity);
+            for (int i = 0; i < tiles.Length; i++)
             {
-                horCol[i].GetComponent<Tile>()?.NoBombReveal();
-            }
-            for (int i = 0; i < verCol.Length; i++)
-            {
-                verCol[i].GetComponent<Tile>()?.NoBombReveal();
+                tiles[i].GetComponent<Tile>()?.NoBombReveal();
             }
 
             Destroy(gameObject);
@@ -139,10 +134,7 @@ public class Tile : Base
 
     public void NoBombReveal()
     {
-        if (bombCount == 0)
-        {
-            DoAction();
-        }
+        DoAction();
     }
 
     public void SetBombCount(int amount)

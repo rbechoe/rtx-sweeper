@@ -32,6 +32,7 @@ public class Spawner : Base
         int spawnChance = 0;
         GameObject newTile = null;
 
+        // TODO track empty tile for no guess start
         for (int x = 0; x < gridSize; x++)
         {
             for (int z = 0; z < gridSize; z++)
