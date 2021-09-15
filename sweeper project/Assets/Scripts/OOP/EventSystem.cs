@@ -5,12 +5,11 @@ using UnityEngine;
 public enum EventType
 {
     COUNT_BOMBS     = 0,    
-    SHOW_BOMBS      = 1,    
-    GAME_END        = 2,
+    SHOW_BOMBS      = 1,
+    END_GAME        = 2,
     ENABLE_GRID     = 3,
     START_GAME      = 4,
-    END_GAME        = 5,
-    PREPARE_GAME    = 6,
+    PREPARE_GAME    = 5,
 }
 
 public delegate void EventCallback(EventType evt, object value);

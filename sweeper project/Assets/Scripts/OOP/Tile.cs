@@ -38,6 +38,28 @@ public class Tile : Base
             myMat.color = selectCol;
             myMat.SetColor("_EmissiveColor", selectCol * 10);
         }
+
+        // press left button - highlight adjecant tiles that can be revealed if this tile is revealed
+        if (Input.GetMouseButtonDown(0))
+        {
+            // only reveal tile when flags nearby equals amount of bombs nearby
+            // do note that if flags are placed incorrect that the user can lose if it reveals a bomb
+        }
+
+        // release left button - reveal tile
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (clickable)
+            {
+                DoAction();
+            }
+        }
+
+        // right click - place flag
+        if (Input.GetMouseButtonUp(1))
+        {
+            // plant flag on top of tile
+        }
     }
 
     private void OnMouseExit()
@@ -46,14 +68,6 @@ public class Tile : Base
         {
             myMat.color = defaultCol;
             myMat.SetColor("_EmissiveColor", defaultCol);
-        }
-    }
-
-    private void OnMouseDown()
-    {
-        if (clickable)
-        {
-            DoAction();
         }
     }
 
@@ -84,19 +98,6 @@ public class Tile : Base
         defaultCol = Color.black;
         myMat.color = defaultCol;
 
-        if (bombCount == 0)
-        {
-            Collider[] horCol = Physics.OverlapBox(gameObject.transform.position, new Vector3(1, 1, 0.5f) * 1.25f, Quaternion.identity);
-            Collider[] verCol = Physics.OverlapBox(gameObject.transform.position, new Vector3(0.5f, 1, 1) * 1.25f, Quaternion.identity);
-            for (int i = 0; i < horCol.Length; i++)
-            {
-                horCol[i].GetComponent<Tile>().NoBombReveal();
-            }
-            for (int i = 0; i < verCol.Length; i++)
-            {
-                verCol[i].GetComponent<Tile>().NoBombReveal();
-            }
-        }
         if (gameObject.CompareTag("Bomb"))
         {
             gameManager.EndGame();
@@ -106,6 +107,23 @@ public class Tile : Base
         else
         {
             gameManager.AddGoodTile();
+        }
+
+        // only remove empty tiles that are not bombs
+        if (bombCount == 0 && !gameObject.CompareTag("Bomb"))
+        {
+            Collider[] horCol = Physics.OverlapBox(gameObject.transform.position, new Vector3(1, 1, 0.1f) * 1.25f, Quaternion.identity);
+            Collider[] verCol = Physics.OverlapBox(gameObject.transform.position, new Vector3(0.1f, 1, 1) * 1.25f, Quaternion.identity);
+            for (int i = 0; i < horCol.Length; i++)
+            {
+                horCol[i].GetComponent<Tile>()?.NoBombReveal();
+            }
+            for (int i = 0; i < verCol.Length; i++)
+            {
+                verCol[i].GetComponent<Tile>()?.NoBombReveal();
+            }
+
+            Destroy(gameObject);
         }
 
         myMat.SetColor("_EmissiveColor", defaultCol);

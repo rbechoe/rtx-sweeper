@@ -10,6 +10,7 @@ public class UIManager : Base
     GameManager gameManager;
 
     public int bombs { get; set; }
+    public int flags { get; set; }
 
     public GameObject victory;
 
