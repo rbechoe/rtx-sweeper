@@ -6,6 +6,7 @@ public class Spawner : Base
 {
     [Header("Prefabs")]
     public GameObject tile;
+    public GameObject flag;
 
     [Header("Statistics")]
     public bool isDone;
@@ -13,7 +14,10 @@ public class Spawner : Base
 
     private int gridSize;
     private int bombAmount = 10;
+
     private List<GameObject> tiles = new List<GameObject>();
+    private List<GameObject> activeFlags = new List<GameObject>();
+    private List<GameObject> inactiveFlags = new List<GameObject>();
 
     GameManager gameManager;
 
@@ -23,6 +27,18 @@ public class Spawner : Base
         bombAmount = _bombAmount;
         gameManager = _gameManager;
         StartCoroutine(Grid());
+    }
+
+    private void OnEnable()
+    {
+        EventSystem<Vector3>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
+    }
+
+    private void OnDisable()
+    {
+        EventSystem<Vector3>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
     }
 
     private IEnumerator Grid()
@@ -64,6 +80,12 @@ public class Spawner : Base
                 newTile.name = "tile " + curTile;
                 tiles.Add(newTile);
 
+                // create flag for the pool
+                if (inactiveFlags.Count < curTile)
+                {
+                    AddNewFlag();
+                }
+
                 // continue next frame
                 if (curTileCount >= tilesPerFrame)
                 {
@@ -76,5 +98,31 @@ public class Spawner : Base
         yield return new WaitForEndOfFrame();
         isDone = true;
         EventSystem.InvokeEvent(EventType.PREPARE_GAME);
+    }
+
+    // add flag to pool
+    private void AddNewFlag()
+    {
+        GameObject _flag = Instantiate(flag, Vector3.up * 5000, Quaternion.identity);
+        inactiveFlags.Add(_flag);
+    }
+
+    // activate a flag and place it above the tile
+    private void ActivateFlag(Vector3 position)
+    {
+        if (inactiveFlags.Count > 0)
+        {
+            inactiveFlags[0].transform.position = position;
+            activeFlags.Add(inactiveFlags[0]);
+            inactiveFlags.RemoveAt(0);
+        }
+    }
+
+    // remove a flag from the tile
+    public void ReturnFlag(GameObject flag)
+    {
+        flag.transform.position = Vector3.up * 5000;
+        activeFlags.Remove(flag);
+        inactiveFlags.Add(flag);
     }
 }

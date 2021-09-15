@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +9,11 @@ public enum EventType
     ENABLE_GRID     = 3,
     START_GAME      = 4,
     PREPARE_GAME    = 5,
+    PLANT_FLAG      = 6,
+    REMOVE_FLAG     = 7,
 }
 
-public delegate void EventCallback(EventType evt, object value);
-
+// event system that takes 0 arguments
 public static class EventSystem
 {
     private static Dictionary<EventType, System.Action> eventDictionary = new Dictionary<EventType, System.Action>();
@@ -39,7 +39,36 @@ public static class EventSystem
     // execute event for all those listening
     public static void InvokeEvent(EventType type)
     {
-        Debug.Log("Invoked: " + type.ToString());
         eventDictionary[type]?.Invoke();
+    }
+}
+
+// event system that takes 1 argument
+public static class EventSystem<T>
+{
+    private static Dictionary<EventType, System.Action<T>> eventDictionary = new Dictionary<EventType, System.Action<T>>();
+
+    public static void AddListener(EventType type, System.Action<T> function)
+    {
+        if (!eventDictionary.ContainsKey(type))
+        {
+            eventDictionary.Add(type, null);
+        }
+
+        eventDictionary[type] += (function);
+    }
+
+    public static void RemoveListener(EventType type, System.Action<T> function)
+    {
+        if (eventDictionary.ContainsKey(type))
+        {
+            eventDictionary[type] -= (function);
+        }
+    }
+
+    // execute event for all those listening
+    public static void InvokeEvent(EventType type, T param)
+    {
+        eventDictionary[type]?.Invoke(param);
     }
 }

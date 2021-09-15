@@ -62,9 +62,7 @@ public class Tile : Base
         // right click - place flag
         if (Input.GetMouseButtonUp(1))
         {
-            // plant flag on top of tile
-            // call flag place event on this location to spawn a flag
-            // can do eventsystem.invoke(flag)
+            EventSystem<Vector3>.InvokeEvent(EventType.PLANT_FLAG, transform.position);
         }
     }
 
@@ -95,9 +93,11 @@ public class Tile : Base
 
     public void DoAction()
     {
-        if (triggered) return;
+        if (triggered)
+        {
+            return;
+        }
 
-        meshRenderer.enabled = true;
         triggered = true;
 
         defaultCol = Color.black;
@@ -112,6 +112,9 @@ public class Tile : Base
         else
         {
             gameManager.AddGoodTile();
+            meshRenderer.enabled = true;
+            defaultCol = Color.black;
+            myMat.color = defaultCol;
         }
 
         // only remove empty tiles that are not bombs

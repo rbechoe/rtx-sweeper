@@ -1572,6 +1572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 5318673126723917579, guid: f0759311c5d0df049bf86c99c328b3c8, type: 3}
+  flag: {fileID: 3511246584958374060, guid: 3b34af88b58bb734b9c8f84d53c76d9f, type: 3}
   isDone: 0
   bombCount: 0
 --- !u!114 &1492304674
