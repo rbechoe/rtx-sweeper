@@ -15,9 +15,6 @@ public class GameManager : Base
     [SerializeField]
     private Spawner spawner;
 
-    [SerializeField]
-    private List<GameObject> tiles;
-
     [Header("Debug")]
     public bool forceCheck;
 
@@ -32,13 +29,23 @@ public class GameManager : Base
         if (forceCheck)
         {
             forceCheck = false;
-            SetCheckers();
+            StartGame();
         }
 
         if (gameActive)
         {
             timer += Time.deltaTime;
         }
+    }
+
+    private void OnEnable()
+    {
+        EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
+    }
+
+    private void OnDisable()
+    {
+        EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
     }
 
     public void SetupEasy()
@@ -68,23 +75,13 @@ public class GameManager : Base
         spawner.CreateGrid(gridSize, bombAmount, this);
     }
 
-    public void SetTiles(List<GameObject> _tiles)
-    {
-        tiles = _tiles;
-    }
-
-    public void SetCheckers()
-    {
-        StartCoroutine(CheckBombs());
-    }
-
     public void AddGoodTile()
     {
         goodTiles++;
         CheckForVictory();
     }
 
-    void CheckForVictory()
+    private void CheckForVictory()
     {
         if (goodTiles == Mathf.Pow(gridSize, 2) - bombAmount)
         {
@@ -94,19 +91,10 @@ public class GameManager : Base
         }
     }
 
-    IEnumerator CheckBombs()
+    private void StartGame()
     {
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            tiles[i].GetComponent<Checker>().CheckBombs();
-            tiles[i].GetComponent<Tile>().Clickable();
-        }
-        yield return new WaitForEndOfFrame();
-        StartGame();
-    }
-
-    public void StartGame()
-    {
+        EventSystem.InvokeEvent(EventType.COUNT_BOMBS);
+        EventSystem.InvokeEvent(EventType.START_GAME);
         gameObject.GetComponent<UIManager>().bombs = bombAmount;
         gameActive = true;
     }
@@ -114,15 +102,6 @@ public class GameManager : Base
     public void EndGame()
     {
         gameActive = false;
-        StartCoroutine(DisableTiles());
-    }
-
-    IEnumerator DisableTiles()
-    {
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            tiles[i].GetComponent<Tile>().Unclickable();
-        }
-        yield return new WaitForEndOfFrame();
+        EventSystem.InvokeEvent(EventType.END_GAME);
     }
 }

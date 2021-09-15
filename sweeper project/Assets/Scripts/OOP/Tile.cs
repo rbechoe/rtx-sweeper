@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Tile : Base
 {
-    [Header("Settings")] 
+    [Header("Settings")]
     public Color defaultCol = Color.grey;
-    public Color selectCol  = Color.green;
+    public Color selectCol = Color.green;
     public TMP_Text bombCountTMP;
 
     protected int bombCount;
@@ -30,7 +30,7 @@ public class Tile : Base
         meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
     }
-    
+
     private void OnMouseOver()
     {
         if (clickable && !triggered)
@@ -59,13 +59,19 @@ public class Tile : Base
 
     private void OnEnable()
     {
-        // sub to event
-        //EventSystem.Subscribe(EventType.COUNT_BOMBS, )
+        // listen
+        EventSystem.AddListener(EventType.START_GAME, Clickable);
+        EventSystem.AddListener(EventType.END_GAME, Unclickable);
+        EventSystem.AddListener(EventType.END_GAME, RevealBomb);
+
     }
 
     private void OnDisable()
     {
-        // unsub
+        // unlisten
+        EventSystem.RemoveListener(EventType.START_GAME, Clickable);
+        EventSystem.RemoveListener(EventType.END_GAME, Unclickable);
+        EventSystem.RemoveListener(EventType.END_GAME, RevealBomb);
     }
 
     public void DoAction()
@@ -93,8 +99,6 @@ public class Tile : Base
         }
         if (gameObject.CompareTag("Bomb"))
         {
-            print("Triggered a bomb!");
-            // TODO show all bombs
             gameManager.EndGame();
             defaultCol = Color.red;
             myMat.color = defaultCol;
@@ -105,6 +109,14 @@ public class Tile : Base
         }
 
         myMat.SetColor("_EmissiveColor", defaultCol);
+    }
+
+    private void RevealBomb()
+    {
+        if (gameObject.CompareTag("Bomb"))
+        {
+            DoAction();
+        }
     }
 
     public void NoBombReveal()
@@ -130,12 +142,12 @@ public class Tile : Base
         bombCountTMP.text = "" + bombCount;
     }
 
-    public void Clickable()
+    private void Clickable()
     {
         clickable = true;
     }
 
-    public void Unclickable()
+    private void Unclickable()
     {
         clickable = false;
     }

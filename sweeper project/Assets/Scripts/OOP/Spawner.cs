@@ -64,7 +64,6 @@ public class Spawner : Base
         }
 
         isDone = true;
-        gameManager.SetTiles(tiles);
-        gameManager.SetCheckers();
+        EventSystem.InvokeEvent(EventType.PREPARE_GAME);
     }
 }

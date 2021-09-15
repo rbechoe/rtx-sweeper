@@ -5,19 +5,19 @@ public class Checker : Base
 {
     public Collider[] hitColliders;
 
-    public void CheckBombs()
-    {
-        StartCoroutine(DoChecks());
-    }
-
     private void OnEnable()
     {
-        EventSystem.Subscribe(EventType.COUNT_BOMBS, CheckBombs());
+        EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
     }
 
     private void OnDisable()
     {
-        
+        EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
+    }
+
+    private void CheckBombs()
+    {
+        StartCoroutine(DoChecks());
     }
 
     IEnumerator DoChecks()
