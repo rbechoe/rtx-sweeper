@@ -33,6 +33,8 @@ public class Spawner : Base
         GameObject newTile = null;
 
         // TODO track empty tile for no guess start
+        int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
+        int curTileCount = 0;
         for (int x = 0; x < gridSize; x++)
         {
             for (int z = 0; z < gridSize; z++)
@@ -58,9 +60,16 @@ public class Spawner : Base
                 }
 
                 curTile++;
+                curTileCount++;
                 newTile.name = "tile " + curTile;
                 tiles.Add(newTile);
-                yield return new WaitForEndOfFrame();
+
+                // continue next frame
+                if (curTileCount >= tilesPerFrame)
+                {
+                    curTileCount = 0;
+                    yield return new WaitForEndOfFrame();
+                }
             }
         }
 

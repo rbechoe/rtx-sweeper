@@ -19,6 +19,11 @@ public class Tile : Base
     private bool triggered;
     private bool clickable;
 
+    private void Awake()
+    {
+        bombCountTMP = GetComponentInChildren<TMP_Text>();
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -26,7 +31,6 @@ public class Tile : Base
         myMat.EnableKeyword("_EMISSION");
         myMat.color = defaultCol;
         myMat.SetColor("_EmissiveColor", defaultCol);
-        bombCountTMP = GetComponentInChildren<TMP_Text>();
         meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
     }
