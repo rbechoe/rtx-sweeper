@@ -63,6 +63,8 @@ public class Tile : Base
         if (Input.GetMouseButtonUp(1))
         {
             // plant flag on top of tile
+            // call flag place event on this location to spawn a flag
+            // can do eventsystem.invoke(flag)
         }
     }
 
@@ -81,7 +83,6 @@ public class Tile : Base
         EventSystem.AddListener(EventType.START_GAME, Clickable);
         EventSystem.AddListener(EventType.END_GAME, Unclickable);
         EventSystem.AddListener(EventType.END_GAME, RevealBomb);
-
     }
 
     private void OnDisable()
@@ -164,5 +165,10 @@ public class Tile : Base
     private void Unclickable()
     {
         clickable = false;
+    }
+
+    private void SetFlag()
+    {
+
     }
 }

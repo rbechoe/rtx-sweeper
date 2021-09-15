@@ -73,6 +73,7 @@ public class Spawner : Base
             }
         }
 
+        yield return new WaitForEndOfFrame();
         isDone = true;
         EventSystem.InvokeEvent(EventType.PREPARE_GAME);
     }
