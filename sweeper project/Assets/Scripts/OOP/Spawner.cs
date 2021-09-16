@@ -21,24 +21,26 @@ public class Spawner : Base
 
     GameManager gameManager;
 
-    public void CreateGrid(int _gridSize, int _bombAmount, GameManager _gameManager)
-    {
-        gridSize = _gridSize;
-        bombAmount = _bombAmount;
-        gameManager = _gameManager;
-        StartCoroutine(Grid());
-    }
-
     private void OnEnable()
     {
         EventSystem<Vector3>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem.AddListener(EventType.RESET_GAME, ResetGame);
     }
 
     private void OnDisable()
     {
         EventSystem<Vector3>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem.RemoveListener(EventType.RESET_GAME, ResetGame);
+    }
+
+    public void CreateGrid(int _gridSize, int _bombAmount, GameManager _gameManager)
+    {
+        gridSize = _gridSize;
+        bombAmount = _bombAmount;
+        gameManager = _gameManager;
+        StartCoroutine(Grid());
     }
 
     private IEnumerator Grid()
@@ -97,7 +99,7 @@ public class Spawner : Base
 
         yield return new WaitForEndOfFrame();
         isDone = true;
-        EventSystem.InvokeEvent(EventType.PREPARE_GAME);
+        EventSystem.InvokeEvent(EventType.PREPARE_GAME, gameObject.name);
     }
 
     // add flag to pool
@@ -124,5 +126,42 @@ public class Spawner : Base
         flag.transform.position = Vector3.up * 5000;
         activeFlags.Remove(flag);
         inactiveFlags.Add(flag);
+    }
+
+    private void ResetGame()
+    {
+        isDone = false;
+        bombCount = 0;
+        StartCoroutine(ResetLogic());        
+    }
+
+    IEnumerator ResetLogic()
+    {
+        EventSystem.InvokeEvent(EventType.END_GAME, gameObject.name);
+
+        // remove all flags and tiles
+        foreach (GameObject tile in tiles)
+        {
+            Destroy(tile);
+        }
+        tiles = new List<GameObject>();
+        yield return new WaitForEndOfFrame();
+
+        foreach (GameObject flag in activeFlags)
+        {
+            Destroy(flag);
+        }
+        activeFlags = new List<GameObject>();
+        yield return new WaitForEndOfFrame();
+
+        foreach (GameObject flag in inactiveFlags)
+        {
+            Destroy(flag);
+        }
+        inactiveFlags = new List<GameObject>();
+        yield return new WaitForEndOfFrame();
+
+        // start spawner with current settings
+        StartCoroutine(Grid());
     }
 }

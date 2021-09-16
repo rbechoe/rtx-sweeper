@@ -169,9 +169,4 @@ public class Tile : Base
     {
         clickable = false;
     }
-
-    private void SetFlag()
-    {
-
-    }
 }

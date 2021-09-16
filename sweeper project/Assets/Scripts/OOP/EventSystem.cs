@@ -11,6 +11,7 @@ public enum EventType
     PREPARE_GAME    = 5,
     PLANT_FLAG      = 6,
     REMOVE_FLAG     = 7,
+    RESET_GAME      = 8,
 }
 
 // event system that takes 0 arguments
@@ -37,8 +38,9 @@ public static class EventSystem
     }
 
     // execute event for all those listening
-    public static void InvokeEvent(EventType type)
+    public static void InvokeEvent(EventType type, GameObject sender)
     {
+        Debug.Log(sender.name + ": " + type);
         eventDictionary[type]?.Invoke();
     }
 }
