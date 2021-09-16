@@ -92,8 +92,8 @@ public class GameManager : Base
 
     private void StartGame()
     {
-        EventSystem.InvokeEvent(EventType.COUNT_BOMBS, gameObject.name);
-        EventSystem.InvokeEvent(EventType.START_GAME, gameObject.name);
+        EventSystem.InvokeEvent(EventType.COUNT_BOMBS);
+        EventSystem.InvokeEvent(EventType.START_GAME);
         timer = 0;
         gameObject.GetComponent<UIManager>().bombs = bombAmount;
         gameActive = true;
@@ -102,6 +102,6 @@ public class GameManager : Base
     public void EndGame()
     {
         gameActive = false;
-        EventSystem.InvokeEvent(EventType.END_GAME, gameObject.name);
+        EventSystem.InvokeEvent(EventType.END_GAME);
     }
 }

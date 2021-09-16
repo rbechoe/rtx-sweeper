@@ -50,6 +50,6 @@ public class UIManager : Base
     public void ResetGame()
     {
         victory.SetActive(false);
-        EventSystem.InvokeEvent(EventType.RESET_GAME, gameObject.name);
+        EventSystem.InvokeEvent(EventType.RESET_GAME);
     }
 }

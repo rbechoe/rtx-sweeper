@@ -99,7 +99,7 @@ public class Spawner : Base
 
         yield return new WaitForEndOfFrame();
         isDone = true;
-        EventSystem.InvokeEvent(EventType.PREPARE_GAME, gameObject.name);
+        EventSystem.InvokeEvent(EventType.PREPARE_GAME);
     }
 
     // add flag to pool
@@ -137,7 +137,7 @@ public class Spawner : Base
 
     IEnumerator ResetLogic()
     {
-        EventSystem.InvokeEvent(EventType.END_GAME, gameObject.name);
+        EventSystem.InvokeEvent(EventType.END_GAME);
 
         // remove all flags and tiles
         foreach (GameObject tile in tiles)

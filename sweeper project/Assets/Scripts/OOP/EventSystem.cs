@@ -38,9 +38,8 @@ public static class EventSystem
     }
 
     // execute event for all those listening
-    public static void InvokeEvent(EventType type, GameObject sender)
+    public static void InvokeEvent(EventType type)
     {
-        Debug.Log(sender.name + ": " + type);
         eventDictionary[type]?.Invoke();
     }
 }
