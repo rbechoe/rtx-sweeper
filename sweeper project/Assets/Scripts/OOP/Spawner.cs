@@ -14,6 +14,9 @@ public class Spawner : Base
 
     private int gridSize;
     private int bombAmount = 10;
+    private int xSize = 0;
+    private int zSize = 0;
+    private int bombs = 0;
 
     private List<GameObject> tiles = new List<GameObject>();
     private List<GameObject> activeFlags = new List<GameObject>();
@@ -26,6 +29,8 @@ public class Spawner : Base
         EventSystem<Vector3>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
         EventSystem.AddListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Vector3>.AddListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
     }
 
     private void OnDisable()
@@ -33,13 +38,18 @@ public class Spawner : Base
         EventSystem<Vector3>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
         EventSystem.RemoveListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Vector3>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
     }
 
-    public void CreateGrid(int _gridSize, int _bombAmount, GameManager _gameManager)
+    public void CreateGrid(int _x, int _z, int _bombAmount, GameManager _gameManager)
     {
-        gridSize = _gridSize;
+        gridSize = _x * _z;
         bombAmount = _bombAmount;
+        bombs = _bombAmount;
         gameManager = _gameManager;
+        xSize = _x;
+        zSize = _z;
         StartCoroutine(Grid());
     }
 
@@ -50,17 +60,17 @@ public class Spawner : Base
         int spawnChance = 0;
         GameObject newTile = null;
 
-        // TODO track empty tile for no guess start
+        // TODO track empty tile for no guess start and highlight it during start event
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
         int curTileCount = 0;
-        for (int x = 0; x < gridSize; x++)
+        for (int x = 0; x < xSize; x++)
         {
-            for (int z = 0; z < gridSize; z++)
+            for (int z = 0; z < zSize; z++)
             {
                 // formula: based on tiles and bombs left increase chance for next tile to be bomb
                 if (bombCount < bombAmount)
                 {
-                    tilesLeft = (int)Mathf.Pow(gridSize, 2) - curTile;
+                    tilesLeft = gridSize - curTile;
                     spawnChance = tilesLeft / (bombAmount - bombCount);
                 }
 
@@ -112,7 +122,7 @@ public class Spawner : Base
     // activate a flag and place it above the tile
     private void ActivateFlag(Vector3 position)
     {
-        if (inactiveFlags.Count > 0)
+        if (inactiveFlags.Count > 0 && bombs > 0)
         {
             inactiveFlags[0].transform.position = position;
             activeFlags.Add(inactiveFlags[0]);
@@ -164,5 +174,15 @@ public class Spawner : Base
 
         // start spawner with current settings
         StartCoroutine(Grid());
+    }
+
+    private void AddFlag(Vector3 empty)
+    {
+        bombs--;
+    }
+
+    private void RemoveFlag(GameObject empty)
+    {
+        bombs++;
     }
 }

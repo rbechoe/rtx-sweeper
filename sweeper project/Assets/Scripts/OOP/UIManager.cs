@@ -25,6 +25,17 @@ public class UIManager : Base
         base.Update();
         UpdateUI();
     }
+    private void OnEnable()
+    {
+        EventSystem<Vector3>.AddListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
+    }
+
+    private void OnDisable()
+    {
+        EventSystem<Vector3>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
+    }
 
     private void UpdateUI()
     {
@@ -51,5 +62,18 @@ public class UIManager : Base
     {
         victory.SetActive(false);
         EventSystem.InvokeEvent(EventType.RESET_GAME);
+    }
+
+    private void AddFlag(Vector3 empty)
+    {
+        if (bombs > 0)
+        {
+            bombs--;
+        }
+    }
+
+    private void RemoveFlag(GameObject empty)
+    {
+        bombs++;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : Base
 {
@@ -15,8 +16,12 @@ public class GameManager : Base
     [SerializeField]
     private Spawner spawner;
 
-    [Header("Debug")]
-    public bool forceCheck;
+    [SerializeField]
+    private TMP_InputField xTMP;
+    [SerializeField]
+    private TMP_InputField zTMP;
+    [SerializeField]
+    private TMP_InputField bombTMP;
 
     private int goodTiles;
 
@@ -26,11 +31,6 @@ public class GameManager : Base
     protected override void Update()
     {
         base.Update();
-        if (forceCheck)
-        {
-            forceCheck = false;
-            StartGame();
-        }
 
         if (gameActive)
         {
@@ -52,27 +52,35 @@ public class GameManager : Base
     {
         gridSize = 9;
         bombAmount = 10;
-        SetupGame();
+        SetupGame(gridSize, gridSize, bombAmount);
     }
 
     public void SetupMedium()
     {
         gridSize = 16;
         bombAmount = 40;
-        SetupGame();
+        SetupGame(gridSize, gridSize, bombAmount);
     }
 
     public void SetupHard()
     {
         gridSize = 30;
         bombAmount = 130;
-        SetupGame();
+        SetupGame(gridSize, gridSize, bombAmount);
     }
 
-    private void SetupGame()
+    public void SetupCustom()
     {
-        mainCam.transform.position = new Vector3(gridSize / 2f * 0.9f, gridSize * 1.1f, (gridSize / 2f - 0.5f) * 1.2f);
-        spawner.CreateGrid(gridSize, bombAmount, this);
+        gridSize = int.Parse(xTMP.text) * int.Parse(zTMP.text);
+        bombAmount = int.Parse(bombTMP.text);
+        bombAmount = Mathf.Clamp(bombAmount, 0, gridSize - 1);
+        SetupGame(int.Parse(xTMP.text), int.Parse(zTMP.text), bombAmount);
+    }
+
+    private void SetupGame(int _x, int _z, int _bombCount)
+    {
+        mainCam.transform.position = new Vector3(_x / 2f * 0.9f, (_x + _z / 2f) * 1.1f, (_z / 2f - 0.5f) * 1.2f);
+        spawner.CreateGrid(_x, _z, _bombCount, this);
     }
 
     public void AddGoodTile()
@@ -95,6 +103,7 @@ public class GameManager : Base
         EventSystem.InvokeEvent(EventType.COUNT_BOMBS);
         EventSystem.InvokeEvent(EventType.START_GAME);
         timer = 0;
+        goodTiles = 0;
         gameObject.GetComponent<UIManager>().bombs = bombAmount;
         gameActive = true;
     }
