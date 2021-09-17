@@ -12,6 +12,7 @@ public enum EventType
     PLANT_FLAG      = 6,
     REMOVE_FLAG     = 7,
     RESET_GAME      = 8,
+    FIRST_CLICK     = 10,
 }
 
 // event system that takes 0 arguments
