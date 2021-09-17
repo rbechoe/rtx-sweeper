@@ -69,6 +69,7 @@ public static class EventSystem<T>
     }
 
     // execute event for all those listening
+    // TODO param T[] for multiple params or nulls
     public static void InvokeEvent(EventType type, T param)
     {
         eventDictionary[type]?.Invoke(param);
