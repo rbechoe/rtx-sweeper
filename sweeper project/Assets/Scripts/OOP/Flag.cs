@@ -6,7 +6,9 @@ public class Flag : Base
     {
         if (Input.GetMouseButtonUp(0))
         {
-            EventSystem<GameObject>.InvokeEvent(EventType.REMOVE_FLAG, gameObject);
+            Parameters param = new Parameters();
+            param.gameObjects.Add(gameObject);
+            EventSystem<Parameters>.InvokeEvent(EventType.REMOVE_FLAG, param);
         }
     }
 }

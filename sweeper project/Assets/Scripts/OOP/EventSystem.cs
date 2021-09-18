@@ -15,42 +15,12 @@ public enum EventType
     FIRST_CLICK     = 10,
 }
 
-// event system that takes 0 arguments
-public static class EventSystem
+// event system that takes multiple arguments through an array
+public static class EventSystem<Parameters>
 {
-    private static Dictionary<EventType, System.Action> eventDictionary = new Dictionary<EventType, System.Action>();
+    private static Dictionary<EventType, System.Action<Parameters>> eventDictionary = new Dictionary<EventType, System.Action<Parameters>>();
 
-    public static void AddListener(EventType type, System.Action function)
-    {
-        if (!eventDictionary.ContainsKey(type))
-        {
-            eventDictionary.Add(type, null);
-        }
-
-        eventDictionary[type] += (function);
-    }
-    
-    public static void RemoveListener(EventType type, System.Action function)
-    {
-        if (eventDictionary.ContainsKey(type))
-        {
-            eventDictionary[type] -= (function);
-        }
-    }
-
-    // execute event for all those listening
-    public static void InvokeEvent(EventType type)
-    {
-        eventDictionary[type]?.Invoke();
-    }
-}
-
-// event system that takes 1 argument
-public static class EventSystem<T>
-{
-    private static Dictionary<EventType, System.Action<T>> eventDictionary = new Dictionary<EventType, System.Action<T>>();
-
-    public static void AddListener(EventType type, System.Action<T> function)
+    public static void AddListener(EventType type, System.Action<Parameters> function)
     {
         if (!eventDictionary.ContainsKey(type))
         {
@@ -60,7 +30,7 @@ public static class EventSystem<T>
         eventDictionary[type] += (function);
     }
 
-    public static void RemoveListener(EventType type, System.Action<T> function)
+    public static void RemoveListener(EventType type, System.Action<Parameters> function)
     {
         if (eventDictionary.ContainsKey(type))
         {
@@ -69,9 +39,18 @@ public static class EventSystem<T>
     }
 
     // execute event for all those listening
-    // TODO param T[] for multiple params or nulls
-    public static void InvokeEvent(EventType type, T param)
+    public static void InvokeEvent(EventType type, Parameters param)
     {
         eventDictionary[type]?.Invoke(param);
     }
+}
+
+// all possible parameters
+public class Parameters
+{
+    public List<int> integers = new List<int>();
+    public List<float> floats = new List<float>();
+    public List<bool> booleans = new List<bool>();
+    public List<Vector3> vector3s = new List<Vector3>();
+    public List<GameObject> gameObjects = new List<GameObject>();
 }

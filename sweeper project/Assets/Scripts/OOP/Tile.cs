@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -35,6 +33,22 @@ public class Tile : Base
         meshRenderer.enabled = false;
     }
 
+    private void OnEnable()
+    {
+        // listen
+        EventSystem<Parameters>.AddListener(EventType.START_GAME, Clickable);
+        EventSystem<Parameters>.AddListener(EventType.END_GAME, Unclickable);
+        EventSystem<Parameters>.AddListener(EventType.END_GAME, RevealBomb);
+    }
+
+    private void OnDisable()
+    {
+        // unlisten
+        EventSystem<Parameters>.RemoveListener(EventType.START_GAME, Clickable);
+        EventSystem<Parameters>.RemoveListener(EventType.END_GAME, Unclickable);
+        EventSystem<Parameters>.RemoveListener(EventType.END_GAME, RevealBomb);
+    }
+
     private void OnMouseOver()
     {
         if (clickable && !triggered)
@@ -62,7 +76,9 @@ public class Tile : Base
         // right click - place flag
         if (Input.GetMouseButtonUp(1))
         {
-            EventSystem<Vector3>.InvokeEvent(EventType.PLANT_FLAG, transform.position);
+            Parameters param = new Parameters();
+            param.vector3s.Add(transform.position);
+            EventSystem<Parameters>.InvokeEvent(EventType.PLANT_FLAG, param);
         }
     }
 
@@ -73,22 +89,6 @@ public class Tile : Base
             myMat.color = defaultCol;
             myMat.SetColor("_EmissiveColor", defaultCol);
         }
-    }
-
-    private void OnEnable()
-    {
-        // listen
-        EventSystem.AddListener(EventType.START_GAME, Clickable);
-        EventSystem.AddListener(EventType.END_GAME, Unclickable);
-        EventSystem.AddListener(EventType.END_GAME, RevealBomb);
-    }
-
-    private void OnDisable()
-    {
-        // unlisten
-        EventSystem.RemoveListener(EventType.START_GAME, Clickable);
-        EventSystem.RemoveListener(EventType.END_GAME, Unclickable);
-        EventSystem.RemoveListener(EventType.END_GAME, RevealBomb);
     }
 
     public void DoAction()
@@ -132,7 +132,7 @@ public class Tile : Base
         myMat.SetColor("_EmissiveColor", defaultCol);
     }
 
-    private void RevealBomb()
+    private void RevealBomb(object value)
     {
         if (gameObject.CompareTag("Bomb"))
         {
@@ -160,12 +160,12 @@ public class Tile : Base
         bombCountTMP.text = "" + bombCount;
     }
 
-    private void Clickable()
+    private void Clickable(object value)
     {
         clickable = true;
     }
 
-    private void Unclickable()
+    private void Unclickable(object value)
     {
         clickable = false;
     }

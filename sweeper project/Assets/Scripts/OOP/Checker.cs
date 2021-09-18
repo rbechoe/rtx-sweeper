@@ -7,15 +7,15 @@ public class Checker : Base
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem<Parameters>.AddListener(EventType.COUNT_BOMBS, CheckBombs);
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem<Parameters>.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
     }
 
-    private void CheckBombs()
+    private void CheckBombs(object value)
     {
         StartCoroutine(DoChecks());
     }

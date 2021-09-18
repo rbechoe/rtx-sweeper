@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -28,6 +26,16 @@ public class GameManager : Base
     public float timer { get; private set; }
     public bool gameActive { get; set; }
 
+    private void OnEnable()
+    {
+        EventSystem<Parameters>.AddListener(EventType.PREPARE_GAME, StartGame);
+    }
+
+    private void OnDisable()
+    {
+        EventSystem<Parameters>.RemoveListener(EventType.PREPARE_GAME, StartGame);
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -36,16 +44,6 @@ public class GameManager : Base
         {
             timer += Time.deltaTime;
         }
-    }
-
-    private void OnEnable()
-    {
-        EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
-    }
-
-    private void OnDisable()
-    {
-        EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
     }
 
     public void SetupEasy()
@@ -98,10 +96,10 @@ public class GameManager : Base
         }
     }
 
-    private void StartGame()
+    private void StartGame(object value)
     {
-        EventSystem.InvokeEvent(EventType.COUNT_BOMBS);
-        EventSystem.InvokeEvent(EventType.START_GAME);
+        EventSystem<Parameters>.InvokeEvent(EventType.COUNT_BOMBS, new Parameters());
+        EventSystem<Parameters>.InvokeEvent(EventType.START_GAME, new Parameters());
         timer = 0;
         goodTiles = 0;
         gameObject.GetComponent<UIManager>().bombs = bombAmount;
@@ -111,6 +109,6 @@ public class GameManager : Base
     public void EndGame()
     {
         gameActive = false;
-        EventSystem.InvokeEvent(EventType.END_GAME);
+        EventSystem<Parameters>.InvokeEvent(EventType.END_GAME, new Parameters());
     }
 }

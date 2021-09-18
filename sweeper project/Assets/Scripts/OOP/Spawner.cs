@@ -26,20 +26,20 @@ public class Spawner : Base
 
     private void OnEnable()
     {
-        EventSystem<Vector3>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem.AddListener(EventType.RESET_GAME, ResetGame);
-        EventSystem<Vector3>.AddListener(EventType.PLANT_FLAG, AddFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
+        EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem<Parameters>.AddListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
     }
 
     private void OnDisable()
     {
-        EventSystem<Vector3>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem.RemoveListener(EventType.RESET_GAME, ResetGame);
-        EventSystem<Vector3>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
     }
 
     public void CreateGrid(int _x, int _z, int _bombAmount, GameManager _gameManager)
@@ -80,6 +80,12 @@ public class Spawner : Base
                     newTile.AddComponent<Bomb>();
                     newTile.GetComponent<Bomb>().SetGameManager(gameManager);
                     bombCount++;
+
+                    // create flag for the pool, 1 flag per bomb
+                    if (inactiveFlags.Count < curTile)
+                    {
+                        AddNewFlag();
+                    }
                 }
                 else
                 {
@@ -92,12 +98,6 @@ public class Spawner : Base
                 newTile.name = "tile " + curTile;
                 tiles.Add(newTile);
 
-                // create flag for the pool
-                if (inactiveFlags.Count < curTile)
-                {
-                    AddNewFlag();
-                }
-
                 // continue next frame
                 if (curTileCount >= tilesPerFrame)
                 {
@@ -109,7 +109,7 @@ public class Spawner : Base
 
         yield return new WaitForEndOfFrame();
         isDone = true;
-        EventSystem.InvokeEvent(EventType.PREPARE_GAME);
+        EventSystem<Parameters>.InvokeEvent(EventType.PREPARE_GAME, new Parameters());
     }
 
     // add flag to pool
@@ -120,25 +120,26 @@ public class Spawner : Base
     }
 
     // activate a flag and place it above the tile
-    private void ActivateFlag(Vector3 position)
+    private void ActivateFlag(Parameters param)
     {
         if (inactiveFlags.Count > 0 && bombs > 0)
         {
-            inactiveFlags[0].transform.position = position;
+            inactiveFlags[0].transform.position = param.vector3s[0];
             activeFlags.Add(inactiveFlags[0]);
             inactiveFlags.RemoveAt(0);
         }
     }
 
     // remove a flag from the tile
-    public void ReturnFlag(GameObject flag)
+    public void ReturnFlag(Parameters param)
     {
-        flag.transform.position = Vector3.up * 5000;
-        activeFlags.Remove(flag);
-        inactiveFlags.Add(flag);
+        GameObject _flag = param.gameObjects[0];
+        _flag.transform.position = Vector3.up * 5000;
+        activeFlags.Remove(_flag);
+        inactiveFlags.Add(_flag);
     }
 
-    private void ResetGame()
+    private void ResetGame(object value)
     {
         isDone = false;
         bombCount = 0;
@@ -148,7 +149,7 @@ public class Spawner : Base
     // super efficient system......not
     IEnumerator ResetLogic()
     {
-        EventSystem.InvokeEvent(EventType.END_GAME);
+        EventSystem<Parameters>.InvokeEvent(EventType.END_GAME, new Parameters());
 
         // remove all flags and tiles
         foreach (GameObject tile in tiles)
@@ -176,12 +177,12 @@ public class Spawner : Base
         StartCoroutine(Grid());
     }
 
-    private void AddFlag(Vector3 empty)
+    private void AddFlag(object value)
     {
         bombs--;
     }
 
-    private void RemoveFlag(GameObject empty)
+    private void RemoveFlag(object value)
     {
         bombs++;
     }

@@ -20,21 +20,22 @@ public class UIManager : Base
         gameManager = gameObject.GetComponent<GameManager>();
     }
 
-    protected override void Update()
-    {
-        base.Update();
-        UpdateUI();
-    }
     private void OnEnable()
     {
-        EventSystem<Vector3>.AddListener(EventType.PLANT_FLAG, AddFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
+        EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
     }
 
     private void OnDisable()
     {
-        EventSystem<Vector3>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        UpdateUI();
     }
 
     private void UpdateUI()
@@ -61,10 +62,10 @@ public class UIManager : Base
     public void ResetGame()
     {
         victory.SetActive(false);
-        EventSystem.InvokeEvent(EventType.RESET_GAME);
+        EventSystem<Parameters>.InvokeEvent(EventType.RESET_GAME, new Parameters());
     }
 
-    private void AddFlag(Vector3 empty)
+    private void AddFlag(object value)
     {
         if (bombs > 0)
         {
@@ -72,7 +73,7 @@ public class UIManager : Base
         }
     }
 
-    private void RemoveFlag(GameObject empty)
+    private void RemoveFlag(object value)
     {
         bombs++;
     }
