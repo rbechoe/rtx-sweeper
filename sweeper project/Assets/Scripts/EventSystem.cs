@@ -3,6 +3,7 @@ using UnityEngine;
 
 public enum EventType
 {
+    // gameplay related
     COUNT_BOMBS     = 0,    
     SHOW_BOMBS      = 1,
     END_GAME        = 2,
@@ -14,6 +15,13 @@ public enum EventType
     RESET_GAME      = 8,
     FIRST_CLICK     = 10,
     ADD_EMPTY       = 11,
+    // input related
+    INPUT_LEFT      = 12,
+    INPUT_RIGHT     = 13,
+    INPUT_UP        = 14,
+    INPUT_DOWN      = 15,
+    INPUT_FORWARD   = 16,
+    INPUT_BACK      = 17,
 }
 
 // event system that takes multiple arguments through an array
