@@ -22,7 +22,10 @@ public class Spawner : Base
     private List<GameObject> activeFlags = new List<GameObject>();
     private List<GameObject> inactiveFlags = new List<GameObject>();
 
-    GameManager gameManager;
+    private GameManager gameManager;
+
+    private GameObject firstTile;
+    private List<GameObject> emptyTiles = new List<GameObject>();
 
     private void OnEnable()
     {
@@ -31,6 +34,8 @@ public class Spawner : Base
         EventSystem<Parameters>.AddListener(EventType.RESET_GAME, ResetGame);
         EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, AddFlag);
         EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
+        EventSystem<Parameters>.AddListener(EventType.PICK_TILE, PickStartingTile);
+        EventSystem<Parameters>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
     }
 
     private void OnDisable()
@@ -40,6 +45,8 @@ public class Spawner : Base
         EventSystem<Parameters>.RemoveListener(EventType.RESET_GAME, ResetGame);
         EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
         EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.PICK_TILE, PickStartingTile);
+        EventSystem<Parameters>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
     }
 
     public void CreateGrid(int _x, int _z, int _bombAmount, GameManager _gameManager)
@@ -106,10 +113,11 @@ public class Spawner : Base
                 }
             }
         }
-
         yield return new WaitForEndOfFrame();
+
         isDone = true;
         EventSystem<Parameters>.InvokeEvent(EventType.PREPARE_GAME, new Parameters());
+        yield return new WaitForEndOfFrame();
     }
 
     // add flag to pool
@@ -139,10 +147,26 @@ public class Spawner : Base
         inactiveFlags.Add(_flag);
     }
 
+    private void AddEmptyTile(Parameters param)
+    {
+        emptyTiles.Add(param.gameObjects[0]);
+    }
+
+    private void PickStartingTile(object value)
+    {
+        if (emptyTiles.Count > 0)
+        {
+            firstTile = emptyTiles[Random.Range(0, emptyTiles.Count)];
+            firstTile.GetComponent<Tile>().FirstTile();
+        }
+    }
+
     private void ResetGame(object value)
     {
         isDone = false;
         bombCount = 0;
+        firstTile = null;
+        emptyTiles = new List<GameObject>();
         StartCoroutine(ResetLogic());        
     }
 

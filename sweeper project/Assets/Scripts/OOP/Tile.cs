@@ -169,4 +169,11 @@ public class Tile : Base
     {
         clickable = false;
     }
+
+    public void FirstTile()
+    {
+        defaultCol = new Color(0.9f, 0.1f, 0.7f);
+        myMat.color = defaultCol;
+        myMat.SetColor("_EmissiveColor", defaultCol);
+    }
 }

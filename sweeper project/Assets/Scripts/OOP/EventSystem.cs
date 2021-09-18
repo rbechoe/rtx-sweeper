@@ -6,13 +6,14 @@ public enum EventType
     COUNT_BOMBS     = 0,    
     SHOW_BOMBS      = 1,
     END_GAME        = 2,
-    ENABLE_GRID     = 3,
+    PICK_TILE       = 3,
     START_GAME      = 4,
     PREPARE_GAME    = 5,
     PLANT_FLAG      = 6,
     REMOVE_FLAG     = 7,
     RESET_GAME      = 8,
     FIRST_CLICK     = 10,
+    ADD_EMPTY       = 11,
 }
 
 // event system that takes multiple arguments through an array

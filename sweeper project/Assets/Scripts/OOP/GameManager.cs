@@ -99,6 +99,7 @@ public class GameManager : Base
     private void StartGame(object value)
     {
         EventSystem<Parameters>.InvokeEvent(EventType.COUNT_BOMBS, new Parameters());
+        EventSystem<Parameters>.InvokeEvent(EventType.PICK_TILE, new Parameters());
         EventSystem<Parameters>.InvokeEvent(EventType.START_GAME, new Parameters());
         timer = 0;
         goodTiles = 0;

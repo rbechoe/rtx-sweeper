@@ -38,6 +38,14 @@ public class Checker : Base
         tile.SetBombCount(bombCount);
         tile.ShowBombAmount();
 
+        // set as potential first tile
+        if (bombCount == 0 && !gameObject.CompareTag("Bomb"))
+        {
+            Parameters param = new Parameters();
+            param.gameObjects.Add(gameObject);
+            EventSystem<Parameters>.InvokeEvent(EventType.ADD_EMPTY, param);
+        }
+
         yield return new WaitForEndOfFrame();
     }
 }
