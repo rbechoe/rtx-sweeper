@@ -7,7 +7,7 @@ public class GameManager : Base
     public GameObject tile;
 
     [Header("Settings")]
-    public GameObject mainCam;
+    public GameObject target;
     public int gridSize;
     public int bombAmount = 10;
 
@@ -77,7 +77,9 @@ public class GameManager : Base
 
     private void SetupGame(int _x, int _z, int _bombCount)
     {
-        mainCam.transform.position = new Vector3(_x / 2f * 0.9f, (_x + _z / 2f) * 1.1f, (_z / 2f - 0.5f) * 1.2f);
+        Parameters param = new Parameters();
+        param.vector3s.Add(new Vector3(_x / 2f, (_x + _z / 2f) * 0.5f, _z / 2f));
+        EventSystem<Parameters>.InvokeEvent(EventType.START_POS, param);
         spawner.CreateGrid(_x, _z, _bombCount, this);
     }
 

@@ -66,8 +66,7 @@ public class Spawner : Base
         int tilesLeft = 0;
         int spawnChance = 0;
         GameObject newTile = null;
-
-        // TODO track empty tile for no guess start and highlight it during start event
+        
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
         int curTileCount = 0;
         for (int x = 0; x < xSize; x++)

@@ -8,6 +8,7 @@ public class InputManager : Base
 
     protected override void Start()
     {
+        // TODO read from txt file
         keybindings.Add(KeyCode.A,           EventType.INPUT_LEFT);
         keybindings.Add(KeyCode.D,           EventType.INPUT_RIGHT);
         keybindings.Add(KeyCode.W,           EventType.INPUT_FORWARD);
