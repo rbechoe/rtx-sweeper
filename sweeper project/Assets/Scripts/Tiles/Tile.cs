@@ -67,7 +67,7 @@ public class Tile : Base
         }
 
         // press left button - highlight adjecant tiles that can be revealed if this tile is revealed
-        if (Input.GetMouseButtonDown(0) && triggered)
+        if (Input.GetMouseButton(0) && triggered && !previewClicked)
         {
             // use box to detect all nearby tiles that can be activated once amount bombs equals amount of flags, not more or less
             Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, flagMask);
