@@ -1119,7 +1119,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1492304674}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SetupMedium
+        m_MethodName: SetupMedium3D
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3414,7 +3414,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1492304674}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SetupHard
+        m_MethodName: SetupHard3D
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3873,7 +3873,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1192387869}
   m_OnClick:
     m_PersistentCalls:
@@ -4880,6 +4880,7 @@ GameObject:
   - component: {fileID: 1492304673}
   - component: {fileID: 1492304675}
   - component: {fileID: 1492304676}
+  - component: {fileID: 1492304677}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: GameController
@@ -4934,6 +4935,7 @@ MonoBehaviour:
   gridSize: 16
   bombAmount: 40
   spawner: {fileID: 1492304673}
+  spawner3D: {fileID: 1492304677}
   xTMP: {fileID: 1433798767}
   zTMP: {fileID: 1884366107}
   bombTMP: {fileID: 2022597135}
@@ -4964,6 +4966,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775ca9bc869e60447b67bad2120c4dcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1492304677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492304671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 124f21d9f6ecd0e40aefa557b28e50dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tile: {fileID: 2685168119620687833, guid: 019fa0039a4a1954db6e31676778f3b9, type: 3}
+  flag: {fileID: 1674806087784856364, guid: b6a16481db36d7a458cafee484786b9a, type: 3}
+  isDone: 0
+  bombCount: 0
 --- !u!1 &1541004225
 GameObject:
   m_ObjectHideFlags: 0
@@ -5976,7 +5994,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1492304674}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SetupEasy
+        m_MethodName: SetupEasy3D
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

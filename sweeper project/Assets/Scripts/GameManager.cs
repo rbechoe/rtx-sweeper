@@ -13,6 +13,8 @@ public class GameManager : Base
 
     [SerializeField]
     private Spawner spawner;
+    [SerializeField]
+    private DifficultSpawner spawner3D;
 
     [SerializeField]
     private TMP_InputField xTMP;
@@ -67,6 +69,27 @@ public class GameManager : Base
         SetupGame(gridSize, gridSize, bombAmount);
     }
 
+    public void SetupEasy3D()
+    {
+        gridSize = 4;
+        bombAmount = 10;
+        Setup3DGame(gridSize, bombAmount);
+    }
+
+    public void SetupMedium3D()
+    {
+        gridSize = 6;
+        bombAmount = 48;
+        Setup3DGame(gridSize, bombAmount);
+    }
+
+    public void SetupHard3D()
+    {
+        gridSize = 10;
+        bombAmount = 300;
+        Setup3DGame(gridSize, bombAmount);
+    }
+
     public void SetupCustom()
     {
         gridSize = int.Parse(xTMP.text) * int.Parse(zTMP.text);
@@ -81,6 +104,11 @@ public class GameManager : Base
         param.vector3s.Add(new Vector3(_x / 2f, (_x + _z / 2f) * 0.5f, _z / 2f));
         EventSystem<Parameters>.InvokeEvent(EventType.START_POS, param);
         spawner.CreateGrid(_x, _z, _bombCount, this);
+    }
+
+    private void Setup3DGame(int _gridSize, int _bombCount)
+    {
+        spawner3D.CreateGrid(_gridSize, _bombCount, this);
     }
 
     public void AddGoodTile()

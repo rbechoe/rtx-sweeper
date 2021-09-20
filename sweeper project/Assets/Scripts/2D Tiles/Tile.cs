@@ -137,7 +137,7 @@ public class Tile : Base
         }
     }
 
-    public void DoAction()
+    public virtual void DoAction()
     {
         if (triggered)
         {
