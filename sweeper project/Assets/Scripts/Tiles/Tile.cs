@@ -8,9 +8,7 @@ public class Tile : Base
     public Color selectCol = Color.green;
     public TMP_Text bombCountTMP;
 
-    private LayerMask bombMask;
     private LayerMask flagMask;
-    private LayerMask tileMask;
     private LayerMask allMask;
 
     protected int bombCount;
@@ -40,9 +38,7 @@ public class Tile : Base
         meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
 
-        bombMask = LayerMask.GetMask("Bomb");
         flagMask = LayerMask.GetMask("Flag");
-        tileMask = LayerMask.GetMask("Empty");
         allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
     }
 
@@ -74,9 +70,7 @@ public class Tile : Base
         if (Input.GetMouseButtonDown(0) && triggered)
         {
             // use box to detect all nearby tiles that can be activated once amount bombs equals amount of flags, not more or less
-            Collider[] nearbyBombs = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, bombMask);
             Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, flagMask);
-            Collider[] nearbyTiles = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, tileMask);
             Collider[] allTiles = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, allMask);
 
             if (bombCount == nearbyFlags.Length)
@@ -84,23 +78,12 @@ public class Tile : Base
                 canReveal = true;
             }
 
-            if (canReveal)
+            foreach (Collider _tile in allTiles)
             {
-                foreach (Collider _tile in nearbyTiles)
-                {
-                    _tile.GetComponent<Tile>()?.PreviewTileSelection();
-                    tilesPreviewed = nearbyTiles;
-                }
-            }
-            else
-            {
-                foreach (Collider _tile in allTiles)
-                {
-                    _tile.GetComponent<Tile>()?.PreviewTileSelection();
-                    tilesPreviewed = allTiles;
-                }
+                _tile.GetComponent<Tile>()?.PreviewTileSelection();
             }
 
+            tilesPreviewed = allTiles;
             previewClicked = true;
         }
 
@@ -117,7 +100,7 @@ public class Tile : Base
             {
                 foreach (Collider _tile in tilesPreviewed)
                 {
-                    _tile.GetComponent<Tile>().DoAction();
+                    _tile.GetComponent<Tile>()?.DoAction();
                 }
                 previewClicked = false;
                 tilesPreviewed = null;
@@ -157,6 +140,13 @@ public class Tile : Base
     public void DoAction()
     {
         if (triggered)
+        {
+            return;
+        }
+
+        // return if there is a flag on this position
+        Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
+        if (nearbyFlags.Length > 0)
         {
             return;
         }
