@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - bombCountTMP: {instanceID: 0}
-  - flag: {fileID: 3511246584958374060, guid: 3b34af88b58bb734b9c8f84d53c76d9f, type: 3}
+  - testObj: {fileID: 1900706165355697342, guid: e2c415c2793d90b4b896f27dca3c5a9d, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

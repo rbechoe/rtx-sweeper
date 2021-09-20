@@ -4,5 +4,6 @@ public class Bomb : Tile
     {
         base.Start();
         gameObject.tag = "Bomb";
+        gameObject.layer = 11;
     }
 }

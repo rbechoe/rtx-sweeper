@@ -8,6 +8,11 @@ public class Tile : Base
     public Color selectCol = Color.green;
     public TMP_Text bombCountTMP;
 
+    private LayerMask bombMask;
+    private LayerMask flagMask;
+    private LayerMask tileMask;
+    private LayerMask allMask;
+
     protected int bombCount;
     protected Material myMat;
 
@@ -16,6 +21,9 @@ public class Tile : Base
 
     private bool triggered;
     private bool clickable;
+    private bool previewClicked;
+    private bool canReveal;
+    private Collider[] tilesPreviewed;
 
     private void Awake()
     {
@@ -31,6 +39,11 @@ public class Tile : Base
         myMat.SetColor("_EmissiveColor", defaultCol);
         meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
+
+        bombMask = LayerMask.GetMask("Bomb");
+        flagMask = LayerMask.GetMask("Flag");
+        tileMask = LayerMask.GetMask("Empty");
+        allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
     }
 
     private void OnEnable()
@@ -58,10 +71,37 @@ public class Tile : Base
         }
 
         // press left button - highlight adjecant tiles that can be revealed if this tile is revealed
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && triggered)
         {
-            // only reveal tile when flags nearby equals amount of bombs nearby
-            // do note that if flags are placed incorrect that the user can lose if it reveals a bomb
+            // use box to detect all nearby tiles that can be activated once amount bombs equals amount of flags, not more or less
+            Collider[] nearbyBombs = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, bombMask);
+            Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, flagMask);
+            Collider[] nearbyTiles = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, tileMask);
+            Collider[] allTiles = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, allMask);
+
+            if (bombCount == nearbyFlags.Length)
+            {
+                canReveal = true;
+            }
+
+            if (canReveal)
+            {
+                foreach (Collider _tile in nearbyTiles)
+                {
+                    _tile.GetComponent<Tile>()?.PreviewTileSelection();
+                    tilesPreviewed = nearbyTiles;
+                }
+            }
+            else
+            {
+                foreach (Collider _tile in allTiles)
+                {
+                    _tile.GetComponent<Tile>()?.PreviewTileSelection();
+                    tilesPreviewed = allTiles;
+                }
+            }
+
+            previewClicked = true;
         }
 
         // release left button - reveal tile
@@ -70,6 +110,17 @@ public class Tile : Base
             if (clickable)
             {
                 DoAction();
+            }
+
+            // reveal all nearby tiles
+            if (previewClicked && canReveal)
+            {
+                foreach (Collider _tile in tilesPreviewed)
+                {
+                    _tile.GetComponent<Tile>().DoAction();
+                }
+                previewClicked = false;
+                tilesPreviewed = null;
             }
         }
 
@@ -84,10 +135,22 @@ public class Tile : Base
 
     private void OnMouseExit()
     {
+        // set tile back to base color
         if (clickable && !triggered)
         {
             myMat.color = defaultCol;
             myMat.SetColor("_EmissiveColor", defaultCol);
+        }
+
+        // set all nearby tiles back to base color
+        if (previewClicked)
+        {
+            foreach (Collider _tile in tilesPreviewed)
+            {
+                _tile.GetComponent<Tile>()?.SetToDefaultCol();
+            }
+            previewClicked = false;
+            tilesPreviewed = null;
         }
     }
 
@@ -130,6 +193,22 @@ public class Tile : Base
         }
 
         myMat.SetColor("_EmissiveColor", defaultCol);
+    }
+
+    public void PreviewTileSelection()
+    {
+        if (clickable && !triggered)
+        {
+            myMat.SetColor("_EmissiveColor", new Color(0.7f, 0.7f, 0.7f));
+        }
+    }
+
+    public void SetToDefaultCol()
+    {
+        if (clickable && !triggered)
+        {
+            myMat.SetColor("_EmissiveColor", defaultCol);
+        }
     }
 
     private void RevealBomb(object value)
