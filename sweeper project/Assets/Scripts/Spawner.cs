@@ -22,8 +22,6 @@ public class Spawner : Base
     private List<GameObject> activeFlags = new List<GameObject>();
     private List<GameObject> inactiveFlags = new List<GameObject>();
 
-    private GameManager gameManager;
-
     private GameObject firstTile;
     private List<GameObject> emptyTiles = new List<GameObject>();
 
@@ -213,10 +211,16 @@ public class Spawner : Base
     private void AddFlag(object value)
     {
         bombs--;
+        Parameters param = new Parameters();
+        param.integers.Add(bombs);
+        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
     }
 
     private void RemoveFlag(object value)
     {
         bombs++;
+        Parameters param = new Parameters();
+        param.integers.Add(bombs);
+        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
     }
 }

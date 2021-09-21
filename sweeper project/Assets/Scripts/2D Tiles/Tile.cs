@@ -110,7 +110,7 @@ public class Tile : Base
         }
 
         // right click - place flag
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) && !triggered)
         {
             Parameters param = new Parameters();
             param.vector3s.Add(transform.position);

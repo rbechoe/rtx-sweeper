@@ -16,13 +16,15 @@ public enum EventType
     FIRST_CLICK     = 10,
     ADD_EMPTY       = 11,
     START_POS       = 12,
+    WIN_GAME        = 13,
+    BOMB_UPDATE     = 14,
     // input related
-    INPUT_LEFT      = 13,
-    INPUT_RIGHT     = 14,
-    INPUT_UP        = 15,
-    INPUT_DOWN      = 16,
-    INPUT_FORWARD   = 17,
-    INPUT_BACK      = 18,
+    INPUT_LEFT      = 15,
+    INPUT_RIGHT     = 16,
+    INPUT_UP        = 17,
+    INPUT_DOWN      = 18,
+    INPUT_FORWARD   = 19,
+    INPUT_BACK      = 20,
 }
 
 // event system that takes multiple arguments through an array

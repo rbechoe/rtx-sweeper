@@ -49,18 +49,20 @@ public class GameManager : Base
         if (goodTiles == Mathf.Pow(gridSize, 2) - bombAmount)
         {
             EndGame();
-            //gameObject.GetComponent<UIManager>().ShowVictory();
+            EventSystem<Parameters>.InvokeEvent(EventType.WIN_GAME, new Parameters());
         }
     }
 
     private void StartGame(object value)
     {
+        Parameters param = new Parameters();
+        param.integers.Add(bombAmount);
         EventSystem<Parameters>.InvokeEvent(EventType.COUNT_BOMBS, new Parameters());
         EventSystem<Parameters>.InvokeEvent(EventType.PICK_TILE, new Parameters());
         EventSystem<Parameters>.InvokeEvent(EventType.START_GAME, new Parameters());
+        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
         timer = 0;
         goodTiles = 0;
-        //gameObject.GetComponent<UIManager>().bombs = bombAmount;
         gameActive = true;
     }
 
