@@ -179,11 +179,19 @@ public class DifficultSpawner : Base
     IEnumerator ResetLogic()
     {
         emptyTiles = new List<GameObject>();
+        int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
+        int curTileCount = 0;
 
         // remove all flags and tiles
         foreach (GameObject tile in tiles)
         {
             Destroy(tile);
+            curTileCount++;
+            if (curTileCount >= tilesPerFrame)
+            {
+                curTileCount = 0;
+                yield return new WaitForEndOfFrame();
+            }
         }
         tiles = new List<GameObject>();
         yield return new WaitForEndOfFrame();
@@ -191,6 +199,12 @@ public class DifficultSpawner : Base
         foreach (GameObject flag in activeFlags)
         {
             Destroy(flag);
+            curTileCount++;
+            if (curTileCount >= tilesPerFrame)
+            {
+                curTileCount = 0;
+                yield return new WaitForEndOfFrame();
+            }
         }
         activeFlags = new List<GameObject>();
         yield return new WaitForEndOfFrame();
@@ -198,6 +212,12 @@ public class DifficultSpawner : Base
         foreach (GameObject flag in inactiveFlags)
         {
             Destroy(flag);
+            curTileCount++;
+            if (curTileCount >= tilesPerFrame)
+            {
+                curTileCount = 0;
+                yield return new WaitForEndOfFrame();
+            }
         }
         inactiveFlags = new List<GameObject>();
         yield return new WaitForEndOfFrame();

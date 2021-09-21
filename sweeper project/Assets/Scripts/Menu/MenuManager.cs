@@ -54,21 +54,21 @@ public class MenuManager : Base
     public void Easy3D()
     {
         gridSize = 4;
-        bombAmount = 10;
+        bombAmount = 8;
         NewGame3D();
     }
 
     public void Medium3D()
     {
         gridSize = 6;
-        bombAmount = 48;
+        bombAmount = 30;
         NewGame3D();
     }
 
     public void Hard3D()
     {
         gridSize = 10;
-        bombAmount = 250;
+        bombAmount = 80;
         NewGame3D();
     }
 
