@@ -1,8 +1,7 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class Tile : Base
+public class Tile3D : Base
 {
     [Header("Settings")]
     public Color defaultCol = Color.grey;
@@ -15,8 +14,8 @@ public class Tile : Base
     protected int bombCount;
     protected Material myMat;
 
-    private MeshRenderer meshRenderer;
     private GameManager gameManager;
+    private MeshRenderer meshRenderer;
 
     private bool triggered;
     private bool clickable;
@@ -142,23 +141,16 @@ public class Tile : Base
 
     public virtual void DoAction()
     {
-        StartCoroutine(FireAction());
-    }
-
-    private IEnumerator FireAction()
-    {
-        yield return new WaitForEndOfFrame();
-
         if (triggered)
         {
-            yield return null;
+            return;
         }
 
         // return if there is a flag on this position
         Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
         if (nearbyFlags.Length > 0)
         {
-            yield return null;
+            return;
         }
 
         triggered = true;

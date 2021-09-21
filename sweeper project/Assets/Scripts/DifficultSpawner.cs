@@ -20,8 +20,6 @@ public class DifficultSpawner : Base
     private List<GameObject> activeFlags = new List<GameObject>();
     private List<GameObject> inactiveFlags = new List<GameObject>();
 
-    private GameManager gameManager;
-
     private GameObject firstTile;
     private List<GameObject> emptyTiles = new List<GameObject>();
 
@@ -38,12 +36,24 @@ public class DifficultSpawner : Base
 
     private void OnEnable()
     {
-
+        EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem<Parameters>.AddListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
+        EventSystem<Parameters>.AddListener(EventType.PICK_TILE, PickStartingTile);
+        EventSystem<Parameters>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
     }
 
     private void OnDisable()
     {
-
+        EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.PICK_TILE, PickStartingTile);
+        EventSystem<Parameters>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
     }
 
     public void CreateGrid(int _gridSize, int _bombAmount)
@@ -81,8 +91,7 @@ public class DifficultSpawner : Base
 
                     if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
                     {
-                        //newTile.AddComponent<Bomb>();
-                        //newTile.GetComponent<Bomb>().SetGameManager(gameManager);
+                        newTile.AddComponent<Bomb3D>();
                         bombCount++;
 
                         // create flag for the pool, 1 flag per bomb
@@ -93,8 +102,7 @@ public class DifficultSpawner : Base
                     }
                     else
                     {
-                        //newTile.AddComponent<Empty>();
-                        //newTile.GetComponent<Empty>().SetGameManager(gameManager);
+                        newTile.AddComponent<Empty3D>();
                     }
 
                     curTile++;
@@ -114,6 +122,7 @@ public class DifficultSpawner : Base
         yield return new WaitForEndOfFrame();
 
         isDone = true;
+        //EventSystem<Parameters>.InvokeEvent(EventType.PREPARE_GAME, new Parameters());
         yield return new WaitForEndOfFrame();
     }
 

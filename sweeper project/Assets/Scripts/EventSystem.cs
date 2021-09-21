@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public enum EventType
 {
@@ -61,8 +61,8 @@ public static class EventSystem<Parameters>
 public class Parameters
 {
     public List<int> integers = new List<int>();
-    public List<float> floats = new List<float>();
     public List<bool> booleans = new List<bool>();
+    public List<float> floats = new List<float>();
     public List<Vector3> vector3s = new List<Vector3>();
     public List<GameObject> gameObjects = new List<GameObject>();
 }
