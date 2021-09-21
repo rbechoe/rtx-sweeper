@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/sweeper rtx.unity
+    path: Assets/Scenes/Menu.unity
     guid: 10c60b82352180247b30d58523531cd5
+  - enabled: 1
+    path: Assets/Scenes/Garden.unity
+    guid: d2ba687a8e31dad43a54753e3d600ef3
+  - enabled: 1
+    path: Assets/Scenes/Universe.unity
+    guid: fcf4db1bb89ec5445a2e6a72da15a42a
   m_configObjects: {}

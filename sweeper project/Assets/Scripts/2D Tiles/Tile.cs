@@ -38,6 +38,8 @@ public class Tile : Base
         meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
 
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+
         flagMask = LayerMask.GetMask("Flag");
         allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
     }
@@ -217,11 +219,6 @@ public class Tile : Base
     public void SetBombCount(int amount)
     {
         bombCount = amount;
-    }
-
-    public void SetGameManager(GameManager _gameManager)
-    {
-        gameManager = _gameManager;
     }
 
     public void ShowBombAmount()

@@ -25,6 +25,17 @@ public class DifficultSpawner : Base
     private GameObject firstTile;
     private List<GameObject> emptyTiles = new List<GameObject>();
 
+    protected override void Start()
+    {
+        base.Start();
+        gridSize = TheCreator.Instance.gridSize;
+        bombAmount = TheCreator.Instance.bombAmount;
+        Parameters param = new Parameters();
+        param.vector3s.Add(new Vector3(gridSize / 2f, gridSize, gridSize / 2f));
+        EventSystem<Parameters>.InvokeEvent(EventType.START_POS, param);
+        CreateGrid(gridSize, bombAmount);
+    }
+
     private void OnEnable()
     {
 
@@ -35,12 +46,11 @@ public class DifficultSpawner : Base
 
     }
 
-    public void CreateGrid(int _gridSize, int _bombAmount, GameManager _gameManager)
+    public void CreateGrid(int _gridSize, int _bombAmount)
     {
         gridSize = _gridSize;
         bombAmount = _bombAmount;
         bombs = _bombAmount;
-        gameManager = _gameManager;
         StartCoroutine(Grid());
     }
 

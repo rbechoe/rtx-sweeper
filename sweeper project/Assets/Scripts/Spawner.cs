@@ -27,6 +27,19 @@ public class Spawner : Base
     private GameObject firstTile;
     private List<GameObject> emptyTiles = new List<GameObject>();
 
+    protected override void Start()
+    {
+        base.Start();
+        xSize = TheCreator.Instance.xSize;
+        zSize = TheCreator.Instance.zSize;
+        gridSize = TheCreator.Instance.gridSize;
+        bombAmount = TheCreator.Instance.bombAmount;
+        Parameters param = new Parameters();
+        param.vector3s.Add(new Vector3(xSize / 2f, (xSize + zSize / 2f) * 0.5f, zSize / 2f));
+        EventSystem<Parameters>.InvokeEvent(EventType.START_POS, param);
+        CreateGrid(xSize, zSize, bombAmount);
+    }
+
     private void OnEnable()
     {
         EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
@@ -49,12 +62,9 @@ public class Spawner : Base
         EventSystem<Parameters>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
     }
 
-    public void CreateGrid(int _x, int _z, int _bombAmount, GameManager _gameManager)
+    public void CreateGrid(int _x, int _z, int _bombAmount)
     {
-        gridSize = _x * _z;
         bombAmount = _bombAmount;
-        bombs = _bombAmount;
-        gameManager = _gameManager;
         xSize = _x;
         zSize = _z;
         StartCoroutine(Grid());
@@ -65,6 +75,8 @@ public class Spawner : Base
         int curTile = 0;
         int tilesLeft = 0;
         int spawnChance = 0;
+        gridSize = xSize * zSize;
+        bombs = bombAmount;
         GameObject newTile = null;
         
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
@@ -84,7 +96,6 @@ public class Spawner : Base
                 if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
                 {
                     newTile.AddComponent<Bomb>();
-                    newTile.GetComponent<Bomb>().SetGameManager(gameManager);
                     bombCount++;
 
                     // create flag for the pool, 1 flag per bomb
@@ -96,7 +107,6 @@ public class Spawner : Base
                 else
                 {
                     newTile.AddComponent<Empty>();
-                    newTile.GetComponent<Empty>().SetGameManager(gameManager);
                 }
 
                 curTile++;
