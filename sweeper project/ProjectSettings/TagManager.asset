@@ -7,6 +7,8 @@ TagManager:
   - Bomb
   - Empty
   - Flag
+  - Opaque
+  - Transparent
   layers:
   - Default
   - TransparentFX

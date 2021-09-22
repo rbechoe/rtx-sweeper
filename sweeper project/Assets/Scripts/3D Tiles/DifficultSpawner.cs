@@ -74,11 +74,11 @@ public class DifficultSpawner : Base
 
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
         int curTileCount = 0;
-        for (int x = -(gridSize / 2); x < gridSize; x++)
+        for (float x = -(gridSize / 2f); x < (gridSize / 2f); x++)
         {
-            for (int z = -(gridSize / 2); z < gridSize; z++)
+            for (float z = -(gridSize / 2f); z < (gridSize / 2f); z++)
             {
-                for (int y = -(gridSize / 2); y < gridSize; y++)
+                for (float y = -(gridSize / 2f); y < (gridSize / 2f); y++)
                 {
                     // formula: based on tiles and bombs left increase chance for next tile to be bomb
                     if (bombCount < bombAmount)
@@ -87,7 +87,7 @@ public class DifficultSpawner : Base
                         spawnChance = tilesLeft / (bombAmount - bombCount);
                     }
 
-                    newTile = Instantiate(tile, new Vector3(x, y, z), Quaternion.identity);
+                    newTile = Instantiate(tile, new Vector3(x + .5f, y + .5f, z + .5f), Quaternion.identity);
                     newTile.transform.localScale = Vector3.one * 0.9f;
 
                     if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)

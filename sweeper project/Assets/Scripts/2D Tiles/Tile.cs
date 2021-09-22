@@ -151,14 +151,14 @@ public class Tile : Base
 
         if (triggered)
         {
-            yield return null;
+            yield break;
         }
 
         // return if there is a flag on this position
         Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
         if (nearbyFlags.Length > 0)
         {
-            yield return null;
+            yield break;
         }
 
         triggered = true;
