@@ -53,7 +53,10 @@ public static class EventSystem<Parameters>
     // execute event for all those listening
     public static void InvokeEvent(EventType type, Parameters param)
     {
-        eventDictionary[type]?.Invoke(param);
+        if (eventDictionary.ContainsKey(type))
+        {
+            eventDictionary[type]?.Invoke(param);
+        }
     }
 }
 

@@ -7,6 +7,7 @@ public class DifficultSpawner : Base
     [Header("Prefabs")]
     public GameObject tile;
     public GameObject flag;
+    public GameObject parentTile;
 
     [Header("Statistics")]
     public bool isDone;
@@ -37,9 +38,9 @@ public class DifficultSpawner : Base
     private void OnEnable()
     {
         EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<Parameters>.AddListener(EventType.RESET_GAME, ResetGame);
         EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<Parameters>.AddListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
         EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
         EventSystem<Parameters>.AddListener(EventType.PICK_TILE, PickStartingTile);
         EventSystem<Parameters>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
@@ -48,9 +49,9 @@ public class DifficultSpawner : Base
     private void OnDisable()
     {
         EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<Parameters>.RemoveListener(EventType.RESET_GAME, ResetGame);
         EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
         EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
         EventSystem<Parameters>.RemoveListener(EventType.PICK_TILE, PickStartingTile);
         EventSystem<Parameters>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
@@ -73,11 +74,11 @@ public class DifficultSpawner : Base
 
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
         int curTileCount = 0;
-        for (int x = 0; x < gridSize; x++)
+        for (int x = -(gridSize / 2); x < gridSize; x++)
         {
-            for (int z = 0; z < gridSize; z++)
+            for (int z = -(gridSize / 2); z < gridSize; z++)
             {
-                for (int y = 0; y < gridSize; y++)
+                for (int y = -(gridSize / 2); y < gridSize; y++)
                 {
                     // formula: based on tiles and bombs left increase chance for next tile to be bomb
                     if (bombCount < bombAmount)
@@ -109,6 +110,7 @@ public class DifficultSpawner : Base
                     curTileCount++;
                     newTile.name = "tile " + curTile;
                     tiles.Add(newTile);
+                    newTile.transform.parent = parentTile.transform;
 
                     // continue next frame
                     if (curTileCount >= tilesPerFrame)
@@ -122,7 +124,7 @@ public class DifficultSpawner : Base
         yield return new WaitForEndOfFrame();
 
         isDone = true;
-        //EventSystem<Parameters>.InvokeEvent(EventType.PREPARE_GAME, new Parameters());
+        EventSystem<Parameters>.InvokeEvent(EventType.PREPARE_GAME, new Parameters());
         yield return new WaitForEndOfFrame();
     }
 
