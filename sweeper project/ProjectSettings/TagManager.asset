@@ -11,6 +11,7 @@ TagManager:
   - Transparent
   - Selection
   - Picker
+  - LookTarget
   layers:
   - Default
   - TransparentFX

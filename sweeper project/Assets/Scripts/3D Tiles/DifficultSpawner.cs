@@ -83,7 +83,7 @@ public class DifficultSpawner : Base
                     // formula: based on tiles and bombs left increase chance for next tile to be bomb
                     if (bombCount < bombAmount)
                     {
-                        tilesLeft = gridSize - curTile;
+                        tilesLeft = int.Parse(Mathf.Pow(gridSize, 3).ToString()) - curTile;
                         spawnChance = tilesLeft / (bombAmount - bombCount);
                     }
 
@@ -165,7 +165,7 @@ public class DifficultSpawner : Base
         if (emptyTiles.Count > 0)
         {
             firstTile = emptyTiles[Random.Range(0, emptyTiles.Count)];
-            firstTile.GetComponent<Tile>().FirstTile();
+            firstTile.GetComponent<Tile3D>().FirstTile();
         }
     }
 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2685168119620687828}
   - component: {fileID: 2685168119620687835}
   - component: {fileID: 2685168119620687834}
+  - component: {fileID: 6155620323563193095}
   m_Layer: 12
   m_Name: 3D Tile
   m_TagString: Empty
@@ -97,6 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6155620323563193095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2685168119620687833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629d9c76a3d6fc4429e7efdc5ca723a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitColliders: []
 --- !u!1 &8972983688656368597
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +122,7 @@ GameObject:
   - component: {fileID: 8041559971248235720}
   - component: {fileID: 6449684177980736360}
   - component: {fileID: 2315544254603145683}
+  - component: {fileID: 5451509073592196273}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -132,7 +147,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 5}
+  m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6449684177980736360
 MeshRenderer:
@@ -196,7 +211,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A
+  m_text: 26
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -223,15 +238,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -268,3 +283,15 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 6449684177980736360}
   m_maskType: 0
+--- !u!114 &5451509073592196273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972983688656368597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcfa43af67c5a724c8e9f3d6f3b4564d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

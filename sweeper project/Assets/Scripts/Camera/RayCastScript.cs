@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RayCastScript : MonoBehaviour
+public class RayCastScript : Base
 {
     public GameObject target;
     public LayerMask selector;
-    void Update()
+    protected override void Update()
     {
         RaycastHit hit;
         Ray ray = gameObject.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);

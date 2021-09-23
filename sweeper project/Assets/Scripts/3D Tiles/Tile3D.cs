@@ -244,7 +244,7 @@ public class Tile3D : Base
             Collider[] tiles = Physics.OverlapBox(gameObject.transform.position, new Vector3(1, 1, 1) * 1.5f, Quaternion.identity);
             for (int i = 0; i < tiles.Length; i++)
             {
-                tiles[i].GetComponent<Tile>()?.NoBombReveal();
+                tiles[i].GetComponent<Tile3D>()?.NoBombReveal();
             }
 
             Destroy(gameObject);
