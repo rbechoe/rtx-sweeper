@@ -133,7 +133,7 @@ public class Tile3D : Base
     // update base colors based on layer object currently is in
     private void UpdateColliders()
     {
-        if (hovered)
+        if (hovered || triggered)
         {
             return;
         }
@@ -148,10 +148,7 @@ public class Tile3D : Base
                 {
                     defaultCol = defaultSide;
                     SetColor();
-                    if (!triggered)
-                    {
-                        myCol.enabled = false;
-                    }
+                    myCol.enabled = false;
                     break;
                 }
 
@@ -159,10 +156,7 @@ public class Tile3D : Base
                 {
                     defaultCol = defaultMid;
                     SetColor(2);
-                    if (!triggered)
-                    {
-                        myCol.enabled = true;
-                    }
+                    myCol.enabled = true;
                     break;
                 }
             }
@@ -171,10 +165,7 @@ public class Tile3D : Base
         {
             defaultCol = defaultNone;
             SetColor();
-            if (!triggered)
-            {
-                myCol.enabled = false;
-            }
+            myCol.enabled = false;
         }
     }
 
