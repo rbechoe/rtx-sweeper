@@ -21,10 +21,11 @@ public class Tile3D : Base
     private MeshRenderer meshRenderer;
     private BoxCollider myCol;
 
-    private bool triggered;
-    private bool clickable;
-    private bool previewClicked;
-    private bool canReveal;
+    public bool triggered;
+    public bool clickable;
+    public bool previewClicked;
+    public bool canReveal;
+    public bool hovered;
     private Collider[] tilesPreviewed;
 
     private void Awake()
@@ -41,7 +42,7 @@ public class Tile3D : Base
         myMat.SetColor("_EmissiveColor", defaultCol);
         defaultMid = new Color(0.25f, 1, 0.25f, 0.5f);
         defaultNone = new Color(0.1f, 0.1f, 0.1f, 0.001f);
-        defaultSide = new Color(1, 1, 1, 0.005f);
+        defaultSide = new Color(1, 1, 1, 0.05f);
         meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
         myCol = gameObject.GetComponent<BoxCollider>();
@@ -71,7 +72,10 @@ public class Tile3D : Base
     protected override void Update()
     {
         base.Update();
-
+        if (hovered)
+        {
+            return;
+        }
         Collider[] selectorType = Physics.OverlapBox(transform.position, Vector3.one * 0.1f, Quaternion.identity);
 
         defaultCol = defaultNone;
@@ -92,10 +96,11 @@ public class Tile3D : Base
                     SetColor();
                     break;
                 }
+
                 if (col.CompareTag("Opaque"))
                 {
                     defaultCol = defaultMid;
-                    SetColor(10);
+                    SetColor(2);
                     if (!triggered)
                     {
                         clickable = true;
@@ -109,6 +114,8 @@ public class Tile3D : Base
 
     private void OnMouseOver()
     {
+        hovered = true;
+
         if (clickable && !triggered)
         {
             myMat.color = selectCol;
@@ -167,6 +174,8 @@ public class Tile3D : Base
 
     private void OnMouseExit()
     {
+        hovered = false;
+
         // set tile back to base color
         if (clickable && !triggered)
         {
@@ -200,12 +209,12 @@ public class Tile3D : Base
             return;
         }
 
-        print("clicked");
-
         triggered = true;
 
         defaultCol = Color.black;
         myMat.color = defaultCol;
+
+        print(gameObject.name);
 
         if (gameObject.CompareTag("Bomb"))
         {
@@ -248,12 +257,14 @@ public class Tile3D : Base
     {
         if (clickable && !triggered)
         {
+            myMat.color = defaultCol;
             myMat.SetColor("_EmissiveColor", defaultCol);
         }
     }
 
     private void SetColor(int _strenght = 1)
     {
+        myMat.color = defaultCol;
         myMat.SetColor("_EmissiveColor", defaultCol * _strenght);
     }
 

@@ -17,6 +17,10 @@ public class Movement3D : Base
 
     private bool inRoutine;
 
+    private int speed = 5;
+    private float moveCd = 0;
+    private float moveCdReset = .5f;
+
     protected override void Start()
     {
         base.Start();
@@ -32,6 +36,8 @@ public class Movement3D : Base
         EventSystem<Parameters>.AddListener(EventType.INPUT_BACK, RotateDown);
         EventSystem<Parameters>.AddListener(EventType.INPUT_RIGHT, RotateRight);
         EventSystem<Parameters>.AddListener(EventType.INPUT_LEFT, RotateLeft);
+        EventSystem<Parameters>.AddListener(EventType.INPUT_UP, MoveUp);
+        EventSystem<Parameters>.AddListener(EventType.INPUT_DOWN, MoveDown);
     }
 
     private void OnDisable()
@@ -40,6 +46,17 @@ public class Movement3D : Base
         EventSystem<Parameters>.RemoveListener(EventType.INPUT_BACK, RotateDown);
         EventSystem<Parameters>.RemoveListener(EventType.INPUT_RIGHT, RotateRight);
         EventSystem<Parameters>.RemoveListener(EventType.INPUT_LEFT, RotateLeft);
+        EventSystem<Parameters>.RemoveListener(EventType.INPUT_UP, MoveUp);
+        EventSystem<Parameters>.RemoveListener(EventType.INPUT_DOWN, MoveDown);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (moveCd > 0)
+        {
+            moveCd -= Time.deltaTime;
+        }
     }
 
     private void RotateUp(object value)
@@ -48,20 +65,7 @@ public class Movement3D : Base
         {
             return;
         }
-        StartCoroutine(RoutineUp());
-    }
-
-    private IEnumerator RoutineUp()
-    {
-        inRoutine = true;
-        for (int i = 0; i < 90; i++)
-        {
-            parentObj.transform.rotation *= Quaternion.Euler(1f, 0, 0);
-            yield return new WaitForEndOfFrame();
-        }
-        inRoutine = false;
-        FloorAxis();
-        yield return new WaitForEndOfFrame();
+        StartCoroutine(RoutineRotation(new Vector3(speed, 0, 0)));
     }
 
     private void RotateDown(object value)
@@ -70,20 +74,7 @@ public class Movement3D : Base
         {
             return;
         }
-        StartCoroutine(RoutineDown());
-    }
-
-    private IEnumerator RoutineDown()
-    {
-        inRoutine = true;
-        for (int i = 0; i < 90; i++)
-        {
-            parentObj.transform.rotation *= Quaternion.Euler(-1f, 0, 0);
-            yield return new WaitForEndOfFrame();
-        }
-        inRoutine = false;
-        FloorAxis();
-        yield return new WaitForEndOfFrame();
+        StartCoroutine(RoutineRotation(new Vector3(-speed, 0, 0)));
     }
 
     private void RotateLeft(object value)
@@ -92,20 +83,7 @@ public class Movement3D : Base
         {
             return;
         }
-        StartCoroutine(RoutineLeft());
-    }
-
-    private IEnumerator RoutineLeft()
-    {
-        inRoutine = true;
-        for (int i = 0; i < 90; i++)
-        {
-            parentObj.transform.rotation *= Quaternion.Euler(0, -1f, 0);
-            yield return new WaitForEndOfFrame();
-        }
-        inRoutine = false;
-        FloorAxis();
-        yield return new WaitForEndOfFrame();
+        StartCoroutine(RoutineRotation(new Vector3(0, -speed, 0)));
     }
 
     private void RotateRight(object value)
@@ -114,15 +92,15 @@ public class Movement3D : Base
         {
             return;
         }
-        StartCoroutine(RoutineRight());
+        StartCoroutine(RoutineRotation(new Vector3(0, speed, 0)));
     }
 
-    private IEnumerator RoutineRight()
+    private IEnumerator RoutineRotation(Vector3 _speed)
     {
         inRoutine = true;
-        for (int i = 0; i < 90; i++)
+        for (int i = 0; i < 90 / speed; i++)
         {
-            parentObj.transform.rotation *= Quaternion.Euler(0, 1f, 0);
+            parentObj.transform.rotation *= Quaternion.Euler(_speed);
             yield return new WaitForEndOfFrame();
         }
         inRoutine = false;
@@ -135,5 +113,23 @@ public class Movement3D : Base
         parentObj.transform.eulerAngles = new Vector3(Mathf.RoundToInt(parentObj.transform.eulerAngles.x),
                                                       Mathf.RoundToInt(parentObj.transform.eulerAngles.y),
                                                       Mathf.RoundToInt(parentObj.transform.eulerAngles.z));
+    }
+
+    private void MoveUp(object value)
+    {
+        if (moveCd <= 0)
+        {
+            parentSelection.transform.position += Vector3.up;
+            moveCd = moveCdReset;
+        }
+    }
+
+    private void MoveDown(object value)
+    {
+        if (moveCd <= 0)
+        {
+            parentSelection.transform.position += Vector3.down;
+            moveCd = moveCdReset;
+        }
     }
 }
