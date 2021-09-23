@@ -13,6 +13,7 @@ public class Tile3D : Base
 
     private LayerMask flagMask;
     private LayerMask allMask;
+    private LayerMask selectionLayers;
 
     protected int bombCount;
     protected Material myMat;
@@ -35,14 +36,13 @@ public class Tile3D : Base
 
     protected override void Start()
     {
-        base.Start();
         myMat = gameObject.GetComponent<Renderer>().material;
         myMat.EnableKeyword("_EMISSION");
         myMat.color = defaultCol;
         myMat.SetColor("_EmissiveColor", defaultCol);
         defaultMid = new Color(0.25f, 1, 0.25f, 0.5f);
-        defaultNone = new Color(0.1f, 0.1f, 0.1f, 0.001f);
-        defaultSide = new Color(1, 1, 1, 0.05f);
+        defaultNone = new Color(0.1f, 0.1f, 0.1f, 0.01f);
+        defaultSide = new Color(1, 1, 1, 0.1f);
         meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
         myCol = gameObject.GetComponent<BoxCollider>();
@@ -51,6 +51,7 @@ public class Tile3D : Base
 
         flagMask = LayerMask.GetMask("Flag");
         allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
+        selectionLayers = LayerMask.GetMask("Selector", "Transparent");
     }
 
     private void OnEnable()
@@ -71,29 +72,86 @@ public class Tile3D : Base
 
     protected override void Update()
     {
-        base.Update();
+        if (clickable)
+        {
+            UpdateColliders();
+            SelectTile();
+        }
+    }
+
+    private void SelectTile()
+    {
+        if (hovered)
+        {
+            if (Input.GetMouseButton(0) && triggered && !previewClicked)
+            {
+                // use box to detect all nearby tiles that can be activated once amount bombs equals amount of flags, not more or less
+                Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, flagMask);
+                Collider[] allTiles = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, allMask);
+
+                if (bombCount == nearbyFlags.Length)
+                {
+                    canReveal = true;
+                }
+
+                foreach (Collider _tile in allTiles)
+                {
+                    _tile.GetComponent<Tile>()?.PreviewTileSelection();
+                }
+
+                tilesPreviewed = allTiles;
+                previewClicked = true;
+            }
+
+            // release left button - reveal tile
+            if (Input.GetMouseButtonUp(0))
+            {
+                DoAction();
+
+                // reveal all nearby tiles
+                if (previewClicked && canReveal)
+                {
+                    foreach (Collider _tile in tilesPreviewed)
+                    {
+                        _tile.GetComponent<Tile>()?.DoAction();
+                    }
+                    previewClicked = false;
+                    tilesPreviewed = null;
+                }
+            }
+
+            // right click - place flag
+            if (Input.GetMouseButtonUp(1) && !triggered)
+            {
+                Parameters param = new Parameters();
+                param.vector3s.Add(transform.position);
+                EventSystem<Parameters>.InvokeEvent(EventType.PLANT_FLAG, param);
+            }
+        }
+    }
+
+    // update base colors based on layer object currently is in
+    private void UpdateColliders()
+    {
         if (hovered)
         {
             return;
         }
-        Collider[] selectorType = Physics.OverlapBox(transform.position, Vector3.one * 0.1f, Quaternion.identity);
 
-        defaultCol = defaultNone;
-        SetColor();
-        if (!triggered)
-        {
-            clickable = false;
-            myCol.enabled = false;
-        }
+        Collider[] selectorType = Physics.OverlapBox(transform.position, Vector3.one * 0.1f, Quaternion.identity, selectionLayers);
 
         if (selectorType.Length > 0)
         {
-            foreach(Collider col in selectorType)
+            foreach (Collider col in selectorType)
             {
                 if (col.CompareTag("Transparent"))
                 {
                     defaultCol = defaultSide;
                     SetColor();
+                    if (!triggered)
+                    {
+                        myCol.enabled = false;
+                    }
                     break;
                 }
 
@@ -103,95 +161,44 @@ public class Tile3D : Base
                     SetColor(2);
                     if (!triggered)
                     {
-                        clickable = true;
                         myCol.enabled = true;
                     }
                     break;
                 }
             }
         }
+        else
+        {
+            defaultCol = defaultNone;
+            SetColor();
+            if (!triggered)
+            {
+                myCol.enabled = false;
+            }
+        }
     }
 
-    private void OnMouseOver()
+    private void OnCollisionEnter(Collision collision)
     {
-        hovered = true;
-
-        if (clickable && !triggered)
+        if (collision.gameObject.CompareTag("Picker") && clickable)
         {
+            hovered = true;
+
+            // set tile back to base color
             myMat.color = selectCol;
             myMat.SetColor("_EmissiveColor", selectCol * 10);
         }
-
-        // press left button - highlight adjecant tiles that can be revealed if this tile is revealed
-        if (Input.GetMouseButton(0) && triggered && !previewClicked)
-        {
-            // use box to detect all nearby tiles that can be activated once amount bombs equals amount of flags, not more or less
-            Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, flagMask);
-            Collider[] allTiles = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, allMask);
-
-            if (bombCount == nearbyFlags.Length)
-            {
-                canReveal = true;
-            }
-
-            foreach (Collider _tile in allTiles)
-            {
-                _tile.GetComponent<Tile>()?.PreviewTileSelection();
-            }
-
-            tilesPreviewed = allTiles;
-            previewClicked = true;
-        }
-
-        // release left button - reveal tile
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (clickable)
-            {
-                DoAction();
-            }
-
-            // reveal all nearby tiles
-            if (previewClicked && canReveal)
-            {
-                foreach (Collider _tile in tilesPreviewed)
-                {
-                    _tile.GetComponent<Tile>()?.DoAction();
-                }
-                previewClicked = false;
-                tilesPreviewed = null;
-            }
-        }
-
-        // right click - place flag
-        if (Input.GetMouseButtonUp(1) && !triggered)
-        {
-            Parameters param = new Parameters();
-            param.vector3s.Add(transform.position);
-            EventSystem<Parameters>.InvokeEvent(EventType.PLANT_FLAG, param);
-        }
     }
 
-    private void OnMouseExit()
+    private void OnCollisionExit(Collision collision)
     {
-        hovered = false;
-
-        // set tile back to base color
-        if (clickable && !triggered)
+        if (collision.gameObject.CompareTag("Picker") && clickable)
         {
+            hovered = false;
+
+            // set tile back to base color
             myMat.color = defaultCol;
             myMat.SetColor("_EmissiveColor", defaultCol);
-        }
-
-        // set all nearby tiles back to base color
-        if (previewClicked)
-        {
-            foreach (Collider _tile in tilesPreviewed)
-            {
-                _tile.GetComponent<Tile>()?.SetToDefaultCol();
-            }
-            previewClicked = false;
-            tilesPreviewed = null;
         }
     }
 
@@ -213,14 +220,14 @@ public class Tile3D : Base
 
         defaultCol = Color.black;
         myMat.color = defaultCol;
-
-        print(gameObject.name);
+        SetColor();
 
         if (gameObject.CompareTag("Bomb"))
         {
             gameManager.EndGame();
             defaultCol = Color.red;
             myMat.color = defaultCol;
+            SetColor();
         }
         else
         {
@@ -228,6 +235,7 @@ public class Tile3D : Base
             meshRenderer.enabled = true;
             defaultCol = Color.black;
             myMat.color = defaultCol;
+            SetColor();
         }
 
         // only remove empty tiles that are not bombs

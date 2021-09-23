@@ -9,6 +9,8 @@ TagManager:
   - Flag
   - Opaque
   - Transparent
+  - Selection
+  - Picker
   layers:
   - Default
   - TransparentFX
@@ -23,8 +25,8 @@ TagManager:
   - Flag
   - Bomb
   - Empty
-  - 
-  - 
+  - Selector
+  - Transparent
   - 
   - 
   - 

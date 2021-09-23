@@ -19,7 +19,7 @@ public class Movement3D : Base
 
     private int speed = 5;
     private float moveCd = 0;
-    private float moveCdReset = .5f;
+    private float moveCdReset = .25f;
 
     protected override void Start()
     {
