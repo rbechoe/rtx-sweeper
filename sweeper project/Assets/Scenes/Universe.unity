@@ -1564,7 +1564,7 @@ GameObject:
   - component: {fileID: 1969299266}
   - component: {fileID: 1969299270}
   m_Layer: 0
-  m_Name: selector
+  m_Name: collider selector
   m_TagString: Picker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

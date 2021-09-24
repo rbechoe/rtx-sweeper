@@ -147,6 +147,7 @@ public class Tile3D : Base
                 if (col.CompareTag("Transparent"))
                 {
                     defaultCol = defaultSide;
+                    bombCountTMP.color = defaultCol;
                     SetColor();
                     myCol.enabled = false;
                     break;
@@ -155,6 +156,7 @@ public class Tile3D : Base
                 if (col.CompareTag("Opaque"))
                 {
                     defaultCol = defaultMid;
+                    bombCountTMP.color = defaultCol;
                     SetColor(2);
                     myCol.enabled = true;
                     break;
@@ -164,6 +166,7 @@ public class Tile3D : Base
         else
         {
             defaultCol = defaultNone;
+            bombCountTMP.color = defaultCol;
             SetColor();
             myCol.enabled = false;
         }
