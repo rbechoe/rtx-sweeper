@@ -8,6 +8,8 @@ public class DifficultSpawner : Base
     public GameObject tile;
     public GameObject flag;
     public GameObject parentTile;
+    [SerializeField]
+    private GameObject target;
 
     [Header("Statistics")]
     public bool isDone;
@@ -62,6 +64,8 @@ public class DifficultSpawner : Base
         gridSize = _gridSize;
         bombAmount = _bombAmount;
         bombs = _bombAmount;
+        // magical numbers to fix set 3D grid with camera orientation
+        target.transform.position = new Vector3(0, -9 + gridSize * 2, 1 - gridSize / 10f);
         StartCoroutine(Grid());
     }
 

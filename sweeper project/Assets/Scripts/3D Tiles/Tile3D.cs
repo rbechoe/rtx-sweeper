@@ -27,6 +27,7 @@ public class Tile3D : Base
     public bool previewClicked;
     public bool canReveal;
     public bool hovered;
+    private bool startingTile;
     private Collider[] tilesPreviewed;
 
     private void Awake()
@@ -133,7 +134,7 @@ public class Tile3D : Base
     // update base colors based on layer object currently is in
     private void UpdateColliders()
     {
-        if (hovered || triggered)
+        if (hovered || triggered || startingTile)
         {
             return;
         }
@@ -225,7 +226,7 @@ public class Tile3D : Base
         }
         else
         {
-            gameManager.AddGoodTile();
+            gameManager.AddGoodTile3D();
             meshRenderer.enabled = true;
             defaultCol = Color.black;
             myMat.color = defaultCol;
@@ -245,14 +246,6 @@ public class Tile3D : Base
         }
 
         myMat.SetColor("_EmissiveColor", defaultCol);
-    }
-
-    public void PreviewTileSelection()
-    {
-        if (clickable && !triggered)
-        {
-            //myMat.SetColor("_EmissiveColor", new Color(0.7f, 0.7f, 0.7f));
-        }
     }
 
     public void SetToDefaultCol()
@@ -305,8 +298,9 @@ public class Tile3D : Base
 
     public void FirstTile()
     {
+        startingTile = true;
         defaultCol = new Color(0.9f, 0.1f, 0.7f);
         myMat.color = defaultCol;
-        myMat.SetColor("_EmissiveColor", defaultCol);
+        SetColor(2);
     }
 }

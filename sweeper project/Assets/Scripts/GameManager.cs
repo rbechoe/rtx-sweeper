@@ -38,13 +38,28 @@ public class GameManager : Base
         }
     }
 
-    public void AddGoodTile()
+    public void AddGoodTile3D()
     {
         goodTiles++;
-        CheckForVictory();
+        CheckForVictory3D();
     }
 
-    private void CheckForVictory()
+    private void CheckForVictory3D()
+    {
+        if (goodTiles == Mathf.Pow(gridSize, 3) - bombAmount)
+        {
+            EndGame();
+            EventSystem<Parameters>.InvokeEvent(EventType.WIN_GAME, new Parameters());
+        }
+    }
+
+    public void AddGoodTile2D()
+    {
+        goodTiles++;
+        CheckForVictory2D();
+    }
+
+    private void CheckForVictory2D()
     {
         if (goodTiles == Mathf.Pow(gridSize, 2) - bombAmount)
         {

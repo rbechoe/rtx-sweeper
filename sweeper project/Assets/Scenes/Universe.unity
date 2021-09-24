@@ -723,7 +723,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1228702816
 Transform:
   m_ObjectHideFlags: 0
@@ -1489,6 +1489,7 @@ MonoBehaviour:
   tile: {fileID: 2685168119620687833, guid: 019fa0039a4a1954db6e31676778f3b9, type: 3}
   flag: {fileID: 1674806087784856364, guid: b6a16481db36d7a458cafee484786b9a, type: 3}
   parentTile: {fileID: 2009936612}
+  target: {fileID: 1048770557}
   isDone: 0
   bombCount: 0
 --- !u!114 &1947806620

@@ -174,7 +174,7 @@ public class Tile : Base
         }
         else
         {
-            gameManager.AddGoodTile();
+            gameManager.AddGoodTile2D();
             meshRenderer.enabled = true;
             defaultCol = Color.black;
             myMat.color = defaultCol;
