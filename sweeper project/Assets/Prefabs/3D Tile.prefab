@@ -123,7 +123,8 @@ GameObject:
   - component: {fileID: 6449684177980736360}
   - component: {fileID: 2315544254603145683}
   - component: {fileID: 5451509073592196273}
-  m_Layer: 0
+  - component: {fileID: 8350796044138339365}
+  m_Layer: 15
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,3 +296,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcfa43af67c5a724c8e9f3d6f3b4564d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &8350796044138339365
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972983688656368597}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0.005863309, y: -0.0036564022, z: 0}

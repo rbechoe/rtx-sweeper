@@ -1,5 +1,5 @@
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class Tile3D : Base
 {
@@ -9,24 +9,23 @@ public class Tile3D : Base
     public Color defaultMid;
     public Color defaultNone;
     public Color defaultSide;
-    public TMP_Text bombCountTMP;
 
     private LayerMask flagMask;
     private LayerMask allMask;
     private LayerMask selectionLayers;
+    private TMP_Text bombCountTMP;
 
     protected int bombCount;
     protected Material myMat;
 
     private GameManager gameManager;
     private MeshRenderer meshRenderer;
-    private BoxCollider myCol;
 
-    public bool triggered;
-    public bool clickable;
-    public bool previewClicked;
-    public bool canReveal;
-    public bool hovered;
+    private bool triggered;
+    private bool clickable;
+    private bool previewClicked;
+    private bool canReveal;
+    private bool hovered;
     private bool startingTile;
     private Collider[] tilesPreviewed;
 
@@ -46,7 +45,6 @@ public class Tile3D : Base
         defaultSide = new Color(1, 1, 1, 0.1f);
         meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
-        myCol = gameObject.GetComponent<BoxCollider>();
 
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 
@@ -148,18 +146,14 @@ public class Tile3D : Base
                 if (col.CompareTag("Transparent"))
                 {
                     defaultCol = defaultSide;
-                    bombCountTMP.color = defaultCol;
                     SetColor();
-                    //myCol.enabled = false;
                     break;
                 }
 
                 if (col.CompareTag("Opaque"))
                 {
                     defaultCol = defaultMid;
-                    bombCountTMP.color = defaultCol;
                     SetColor(2);
-                    //myCol.enabled = true;
                     break;
                 }
             }
@@ -167,9 +161,7 @@ public class Tile3D : Base
         else
         {
             defaultCol = defaultNone;
-            bombCountTMP.color = defaultCol;
             SetColor();
-            //myCol.enabled = false;
         }
     }
 
