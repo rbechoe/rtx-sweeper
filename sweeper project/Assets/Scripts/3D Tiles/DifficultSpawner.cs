@@ -136,6 +136,7 @@ public class DifficultSpawner : Base
     private void AddNewFlag()
     {
         GameObject _flag = Instantiate(flag, Vector3.up * 5000, Quaternion.identity);
+        _flag.transform.localScale = Vector3.one;
         inactiveFlags.Add(_flag);
     }
 
@@ -145,6 +146,7 @@ public class DifficultSpawner : Base
         if (inactiveFlags.Count > 0 && bombs > 0)
         {
             inactiveFlags[0].transform.position = param.vector3s[0];
+            inactiveFlags[0].transform.parent = parentTile.transform;
             activeFlags.Add(inactiveFlags[0]);
             inactiveFlags.RemoveAt(0);
         }
@@ -155,6 +157,7 @@ public class DifficultSpawner : Base
     {
         GameObject _flag = param.gameObjects[0];
         _flag.transform.position = Vector3.up * 5000;
+        _flag.transform.parent = null;
         activeFlags.Remove(_flag);
         inactiveFlags.Add(_flag);
     }
@@ -235,10 +238,16 @@ public class DifficultSpawner : Base
     private void AddFlag(object value)
     {
         bombs--;
+        Parameters param = new Parameters();
+        param.integers.Add(bombs);
+        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
     }
 
     private void RemoveFlag(object value)
     {
         bombs++;
+        Parameters param = new Parameters();
+        param.integers.Add(bombs);
+        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
     }
 }

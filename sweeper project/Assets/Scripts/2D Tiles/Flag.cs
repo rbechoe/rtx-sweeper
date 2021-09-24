@@ -14,7 +14,7 @@ public class Flag : Base
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(1))
         {
             Parameters param = new Parameters();
             param.gameObjects.Add(gameObject);
