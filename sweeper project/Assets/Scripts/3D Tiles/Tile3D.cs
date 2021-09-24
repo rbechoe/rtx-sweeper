@@ -150,7 +150,7 @@ public class Tile3D : Base
                     defaultCol = defaultSide;
                     bombCountTMP.color = defaultCol;
                     SetColor();
-                    myCol.enabled = false;
+                    //myCol.enabled = false;
                     break;
                 }
 
@@ -159,7 +159,7 @@ public class Tile3D : Base
                     defaultCol = defaultMid;
                     bombCountTMP.color = defaultCol;
                     SetColor(2);
-                    myCol.enabled = true;
+                    //myCol.enabled = true;
                     break;
                 }
             }
@@ -169,7 +169,7 @@ public class Tile3D : Base
             defaultCol = defaultNone;
             bombCountTMP.color = defaultCol;
             SetColor();
-            myCol.enabled = false;
+            //myCol.enabled = false;
         }
     }
 
