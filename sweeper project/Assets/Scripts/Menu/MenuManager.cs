@@ -88,6 +88,11 @@ public class MenuManager : Base
         SceneManager.LoadScene("Universe");
     }
 
+    public void LoadAsia()
+    {
+        SceneManager.LoadScene("Asia");
+    }
+
     public void QuitGame()
     {
         Application.Quit();

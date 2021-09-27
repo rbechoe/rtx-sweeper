@@ -16,7 +16,6 @@ public class Tile : Base
     protected Material myMat;
 
     private MeshRenderer meshRenderer;
-    private GameManager gameManager;
 
     private bool triggered;
     private bool clickable;
@@ -39,8 +38,6 @@ public class Tile : Base
         meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
 
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-
         flagMask = LayerMask.GetMask("Flag");
         allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
     }
@@ -51,6 +48,8 @@ public class Tile : Base
         EventSystem<Parameters>.AddListener(EventType.START_GAME, Clickable);
         EventSystem<Parameters>.AddListener(EventType.END_GAME, Unclickable);
         EventSystem<Parameters>.AddListener(EventType.END_GAME, RevealBomb);
+        EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, Unclickable);
+        EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, RevealBomb);
     }
 
     private void OnDisable()
@@ -59,6 +58,8 @@ public class Tile : Base
         EventSystem<Parameters>.RemoveListener(EventType.START_GAME, Clickable);
         EventSystem<Parameters>.RemoveListener(EventType.END_GAME, Unclickable);
         EventSystem<Parameters>.RemoveListener(EventType.END_GAME, RevealBomb);
+        EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, Unclickable);
+        EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, RevealBomb);
     }
 
     private void OnMouseOver()
@@ -168,13 +169,15 @@ public class Tile : Base
 
         if (gameObject.CompareTag("Bomb"))
         {
-            gameManager.EndGame();
+            EventSystem<Parameters>.InvokeEvent(EventType.GAME_LOSE, new Parameters());
             defaultCol = Color.red;
             myMat.color = defaultCol;
         }
         else
         {
-            gameManager.AddGoodTile2D();
+            Parameters param = new Parameters();
+            param.gameObjects.Add(gameObject);
+            EventSystem<Parameters>.InvokeEvent(EventType.ADD_GOOD_TILE, param);
             meshRenderer.enabled = true;
             defaultCol = Color.black;
             myMat.color = defaultCol;

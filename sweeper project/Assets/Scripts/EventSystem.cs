@@ -25,6 +25,10 @@ public enum EventType
     INPUT_DOWN      = 18,
     INPUT_FORWARD   = 19,
     INPUT_BACK      = 20,
+    // new stuff
+    RANDOM_GRID     = 21,
+    GAME_LOSE       = 22,
+    ADD_GOOD_TILE   = 23,
 }
 
 // event system that takes multiple arguments through an array
