@@ -48,6 +48,7 @@ public class Tile : Base
         EventSystem<Parameters>.AddListener(EventType.START_GAME, Clickable);
         EventSystem<Parameters>.AddListener(EventType.END_GAME, Unclickable);
         EventSystem<Parameters>.AddListener(EventType.END_GAME, RevealBomb);
+        EventSystem<Parameters>.AddListener(EventType.WIN_GAME, Unclickable);
         EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, Unclickable);
         EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, RevealBomb);
     }
@@ -58,6 +59,7 @@ public class Tile : Base
         EventSystem<Parameters>.RemoveListener(EventType.START_GAME, Clickable);
         EventSystem<Parameters>.RemoveListener(EventType.END_GAME, Unclickable);
         EventSystem<Parameters>.RemoveListener(EventType.END_GAME, RevealBomb);
+        EventSystem<Parameters>.RemoveListener(EventType.WIN_GAME, Unclickable);
         EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, Unclickable);
         EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, RevealBomb);
     }
@@ -191,8 +193,8 @@ public class Tile : Base
             {
                 tiles[i].GetComponent<Tile>()?.NoBombReveal();
             }
-
-            Destroy(gameObject);
+            myMat.color = new Color(0, 0, 0, 0);
+            bombCount = 8;
         }
 
         myMat.SetColor("_EmissiveColor", defaultCol);
@@ -202,6 +204,7 @@ public class Tile : Base
     {
         if (clickable && !triggered)
         {
+            myMat.color = new Color(0.7f, 0.7f, 0.7f);
             myMat.SetColor("_EmissiveColor", new Color(0.7f, 0.7f, 0.7f));
         }
     }
@@ -210,6 +213,7 @@ public class Tile : Base
     {
         if (clickable && !triggered)
         {
+            myMat.color = defaultCol;
             myMat.SetColor("_EmissiveColor", defaultCol);
         }
     }
@@ -218,7 +222,8 @@ public class Tile : Base
     {
         if (gameObject.CompareTag("Bomb"))
         {
-            DoAction();
+            defaultCol = Color.red;
+            myMat.color = defaultCol;
         }
     }
 

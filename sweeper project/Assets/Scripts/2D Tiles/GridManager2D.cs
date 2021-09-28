@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class GridManager2D : Base
 {
-    public List<GameObject> tiles = new List<GameObject>();
-    public List<GameObject> activeFlags = new List<GameObject>();
-    public List<GameObject> inactiveFlags = new List<GameObject>();
+    private List<GameObject> tiles = new List<GameObject>();
+    private List<GameObject> activeFlags = new List<GameObject>();
+    private List<GameObject> inactiveFlags = new List<GameObject>();
 
     private GameObject firstTile;
     private List<GameObject> emptyTiles = new List<GameObject>();
     private int bombAmount;
+    private int initalBombAmount;
     private int goodTiles = 0;
 
     [Header("Settings")]
     [Tooltip("1:X where 1 is the bomb and X is the amount of non bomb tiles")]
     [SerializeField] private int bombDensity = 6;
     [SerializeField] private GameObject flagParent;
+
+    private bool timeStarted;
+    private bool inReset;
+    private float timer;
 
     protected override void Start()
     {
@@ -40,16 +45,37 @@ public class GridManager2D : Base
         EventSystem<Parameters>.InvokeEvent(EventType.RANDOM_GRID, new Parameters());
     }
 
+    protected override void Update()
+    {
+        if (timeStarted)
+        {
+            timer += Time.deltaTime;
+        }
+        Parameters param = new Parameters();
+        param.floats.Add(timer);
+        EventSystem<Parameters>.InvokeEvent(EventType.UPDATE_TIME, param);
+    }
+
     private void OnEnable()
     {
-        EventSystem<Parameters>.AddListener(EventType.RANDOM_GRID, ResetGame);
         EventSystem<Parameters>.AddListener(EventType.ADD_GOOD_TILE, AddGoodTile);
+        EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem<Parameters>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
+        EventSystem<Parameters>.AddListener(EventType.RANDOM_GRID, ResetGame);
+        EventSystem<Parameters>.AddListener(EventType.WIN_GAME, StopTimer);
+        EventSystem<Parameters>.AddListener(EventType.END_GAME, StopTimer);
     }
 
     private void OnDisable()
     {
-        EventSystem<Parameters>.RemoveListener(EventType.RANDOM_GRID, ResetGame);
         EventSystem<Parameters>.RemoveListener(EventType.ADD_GOOD_TILE, AddGoodTile);
+        EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem<Parameters>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
+        EventSystem<Parameters>.RemoveListener(EventType.RANDOM_GRID, ResetGame);
+        EventSystem<Parameters>.RemoveListener(EventType.WIN_GAME, StopTimer);
+        EventSystem<Parameters>.RemoveListener(EventType.END_GAME, StopTimer);
     }
 
     private IEnumerator RandomizeGrid()
@@ -73,11 +99,15 @@ public class GridManager2D : Base
             GameObject newTile = tiles[tileId];
             if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
             {
+                newTile.tag = "Bomb";
+                newTile.layer = 11;
                 newTile.AddComponent<Bomb>();
                 bombCount++;
             }
             else
             {
+                newTile.tag = "Empty";
+                newTile.layer = 12;
                 newTile.AddComponent<Empty>();
             }
 
@@ -107,6 +137,7 @@ public class GridManager2D : Base
             inactiveFlags[0].transform.position = param.vector3s[0];
             activeFlags.Add(inactiveFlags[0]);
             inactiveFlags.RemoveAt(0);
+            AddFlag();
         }
     }
 
@@ -117,6 +148,23 @@ public class GridManager2D : Base
         _flag.transform.position = Vector3.up * 5000;
         activeFlags.Remove(_flag);
         inactiveFlags.Add(_flag);
+        RemoveFlag();
+    }
+
+    private void AddFlag()
+    {
+        bombAmount--;
+        Parameters param = new Parameters();
+        param.integers.Add(bombAmount);
+        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
+    }
+
+    private void RemoveFlag()
+    {
+        bombAmount++;
+        Parameters param = new Parameters();
+        param.integers.Add(bombAmount);
+        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
     }
 
     private void AddEmptyTile(Parameters param)
@@ -135,15 +183,26 @@ public class GridManager2D : Base
 
     private void ResetGame(object value)
     {
-        firstTile = null;
-        StartCoroutine(ResetLogic());
+        if (inReset)
+        {
+            return;
+        }
+        else
+        {
+            inReset = true;
+            firstTile = null;
+            timeStarted = false;
+            goodTiles = 0;
+            timer = 0;
+            bombAmount = tiles.Count / bombDensity;
+            initalBombAmount = bombAmount;
+            emptyTiles = new List<GameObject>();
+            StartCoroutine(ResetLogic());
+        }
     }
     
     IEnumerator ResetLogic()
     {
-        goodTiles = 0;
-        bombAmount = tiles.Count / bombDensity;
-        emptyTiles = new List<GameObject>();
         EventSystem<Parameters>.InvokeEvent(EventType.END_GAME, new Parameters());
 
         // remove all bomb and empty components
@@ -175,22 +234,6 @@ public class GridManager2D : Base
         StartCoroutine(RandomizeGrid());
     }
 
-    private void AddFlag(object value)
-    {
-        bombAmount--;
-        Parameters param = new Parameters();
-        param.integers.Add(bombAmount);
-        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
-    }
-
-    private void RemoveFlag(object value)
-    {
-        bombAmount++;
-        Parameters param = new Parameters();
-        param.integers.Add(bombAmount);
-        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
-    }
-
     private void StartGame()
     {
         Parameters param = new Parameters();
@@ -198,21 +241,30 @@ public class GridManager2D : Base
         EventSystem<Parameters>.InvokeEvent(EventType.COUNT_BOMBS, new Parameters());
         PickStartingTile();
         EventSystem<Parameters>.InvokeEvent(EventType.START_GAME, new Parameters());
-        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param); // TODO fix
+        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
+        inReset = false;
     }
 
     private void AddGoodTile(object value)
     {
+        if (!timeStarted)
+        {
+            timeStarted = true;
+        }
         goodTiles++;
         CheckForVictory();
     }
 
     private void CheckForVictory()
     {
-        if (goodTiles == tiles.Count - bombAmount)
+        if (goodTiles == (tiles.Count - initalBombAmount))
         {
-            //TODO: EndGame();
             EventSystem<Parameters>.InvokeEvent(EventType.WIN_GAME, new Parameters());
         }
+    }
+
+    private void StopTimer(object value)
+    {
+        timeStarted = false;
     }
 }

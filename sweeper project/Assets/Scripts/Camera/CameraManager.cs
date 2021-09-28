@@ -12,7 +12,7 @@ public class CameraManager : Base
 
     private float animationTime = 0;
     private float animationEndTime = 0;
-    private float speed = 2f; // higher is slower
+    private float speed = 1f; // higher is slower
 
     protected override void Start()
     {

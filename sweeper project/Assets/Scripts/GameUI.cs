@@ -16,26 +16,25 @@ public class GameUI : Base
     protected override void Start()
     {
         victoryText.SetActive(false);
-    }
-
-    protected override void Update()
-    {
         bombText.text = bombAmount.ToString();
-        timeText.text = Mathf.FloorToInt(gameManager.timer).ToString();
     }
 
     private void OnEnable()
     {
-        EventSystem<Parameters>.AddListener(EventType.RESET_GAME, ResetGame);    
+        EventSystem<Parameters>.AddListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Parameters>.AddListener(EventType.RANDOM_GRID, ResetGame);
         EventSystem<Parameters>.AddListener(EventType.WIN_GAME, WinGame);    
-        EventSystem<Parameters>.AddListener(EventType.BOMB_UPDATE, SetBombsLeft);    
+        EventSystem<Parameters>.AddListener(EventType.BOMB_UPDATE, SetBombsLeft);
+        EventSystem<Parameters>.AddListener(EventType.UPDATE_TIME, SetTimer);
     }
 
     private void OnDisable()
     {
         EventSystem<Parameters>.RemoveListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Parameters>.RemoveListener(EventType.RANDOM_GRID, ResetGame);
         EventSystem<Parameters>.RemoveListener(EventType.WIN_GAME, WinGame);
         EventSystem<Parameters>.RemoveListener(EventType.BOMB_UPDATE, SetBombsLeft);
+        EventSystem<Parameters>.RemoveListener(EventType.UPDATE_TIME, SetTimer);
     }
 
     private void WinGame(object value)
@@ -47,11 +46,19 @@ public class GameUI : Base
     {
         victoryText.SetActive(false);
         bombAmount = 0;
+        timeText.text = "0";
+        bombText.text = "0";
+    }
+
+    private void SetTimer(Parameters param)
+    {
+        timeText.text = "" + Mathf.FloorToInt(param.floats[0]);
     }
 
     private void SetBombsLeft(Parameters param)
     {
         bombAmount = param.integers[0];
+        bombText.text = bombAmount.ToString();
     }
 
     public void NewGame()

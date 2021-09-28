@@ -29,6 +29,7 @@ public enum EventType
     RANDOM_GRID     = 21,
     GAME_LOSE       = 22,
     ADD_GOOD_TILE   = 23,
+    UPDATE_TIME     = 24,
 }
 
 // event system that takes multiple arguments through an array
