@@ -41,8 +41,6 @@ public class GridManager2D : Base
                 inactiveFlags.Add(child.gameObject);
             }
         }
-
-        EventSystem<Parameters>.InvokeEvent(EventType.RANDOM_GRID, new Parameters());
     }
 
     protected override void Update()
@@ -135,6 +133,7 @@ public class GridManager2D : Base
         if (inactiveFlags.Count > 0 && bombAmount > 0)
         {
             inactiveFlags[0].transform.position = param.vector3s[0];
+            inactiveFlags[0].transform.eulerAngles = param.vector3s[1];
             activeFlags.Add(inactiveFlags[0]);
             inactiveFlags.RemoveAt(0);
             AddFlag();

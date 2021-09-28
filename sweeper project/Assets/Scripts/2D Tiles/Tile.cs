@@ -118,6 +118,7 @@ public class Tile : Base
         {
             Parameters param = new Parameters();
             param.vector3s.Add(transform.position);
+            param.vector3s.Add(transform.eulerAngles);
             EventSystem<Parameters>.InvokeEvent(EventType.PLANT_FLAG, param);
         }
     }
