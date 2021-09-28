@@ -63,6 +63,7 @@ public class GridManager2D : Base
         EventSystem<Parameters>.AddListener(EventType.RANDOM_GRID, ResetGame);
         EventSystem<Parameters>.AddListener(EventType.WIN_GAME, StopTimer);
         EventSystem<Parameters>.AddListener(EventType.END_GAME, StopTimer);
+        EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, StopTimer);
     }
 
     private void OnDisable()
@@ -74,6 +75,7 @@ public class GridManager2D : Base
         EventSystem<Parameters>.RemoveListener(EventType.RANDOM_GRID, ResetGame);
         EventSystem<Parameters>.RemoveListener(EventType.WIN_GAME, StopTimer);
         EventSystem<Parameters>.RemoveListener(EventType.END_GAME, StopTimer);
+        EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, StopTimer);
     }
 
     private IEnumerator RandomizeGrid()
