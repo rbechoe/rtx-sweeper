@@ -9,8 +9,10 @@ public class CameraManager : Base
     [SerializeField] private CinemachineVirtualCamera virtualCam;
     [SerializeField] private CinemachineSmoothPath startToMid;
     [SerializeField] private CinemachineSmoothPath startToLeft;
+    [SerializeField] private CinemachineSmoothPath startToRight;
     [SerializeField] private GridManager2D midManager;
     [SerializeField] private GridManager2D leftManager;
+    [SerializeField] private GridManager2D rightManager;
 
     private float animationTime = 0;
     private float animationEndTime = 0;
@@ -42,6 +44,18 @@ public class CameraManager : Base
         animationEndTime = startToMid.PathLength;
     }
 
+    // go to 13x20 grid - 1 layer
+    public void StartToRightAnimation()
+    {
+        DisableManagers();
+        EventSystem<Parameters>.InvokeEvent(EventType.RANDOM_GRID, new Parameters());
+        rightManager.enabled = true;
+        rightManager.gameObject.SetActive(true);
+        trackedDolly.m_Path = startToRight;
+        animationTime = 0;
+        animationEndTime = startToRight.PathLength;
+    }
+
     // go to 10x9 grid - 1 layer
     public void StartToLeftAnimation()
     {
@@ -58,7 +72,9 @@ public class CameraManager : Base
     {
         midManager.enabled = false;
         leftManager.enabled = false;
+        rightManager.enabled = false;
         midManager.gameObject.SetActive(false);
         leftManager.gameObject.SetActive(false);
+        rightManager.gameObject.SetActive(false);
     }
 }
