@@ -93,6 +93,16 @@ public class MenuManager : Base
         SceneManager.LoadScene("Asia");
     }
 
+    public void LoadDesert()
+    {
+        SceneManager.LoadScene("Desert");
+    }
+
+    public void LoadArctic()
+    {
+        SceneManager.LoadScene("Arctic");
+    }
+
     public void QuitGame()
     {
         Application.Quit();

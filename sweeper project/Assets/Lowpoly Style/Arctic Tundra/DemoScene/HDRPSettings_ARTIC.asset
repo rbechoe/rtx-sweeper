@@ -1,5 +1,44 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5938392161270911191
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b24b200358312b4fa1004e2431c2f1f, type: 3}
+  m_Name: ShadowsMidtonesHighlights
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  shadows:
+    m_OverrideState: 1
+    m_Value: {x: 0.78469044, y: 0.827983, z: 1, w: 0.1793722}
+  midtones:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1, z: 1, w: 0.07174888}
+  highlights:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
+  shadowsStart:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+  shadowsEnd:
+    m_OverrideState: 0
+    m_Value: 0.3
+    min: 0
+  highlightsStart:
+    m_OverrideState: 0
+    m_Value: 0.55
+    min: 0
+  highlightsEnd:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22,6 +61,7 @@ MonoBehaviour:
   - {fileID: 5373272647048343813}
   - {fileID: 3821977760317260894}
   - {fileID: 851271496763624974}
+  - {fileID: -5938392161270911191}
 --- !u!114 &448115243408767295
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -43,13 +83,13 @@ MonoBehaviour:
     max: 360
   skyIntensityMode:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 2
   exposure:
     m_OverrideState: 1
     m_Value: 11
   multiplier:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 33.69
     min: 0
   upperHemisphereLuxValue:
     m_OverrideState: 0
@@ -87,12 +127,12 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   scrollDirection:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
     min: 0
     max: 360
   scrollSpeed:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 2
     min: 0
   enableBackplate:
@@ -611,7 +651,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   toeStrength:
     m_OverrideState: 0
     m_Value: 0

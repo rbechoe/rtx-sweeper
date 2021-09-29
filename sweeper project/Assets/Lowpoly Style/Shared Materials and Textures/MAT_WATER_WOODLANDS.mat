@@ -31,7 +31,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 15, y: 15}
+        m_Scale: {x: 10, y: 10}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
         m_Texture: {fileID: 0}
@@ -206,8 +206,8 @@ Material:
     - _EmissionScaleUI: 0
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
-    - _EmissiveIntensity: 1
-    - _EmissiveIntensityUnit: 0
+    - _EmissiveIntensity: 292.0999
+    - _EmissiveIntensityUnit: 1
     - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
@@ -224,13 +224,13 @@ Material:
     - _HeightPoMAmplitude: 2
     - _HeightTessAmplitude: 2
     - _HeightTessCenter: 0.5
-    - _InvTilingScale: 0.06666667
+    - _InvTilingScale: 0.1
     - _Ior: 1.5
     - _IridescenceMask: 1
     - _IridescenceThickness: 1
     - _LinkDetailsWithBase: 0
     - _MaterialID: 1
-    - _Metallic: 0.583
+    - _Metallic: 0.886
     - _MetallicRemapMax: 0.583
     - _MetallicRemapMin: 0
     - _Mode: 0
@@ -301,8 +301,8 @@ Material:
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColorUI: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissiveColor: {r: 0, g: 0, b: 0, a: 0}
-    - _EmissiveColorLDR: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissiveColor: {r: 0, g: 292.1, b: 285.7016, a: 292.1}
+    - _EmissiveColorLDR: {r: 0, g: 1, b: 0.99030876, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
