@@ -103,6 +103,11 @@ public class MenuManager : Base
         SceneManager.LoadScene("Arctic");
     }
 
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+
     public void QuitGame()
     {
         Application.Quit();

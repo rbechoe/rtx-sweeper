@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Arctic.unity
     guid: 699c96d0853e355418296dc8f68cff68
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: d9cb3ae13673aaa43b4c94ec28b8621b
   m_configObjects: {}
