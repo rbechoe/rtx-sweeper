@@ -12,6 +12,7 @@ TagManager:
   - Selection
   - Picker
   - LookTarget
+  - LookTrigger
   layers:
   - Default
   - TransparentFX
