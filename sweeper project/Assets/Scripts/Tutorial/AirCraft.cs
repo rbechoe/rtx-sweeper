@@ -12,7 +12,7 @@ public class AirCraft : MonoBehaviour, ITriggerable
     public float flightSpeed = 100;
     public float rotateSpeed = 5;
     public int target;
-    private int maxTarget;
+    public int maxTarget;
 
     public void Activate()
     {
@@ -28,7 +28,6 @@ public class AirCraft : MonoBehaviour, ITriggerable
         maxTarget = nodes.Count;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (fly)
@@ -40,7 +39,7 @@ public class AirCraft : MonoBehaviour, ITriggerable
 
             transform.position += transform.forward * flightSpeed * Time.deltaTime;
 
-            if (Vector3.Distance(transform.position, nodes[target].transform.position) < 10)
+            if (Vector3.Distance(transform.position, nodes[target].transform.position) < 5)
             {
                 if (target < nodes.Count - 1)
                 {
@@ -49,7 +48,7 @@ public class AirCraft : MonoBehaviour, ITriggerable
             }
             else
             {
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
             }
         }
     }
