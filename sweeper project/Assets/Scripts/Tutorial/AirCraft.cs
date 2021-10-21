@@ -7,15 +7,15 @@ public class AirCraft : MonoBehaviour, ITriggerable
     public Transform nodeParent;
     public List<GameObject> nodes = new List<GameObject>();
 
-    private bool fly;
+    public bool fly;
 
-    public float flightSpeed;
+    public float flightSpeed = 100;
+    public float rotateSpeed = 5;
     public int target;
     private int maxTarget;
 
     public void Activate()
     {
-        print("starting flight animation");
         fly = true;
     }
 
@@ -33,8 +33,24 @@ public class AirCraft : MonoBehaviour, ITriggerable
     {
         if (fly)
         {
-            // look with delay to target
-            // fly forward on the -Z axis
+            Vector3 targetDir = nodes[target].transform.position - transform.position;
+            float step = Time.deltaTime * rotateSpeed;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDir);
+
+            transform.position += transform.forward * flightSpeed * Time.deltaTime;
+
+            if (Vector3.Distance(transform.position, nodes[target].transform.position) < 10)
+            {
+                if (target < nodes.Count - 1)
+                {
+                    target++;
+                }
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }
