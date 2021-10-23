@@ -25,6 +25,7 @@ public class Runics : MonoBehaviour, ITriggerable
         if (!triggered)
         {
             triggered = true;
+            gameObject.GetComponent<AudioSource>().Play();
         }
     }
 
