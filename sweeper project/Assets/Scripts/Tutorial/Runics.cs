@@ -10,7 +10,7 @@ public class Runics : MonoBehaviour, ITriggerable
     private DecalProjector decalProjector;
 
     private float increaser = 0.1f;
-    private float speed = 10f;
+    private float speed = 15f;
 
     void Start()
     {

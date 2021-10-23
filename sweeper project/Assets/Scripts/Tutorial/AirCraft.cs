@@ -17,6 +17,7 @@ public class AirCraft : MonoBehaviour, ITriggerable
     public void Activate()
     {
         fly = true;
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     void Start()

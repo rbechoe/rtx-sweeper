@@ -6,36 +6,14 @@ public class TriggerInitiate : MonoBehaviour
 {
     public GameObject target;
 
-    public float triggerDistance = 20;
-
-    private bool triggerEntered;
-
     Collider other;
-
-    private void Update()
-    {
-        if (triggerEntered && Vector3.Distance(transform.position, other.transform.position) < triggerDistance)
-        {
-            target.GetComponent<ITriggerable>()?.Activate();
-            gameObject.SetActive(false);
-        }
-    }
 
     private void OnTriggerEnter(Collider _other)
     {
-        if (_other.CompareTag("LookTrigger"))
+        if (_other.CompareTag("Player"))
         {
-            other = _other;
-            triggerEntered = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider _other)
-    {
-        if (_other.CompareTag("LookTrigger"))
-        {
-            other = null;
-            triggerEntered = false;
+            target.GetComponent<ITriggerable>()?.Activate();
+            gameObject.SetActive(false);
         }
     }
 }
