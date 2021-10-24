@@ -5,7 +5,9 @@ using UnityEngine;
 public class AirCraft : MonoBehaviour, ITriggerable
 {
     public Transform nodeParent;
+    public AudioSource audioSource;
     public List<GameObject> nodes = new List<GameObject>();
+    public GameObject[] bombs;
 
     public bool fly;
 
@@ -44,12 +46,11 @@ public class AirCraft : MonoBehaviour, ITriggerable
             {
                 if (target < nodes.Count - 1)
                 {
+                    audioSource.Play();
+                    bombs[target].GetComponent<TutoBomb>().Activate();
+                    bombs[target].transform.parent = null;
                     target++;
                 }
-            }
-            else
-            {
-                //gameObject.SetActive(false);
             }
         }
     }

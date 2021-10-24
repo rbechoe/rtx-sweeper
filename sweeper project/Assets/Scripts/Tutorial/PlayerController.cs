@@ -6,20 +6,51 @@ public class PlayerController : MonoBehaviour
     float horizontal;
     float angleX, angleY, mouseX, mouseY;
 
-    public GameObject playerCam;
+    public GameObject playerCam, menuButton;
 
     [Header("Movement Settings")]
     public float speed = 5;
     public float camSensitivity = 100;
     public float camClamp = 90;
 
+    private bool locked;
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        locked = true;
+        menuButton.SetActive(false);
+    }
+
     void Update()
     {
-        vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-        horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        transform.Translate(horizontal, 0, vertical);
+        if (locked)
+        {
+            vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+            horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+            transform.Translate(horizontal, 0, vertical);
 
-        CamMovement();
+            CamMovement();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                locked = false;
+                menuButton.SetActive(true);
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                locked = true;
+                menuButton.SetActive(false);
+            }
+        }
     }
 
     void CamMovement()
