@@ -20686,7 +20686,6 @@ GameObject:
   - component: {fileID: 386859885}
   - component: {fileID: 386859884}
   - component: {fileID: 386859889}
-  - component: {fileID: 386859890}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -20806,20 +20805,6 @@ MonoBehaviour:
   speed: 5
   camSensitivity: 150
   camClamp: 90
---- !u!182 &386859890
-WindZone:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386859883}
-  m_Enabled: 1
-  m_Mode: 1
-  m_Radius: 2
-  m_WindMain: -3
-  m_WindTurbulence: -3
-  m_WindPulseMagnitude: 0.5
-  m_WindPulseFrequency: 0.01
 --- !u!4 &388511387 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 432458, guid: e035975c34c2a834681e407ca0605802, type: 3}
@@ -85300,6 +85285,7 @@ GameObject:
   - component: {fileID: 1540180600}
   - component: {fileID: 1540180599}
   - component: {fileID: 1540180601}
+  - component: {fileID: 1540180604}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -85494,6 +85480,20 @@ Transform:
   m_Father: {fileID: 386859888}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!182 &1540180604
+WindZone:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540180598}
+  m_Enabled: 1
+  m_Mode: 1
+  m_Radius: 2
+  m_WindMain: -3
+  m_WindTurbulence: -3
+  m_WindPulseMagnitude: 0.5
+  m_WindPulseFrequency: 0.01
 --- !u!4 &1541102036 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 417926, guid: b3801009a5a4e6c4db81b7283812a1df, type: 3}
