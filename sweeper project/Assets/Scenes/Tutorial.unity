@@ -7917,6 +7917,7 @@ MonoBehaviour:
   lookText: {fileID: 1539334678}
   moveText: {fileID: 1828241721}
   blackScreen: {fileID: 2124582619}
+  playerController: {fileID: 386859889}
 --- !u!4 &254455788 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 450186, guid: 37959fcc174a554468158ae1d71189b0, type: 3}

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float camClamp = 90;
 
     private bool locked;
+    private bool movementLocked;
 
     private void Start()
     {
@@ -23,13 +24,21 @@ public class PlayerController : MonoBehaviour
         menuButton.SetActive(false);
     }
 
+    public void ActivateMovement()
+    {
+        movementLocked = true;
+    }
+
     void Update()
     {
         if (locked)
         {
-            vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-            horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-            transform.Translate(horizontal, 0, vertical);
+            if (movementLocked)
+            {
+                vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+                horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+                transform.Translate(horizontal, 0, vertical);
+            }
 
             CamMovement();
         }

@@ -14,6 +14,8 @@ public class TutoHandler : MonoBehaviour
     private void Start()
     {
         StartCoroutine(ShowLook(lookText));
+        StartCoroutine(EnablePlayer());
+        StartCoroutine(ShowLook(moveText, 6));
         StartCoroutine(FadeInRoutine());
     }
 
@@ -33,8 +35,10 @@ public class TutoHandler : MonoBehaviour
         }
     }
 
-    IEnumerator ShowLook(TextMeshProUGUI showText)
+    IEnumerator ShowLook(TextMeshProUGUI showText, float waitTime = 0)
     {
+        yield return new WaitForSeconds(waitTime);
+
         for (int i = 0; i < 255; i++)
         {
             showText.color = new Color(1, 1, 1, i / 255f);
@@ -43,5 +47,11 @@ public class TutoHandler : MonoBehaviour
 
         yield return new WaitForSeconds(6);
         showText.enabled = false;
+    }
+
+    IEnumerator EnablePlayer()
+    {
+        yield return new WaitForSeconds(6);
+        playerController.ActivateMovement();
     }
 }
