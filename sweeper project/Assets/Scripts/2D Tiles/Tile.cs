@@ -23,6 +23,10 @@ public class Tile : Base
     private bool canReveal;
     private Collider[] tilesPreviewed;
 
+    // TODO tile has states indicating whether its a bomb, flag etc etc
+    // TODO tile has a number child that shows bombs nearby 
+    // TODO for boss battle tile count gets updates after every click
+
     private void Awake()
     {
         bombCountTMP = GetComponentInChildren<TMP_Text>();
