@@ -1,6 +1,6 @@
 public class TheCreator : Base
 {
-    private static TheCreator _instance;
+    private static TheCreator instance;
 
     public int xSize { get; set; }
     public int zSize { get; set; }
@@ -11,20 +11,20 @@ public class TheCreator : Base
     {
         get
         {
-            return _instance;
+            return instance;
         }
     }
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
             DontDestroyOnLoad(gameObject);
-            _instance = this;
+            instance = this;
         }
     }
 }

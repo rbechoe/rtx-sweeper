@@ -8,9 +8,9 @@ public class TriggerInitiate : MonoBehaviour
 
     Collider other;
 
-    private void OnTriggerEnter(Collider _other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (_other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             target.GetComponent<ITriggerable>()?.Activate();
             gameObject.SetActive(false);

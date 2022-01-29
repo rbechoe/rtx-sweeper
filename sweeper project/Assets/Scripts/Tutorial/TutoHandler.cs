@@ -9,7 +9,7 @@ public class TutoHandler : MonoBehaviour
 {
     public TextMeshProUGUI lookText, moveText;
     public RawImage blackScreen;
-    public PlayerController playerController; // TODO enable movement after a couple of seconds
+    public PlayerController playerController;
 
     private void Start()
     {
