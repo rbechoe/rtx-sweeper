@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: c7e28235b80d40a4aa279be316006caf, type: 3}
   m_ShaderKeywords: _ENABLE_FOG_ON_TRANSPARENT _RAMPENABLED_ON _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
   stringTagMap:
@@ -125,9 +125,9 @@ Material:
     m_Colors:
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FinalColor: {r: 1, g: 0.12787381, b: 0, a: 1}
+    - _FinalColor: {r: 0, g: 0.63664293, b: 1, a: 1}
     - _MainTexChannels: {r: 1, g: 0, b: 0, a: 0}
-    - _RampColorTint: {r: 1, g: 0.28773582, b: 0.28773582, a: 1}
+    - _RampColorTint: {r: 0.3647059, g: 0.8352941, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5663820066969844396
 MonoBehaviour:
