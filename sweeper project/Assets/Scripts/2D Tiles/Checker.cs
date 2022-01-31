@@ -36,7 +36,6 @@ public class Checker : Base
 
         Tile tile = gameObject.GetComponent<Tile>();
         tile.SetBombCount(bombCount);
-        tile.ShowBombAmount();
 
         // set as potential first tile
         if (bombCount == 0 && !gameObject.CompareTag("Bomb"))

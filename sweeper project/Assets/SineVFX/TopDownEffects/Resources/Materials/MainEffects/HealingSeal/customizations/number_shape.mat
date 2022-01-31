@@ -59,7 +59,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainMask:
-        m_Texture: {fileID: 2800000, guid: e7e538c2821d4534dbaebb0bc249f918, type: 3}
+        m_Texture: {fileID: 2800000, guid: c45d90ddf2a63b64aad3ad039c745962, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -75,7 +75,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Ramp:
-        m_Texture: {fileID: 2800000, guid: 305b0879b1924fa8a4599d9ce4e73155, type: 3}
+        m_Texture: {fileID: 2800000, guid: cc0dbce5c0bf4435a6238cce28671ec9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SecondMask:
@@ -283,10 +283,10 @@ Material:
     - _CustomColorMaskChannels1: {r: 1, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FinalColor: {r: 0.00996837, g: 0.745283, b: 0, a: 1}
+    - _FinalColor: {r: 0, g: 0.74509805, b: 0.17314866, a: 1}
     - _MainMaskChannelsMultiply: {r: 1, g: 0.5, b: 0, a: 0}
     - _Noise01ScrollSpeedUV: {r: 1, g: 1, b: 0, a: 0}
-    - _RampColorTint: {r: 0.6156086, g: 1, b: 0.36470592, a: 1}
+    - _RampColorTint: {r: 0.36470592, g: 1, b: 0.37183997, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5976418171449137800
 MonoBehaviour:

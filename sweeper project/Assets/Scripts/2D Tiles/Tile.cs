@@ -7,15 +7,13 @@ public class Tile : Base
     [Header("Settings")]
     public Color defaultCol = Color.grey;
     public Color selectCol = Color.green;
-    public TMP_Text bombCountTMP;
+    public VFXManipulator vfx;
 
     private LayerMask flagMask;
     private LayerMask allMask;
 
     protected int bombCount;
-    protected Material myMat;
-
-    private MeshRenderer meshRenderer;
+    protected Material gridMat;
 
     private bool triggered;
     private bool clickable;
@@ -27,20 +25,13 @@ public class Tile : Base
     // TODO tile has a number child that shows bombs nearby 
     // TODO for boss battle tile count gets updates after every click
 
-    private void Awake()
-    {
-        bombCountTMP = GetComponentInChildren<TMP_Text>();
-    }
-
     protected override void Start()
     {
         base.Start();
-        myMat = gameObject.GetComponent<Renderer>().material;
-        myMat.EnableKeyword("_EMISSION");
-        myMat.color = defaultCol;
-        myMat.SetColor("_EmissiveColor", defaultCol);
-        meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
-        meshRenderer.enabled = false;
+        vfx = GetComponentInChildren<VFXManipulator>();
+        gridMat = vfx.gridTile.GetComponent<Renderer>().material;
+        gridMat.SetColor("_TextureColorTint", defaultCol);
+        vfx.gameObject.SetActive(false);
 
         flagMask = LayerMask.GetMask("Flag");
         allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
@@ -66,14 +57,14 @@ public class Tile : Base
         EventSystem<Parameters>.RemoveListener(EventType.WIN_GAME, Unclickable);
         EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, Unclickable);
         EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, RevealBomb);
+        vfx.gameObject.SetActive(true);
     }
 
     private void OnMouseOver()
     {
         if (clickable && !triggered)
         {
-            myMat.color = selectCol;
-            myMat.SetColor("_EmissiveColor", selectCol * 10);
+            gridMat.SetColor("_TextureColorTint", selectCol);
         }
 
         // press left button - highlight adjecant tiles that can be revealed if this tile is revealed
@@ -132,8 +123,7 @@ public class Tile : Base
         // set tile back to base color
         if (clickable && !triggered)
         {
-            myMat.color = defaultCol;
-            myMat.SetColor("_EmissiveColor", defaultCol);
+            gridMat.SetColor("_TextureColorTint", defaultCol);
         }
 
         // set all nearby tiles back to base color
@@ -172,22 +162,22 @@ public class Tile : Base
         triggered = true;
 
         defaultCol = Color.black;
-        myMat.color = defaultCol;
+        gridMat.SetColor("_TextureColorTint", defaultCol);
 
         if (gameObject.CompareTag("Bomb"))
         {
             EventSystem<Parameters>.InvokeEvent(EventType.GAME_LOSE, new Parameters());
             defaultCol = Color.red;
-            myMat.color = defaultCol;
+            gridMat.SetColor("_TextureColorTint", defaultCol);
         }
         else
         {
             Parameters param = new Parameters();
             param.gameObjects.Add(gameObject);
             EventSystem<Parameters>.InvokeEvent(EventType.ADD_GOOD_TILE, param);
-            meshRenderer.enabled = true;
             defaultCol = Color.black;
-            myMat.color = defaultCol;
+            gridMat.SetColor("_TextureColorTint", defaultCol);
+            ShowBombAmount();
         }
 
         // only remove empty tiles that are not bombs
@@ -198,19 +188,18 @@ public class Tile : Base
             {
                 tiles[i].GetComponent<Tile>()?.NoBombReveal();
             }
-            myMat.color = new Color(0, 0, 0, 0);
+            gridMat.SetColor("_TextureColorTint", new Color(0, 0, 0, 0));
             bombCount = 8;
         }
-
-        myMat.SetColor("_EmissiveColor", defaultCol);
+        
+        gridMat.SetColor("_TextureColorTint", defaultCol);
     }
 
     public void PreviewTileSelection()
     {
         if (clickable && !triggered)
         {
-            myMat.color = new Color(0.7f, 0.7f, 0.7f);
-            myMat.SetColor("_EmissiveColor", new Color(0.7f, 0.7f, 0.7f));
+            gridMat.SetColor("_TextureColorTint", new Color(0.7f, 0.7f, 0.7f));
         }
     }
 
@@ -218,8 +207,7 @@ public class Tile : Base
     {
         if (clickable && !triggered)
         {
-            myMat.color = defaultCol;
-            myMat.SetColor("_EmissiveColor", defaultCol);
+            gridMat.SetColor("_TextureColorTint", defaultCol);
         }
     }
 
@@ -228,7 +216,7 @@ public class Tile : Base
         if (gameObject.CompareTag("Bomb"))
         {
             defaultCol = Color.red;
-            myMat.color = defaultCol;
+            gridMat.SetColor("_TextureColorTint", defaultCol);
         }
     }
 
@@ -242,9 +230,12 @@ public class Tile : Base
         bombCount = amount;
     }
 
-    public void ShowBombAmount()
+    private void ShowBombAmount()
     {
-        bombCountTMP.text = "" + bombCount;
+        if (bombCount < 1) return;
+
+        if (!vfx.gameObject.activeSelf) vfx.gameObject.SetActive(true);
+        vfx.UpdateEffect(bombCount);
     }
 
     private void Clickable(object value)
@@ -260,7 +251,6 @@ public class Tile : Base
     public void FirstTile()
     {
         defaultCol = new Color(0.9f, 0.1f, 0.7f);
-        myMat.color = defaultCol;
-        myMat.SetColor("_EmissiveColor", defaultCol);
+        gridMat.SetColor("_TextureColorTint", defaultCol);
     }
 }

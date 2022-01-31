@@ -86686,7 +86686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 004d653dcd2a7e54ba387ea9b6edc293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombDensity: 4
+  bombDensity: 5
   flagParent: {fileID: 1978158696}
 --- !u!4 &1937665375
 Transform:

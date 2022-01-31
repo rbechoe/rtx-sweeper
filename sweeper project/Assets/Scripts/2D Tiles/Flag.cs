@@ -2,20 +2,6 @@ using UnityEngine;
 
 public class Flag : Base
 {
-    private void OnEnable()
-    {
-        EventSystem<Parameters>.AddListener(EventType.END_GAME, ReSize);
-        EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, ReSize);
-        EventSystem<Parameters>.AddListener(EventType.START_GAME, BigSize);
-    }
-
-    private void OnDisable()
-    {
-        EventSystem<Parameters>.RemoveListener(EventType.END_GAME, ReSize);
-        EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, ReSize);
-        EventSystem<Parameters>.RemoveListener(EventType.START_GAME, BigSize);
-    }
-
     private void OnMouseOver()
     {
         if (Input.GetMouseButtonUp(1))
@@ -24,15 +10,5 @@ public class Flag : Base
             param.gameObjects.Add(gameObject);
             EventSystem<Parameters>.InvokeEvent(EventType.REMOVE_FLAG, param);
         }
-    }
-
-    private void ReSize(object value)
-    {
-        transform.localScale = new Vector3(0.5f, transform.localScale.y, 0.5f);
-    }
-
-    private void BigSize(object value)
-    {
-        transform.localScale = new Vector3(1, transform.localScale.y, 1);
     }
 }

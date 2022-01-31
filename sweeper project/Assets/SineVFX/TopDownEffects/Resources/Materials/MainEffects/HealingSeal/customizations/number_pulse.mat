@@ -72,7 +72,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainMask:
-        m_Texture: {fileID: 2800000, guid: e7e538c2821d4534dbaebb0bc249f918, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1624f96cf0184437b2ff9c0cf20d2b6c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -88,7 +88,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Ramp:
-        m_Texture: {fileID: 2800000, guid: 0236eb84c3a345b38294a3b6369b7e6f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 45ee17d8b8214aa5b62ad7e6aa662e0d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SecondMask:
@@ -203,14 +203,14 @@ Material:
     - _EMISSIONVERTEXSTREAMENABLED: 0
     - _EnableBlendModePreserveSpecularLighting: 0
     - _EnableFogOnTransparent: 1
-    - _FinalOpacityExp: 1
+    - _FinalOpacityExp: 8
     - _FinalOpacityExp1: 1
-    - _FinalOpacityPower: 1
+    - _FinalOpacityPower: 0.36
     - _FinalPower: 2
     - _Float4: 0.25
     - _MainMaskExp: 1
-    - _MainMaskScaleU: 1
-    - _MainMaskScaleV: 1
+    - _MainMaskScaleU: 2
+    - _MainMaskScaleV: 2
     - _MainMaskScrollSpeedU: 0
     - _MainMaskScrollSpeedV: 0
     - _NOISE01RADIAL: 1
@@ -296,8 +296,8 @@ Material:
     - _CustomColorMaskChannels1: {r: 1, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FinalColor: {r: 1, g: 0.27058828, b: 0.29885903, a: 1}
+    - _FinalColor: {r: 1, g: 0, b: 0.9295864, a: 1}
     - _MainMaskChannelsMultiply: {r: 0, g: 1, b: 0, a: 0}
     - _Noise01ScrollSpeedUV: {r: 1, g: 1, b: 0, a: 0}
-    - _RampColorTint: {r: 1, g: 0.7659509, b: 0.64705884, a: 1}
+    - _RampColorTint: {r: 0, g: 1, b: 0.222013, a: 1}
   m_BuildTextureStacks: []

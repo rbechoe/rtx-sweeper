@@ -283,10 +283,10 @@ Material:
     - _CustomColorMaskChannels1: {r: 1, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FinalColor: {r: 0.00996837, g: 0.745283, b: 0, a: 1}
+    - _FinalColor: {r: 0, g: 0.74509805, b: 0.73822355, a: 1}
     - _MainMaskChannelsMultiply: {r: 1, g: 0.5, b: 0, a: 0}
     - _Noise01ScrollSpeedUV: {r: 1, g: 1, b: 0, a: 0}
-    - _RampColorTint: {r: 0.6156086, g: 1, b: 0.36470592, a: 1}
+    - _RampColorTint: {r: 0.36470592, g: 0.6745653, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5976418171449137800
 MonoBehaviour:
