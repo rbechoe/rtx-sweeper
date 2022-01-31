@@ -14,6 +14,7 @@ public class VFXManipulator : MonoBehaviour
     public Renderer pulseMat2;
     public Texture2D[] textures;
     public GameObject gridTile;
+    public GameObject bombEffect;
 
     void Update()
     {

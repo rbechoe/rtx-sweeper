@@ -271,6 +271,10 @@ PrefabInstance:
       propertyPath: gridTile
       value: 
       objectReference: {fileID: 8753056146899203664}
+    - target: {fileID: 6006877001126488843, guid: 218a1f746f48c2040bf97e62f9983122, type: 3}
+      propertyPath: bombEffect
+      value: 
+      objectReference: {fileID: 2421216553609747306, guid: b4e7e6977786b8f4f82bd0a1942271bf, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 218a1f746f48c2040bf97e62f9983122, type: 3}
 --- !u!4 &5357895672198170025 stripped

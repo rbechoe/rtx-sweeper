@@ -12,7 +12,7 @@ Material:
   m_ShaderKeywords: _DISTORTIONENABLED_ON _DOUBLESIDED_ON _ENABLE_FOG_ON_TRANSPARENT
     _NOISE01RADIAL_ON _RAMPENABLED_ON _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: 3000
   stringTagMap:

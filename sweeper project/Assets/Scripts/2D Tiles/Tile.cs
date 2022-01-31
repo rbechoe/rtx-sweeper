@@ -21,8 +21,6 @@ public class Tile : Base
     private bool canReveal;
     private Collider[] tilesPreviewed;
 
-    // TODO tile has states indicating whether its a bomb, flag etc etc
-    // TODO tile has a number child that shows bombs nearby 
     // TODO for boss battle tile count gets updates after every click
 
     protected override void Start()
@@ -167,8 +165,6 @@ public class Tile : Base
         if (gameObject.CompareTag("Bomb"))
         {
             EventSystem<Parameters>.InvokeEvent(EventType.GAME_LOSE, new Parameters());
-            defaultCol = Color.red;
-            gridMat.SetColor("_TextureColorTint", defaultCol);
         }
         else
         {
@@ -215,8 +211,9 @@ public class Tile : Base
     {
         if (gameObject.CompareTag("Bomb"))
         {
-            defaultCol = Color.red;
+            defaultCol = new Color(0.4f, 0.1f, 0.1f);
             gridMat.SetColor("_TextureColorTint", defaultCol);
+            Instantiate(vfx.bombEffect, transform.position, Quaternion.identity);
         }
     }
 

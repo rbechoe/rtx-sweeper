@@ -12,7 +12,7 @@ Material:
   m_ShaderKeywords: _DISTORTIONENABLED_ON _DOUBLESIDED_ON _ENABLE_FOG_ON_TRANSPARENT
     _RAMPENABLED_ON _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: 3000
   stringTagMap:
@@ -286,7 +286,7 @@ Material:
     - _FinalColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainMaskChannelsMultiply: {r: 1, g: 0, b: 0, a: 0}
     - _Noise01ScrollSpeedUV: {r: 1, g: 1, b: 0, a: 0}
-    - _RampColorTint: {r: 0.745283, g: 0.10194911, b: 0.16402526, a: 1}
+    - _RampColorTint: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &9039441818241692759
 MonoBehaviour:
