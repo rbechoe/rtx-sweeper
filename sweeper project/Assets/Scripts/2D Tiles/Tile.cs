@@ -40,7 +40,6 @@ public class Tile : Base
         // listen
         EventSystem<Parameters>.AddListener(EventType.START_GAME, Clickable);
         EventSystem<Parameters>.AddListener(EventType.END_GAME, Unclickable);
-        EventSystem<Parameters>.AddListener(EventType.END_GAME, RevealBomb);
         EventSystem<Parameters>.AddListener(EventType.WIN_GAME, Unclickable);
         EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, Unclickable);
         EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, RevealBomb);
@@ -51,7 +50,6 @@ public class Tile : Base
         // unlisten
         EventSystem<Parameters>.RemoveListener(EventType.START_GAME, Clickable);
         EventSystem<Parameters>.RemoveListener(EventType.END_GAME, Unclickable);
-        EventSystem<Parameters>.RemoveListener(EventType.END_GAME, RevealBomb);
         EventSystem<Parameters>.RemoveListener(EventType.WIN_GAME, Unclickable);
         EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, Unclickable);
         EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, RevealBomb);
@@ -211,7 +209,7 @@ public class Tile : Base
     {
         if (gameObject.CompareTag("Bomb"))
         {
-            defaultCol = new Color(0.4f, 0.1f, 0.1f);
+            defaultCol = new Color(0.8f, 0.3f, 0.25f);
             gridMat.SetColor("_TextureColorTint", defaultCol);
             Instantiate(vfx.bombEffect, transform.position, Quaternion.identity);
         }
@@ -247,7 +245,7 @@ public class Tile : Base
 
     public void FirstTile()
     {
-        defaultCol = new Color(0.9f, 0.1f, 0.7f);
+        defaultCol = new Color(0.4f, 0.8f, 0.6f);
         gridMat.SetColor("_TextureColorTint", defaultCol);
     }
 }

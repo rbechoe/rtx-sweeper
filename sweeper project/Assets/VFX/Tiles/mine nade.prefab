@@ -14684,6 +14684,7 @@ GameObject:
   - component: {fileID: 2421216553609747307}
   - component: {fileID: 2421216553609747305}
   - component: {fileID: 2421216553609747304}
+  - component: {fileID: 6704873294366961052}
   m_Layer: 0
   m_Name: mine nade
   m_TagString: Untagged
@@ -19481,6 +19482,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &6704873294366961052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2421216553609747306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082faa8d3ffc11041adf2f0aa70230b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 1.6
 --- !u!1 &2421216553811119118
 GameObject:
   m_ObjectHideFlags: 0
@@ -29464,7 +29478,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 6
+      scalar: 5
       minScalar: 3.5
       maxCurve:
         serializedVersion: 2
