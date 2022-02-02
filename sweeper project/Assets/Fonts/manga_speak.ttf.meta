@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: e993b392119eb8b41b657eccf2c6cc85
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Manga Speak
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a4810aea41548b1449f2f4595f7974f1, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
