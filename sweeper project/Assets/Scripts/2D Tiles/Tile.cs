@@ -89,6 +89,7 @@ public class Tile : Base
         {
             if (clickable)
             {
+                EventSystem<Parameters>.InvokeEvent(EventType.PLAY_CLICK, new Parameters());
                 DoAction();
             }
 
@@ -107,6 +108,7 @@ public class Tile : Base
         // right click - place flag
         if (Input.GetMouseButtonUp(1) && !triggered)
         {
+            EventSystem<Parameters>.InvokeEvent(EventType.PLAY_FLAG, new Parameters());
             Parameters param = new Parameters();
             param.vector3s.Add(transform.position);
             param.vector3s.Add(transform.eulerAngles);

@@ -30,6 +30,8 @@ public enum EventType
     GAME_LOSE       = 22,
     ADD_GOOD_TILE   = 23,
     UPDATE_TIME     = 24,
+    PLAY_CLICK      = 25,
+    PLAY_FLAG       = 26,
 }
 
 // event system that takes multiple arguments through an array
