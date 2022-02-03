@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GridManager2D : Base
@@ -21,7 +22,18 @@ public class GridManager2D : Base
 
     private bool timeStarted;
     private bool inReset;
+    private bool wonGame;
+    private int tileClicks;
     private float timer;
+
+    private DataSerializer DS;
+
+    public TextMeshProUGUI infoText;
+
+    public int area; // 1 = arctic, 2 = asia, 3 = desert
+    public int level;
+
+    private bool firstTime = true; // used to avoid bug, clean solution needs to be fixed!
 
     protected override void Start()
     {
@@ -41,6 +53,9 @@ public class GridManager2D : Base
                 inactiveFlags.Add(child.gameObject);
             }
         }
+
+        DS = gameObject.GetComponent<DataSerializer>();
+        SetText();
     }
 
     protected override void Update()
@@ -258,14 +273,213 @@ public class GridManager2D : Base
 
     private void CheckForVictory()
     {
+        tileClicks++;
         if (goodTiles == (tiles.Count - initalBombAmount))
         {
+            wonGame = true;
             EventSystem<Parameters>.InvokeEvent(EventType.WIN_GAME, new Parameters());
         }
     }
 
     private void StopTimer(object value)
     {
+        if (firstTime)
+        {
+            firstTime = false;
+            return;
+        }
+
         timeStarted = false;
+        float efficiency = initalBombAmount / tileClicks * 100;
+        efficiency = Mathf.Clamp(efficiency, 0, 100);
+
+        AccountData AD = DS.GetUserData();
+        AD.totalClicks = AD.totalClicks + tileClicks;
+        AD.totalTimePlayed = AD.totalTimePlayed + (int)timer;
+        if (wonGame)
+            AD.gamesWon = AD.gamesWon + 1;
+        else
+            AD.gamesLost = AD.gamesLost + 1;
+
+        switch (area)
+        {
+            /*case 1: // arctic
+                switch (level)
+                {
+                    case 1: // level 1
+                        infoText.text = "\n" +
+                            "Best time: " + AD.asiaTime1 + "s\n" +
+                            "Efficiency: " + AD.asiaEfficiency1 + "\n" +
+                            "Victories: " + AD.asiaVictories1 + "\n";
+                        break;
+                    case 2: // level 2
+                        infoText.text = "\n" +
+                            "Best time: " + AD.asiaTime2 + "s\n" +
+                            "Efficiency: " + AD.asiaEfficiency2 + "\n" +
+                            "Victories: " + AD.asiaVictories2 + "\n";
+                        break;
+                    case 3: // level 3
+                        infoText.text = "\n" +
+                            "Best time: " + AD.asiaTime3 + "s\n" +
+                            "Efficiency: " + AD.asiaEfficiency3 + "\n" +
+                            "Victories: " + AD.asiaVictories3 + "\n";
+                        break;
+                }
+                break;*/
+
+            case 2: // asia
+                AD.asiaVictories = (wonGame) ? AD.asiaVictories + 1 : AD.asiaVictories;
+                AD.asiaTotalClicks += tileClicks;
+                AD.asiaGamesPlayed += 1;
+
+                if (wonGame)
+                {
+                    switch (level)
+                    {
+                        case 1: // level 1
+                            AD.asiaVictories1 += 1;
+
+                            if ((int)timer < AD.asiaTime1 || (int)timer == AD.asiaTime1 && efficiency > AD.asiaEfficiency1)
+                            {
+                                AD.asiaTime1 = (int)timer;
+                                AD.asiaEfficiency1 = (int)efficiency;
+                                AD.asiaClicks1 = tileClicks;
+                            }
+                            break;
+
+                        case 2: // level 2
+                            AD.asiaVictories2 += 1;
+
+                            if ((int)timer < AD.asiaTime2 || (int)timer == AD.asiaTime2 && efficiency > AD.asiaEfficiency2)
+                            {
+                                AD.asiaTime2 = (int)timer;
+                                AD.asiaEfficiency2 = (int)efficiency;
+                                AD.asiaClicks2 = tileClicks;
+                            }
+                            break;
+
+                        case 3: // level 3
+                            AD.asiaVictories3 += 1;
+
+                            if ((int)timer < AD.asiaTime3 || (int)timer == AD.asiaTime3 && efficiency > AD.asiaEfficiency3)
+                            {
+                                AD.asiaTime3 = (int)timer;
+                                AD.asiaEfficiency3 = (int)efficiency;
+                                AD.asiaClicks3 = tileClicks;
+                            }
+                            break;
+                    }
+                }
+                break;
+
+                /*case 3: // desert
+                    switch (level)
+                    {
+                        case 1: // level 1
+                            infoText.text = "\n" +
+                                "Best time: " + AD.asiaTime1 + "s\n" +
+                                "Efficiency: " + AD.asiaEfficiency1 + "\n" +
+                                "Victories: " + AD.asiaVictories1 + "\n";
+                            break;
+                        case 2: // level 2
+                            infoText.text = "\n" +
+                                "Best time: " + AD.asiaTime2 + "s\n" +
+                                "Efficiency: " + AD.asiaEfficiency2 + "\n" +
+                                "Victories: " + AD.asiaVictories2 + "\n";
+                            break;
+                        case 3: // level 3
+                            infoText.text = "\n" +
+                                "Best time: " + AD.asiaTime3 + "s\n" +
+                                "Efficiency: " + AD.asiaEfficiency3 + "\n" +
+                                "Victories: " + AD.asiaVictories3 + "\n";
+                            break;
+                    }
+                    break;*/
+        }
+
+        DS.UpdateAccountData(AD);
+        SetText();
+
+        wonGame = false;
+    }
+
+    private void SetText(AccountData data = null)
+    {
+        if (data == null) data = DS.GetUserData();
+
+        switch (area)
+        {
+            /*case 1: // arctic
+                switch (level)
+                {
+                    case 1: // level 1
+                        infoText.text = "\n" +
+                            "Best time: " + AD.asiaTime1 + "s\n" +
+                            "Efficiency: " + AD.asiaEfficiency1 + "\n" +
+                            "Victories: " + AD.asiaVictories1 + "\n";
+                        break;
+                    case 2: // level 2
+                        infoText.text = "\n" +
+                            "Best time: " + AD.asiaTime2 + "s\n" +
+                            "Efficiency: " + AD.asiaEfficiency2 + "\n" +
+                            "Victories: " + AD.asiaVictories2 + "\n";
+                        break;
+                    case 3: // level 3
+                        infoText.text = "\n" +
+                            "Best time: " + AD.asiaTime3 + "s\n" +
+                            "Efficiency: " + AD.asiaEfficiency3 + "\n" +
+                            "Victories: " + AD.asiaVictories3 + "\n";
+                        break;
+                }
+                break;*/
+
+            case 2: // asia
+                switch (level)
+                {
+                    case 1: // level 1
+                        infoText.text = "\n" +
+                            "Best time: " + data.asiaTime1 + "s\n" +
+                            "Efficiency: " + data.asiaEfficiency1 + "\n" +
+                            "Victories: " + data.asiaVictories1 + "\n";
+                        break;
+                    case 2: // level 2
+                        infoText.text = "\n" +
+                            "Best time: " + data.asiaTime2 + "s\n" +
+                            "Efficiency: " + data.asiaEfficiency2 + "\n" +
+                            "Victories: " + data.asiaVictories2 + "\n";
+                        break;
+                    case 3: // level 3
+                        infoText.text = "\n" +
+                            "Best time: " + data.asiaTime3 + "s\n" +
+                            "Efficiency: " + data.asiaEfficiency3 + "\n" +
+                            "Victories: " + data.asiaVictories3 + "\n";
+                        break;
+                }
+                break;
+
+                /*case 3: // desert
+                    switch (level)
+                    {
+                        case 1: // level 1
+                            infoText.text = "\n" +
+                                "Best time: " + AD.asiaTime1 + "s\n" +
+                                "Efficiency: " + AD.asiaEfficiency1 + "\n" +
+                                "Victories: " + AD.asiaVictories1 + "\n";
+                            break;
+                        case 2: // level 2
+                            infoText.text = "\n" +
+                                "Best time: " + AD.asiaTime2 + "s\n" +
+                                "Efficiency: " + AD.asiaEfficiency2 + "\n" +
+                                "Victories: " + AD.asiaVictories2 + "\n";
+                            break;
+                        case 3: // level 3
+                            infoText.text = "\n" +
+                                "Best time: " + AD.asiaTime3 + "s\n" +
+                                "Efficiency: " + AD.asiaEfficiency3 + "\n" +
+                                "Victories: " + AD.asiaVictories3 + "\n";
+                            break;
+                    }
+                    break;*/
+        }
     }
 }
