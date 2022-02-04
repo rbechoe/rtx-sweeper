@@ -451,6 +451,7 @@ public class GridManager2D : Base
         DS.UpdateAccountData(AD);
         SetText();
 
+        timer = 0;
         tileClicks = 0;
         wonGame = false;
     }

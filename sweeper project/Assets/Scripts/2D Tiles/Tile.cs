@@ -212,7 +212,7 @@ public class Tile : Base
     {
         if (gameObject.CompareTag("Bomb"))
         {
-            defaultCol = new Color(0.8f, 0.3f, 0.25f);
+            defaultCol = new Color(0.5f, 0f, 0f);
             gridMat.SetColor("_TextureColorTint", defaultCol);
             Instantiate(vfx.bombEffect, transform.position, Quaternion.identity);
         }
@@ -248,7 +248,7 @@ public class Tile : Base
 
     public void FirstTile()
     {
-        defaultCol = new Color(0.4f, 0.8f, 0.6f);
+        defaultCol = new Color(0.6f, 1f, 0.8f);
         gridMat.SetColor("_TextureColorTint", defaultCol);
     }
 }
