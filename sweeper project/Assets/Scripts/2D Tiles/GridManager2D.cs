@@ -12,7 +12,7 @@ public class GridManager2D : Base
     private GameObject firstTile;
     private List<GameObject> emptyTiles = new List<GameObject>();
     private int bombAmount;
-    private int initalBombAmount;
+    private int initialBombAmount;
     private int goodTiles = 0;
 
     [Header("Settings")]
@@ -79,6 +79,9 @@ public class GridManager2D : Base
         EventSystem<Parameters>.AddListener(EventType.WIN_GAME, StopTimer);
         EventSystem<Parameters>.AddListener(EventType.END_GAME, StopTimer);
         EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, StopTimer);
+        EventSystem<Parameters>.AddListener(EventType.TILE_CLICK, TileClick);
+        EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, TileClick);
+        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, TileClick);
     }
 
     private void OnDisable()
@@ -91,6 +94,9 @@ public class GridManager2D : Base
         EventSystem<Parameters>.RemoveListener(EventType.WIN_GAME, StopTimer);
         EventSystem<Parameters>.RemoveListener(EventType.END_GAME, StopTimer);
         EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, StopTimer);
+        EventSystem<Parameters>.RemoveListener(EventType.TILE_CLICK, TileClick);
+        EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, TileClick);
+        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, TileClick);
     }
 
     private IEnumerator RandomizeGrid()
@@ -209,9 +215,8 @@ public class GridManager2D : Base
             firstTile = null;
             timeStarted = false;
             goodTiles = 0;
-            timer = 0;
             bombAmount = tiles.Count / bombDensity;
-            initalBombAmount = bombAmount;
+            initialBombAmount = bombAmount;
             emptyTiles = new List<GameObject>();
             StartCoroutine(ResetLogic());
         }
@@ -273,24 +278,28 @@ public class GridManager2D : Base
 
     private void CheckForVictory()
     {
-        tileClicks++;
-        if (goodTiles == (tiles.Count - initalBombAmount))
+        if (goodTiles == (tiles.Count - initialBombAmount))
         {
             wonGame = true;
             EventSystem<Parameters>.InvokeEvent(EventType.WIN_GAME, new Parameters());
         }
     }
 
+    private void TileClick(object value)
+    {
+        tileClicks++;
+    }
+
     private void StopTimer(object value)
     {
-        if (firstTime)
+        if (firstTime || tileClicks == 0)
         {
             firstTime = false;
             return;
         }
 
         timeStarted = false;
-        float efficiency = initalBombAmount / tileClicks * 100;
+        float efficiency = (initialBombAmount * bombDensity - initialBombAmount) / tileClicks * 50f;
         efficiency = Mathf.Clamp(efficiency, 0, 100);
 
         AccountData AD = DS.GetUserData();
@@ -303,29 +312,50 @@ public class GridManager2D : Base
 
         switch (area)
         {
-            /*case 1: // arctic
-                switch (level)
+            case 1: // arctic
+                AD.arcticVictories = (wonGame) ? AD.arcticVictories + 1 : AD.arcticVictories;
+                AD.arcticTotalClicks += tileClicks;
+                AD.arcticGamesPlayed += 1;
+
+                if (wonGame)
                 {
-                    case 1: // level 1
-                        infoText.text = "\n" +
-                            "Best time: " + AD.asiaTime1 + "s\n" +
-                            "Efficiency: " + AD.asiaEfficiency1 + "\n" +
-                            "Victories: " + AD.asiaVictories1 + "\n";
-                        break;
-                    case 2: // level 2
-                        infoText.text = "\n" +
-                            "Best time: " + AD.asiaTime2 + "s\n" +
-                            "Efficiency: " + AD.asiaEfficiency2 + "\n" +
-                            "Victories: " + AD.asiaVictories2 + "\n";
-                        break;
-                    case 3: // level 3
-                        infoText.text = "\n" +
-                            "Best time: " + AD.asiaTime3 + "s\n" +
-                            "Efficiency: " + AD.asiaEfficiency3 + "\n" +
-                            "Victories: " + AD.asiaVictories3 + "\n";
-                        break;
+                    switch (level)
+                    {
+                        case 1: // level 1
+                            AD.arcticVictories1 += 1;
+
+                            if ((int)timer < AD.arcticTime1 || ((int)timer == AD.arcticTime1 && efficiency > AD.arcticEfficiency1) || AD.arcticTime1 == 0)
+                            {
+                                AD.arcticTime1 = (int)timer;
+                                AD.arcticEfficiency1 = (int)efficiency;
+                                AD.arcticClicks1 = tileClicks;
+                            }
+                            break;
+
+                        case 2: // level 2
+                            AD.arcticVictories2 += 1;
+
+                            if ((int)timer < AD.arcticTime2 || ((int)timer == AD.arcticTime2 && efficiency > AD.arcticEfficiency2) || AD.arcticTime2 == 0)
+                            {
+                                AD.arcticTime2 = (int)timer;
+                                AD.arcticEfficiency2 = (int)efficiency;
+                                AD.arcticClicks2 = tileClicks;
+                            }
+                            break;
+
+                        case 3: // level 3
+                            AD.arcticVictories3 += 1;
+
+                            if ((int)timer < AD.arcticTime3 || ((int)timer == AD.arcticTime3 && efficiency > AD.arcticEfficiency3) || AD.arcticTime1 == 0)
+                            {
+                                AD.arcticTime3 = (int)timer;
+                                AD.arcticEfficiency3 = (int)efficiency;
+                                AD.arcticClicks3 = tileClicks;
+                            }
+                            break;
+                    }
                 }
-                break;*/
+                break;
 
             case 2: // asia
                 AD.asiaVictories = (wonGame) ? AD.asiaVictories + 1 : AD.asiaVictories;
@@ -339,7 +369,7 @@ public class GridManager2D : Base
                         case 1: // level 1
                             AD.asiaVictories1 += 1;
 
-                            if ((int)timer < AD.asiaTime1 || (int)timer == AD.asiaTime1 && efficiency > AD.asiaEfficiency1)
+                            if ((int)timer < AD.asiaTime1 || ((int)timer == AD.asiaTime1 && efficiency > AD.asiaEfficiency1) || AD.asiaTime1 == 0)
                             {
                                 AD.asiaTime1 = (int)timer;
                                 AD.asiaEfficiency1 = (int)efficiency;
@@ -350,7 +380,7 @@ public class GridManager2D : Base
                         case 2: // level 2
                             AD.asiaVictories2 += 1;
 
-                            if ((int)timer < AD.asiaTime2 || (int)timer == AD.asiaTime2 && efficiency > AD.asiaEfficiency2)
+                            if ((int)timer < AD.asiaTime2 || ((int)timer == AD.asiaTime2 && efficiency > AD.asiaEfficiency2) || AD.asiaTime2 == 0)
                             {
                                 AD.asiaTime2 = (int)timer;
                                 AD.asiaEfficiency2 = (int)efficiency;
@@ -361,7 +391,7 @@ public class GridManager2D : Base
                         case 3: // level 3
                             AD.asiaVictories3 += 1;
 
-                            if ((int)timer < AD.asiaTime3 || (int)timer == AD.asiaTime3 && efficiency > AD.asiaEfficiency3)
+                            if ((int)timer < AD.asiaTime3 || ((int)timer == AD.asiaTime3 && efficiency > AD.asiaEfficiency3) || AD.asiaTime1 == 0)
                             {
                                 AD.asiaTime3 = (int)timer;
                                 AD.asiaEfficiency3 = (int)efficiency;
@@ -372,34 +402,56 @@ public class GridManager2D : Base
                 }
                 break;
 
-                /*case 3: // desert
+            case 3: // desert
+                AD.desertVictories = (wonGame) ? AD.desertVictories + 1 : AD.desertVictories;
+                AD.desertTotalClicks += tileClicks;
+                AD.desertGamesPlayed += 1;
+
+                if (wonGame)
+                {
                     switch (level)
                     {
                         case 1: // level 1
-                            infoText.text = "\n" +
-                                "Best time: " + AD.asiaTime1 + "s\n" +
-                                "Efficiency: " + AD.asiaEfficiency1 + "\n" +
-                                "Victories: " + AD.asiaVictories1 + "\n";
+                            AD.desertVictories1 += 1;
+
+                            if ((int)timer < AD.desertTime1 || ((int)timer == AD.desertTime1 && efficiency > AD.desertEfficiency1) || AD.desertTime1 == 0)
+                            {
+                                AD.desertTime1 = (int)timer;
+                                AD.desertEfficiency1 = (int)efficiency;
+                                AD.desertClicks1 = tileClicks;
+                            }
                             break;
+
                         case 2: // level 2
-                            infoText.text = "\n" +
-                                "Best time: " + AD.asiaTime2 + "s\n" +
-                                "Efficiency: " + AD.asiaEfficiency2 + "\n" +
-                                "Victories: " + AD.asiaVictories2 + "\n";
+                            AD.desertVictories2 += 1;
+
+                            if ((int)timer < AD.desertTime2 || ((int)timer == AD.desertTime2 && efficiency > AD.desertEfficiency2) || AD.desertTime2 == 0)
+                            {
+                                AD.desertTime2 = (int)timer;
+                                AD.desertEfficiency2 = (int)efficiency;
+                                AD.desertClicks2 = tileClicks;
+                            }
                             break;
+
                         case 3: // level 3
-                            infoText.text = "\n" +
-                                "Best time: " + AD.asiaTime3 + "s\n" +
-                                "Efficiency: " + AD.asiaEfficiency3 + "\n" +
-                                "Victories: " + AD.asiaVictories3 + "\n";
+                            AD.desertVictories3 += 1;
+
+                            if ((int)timer < AD.desertTime3 || ((int)timer == AD.desertTime3 && efficiency > AD.desertEfficiency3) || AD.desertTime1 == 0)
+                            {
+                                AD.desertTime3 = (int)timer;
+                                AD.desertEfficiency3 = (int)efficiency;
+                                AD.desertClicks3 = tileClicks;
+                            }
                             break;
                     }
-                    break;*/
+                }
+                break;
         }
 
         DS.UpdateAccountData(AD);
         SetText();
 
+        tileClicks = 0;
         wonGame = false;
     }
 
@@ -409,29 +461,29 @@ public class GridManager2D : Base
 
         switch (area)
         {
-            /*case 1: // arctic
+            case 1: // arctic
                 switch (level)
                 {
                     case 1: // level 1
                         infoText.text = "\n" +
-                            "Best time: " + AD.asiaTime1 + "s\n" +
-                            "Efficiency: " + AD.asiaEfficiency1 + "\n" +
-                            "Victories: " + AD.asiaVictories1 + "\n";
+                            "Best time: " + data.arcticTime1 + "s\n" +
+                            "Efficiency: " + data.arcticEfficiency1 + "\n" +
+                            "Victories: " + data.arcticVictories1 + "\n";
                         break;
                     case 2: // level 2
                         infoText.text = "\n" +
-                            "Best time: " + AD.asiaTime2 + "s\n" +
-                            "Efficiency: " + AD.asiaEfficiency2 + "\n" +
-                            "Victories: " + AD.asiaVictories2 + "\n";
+                            "Best time: " + data.arcticTime2 + "s\n" +
+                            "Efficiency: " + data.arcticEfficiency2 + "\n" +
+                            "Victories: " + data.arcticVictories2 + "\n";
                         break;
                     case 3: // level 3
                         infoText.text = "\n" +
-                            "Best time: " + AD.asiaTime3 + "s\n" +
-                            "Efficiency: " + AD.asiaEfficiency3 + "\n" +
-                            "Victories: " + AD.asiaVictories3 + "\n";
+                            "Best time: " + data.arcticTime3 + "s\n" +
+                            "Efficiency: " + data.arcticEfficiency3 + "\n" +
+                            "Victories: " + data.arcticVictories3 + "\n";
                         break;
                 }
-                break;*/
+                break;
 
             case 2: // asia
                 switch (level)
@@ -457,29 +509,29 @@ public class GridManager2D : Base
                 }
                 break;
 
-                /*case 3: // desert
-                    switch (level)
-                    {
-                        case 1: // level 1
-                            infoText.text = "\n" +
-                                "Best time: " + AD.asiaTime1 + "s\n" +
-                                "Efficiency: " + AD.asiaEfficiency1 + "\n" +
-                                "Victories: " + AD.asiaVictories1 + "\n";
-                            break;
-                        case 2: // level 2
-                            infoText.text = "\n" +
-                                "Best time: " + AD.asiaTime2 + "s\n" +
-                                "Efficiency: " + AD.asiaEfficiency2 + "\n" +
-                                "Victories: " + AD.asiaVictories2 + "\n";
-                            break;
-                        case 3: // level 3
-                            infoText.text = "\n" +
-                                "Best time: " + AD.asiaTime3 + "s\n" +
-                                "Efficiency: " + AD.asiaEfficiency3 + "\n" +
-                                "Victories: " + AD.asiaVictories3 + "\n";
-                            break;
-                    }
-                    break;*/
+            case 3: // desert
+                switch (level)
+                {
+                    case 1: // level 1
+                        infoText.text = "\n" +
+                            "Best time: " + data.desertTime1 + "s\n" +
+                            "Efficiency: " + data.desertEfficiency1 + "\n" +
+                            "Victories: " + data.desertVictories1 + "\n";
+                        break;
+                    case 2: // level 2
+                        infoText.text = "\n" +
+                            "Best time: " + data.desertTime2 + "s\n" +
+                            "Efficiency: " + data.desertEfficiency2 + "\n" +
+                            "Victories: " + data.desertVictories2 + "\n";
+                        break;
+                    case 3: // level 3
+                        infoText.text = "\n" +
+                            "Best time: " + data.desertTime3 + "s\n" +
+                            "Efficiency: " + data.desertEfficiency3 + "\n" +
+                            "Victories: " + data.desertVictories3 + "\n";
+                        break;
+                }
+                break;
         }
     }
 }

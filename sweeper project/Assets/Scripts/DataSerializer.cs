@@ -49,6 +49,21 @@ public class DataSerializer : MonoBehaviour
         AD.gamesLost = 0;
         AD.totalClicks = 0;
         AD.totalTimePlayed = 0;
+
+        AD.arcticVictories = 0;
+        AD.arcticLoses = 0;
+        AD.arcticGamesPlayed = 0;
+        AD.arcticTotalClicks = 0;
+        AD.arcticTime1 = 0;
+        AD.arcticClicks1 = 0;
+        AD.arcticEfficiency1 = 0;
+        AD.arcticTime2 = 0;
+        AD.arcticClicks2 = 0;
+        AD.arcticEfficiency2 = 0;
+        AD.arcticTime3 = 0;
+        AD.arcticClicks3 = 0;
+        AD.arcticEfficiency3 = 0;
+
         AD.asiaVictories = 0;
         AD.asiaLoses = 0;
         AD.asiaGamesPlayed = 0;
@@ -62,6 +77,20 @@ public class DataSerializer : MonoBehaviour
         AD.asiaTime3 = 0;
         AD.asiaClicks3 = 0;
         AD.asiaEfficiency3 = 0;
+
+        AD.desertVictories = 0;
+        AD.desertLoses = 0;
+        AD.desertGamesPlayed = 0;
+        AD.desertTotalClicks = 0;
+        AD.desertTime1 = 0;
+        AD.desertClicks1 = 0;
+        AD.desertEfficiency1 = 0;
+        AD.desertTime2 = 0;
+        AD.desertClicks2 = 0;
+        AD.desertEfficiency2 = 0;
+        AD.desertTime3 = 0;
+        AD.desertClicks3 = 0;
+        AD.desertEfficiency3 = 0;
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream fs = File.Open(Application.persistentDataPath + fileName, FileMode.OpenOrCreate);
@@ -119,31 +148,67 @@ public class DataSerializer : MonoBehaviour
 public class AccountData
 {
     // global stats
-    public float versionNumber;
-    public int tsSaved;
+    public float versionNumber = 0;
+    public int tsSaved = 0;
     
     // account stats
-    public int gamesPlayed;
-    public int gamesWon;
-    public int gamesLost;
-    public int totalClicks;
-    public int totalTimePlayed;
+    public int gamesPlayed = 0;
+    public int gamesWon = 0;
+    public int gamesLost = 0;
+    public int totalClicks = 0;
+    public int totalTimePlayed = 0;
+
+    // arctic
+    public int arcticVictories = 0;
+    public int arcticLoses = 0;
+    public int arcticGamesPlayed = 0;
+    public int arcticTotalClicks = 0;
+    public int arcticTime1 = 0;
+    public int arcticClicks1 = 0;
+    public int arcticEfficiency1 = 0;
+    public int arcticVictories1 = 0;
+    public int arcticTime2 = 0;
+    public int arcticClicks2 = 0;
+    public int arcticEfficiency2 = 0;
+    public int arcticVictories2 = 0;
+    public int arcticTime3 = 0;
+    public int arcticClicks3 = 0;
+    public int arcticEfficiency3 = 0;
+    public int arcticVictories3 = 0;
 
     // Asia
-    public int asiaVictories;
-    public int asiaLoses;
-    public int asiaGamesPlayed;
-    public int asiaTotalClicks;
-    public int asiaTime1;
-    public int asiaClicks1;
-    public int asiaEfficiency1;
-    public int asiaVictories1;
-    public int asiaTime2;
-    public int asiaClicks2;
-    public int asiaEfficiency2;
-    public int asiaVictories2;
-    public int asiaTime3;
-    public int asiaClicks3;
-    public int asiaEfficiency3;
-    public int asiaVictories3;
+    public int asiaVictories = 0;
+    public int asiaLoses = 0;
+    public int asiaGamesPlayed = 0;
+    public int asiaTotalClicks = 0;
+    public int asiaTime1 = 0;
+    public int asiaClicks1 = 0;
+    public int asiaEfficiency1 = 0;
+    public int asiaVictories1 = 0;
+    public int asiaTime2 = 0;
+    public int asiaClicks2 = 0;
+    public int asiaEfficiency2 = 0;
+    public int asiaVictories2 = 0;
+    public int asiaTime3 = 0;
+    public int asiaClicks3 = 0;
+    public int asiaEfficiency3 = 0;
+    public int asiaVictories3 = 0;
+
+    // Desert
+    public int desertVictories = 0;
+    public int desertLoses = 0;
+    public int desertGamesPlayed = 0;
+    public int desertTotalClicks = 0;
+    public int desertTime1 = 0;
+    public int desertClicks1 = 0;
+    public int desertEfficiency1 = 0;
+    public int desertVictories1 = 0;
+    public int desertTime2 = 0;
+    public int desertClicks2 = 0;
+    public int desertEfficiency2 = 0;
+    public int desertVictories2 = 0;
+    public int desertTime3 = 0;
+    public int desertClicks3 = 0;
+    public int desertEfficiency3 = 0;
+    public int desertVictories3 = 0;
 }

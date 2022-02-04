@@ -90,6 +90,7 @@ public class Tile : Base
             if (clickable)
             {
                 EventSystem<Parameters>.InvokeEvent(EventType.PLAY_CLICK, new Parameters());
+                EventSystem<Parameters>.InvokeEvent(EventType.TILE_CLICK, new Parameters());
                 DoAction();
             }
 

@@ -32,6 +32,7 @@ public enum EventType
     UPDATE_TIME     = 24,
     PLAY_CLICK      = 25,
     PLAY_FLAG       = 26,
+    TILE_CLICK      = 27,
 }
 
 // event system that takes multiple arguments through an array
