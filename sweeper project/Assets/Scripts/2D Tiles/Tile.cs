@@ -160,7 +160,7 @@ public class Tile : Base
 
         triggered = true;
 
-        defaultCol = Color.black;
+        defaultCol = Color.grey;
         gridMat.SetColor("_TextureColorTint", defaultCol);
 
         if (gameObject.CompareTag("Bomb"))
@@ -172,7 +172,7 @@ public class Tile : Base
             Parameters param = new Parameters();
             param.gameObjects.Add(gameObject);
             EventSystem<Parameters>.InvokeEvent(EventType.ADD_GOOD_TILE, param);
-            defaultCol = Color.black;
+            defaultCol = Color.grey;
             gridMat.SetColor("_TextureColorTint", defaultCol);
             ShowBombAmount();
         }
@@ -185,11 +185,13 @@ public class Tile : Base
             {
                 tiles[i].GetComponent<Tile>()?.NoBombReveal();
             }
-            gridMat.SetColor("_TextureColorTint", new Color(0, 0, 0, 0));
+            gridMat.SetColor("_TextureColorTint", new Color(0.25f, 0.5f, 0.5f, 0));
             bombCount = 8;
         }
-        
-        gridMat.SetColor("_TextureColorTint", defaultCol);
+        else
+        {
+            gridMat.SetColor("_TextureColorTint", defaultCol);
+        }
     }
 
     public void PreviewTileSelection()
