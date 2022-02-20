@@ -297,14 +297,20 @@ namespace Tiles2D
                 firstTime = false;
                 return;
             }
-
             timeStarted = false;
-            float efficiency = (initialBombAmount * bombDensity - initialBombAmount) / tileClicks * 50f;
+
+            SaveData();
+        }
+
+        private void SaveData()
+        { 
+            float efficiency = (initialBombAmount * (bombDensity - 1f)) / tileClicks * 50f;
             efficiency = Mathf.Clamp(efficiency, 0, 100);
 
             AccountData AD = DS.GetUserData();
             AD.totalClicks = AD.totalClicks + tileClicks;
-            AD.totalTimePlayed = AD.totalTimePlayed + (int)timer;
+            int timer = (int)this.timer;
+            AD.totalTimePlayed = AD.totalTimePlayed + timer;
             if (wonGame)
                 AD.gamesWon = AD.gamesWon + 1;
             else
@@ -324,9 +330,9 @@ namespace Tiles2D
                             case 1: // level 1
                                 AD.arcticVictories1 += 1;
 
-                                if ((int)timer < AD.arcticTime1 || ((int)timer == AD.arcticTime1 && efficiency > AD.arcticEfficiency1) || AD.arcticTime1 == 0)
+                                if (timer < AD.arcticTime1 || (timer == AD.arcticTime1 && efficiency > AD.arcticEfficiency1) || AD.arcticTime1 == 0)
                                 {
-                                    AD.arcticTime1 = (int)timer;
+                                    AD.arcticTime1 = timer;
                                     AD.arcticEfficiency1 = (int)efficiency;
                                     AD.arcticClicks1 = tileClicks;
                                 }
@@ -335,9 +341,9 @@ namespace Tiles2D
                             case 2: // level 2
                                 AD.arcticVictories2 += 1;
 
-                                if ((int)timer < AD.arcticTime2 || ((int)timer == AD.arcticTime2 && efficiency > AD.arcticEfficiency2) || AD.arcticTime2 == 0)
+                                if (timer < AD.arcticTime2 || (timer == AD.arcticTime2 && efficiency > AD.arcticEfficiency2) || AD.arcticTime2 == 0)
                                 {
-                                    AD.arcticTime2 = (int)timer;
+                                    AD.arcticTime2 = timer;
                                     AD.arcticEfficiency2 = (int)efficiency;
                                     AD.arcticClicks2 = tileClicks;
                                 }
@@ -346,9 +352,9 @@ namespace Tiles2D
                             case 3: // level 3
                                 AD.arcticVictories3 += 1;
 
-                                if ((int)timer < AD.arcticTime3 || ((int)timer == AD.arcticTime3 && efficiency > AD.arcticEfficiency3) || AD.arcticTime1 == 0)
+                                if (timer < AD.arcticTime3 || (timer == AD.arcticTime3 && efficiency > AD.arcticEfficiency3) || AD.arcticTime1 == 0)
                                 {
-                                    AD.arcticTime3 = (int)timer;
+                                    AD.arcticTime3 = timer;
                                     AD.arcticEfficiency3 = (int)efficiency;
                                     AD.arcticClicks3 = tileClicks;
                                 }
@@ -369,9 +375,9 @@ namespace Tiles2D
                             case 1: // level 1
                                 AD.asiaVictories1 += 1;
 
-                                if ((int)timer < AD.asiaTime1 || ((int)timer == AD.asiaTime1 && efficiency > AD.asiaEfficiency1) || AD.asiaTime1 == 0)
+                                if (timer < AD.asiaTime1 || (timer == AD.asiaTime1 && efficiency > AD.asiaEfficiency1) || AD.asiaTime1 == 0)
                                 {
-                                    AD.asiaTime1 = (int)timer;
+                                    AD.asiaTime1 = timer;
                                     AD.asiaEfficiency1 = (int)efficiency;
                                     AD.asiaClicks1 = tileClicks;
                                 }
@@ -380,9 +386,9 @@ namespace Tiles2D
                             case 2: // level 2
                                 AD.asiaVictories2 += 1;
 
-                                if ((int)timer < AD.asiaTime2 || ((int)timer == AD.asiaTime2 && efficiency > AD.asiaEfficiency2) || AD.asiaTime2 == 0)
+                                if (timer < AD.asiaTime2 || (timer == AD.asiaTime2 && efficiency > AD.asiaEfficiency2) || AD.asiaTime2 == 0)
                                 {
-                                    AD.asiaTime2 = (int)timer;
+                                    AD.asiaTime2 = timer;
                                     AD.asiaEfficiency2 = (int)efficiency;
                                     AD.asiaClicks2 = tileClicks;
                                 }
@@ -391,9 +397,9 @@ namespace Tiles2D
                             case 3: // level 3
                                 AD.asiaVictories3 += 1;
 
-                                if ((int)timer < AD.asiaTime3 || ((int)timer == AD.asiaTime3 && efficiency > AD.asiaEfficiency3) || AD.asiaTime1 == 0)
+                                if (timer < AD.asiaTime3 || (timer == AD.asiaTime3 && efficiency > AD.asiaEfficiency3) || AD.asiaTime1 == 0)
                                 {
-                                    AD.asiaTime3 = (int)timer;
+                                    AD.asiaTime3 = timer;
                                     AD.asiaEfficiency3 = (int)efficiency;
                                     AD.asiaClicks3 = tileClicks;
                                 }
@@ -414,9 +420,9 @@ namespace Tiles2D
                             case 1: // level 1
                                 AD.desertVictories1 += 1;
 
-                                if ((int)timer < AD.desertTime1 || ((int)timer == AD.desertTime1 && efficiency > AD.desertEfficiency1) || AD.desertTime1 == 0)
+                                if (timer < AD.desertTime1 || (timer == AD.desertTime1 && efficiency > AD.desertEfficiency1) || AD.desertTime1 == 0)
                                 {
-                                    AD.desertTime1 = (int)timer;
+                                    AD.desertTime1 = timer;
                                     AD.desertEfficiency1 = (int)efficiency;
                                     AD.desertClicks1 = tileClicks;
                                 }
@@ -425,9 +431,9 @@ namespace Tiles2D
                             case 2: // level 2
                                 AD.desertVictories2 += 1;
 
-                                if ((int)timer < AD.desertTime2 || ((int)timer == AD.desertTime2 && efficiency > AD.desertEfficiency2) || AD.desertTime2 == 0)
+                                if (timer < AD.desertTime2 || (timer == AD.desertTime2 && efficiency > AD.desertEfficiency2) || AD.desertTime2 == 0)
                                 {
-                                    AD.desertTime2 = (int)timer;
+                                    AD.desertTime2 = timer;
                                     AD.desertEfficiency2 = (int)efficiency;
                                     AD.desertClicks2 = tileClicks;
                                 }
@@ -436,9 +442,9 @@ namespace Tiles2D
                             case 3: // level 3
                                 AD.desertVictories3 += 1;
 
-                                if ((int)timer < AD.desertTime3 || ((int)timer == AD.desertTime3 && efficiency > AD.desertEfficiency3) || AD.desertTime1 == 0)
+                                if (timer < AD.desertTime3 || (timer == AD.desertTime3 && efficiency > AD.desertEfficiency3) || AD.desertTime1 == 0)
                                 {
-                                    AD.desertTime3 = (int)timer;
+                                    AD.desertTime3 = timer;
                                     AD.desertEfficiency3 = (int)efficiency;
                                     AD.desertClicks3 = tileClicks;
                                 }
