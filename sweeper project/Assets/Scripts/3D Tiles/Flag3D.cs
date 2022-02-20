@@ -8,23 +8,21 @@ public class Flag3D : Base
     {
         if (Input.GetMouseButtonUp(1) && hovered)
         {
-            Parameters param = new Parameters();
-            param.gameObjects.Add(gameObject);
-            EventSystem<Parameters>.InvokeEvent(EventType.REMOVE_FLAG, param);
+            EventSystem<GameObject>.InvokeEvent(EventType.REMOVE_FLAG, gameObject);
         }
     }
 
     private void OnEnable()
     {
-        EventSystem<Parameters>.AddListener(EventType.END_GAME, ReSize);
+        EventSystem.AddListener(EventType.END_GAME, ReSize);
     }
 
     private void OnDisable()
     {
-        EventSystem<Parameters>.RemoveListener(EventType.END_GAME, ReSize);
+        EventSystem.RemoveListener(EventType.END_GAME, ReSize);
     }
 
-    private void ReSize(object value)
+    private void ReSize()
     {
         transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
     }

@@ -38,21 +38,21 @@ public class Tile : Base
     private void OnEnable()
     {
         // listen
-        EventSystem<Parameters>.AddListener(EventType.START_GAME, Clickable);
-        EventSystem<Parameters>.AddListener(EventType.END_GAME, Unclickable);
-        EventSystem<Parameters>.AddListener(EventType.WIN_GAME, Unclickable);
-        EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, Unclickable);
-        EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, RevealBomb);
+        EventSystem.AddListener(EventType.START_GAME, Clickable);
+        EventSystem.AddListener(EventType.END_GAME, Unclickable);
+        EventSystem.AddListener(EventType.WIN_GAME, Unclickable);
+        EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
+        EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
     }
 
     private void OnDisable()
     {
         // unlisten
-        EventSystem<Parameters>.RemoveListener(EventType.START_GAME, Clickable);
-        EventSystem<Parameters>.RemoveListener(EventType.END_GAME, Unclickable);
-        EventSystem<Parameters>.RemoveListener(EventType.WIN_GAME, Unclickable);
-        EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, Unclickable);
-        EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, RevealBomb);
+        EventSystem.RemoveListener(EventType.START_GAME, Clickable);
+        EventSystem.RemoveListener(EventType.END_GAME, Unclickable);
+        EventSystem.RemoveListener(EventType.WIN_GAME, Unclickable);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
         vfx.gameObject.SetActive(true);
     }
 
@@ -89,8 +89,8 @@ public class Tile : Base
         {
             if (clickable)
             {
-                EventSystem<Parameters>.InvokeEvent(EventType.PLAY_CLICK, new Parameters());
-                EventSystem<Parameters>.InvokeEvent(EventType.TILE_CLICK, new Parameters());
+                EventSystem.InvokeEvent(EventType.PLAY_CLICK);
+                EventSystem.InvokeEvent(EventType.TILE_CLICK);
                 DoAction();
             }
 
@@ -109,11 +109,8 @@ public class Tile : Base
         // right click - place flag
         if (Input.GetMouseButtonUp(1) && !triggered)
         {
-            EventSystem<Parameters>.InvokeEvent(EventType.PLAY_FLAG, new Parameters());
-            Parameters param = new Parameters();
-            param.vector3s.Add(transform.position);
-            param.vector3s.Add(transform.eulerAngles);
-            EventSystem<Parameters>.InvokeEvent(EventType.PLANT_FLAG, param);
+            EventSystem.InvokeEvent(EventType.PLAY_FLAG);
+            EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
         }
     }
 
@@ -165,13 +162,11 @@ public class Tile : Base
 
         if (gameObject.CompareTag("Bomb"))
         {
-            EventSystem<Parameters>.InvokeEvent(EventType.GAME_LOSE, new Parameters());
+            EventSystem.InvokeEvent(EventType.GAME_LOSE);
         }
         else
         {
-            Parameters param = new Parameters();
-            param.gameObjects.Add(gameObject);
-            EventSystem<Parameters>.InvokeEvent(EventType.ADD_GOOD_TILE, param);
+            EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
             defaultCol = Color.grey;
             gridMat.SetColor("_TextureColorTint", defaultCol);
             ShowBombAmount();
@@ -210,7 +205,7 @@ public class Tile : Base
         }
     }
 
-    private void RevealBomb(object value)
+    private void RevealBomb()
     {
         if (gameObject.CompareTag("Bomb"))
         {
@@ -238,12 +233,12 @@ public class Tile : Base
         vfx.UpdateEffect(bombCount);
     }
 
-    private void Clickable(object value)
+    private void Clickable()
     {
         clickable = true;
     }
 
-    private void Unclickable(object value)
+    private void Unclickable()
     {
         clickable = false;
     }

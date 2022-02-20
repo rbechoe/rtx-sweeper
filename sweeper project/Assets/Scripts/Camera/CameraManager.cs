@@ -36,7 +36,7 @@ public class CameraManager : Base
     public void StartToMidAnimation()
     {
         DisableManagers();
-        EventSystem<Parameters>.InvokeEvent(EventType.RANDOM_GRID, new Parameters());
+        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
         midManager.enabled = true;
         midManager.gameObject.SetActive(true);
         trackedDolly.m_Path = startToMid;
@@ -48,7 +48,7 @@ public class CameraManager : Base
     public void StartToRightAnimation()
     {
         DisableManagers();
-        EventSystem<Parameters>.InvokeEvent(EventType.RANDOM_GRID, new Parameters());
+        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
         rightManager.enabled = true;
         rightManager.gameObject.SetActive(true);
         trackedDolly.m_Path = startToRight;
@@ -60,7 +60,7 @@ public class CameraManager : Base
     public void StartToLeftAnimation()
     {
         DisableManagers();
-        EventSystem<Parameters>.InvokeEvent(EventType.RANDOM_GRID, new Parameters());
+        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
         leftManager.enabled = true;
         leftManager.gameObject.SetActive(true);
         trackedDolly.m_Path = startToLeft;

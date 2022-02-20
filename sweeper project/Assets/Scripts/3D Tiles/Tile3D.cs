@@ -56,17 +56,17 @@ public class Tile3D : Base
     private void OnEnable()
     {
         // listen
-        EventSystem<Parameters>.AddListener(EventType.START_GAME, Clickable);
-        EventSystem<Parameters>.AddListener(EventType.END_GAME, Unclickable);
-        EventSystem<Parameters>.AddListener(EventType.END_GAME, RevealBomb);
+        EventSystem.AddListener(EventType.START_GAME, Clickable);
+        EventSystem.AddListener(EventType.END_GAME, Unclickable);
+        EventSystem.AddListener(EventType.END_GAME, RevealBomb);
     }
 
     private void OnDisable()
     {
         // unlisten
-        EventSystem<Parameters>.RemoveListener(EventType.START_GAME, Clickable);
-        EventSystem<Parameters>.RemoveListener(EventType.END_GAME, Unclickable);
-        EventSystem<Parameters>.RemoveListener(EventType.END_GAME, RevealBomb);
+        EventSystem.RemoveListener(EventType.START_GAME, Clickable);
+        EventSystem.RemoveListener(EventType.END_GAME, Unclickable);
+        EventSystem.RemoveListener(EventType.END_GAME, RevealBomb);
     }
 
     protected override void Update()
@@ -122,9 +122,7 @@ public class Tile3D : Base
             // right click - place flag
             if (Input.GetMouseButtonUp(1) && !triggered)
             {
-                Parameters param = new Parameters();
-                param.vector3s.Add(transform.position);
-                EventSystem<Parameters>.InvokeEvent(EventType.PLANT_FLAG, param);
+                EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
             }
         }
     }
@@ -255,7 +253,7 @@ public class Tile3D : Base
         myMat.SetColor("_EmissiveColor", defaultCol * _strenght);
     }
 
-    private void RevealBomb(object value)
+    private void RevealBomb()
     {
         if (gameObject.CompareTag("Bomb"))
         {
@@ -278,12 +276,12 @@ public class Tile3D : Base
         bombCountTMP.text = "" + bombCount;
     }
 
-    private void Clickable(object value)
+    private void Clickable()
     {
         clickable = true;
     }
 
-    private void Unclickable(object value)
+    private void Unclickable()
     {
         clickable = false;
     }

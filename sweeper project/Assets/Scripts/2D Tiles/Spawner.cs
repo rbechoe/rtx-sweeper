@@ -32,32 +32,31 @@ public class Spawner : Base
         zSize = TheCreator.Instance.zSize;
         gridSize = TheCreator.Instance.gridSize;
         bombAmount = TheCreator.Instance.bombAmount;
-        Parameters param = new Parameters();
-        param.vector3s.Add(new Vector3(xSize / 2f, (xSize + zSize / 2f) * 0.5f, zSize / 2f));
-        EventSystem<Parameters>.InvokeEvent(EventType.START_POS, param);
+        Vector3 position = new Vector3(xSize / 2f, (xSize + zSize / 2f) * 0.5f, zSize / 2f);
+        EventSystem<Vector3>.InvokeEvent(EventType.START_POS, position);
         CreateGrid(xSize, zSize, bombAmount);
     }
 
     private void OnEnable()
     {
-        EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<Parameters>.AddListener(EventType.RESET_GAME, ResetGame);
-        EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, AddFlag);
-        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
-        EventSystem<Parameters>.AddListener(EventType.PICK_TILE, PickStartingTile);
-        EventSystem<Parameters>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
+        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem.AddListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
+        EventSystem.AddListener(EventType.PICK_TILE, PickStartingTile);
+        EventSystem<GameObject>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
     }
 
     private void OnDisable()
     {
-        EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<Parameters>.RemoveListener(EventType.RESET_GAME, ResetGame);
-        EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
-        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
-        EventSystem<Parameters>.RemoveListener(EventType.PICK_TILE, PickStartingTile);
-        EventSystem<Parameters>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
+        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem.RemoveListener(EventType.RESET_GAME, ResetGame);
+        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
+        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
+        EventSystem.RemoveListener(EventType.PICK_TILE, PickStartingTile);
+        EventSystem<GameObject>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
     }
 
     public void CreateGrid(int _x, int _z, int _bombAmount)
@@ -123,7 +122,7 @@ public class Spawner : Base
         yield return new WaitForEndOfFrame();
 
         isDone = true;
-        EventSystem<Parameters>.InvokeEvent(EventType.PREPARE_GAME, new Parameters());
+        EventSystem.InvokeEvent(EventType.PREPARE_GAME);
         yield return new WaitForEndOfFrame();
     }
 
@@ -135,31 +134,31 @@ public class Spawner : Base
     }
 
     // activate a flag and place it above the tile
-    private void ActivateFlag(Parameters param)
+    private void ActivateFlag(Vector3[] vectors)
     {
         if (inactiveFlags.Count > 0 && bombs > 0)
         {
-            inactiveFlags[0].transform.position = param.vector3s[0];
+            inactiveFlags[0].transform.position = vectors[0];
+            inactiveFlags[0].transform.eulerAngles = vectors[1];
             activeFlags.Add(inactiveFlags[0]);
             inactiveFlags.RemoveAt(0);
         }
     }
 
     // remove a flag from the tile
-    public void ReturnFlag(Parameters param)
+    public void ReturnFlag(GameObject flag)
     {
-        GameObject _flag = param.gameObjects[0];
-        _flag.transform.position = Vector3.up * 5000;
-        activeFlags.Remove(_flag);
-        inactiveFlags.Add(_flag);
+        flag.transform.position = Vector3.up * 5000;
+        activeFlags.Remove(flag);
+        inactiveFlags.Add(flag);
     }
 
-    private void AddEmptyTile(Parameters param)
+    private void AddEmptyTile(GameObject gameobject)
     {
-        emptyTiles.Add(param.gameObjects[0]);
+        emptyTiles.Add(gameobject);
     }
 
-    private void PickStartingTile(object value)
+    private void PickStartingTile()
     {
         if (emptyTiles.Count > 0)
         {
@@ -168,7 +167,7 @@ public class Spawner : Base
         }
     }
 
-    private void ResetGame(object value)
+    private void ResetGame()
     {
         isDone = false;
         bombCount = 0;
@@ -180,7 +179,7 @@ public class Spawner : Base
     IEnumerator ResetLogic()
     {
         emptyTiles = new List<GameObject>();
-        EventSystem<Parameters>.InvokeEvent(EventType.END_GAME, new Parameters());
+        EventSystem.InvokeEvent(EventType.END_GAME);
 
         // remove all flags and tiles
         foreach (GameObject tile in tiles)
@@ -208,19 +207,15 @@ public class Spawner : Base
         StartCoroutine(Grid());
     }
 
-    private void AddFlag(object value)
+    private void AddFlag(Vector3[] vectors)
     {
         bombs--;
-        Parameters param = new Parameters();
-        param.integers.Add(bombs);
-        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
+        EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombs);
     }
 
-    private void RemoveFlag(object value)
+    private void RemoveFlag(GameObject flag)
     {
         bombs++;
-        Parameters param = new Parameters();
-        param.integers.Add(bombs);
-        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
+        EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombs);
     }
 }

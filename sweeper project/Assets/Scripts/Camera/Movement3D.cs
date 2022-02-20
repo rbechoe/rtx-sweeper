@@ -32,22 +32,22 @@ public class Movement3D : Base
 
     private void OnEnable()
     {
-        EventSystem<Parameters>.AddListener(EventType.INPUT_FORWARD, RotateUp);
-        EventSystem<Parameters>.AddListener(EventType.INPUT_BACK, RotateDown);
-        EventSystem<Parameters>.AddListener(EventType.INPUT_RIGHT, RotateRight);
-        EventSystem<Parameters>.AddListener(EventType.INPUT_LEFT, RotateLeft);
-        EventSystem<Parameters>.AddListener(EventType.INPUT_UP, MoveUp);
-        EventSystem<Parameters>.AddListener(EventType.INPUT_DOWN, MoveDown);
+        EventSystem.AddListener(EventType.INPUT_FORWARD, RotateUp);
+        EventSystem.AddListener(EventType.INPUT_BACK, RotateDown);
+        EventSystem.AddListener(EventType.INPUT_RIGHT, RotateRight);
+        EventSystem.AddListener(EventType.INPUT_LEFT, RotateLeft);
+        EventSystem.AddListener(EventType.INPUT_UP, MoveUp);
+        EventSystem.AddListener(EventType.INPUT_DOWN, MoveDown);
     }
 
     private void OnDisable()
     {
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_FORWARD, RotateUp);
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_BACK, RotateDown);
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_RIGHT, RotateRight);
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_LEFT, RotateLeft);
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_UP, MoveUp);
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_DOWN, MoveDown);
+        EventSystem.RemoveListener(EventType.INPUT_FORWARD, RotateUp);
+        EventSystem.RemoveListener(EventType.INPUT_BACK, RotateDown);
+        EventSystem.RemoveListener(EventType.INPUT_RIGHT, RotateRight);
+        EventSystem.RemoveListener(EventType.INPUT_LEFT, RotateLeft);
+        EventSystem.RemoveListener(EventType.INPUT_UP, MoveUp);
+        EventSystem.RemoveListener(EventType.INPUT_DOWN, MoveDown);
     }
 
     protected override void Update()
@@ -59,7 +59,7 @@ public class Movement3D : Base
         }
     }
 
-    private void RotateUp(object value)
+    private void RotateUp()
     {
         if (inRoutine)
         {
@@ -68,7 +68,7 @@ public class Movement3D : Base
         StartCoroutine(RoutineRotation(new Vector3(speed, 0, 0)));
     }
 
-    private void RotateDown(object value)
+    private void RotateDown()
     {
         if (inRoutine)
         {
@@ -77,7 +77,7 @@ public class Movement3D : Base
         StartCoroutine(RoutineRotation(new Vector3(-speed, 0, 0)));
     }
 
-    private void RotateLeft(object value)
+    private void RotateLeft()
     {
         if (inRoutine)
         {
@@ -86,7 +86,7 @@ public class Movement3D : Base
         StartCoroutine(RoutineRotation(new Vector3(0, -speed, 0)));
     }
 
-    private void RotateRight(object value)
+    private void RotateRight()
     {
         if (inRoutine)
         {
@@ -115,7 +115,7 @@ public class Movement3D : Base
                                                       Mathf.RoundToInt(parentObj.transform.eulerAngles.z));
     }
 
-    private void MoveUp(object value)
+    private void MoveUp()
     {
         if (moveCd <= 0)
         {
@@ -124,7 +124,7 @@ public class Movement3D : Base
         }
     }
 
-    private void MoveDown(object value)
+    private void MoveDown()
     {
         if (moveCd <= 0)
         {

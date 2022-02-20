@@ -7,7 +7,7 @@ public class SweeperManager : Base
 {
     public void StartGame()
     {
-        EventSystem<Parameters>.InvokeEvent(EventType.RANDOM_GRID, new Parameters());
+        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
     }
 
     public void GoToMenu()

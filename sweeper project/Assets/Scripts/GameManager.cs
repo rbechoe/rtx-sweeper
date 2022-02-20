@@ -20,12 +20,12 @@ public class GameManager : Base
 
     private void OnEnable()
     {
-        EventSystem<Parameters>.AddListener(EventType.PREPARE_GAME, StartGame);
+        EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
     }
 
     private void OnDisable()
     {
-        EventSystem<Parameters>.RemoveListener(EventType.PREPARE_GAME, StartGame);
+        EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
     }
 
     protected override void Update()
@@ -49,7 +49,7 @@ public class GameManager : Base
         if (goodTiles == Mathf.Pow(gridSize, 3) - bombAmount)
         {
             EndGame();
-            EventSystem<Parameters>.InvokeEvent(EventType.WIN_GAME, new Parameters());
+            EventSystem.InvokeEvent(EventType.WIN_GAME);
         }
     }
 
@@ -64,18 +64,16 @@ public class GameManager : Base
         if (goodTiles == Mathf.Pow(gridSize, 2) - bombAmount)
         {
             EndGame();
-            EventSystem<Parameters>.InvokeEvent(EventType.WIN_GAME, new Parameters());
+            EventSystem.InvokeEvent(EventType.WIN_GAME);
         }
     }
 
-    private void StartGame(object value)
+    private void StartGame()
     {
-        Parameters param = new Parameters();
-        param.integers.Add(bombAmount);
-        EventSystem<Parameters>.InvokeEvent(EventType.COUNT_BOMBS, new Parameters());
-        EventSystem<Parameters>.InvokeEvent(EventType.PICK_TILE, new Parameters());
-        EventSystem<Parameters>.InvokeEvent(EventType.START_GAME, new Parameters());
-        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
+        EventSystem.InvokeEvent(EventType.COUNT_BOMBS);
+        EventSystem.InvokeEvent(EventType.PICK_TILE);
+        EventSystem.InvokeEvent(EventType.START_GAME);
+        EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
         timer = 0;
         goodTiles = 0;
         gameActive = true;
@@ -84,6 +82,6 @@ public class GameManager : Base
     public void EndGame()
     {
         gameActive = false;
-        EventSystem<Parameters>.InvokeEvent(EventType.END_GAME, new Parameters());
+        EventSystem.InvokeEvent(EventType.END_GAME);
     }
 }

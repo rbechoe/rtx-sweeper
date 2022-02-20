@@ -64,39 +64,37 @@ public class GridManager2D : Base
         {
             timer += Time.deltaTime;
         }
-        Parameters param = new Parameters();
-        param.floats.Add(timer);
-        EventSystem<Parameters>.InvokeEvent(EventType.UPDATE_TIME, param);
+        EventSystem<float>.InvokeEvent(EventType.UPDATE_TIME, timer);
     }
 
     private void OnEnable()
     {
-        EventSystem<Parameters>.AddListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<Parameters>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem<Parameters>.AddListener(EventType.RANDOM_GRID, ResetGame);
-        EventSystem<Parameters>.AddListener(EventType.WIN_GAME, StopTimer);
-        EventSystem<Parameters>.AddListener(EventType.END_GAME, StopTimer);
-        EventSystem<Parameters>.AddListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem<Parameters>.AddListener(EventType.TILE_CLICK, TileClick);
-        EventSystem<Parameters>.AddListener(EventType.PLANT_FLAG, TileClick);
-        EventSystem<Parameters>.AddListener(EventType.REMOVE_FLAG, TileClick);
+        EventSystem<GameObject>.AddListener(EventType.ADD_GOOD_TILE, AddGoodTile);
+        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem<GameObject>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
+        EventSystem.AddListener(EventType.RANDOM_GRID, ResetGame);
+        EventSystem.AddListener(EventType.WIN_GAME, StopTimer);
+        EventSystem.AddListener(EventType.END_GAME, StopTimer);
+        EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
+        EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
+        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
+        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
     }
 
     private void OnDisable()
     {
-        EventSystem<Parameters>.RemoveListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<Parameters>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem<Parameters>.RemoveListener(EventType.RANDOM_GRID, ResetGame);
-        EventSystem<Parameters>.RemoveListener(EventType.WIN_GAME, StopTimer);
-        EventSystem<Parameters>.RemoveListener(EventType.END_GAME, StopTimer);
-        EventSystem<Parameters>.RemoveListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem<Parameters>.RemoveListener(EventType.TILE_CLICK, TileClick);
-        EventSystem<Parameters>.RemoveListener(EventType.PLANT_FLAG, TileClick);
-        EventSystem<Parameters>.RemoveListener(EventType.REMOVE_FLAG, TileClick);
+        EventSystem<GameObject>.RemoveListener(EventType.ADD_GOOD_TILE, AddGoodTile);
+        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
+        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
+        EventSystem<GameObject>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
+        EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGame);
+        EventSystem.RemoveListener(EventType.WIN_GAME, StopTimer);
+        EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
+        EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
+        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
+        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
     }
 
     private IEnumerator RandomizeGrid()
@@ -145,18 +143,18 @@ public class GridManager2D : Base
         }
         yield return new WaitForEndOfFrame();
 
-        EventSystem<Parameters>.InvokeEvent(EventType.PREPARE_GAME, new Parameters());
+        EventSystem.InvokeEvent(EventType.PREPARE_GAME);
         StartGame();
         yield return new WaitForEndOfFrame();
     }
 
     // activate a flag and place it above the tile
-    private void ActivateFlag(Parameters param)
+    private void ActivateFlag(Vector3[] vectors)
     {
         if (inactiveFlags.Count > 0 && bombAmount > 0)
         {
-            inactiveFlags[0].transform.position = param.vector3s[0];
-            inactiveFlags[0].transform.eulerAngles = param.vector3s[1];
+            inactiveFlags[0].transform.position = vectors[0];
+            inactiveFlags[0].transform.eulerAngles = vectors[1];
             activeFlags.Add(inactiveFlags[0]);
             inactiveFlags.RemoveAt(0);
             AddFlag();
@@ -164,34 +162,29 @@ public class GridManager2D : Base
     }
 
     // remove a flag from the tile
-    public void ReturnFlag(Parameters param)
+    public void ReturnFlag(GameObject flag)
     {
-        GameObject _flag = param.gameObjects[0];
-        _flag.transform.position = Vector3.up * 5000;
-        activeFlags.Remove(_flag);
-        inactiveFlags.Add(_flag);
+        flag.transform.position = Vector3.up * 5000;
+        activeFlags.Remove(flag);
+        inactiveFlags.Add(flag);
         RemoveFlag();
     }
 
     private void AddFlag()
     {
         bombAmount--;
-        Parameters param = new Parameters();
-        param.integers.Add(bombAmount);
-        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
+        EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
     }
 
     private void RemoveFlag()
     {
         bombAmount++;
-        Parameters param = new Parameters();
-        param.integers.Add(bombAmount);
-        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
+        EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
     }
 
-    private void AddEmptyTile(Parameters param)
+    private void AddEmptyTile(GameObject gameobject)
     {
-        emptyTiles.Add(param.gameObjects[0]);
+        emptyTiles.Add(gameobject);
     }
 
     private void PickStartingTile()
@@ -203,7 +196,7 @@ public class GridManager2D : Base
         }
     }
 
-    private void ResetGame(object value)
+    private void ResetGame()
     {
         if (inReset)
         {
@@ -224,7 +217,7 @@ public class GridManager2D : Base
     
     IEnumerator ResetLogic()
     {
-        EventSystem<Parameters>.InvokeEvent(EventType.END_GAME, new Parameters());
+        EventSystem.InvokeEvent(EventType.END_GAME);
 
         // remove all bomb and empty components
         foreach (GameObject tile in tiles)
@@ -257,16 +250,14 @@ public class GridManager2D : Base
 
     private void StartGame()
     {
-        Parameters param = new Parameters();
-        param.integers.Add(bombAmount);
-        EventSystem<Parameters>.InvokeEvent(EventType.COUNT_BOMBS, new Parameters());
+        EventSystem.InvokeEvent(EventType.COUNT_BOMBS);
         PickStartingTile();
-        EventSystem<Parameters>.InvokeEvent(EventType.START_GAME, new Parameters());
-        EventSystem<Parameters>.InvokeEvent(EventType.BOMB_UPDATE, param);
+        EventSystem.InvokeEvent(EventType.START_GAME);
+        EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
         inReset = false;
     }
 
-    private void AddGoodTile(object value)
+    private void AddGoodTile(GameObject tile)
     {
         if (!timeStarted)
         {
@@ -281,16 +272,26 @@ public class GridManager2D : Base
         if (goodTiles == (tiles.Count - initialBombAmount))
         {
             wonGame = true;
-            EventSystem<Parameters>.InvokeEvent(EventType.WIN_GAME, new Parameters());
+            EventSystem.InvokeEvent(EventType.WIN_GAME);
         }
     }
 
-    private void TileClick(object value)
+    private void TileClick()
     {
         tileClicks++;
     }
 
-    private void StopTimer(object value)
+    private void TileClick(Vector3[] vectors)
+    {
+        tileClicks++;
+    }
+
+    private void FlagClick(GameObject flag)
+    {
+        tileClicks++;
+    }
+
+    private void StopTimer()
     {
         if (firstTime || tileClicks == 0)
         {

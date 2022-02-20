@@ -7,15 +7,15 @@ public class Checker : Base
 
     private void OnEnable()
     {
-        EventSystem<Parameters>.AddListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
     }
 
     private void OnDisable()
     {
-        EventSystem<Parameters>.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
     }
 
-    private void CheckBombs(object value)
+    private void CheckBombs()
     {
         StartCoroutine(DoChecks());
     }
@@ -40,9 +40,7 @@ public class Checker : Base
         // set as potential first tile
         if (bombCount == 0 && !gameObject.CompareTag("Bomb"))
         {
-            Parameters param = new Parameters();
-            param.gameObjects.Add(gameObject);
-            EventSystem<Parameters>.InvokeEvent(EventType.ADD_EMPTY, param);
+            EventSystem<GameObject>.InvokeEvent(EventType.ADD_EMPTY, gameObject);
         }
 
         yield return new WaitForEndOfFrame();

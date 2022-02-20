@@ -24,7 +24,7 @@ public class InputManager : Base
         {
             if (Input.GetKey(keybinding.Key))
             {
-                EventSystem<Parameters>.InvokeEvent(keybinding.Value, new Parameters());
+                EventSystem.InvokeEvent(keybinding.Value);
             }
         }
     }

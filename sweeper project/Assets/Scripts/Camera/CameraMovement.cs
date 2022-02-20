@@ -6,58 +6,58 @@ public class CameraMovement : Base
 
     private void OnEnable()
     {
-        EventSystem<Parameters>.AddListener(EventType.INPUT_BACK, MoveBackward);
-        EventSystem<Parameters>.AddListener(EventType.INPUT_DOWN, MoveDown);
-        EventSystem<Parameters>.AddListener(EventType.INPUT_FORWARD, MoveForward);
-        EventSystem<Parameters>.AddListener(EventType.INPUT_LEFT, MoveLeft);
-        EventSystem<Parameters>.AddListener(EventType.INPUT_RIGHT, MoveRight);
-        EventSystem<Parameters>.AddListener(EventType.INPUT_UP, MoveUp);
-        EventSystem<Parameters>.AddListener(EventType.START_POS, StartPos);
+        EventSystem.AddListener(EventType.INPUT_BACK, MoveBackward);
+        EventSystem.AddListener(EventType.INPUT_DOWN, MoveDown);
+        EventSystem.AddListener(EventType.INPUT_FORWARD, MoveForward);
+        EventSystem.AddListener(EventType.INPUT_LEFT, MoveLeft);
+        EventSystem.AddListener(EventType.INPUT_RIGHT, MoveRight);
+        EventSystem.AddListener(EventType.INPUT_UP, MoveUp);
+        EventSystem<Vector3>.AddListener(EventType.START_POS, StartPos);
 
     }
 
     private void OnDisable()
     {
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_BACK, MoveBackward);
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_DOWN, MoveDown);
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_FORWARD, MoveForward);
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_LEFT, MoveLeft);
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_RIGHT, MoveRight);
-        EventSystem<Parameters>.RemoveListener(EventType.INPUT_UP, MoveUp);
-        EventSystem<Parameters>.RemoveListener(EventType.START_POS, StartPos);
+        EventSystem.RemoveListener(EventType.INPUT_BACK, MoveBackward);
+        EventSystem.RemoveListener(EventType.INPUT_DOWN, MoveDown);
+        EventSystem.RemoveListener(EventType.INPUT_FORWARD, MoveForward);
+        EventSystem.RemoveListener(EventType.INPUT_LEFT, MoveLeft);
+        EventSystem.RemoveListener(EventType.INPUT_RIGHT, MoveRight);
+        EventSystem.RemoveListener(EventType.INPUT_UP, MoveUp);
+        EventSystem<Vector3>.RemoveListener(EventType.START_POS, StartPos);
     }
 
-    private void StartPos(Parameters param)
+    private void StartPos(Vector3 position)
     {
-        transform.position = param.vector3s[0];
+        transform.position = position;
     }
 
-    private void MoveLeft(object value)
+    private void MoveLeft()
     {
         transform.Translate(Vector3.left * Time.deltaTime * MOVESPEED);
     }
 
-    private void MoveRight(object value)
+    private void MoveRight()
     {
         transform.Translate(Vector3.right * Time.deltaTime * MOVESPEED);
     }
 
-    private void MoveForward(object value)
+    private void MoveForward()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * MOVESPEED);
     }
 
-    private void MoveBackward(object value)
+    private void MoveBackward()
     {
         transform.Translate(Vector3.back * Time.deltaTime * MOVESPEED);
     }
 
-    private void MoveUp(object value)
+    private void MoveUp()
     {
         transform.Translate(Vector3.up * Time.deltaTime * MOVESPEED);
     }
 
-    private void MoveDown(object value)
+    private void MoveDown()
     {
         transform.Translate(Vector3.down * Time.deltaTime * MOVESPEED);
     }
