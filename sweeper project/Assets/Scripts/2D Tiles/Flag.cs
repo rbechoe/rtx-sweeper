@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class Flag : Base
+namespace Tiles2D
 {
-    private void OnMouseOver()
+    public class Flag : Base
     {
-        if (Input.GetMouseButtonUp(1))
+        private void OnMouseOver()
         {
-            EventSystem<GameObject>.InvokeEvent(EventType.REMOVE_FLAG, gameObject);
+            if (Input.GetMouseButtonUp(1))
+            {
+                EventSystem<GameObject>.InvokeEvent(EventType.REMOVE_FLAG, gameObject);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Tiles2D;
 
 public class Tile3D : Base
 {

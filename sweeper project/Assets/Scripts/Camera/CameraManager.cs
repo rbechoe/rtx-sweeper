@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Tiles2D;
 
 public class CameraManager : Base
 {
@@ -10,9 +11,9 @@ public class CameraManager : Base
     [SerializeField] private CinemachineSmoothPath startToMid;
     [SerializeField] private CinemachineSmoothPath startToLeft;
     [SerializeField] private CinemachineSmoothPath startToRight;
-    [SerializeField] private GridManager2D midManager;
-    [SerializeField] private GridManager2D leftManager;
-    [SerializeField] private GridManager2D rightManager;
+    [SerializeField] private GridManager midManager;
+    [SerializeField] private GridManager leftManager;
+    [SerializeField] private GridManager rightManager;
 
     private float animationTime = 0;
     private float animationEndTime = 0;

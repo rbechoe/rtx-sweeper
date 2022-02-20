@@ -6,11 +6,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class DataSerializer : MonoBehaviour
 {
     string fileName = "/gamestats.dat";
-    float versionNumber = 0.69f; //save logic number
+    float versionNumber = 0.69f;
     float requiredVersion = 0.5f;
 
     private void Start()
     {
+        versionNumber = float.Parse(Application.version);
         PurgeFilesCheck();
     }
 

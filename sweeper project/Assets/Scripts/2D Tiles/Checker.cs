@@ -1,48 +1,57 @@
 using UnityEngine;
 using System.Collections;
 
-public class Checker : Base
+namespace Tiles2D
 {
-    public Collider[] hitColliders;
-
-    private void OnEnable()
+    public class Checker : Base
     {
-        EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
-    }
+        public Collider[] hitColliders;
 
-    private void OnDisable()
-    {
-        EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
-    }
-
-    private void CheckBombs()
-    {
-        StartCoroutine(DoChecks());
-    }
-
-    IEnumerator DoChecks()
-    {
-        hitColliders = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
-        int bombCount = 0;
-
-        for (int i = 0; i < hitColliders.Length; i++)
+        private void OnEnable()
         {
-            if (hitColliders[i].gameObject == gameObject) continue;
-            if (hitColliders[i].gameObject.CompareTag("Bomb"))
+            EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
+        }
+
+        private void OnDisable()
+        {
+            EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
+        }
+
+        private void CheckBombs()
+        {
+            StartCoroutine(DoChecks());
+        }
+
+        IEnumerator DoChecks()
+        {
+            hitColliders = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
+            int bombCount = 0;
+
+            for (int i = 0; i < hitColliders.Length; i++)
             {
-                bombCount++;
+                if (hitColliders[i].gameObject == gameObject) continue;
+                if (hitColliders[i].gameObject.CompareTag("Bomb"))
+                {
+                    bombCount++;
+                }
             }
+
+            if (!gameObject.CompareTag("Bomb"))
+            {
+                if (bombCount == 0)
+                {
+                    // set as potential first tile
+                    EventSystem<GameObject>.InvokeEvent(EventType.ADD_EMPTY, gameObject);
+                    gameObject.AddComponent<EmptyTile>();
+                }
+                else
+                {
+                    gameObject.AddComponent<NumberTile>();
+                    gameObject.GetComponent<NumberTile>().SetBombCount(bombCount);
+                }
+            }
+
+            yield return new WaitForEndOfFrame();
         }
-
-        Tile tile = gameObject.GetComponent<Tile>();
-        tile.SetBombCount(bombCount);
-
-        // set as potential first tile
-        if (bombCount == 0 && !gameObject.CompareTag("Bomb"))
-        {
-            EventSystem<GameObject>.InvokeEvent(EventType.ADD_EMPTY, gameObject);
-        }
-
-        yield return new WaitForEndOfFrame();
     }
 }
