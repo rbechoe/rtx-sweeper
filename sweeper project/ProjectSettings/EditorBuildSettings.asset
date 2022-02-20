@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 44004d143d27cd84299593592c4f9a29
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Garden.unity
     guid: d2ba687a8e31dad43a54753e3d600ef3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Universe.unity
     guid: b72895babac5d8f4eb228347653dbe8f
   - enabled: 1
@@ -26,13 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Arctic.unity
     guid: 699c96d0853e355418296dc8f68cff68
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Tutorial.unity
     guid: 3a7fae7730558744a87c69378a8aa5bb
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   m_configObjects: {}
