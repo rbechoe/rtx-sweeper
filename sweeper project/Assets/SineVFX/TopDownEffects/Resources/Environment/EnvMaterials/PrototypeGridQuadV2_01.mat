@@ -101,7 +101,7 @@ Material:
     - _StretchV: 2.59
     - _SupportDecals: 1
     - _SurfaceType: 0
-    - _TexturePower: 0.075
+    - _TexturePower: 1
     - _TransparentBackfaceEnable: 0
     - _TransparentCullMode: 2
     - _TransparentDepthPostpassEnable: 0

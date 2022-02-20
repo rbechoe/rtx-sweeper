@@ -8,9 +8,6 @@ public class GameUI : Base
     public TextMeshProUGUI bombText;
     public TextMeshProUGUI timeText;
 
-    [SerializeField]
-    private GameManager gameManager;
-
     private int bombAmount;
 
     protected override void Start()

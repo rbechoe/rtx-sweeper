@@ -12,7 +12,7 @@ namespace Tiles2D
             {
                 tiles[i].GetComponent<Tile>()?.NoBombReveal();
             }
-            gridMat.SetColor("_TextureColorTint", new Color(0.25f, 0.5f, 0.5f, 0));
+            gridMat.SetColor("_TextureColorTint", new Color(0.1f, 0.1f, 0.1f, 0));
             bombCount = 8;
         }
     }

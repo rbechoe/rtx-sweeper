@@ -37,11 +37,19 @@ namespace Tiles2D
         public int area;
         public int level;
 
+        private string difficultyStars;
         private bool firstTime = true; // used to avoid bug, clean solution needs to be fixed!
 
         protected override void Start()
         {
             base.Start();
+
+            difficultyStars = "Difficulty: ";
+            for (int i = 0; i < (10 - bombDensity); i++)
+            {
+                difficultyStars += "*";
+            }
+
             foreach (Transform child in transform)
             {
                 if (child.GetComponent<Checker>())
@@ -211,6 +219,8 @@ namespace Tiles2D
                 firstTile = null;
                 timeStarted = false;
                 goodTiles = 0;
+                timer = 0;
+                tileClicks = 0;
                 bombAmount = tiles.Count / bombDensity;
                 initialBombAmount = bombAmount;
                 emptyTiles = new List<GameObject>();
@@ -440,9 +450,7 @@ namespace Tiles2D
 
             DS.UpdateAccountData(AD);
             SetText();
-
-            timer = 0;
-            tileClicks = 0;
+            
             wonGame = false;
         }
 
@@ -456,19 +464,19 @@ namespace Tiles2D
                     switch (level)
                     {
                         case 1: // level 1
-                            infoText.text = "\n" +
+                            infoText.text = difficultyStars + "\n" +
                                 "Best time: " + data.arcticTime1 + "s\n" +
                                 "Efficiency: " + data.arcticEfficiency1 + "\n" +
                                 "Victories: " + data.arcticVictories1 + "\n";
                             break;
                         case 2: // level 2
-                            infoText.text = "\n" +
+                            infoText.text = difficultyStars + "\n" +
                                 "Best time: " + data.arcticTime2 + "s\n" +
                                 "Efficiency: " + data.arcticEfficiency2 + "\n" +
                                 "Victories: " + data.arcticVictories2 + "\n";
                             break;
                         case 3: // level 3
-                            infoText.text = "\n" +
+                            infoText.text = difficultyStars + "\n" +
                                 "Best time: " + data.arcticTime3 + "s\n" +
                                 "Efficiency: " + data.arcticEfficiency3 + "\n" +
                                 "Victories: " + data.arcticVictories3 + "\n";
@@ -480,19 +488,19 @@ namespace Tiles2D
                     switch (level)
                     {
                         case 1: // level 1
-                            infoText.text = "\n" +
+                            infoText.text = difficultyStars + "\n" +
                                 "Best time: " + data.asiaTime1 + "s\n" +
                                 "Efficiency: " + data.asiaEfficiency1 + "\n" +
                                 "Victories: " + data.asiaVictories1 + "\n";
                             break;
                         case 2: // level 2
-                            infoText.text = "\n" +
+                            infoText.text = difficultyStars + "\n" +
                                 "Best time: " + data.asiaTime2 + "s\n" +
                                 "Efficiency: " + data.asiaEfficiency2 + "\n" +
                                 "Victories: " + data.asiaVictories2 + "\n";
                             break;
                         case 3: // level 3
-                            infoText.text = "\n" +
+                            infoText.text = difficultyStars + "\n" +
                                 "Best time: " + data.asiaTime3 + "s\n" +
                                 "Efficiency: " + data.asiaEfficiency3 + "\n" +
                                 "Victories: " + data.asiaVictories3 + "\n";
@@ -504,19 +512,19 @@ namespace Tiles2D
                     switch (level)
                     {
                         case 1: // level 1
-                            infoText.text = "\n" +
+                            infoText.text = difficultyStars + "\n" +
                                 "Best time: " + data.desertTime1 + "s\n" +
                                 "Efficiency: " + data.desertEfficiency1 + "\n" +
                                 "Victories: " + data.desertVictories1 + "\n";
                             break;
                         case 2: // level 2
-                            infoText.text = "\n" +
+                            infoText.text = difficultyStars + "\n" +
                                 "Best time: " + data.desertTime2 + "s\n" +
                                 "Efficiency: " + data.desertEfficiency2 + "\n" +
                                 "Victories: " + data.desertVictories2 + "\n";
                             break;
                         case 3: // level 3
-                            infoText.text = "\n" +
+                            infoText.text = difficultyStars + "\n" +
                                 "Best time: " + data.desertTime3 + "s\n" +
                                 "Efficiency: " + data.desertEfficiency3 + "\n" +
                                 "Victories: " + data.desertVictories3 + "\n";
