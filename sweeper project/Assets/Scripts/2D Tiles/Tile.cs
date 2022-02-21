@@ -22,13 +22,16 @@ namespace Tiles2D
         protected bool canReveal;
         protected Collider[] tilesPreviewed;
 
+        private float glowIntensity = 8192; // value is in nits
+
         protected override void Start()
         {
             base.Start();
 
             vfx = GetComponentInChildren<VFXManipulator>();
             gridMat = vfx.gridTile.GetComponent<Renderer>().material;
-            gridMat.SetColor("_TextureColorTint", defaultCol);
+            gridMat.EnableKeyword("_EmissiveColor");
+            UpdateMaterial(defaultCol);
             vfx.gameObject.SetActive(false);
 
             flagMask = LayerMask.GetMask("Flag");
@@ -64,7 +67,7 @@ namespace Tiles2D
         {
             if (clickable && !triggered)
             {
-                gridMat.SetColor("_TextureColorTint", selectCol);
+                UpdateMaterial(selectCol);
             }
 
             // press left button - highlight adjecant tiles that can be revealed if this tile is revealed
@@ -123,7 +126,7 @@ namespace Tiles2D
             // set tile back to base color
             if (clickable && !triggered)
             {
-                gridMat.SetColor("_TextureColorTint", defaultCol);
+                UpdateMaterial(defaultCol);
             }
 
             // set all nearby tiles back to base color
@@ -156,8 +159,8 @@ namespace Tiles2D
 
             triggered = true;
 
-            defaultCol = Color.grey;
-            gridMat.SetColor("_TextureColorTint", defaultCol);
+            defaultCol = Color.black;
+            UpdateMaterial(defaultCol);
 
             TypeSpecificAction();
         }
@@ -166,7 +169,7 @@ namespace Tiles2D
         {
             if (clickable && !triggered)
             {
-                gridMat.SetColor("_TextureColorTint", defaultCol);
+                UpdateMaterial(defaultCol);
             }
         }
 
@@ -175,7 +178,7 @@ namespace Tiles2D
             if (gameObject.CompareTag("Bomb"))
             {
                 defaultCol = new Color(0.5f, 0f, 0f);
-                gridMat.SetColor("_TextureColorTint", defaultCol);
+                UpdateMaterial(defaultCol);
                 Instantiate(vfx.bombEffect, transform.position, Quaternion.identity);
             }
         }
@@ -203,6 +206,12 @@ namespace Tiles2D
             Destroy(this);
         }
 
+        protected void UpdateMaterial(Color color)
+        {
+            gridMat?.SetColor("_EmissiveColor", color * glowIntensity);
+            gridMat?.SetColor("_BaseColor", color);
+        }
+
         public void DoAction()
         {
             StartCoroutine(FireAction());
@@ -212,14 +221,14 @@ namespace Tiles2D
         {
             if (clickable && !triggered)
             {
-                gridMat.SetColor("_TextureColorTint", new Color(0.7f, 0.7f, 0.7f));
+                UpdateMaterial(Color.white);
             }
         }
 
         public void FirstTile()
         {
-            defaultCol = new Color(0.6f, 1f, 0.8f);
-            gridMat?.SetColor("_TextureColorTint", defaultCol);
+            defaultCol = new Color(0, 0, 1);
+            UpdateMaterial(defaultCol);
         }
 
         public void NoBombReveal()

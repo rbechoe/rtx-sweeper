@@ -36,7 +36,7 @@ MonoBehaviour:
     m_Cameras: []
     m_ResolutionCaptureMode: 1
     m_Resolutions:
-    - m_Active: 0
+    - m_Active: 1
       m_Width: 1920
       m_Height: 1080
       m_Scale: 1
@@ -225,7 +225,7 @@ MonoBehaviour:
         y: 0
         width: 0
         height: 0
-    - m_Active: 1
+    - m_Active: 0
       m_Width: 3840
       m_Height: 2160
       m_Scale: 1
@@ -237,7 +237,7 @@ MonoBehaviour:
       m_ForcedUnityPPI: 0
       m_DeviceCanvas: {fileID: 0}
       m_Ratio: 16:9
-      m_FileName: 
+      m_FileName: F:\HKU\sweeper repo\screenshots/3840x2160-screenshot (6).png
       m_IgnoreOrientation: 0
       m_DisableSafeArea: 0
       m_SafeAreaPortrait:
@@ -254,8 +254,8 @@ MonoBehaviour:
         height: 0
     m_GameViewResolution:
       m_Active: 1
-      m_Width: 1310
-      m_Height: 820
+      m_Width: 3840
+      m_Height: 2160
       m_Scale: 1
       m_Orientation: 0
       m_ResolutionName: GameView
