@@ -108,6 +108,11 @@ public class MenuManager : Base
         SceneManager.LoadScene("Tutorial");
     }
 
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
     public void QuitGame()
     {
         Application.Quit();

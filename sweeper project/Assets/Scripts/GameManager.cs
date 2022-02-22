@@ -21,11 +21,13 @@ public class GameManager : Base
     private void OnEnable()
     {
         EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
+        EventSystem.AddListener(EventType.GAME_LOSE, StartGame);
     }
 
     private void OnDisable()
     {
         EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, StartGame);
     }
 
     protected override void Update()
@@ -77,6 +79,11 @@ public class GameManager : Base
         timer = 0;
         goodTiles = 0;
         gameActive = true;
+    }
+
+    private void StopTimer()
+    {
+        gameActive = false;
     }
 
     public void EndGame()
