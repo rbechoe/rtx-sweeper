@@ -28,4 +28,5 @@ public enum EventType
     INPUT_DOWN,         // passes nothing
     INPUT_FORWARD,      // passes nothing
     INPUT_BACK,         // passes nothing
+    INPUT_F12,          // passes nothing
 }
