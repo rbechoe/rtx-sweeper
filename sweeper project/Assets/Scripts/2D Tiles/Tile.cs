@@ -23,6 +23,7 @@ namespace Tiles2D
         protected Collider[] tilesPreviewed;
 
         private float glowIntensity = 8192; // value is in nits
+        private Color emptyTileColor; // received from grid manager
 
         protected override void Start()
         {
@@ -36,6 +37,8 @@ namespace Tiles2D
 
             flagMask = LayerMask.GetMask("Flag");
             allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
+
+            emptyTileColor = gameObject.GetComponent<Checker>().emptyTileColor;
 
             StartSettings();
         }
@@ -159,8 +162,8 @@ namespace Tiles2D
 
             triggered = true;
 
-            defaultCol = Color.black;
-            UpdateMaterial(defaultCol);
+            defaultCol = emptyTileColor;
+            UpdateMaterial(defaultCol, 1);
 
             TypeSpecificAction();
         }
@@ -206,9 +209,11 @@ namespace Tiles2D
             Destroy(this);
         }
 
-        protected void UpdateMaterial(Color color)
+        protected void UpdateMaterial(Color color, float intensity = -10)
         {
-            gridMat?.SetColor("_EmissiveColor", color * glowIntensity);
+            if (intensity == -10) intensity = glowIntensity;
+
+            gridMat?.SetColor("_EmissiveColor", color * intensity);
             gridMat?.SetColor("_BaseColor", color);
         }
 
@@ -227,7 +232,7 @@ namespace Tiles2D
 
         public void FirstTile()
         {
-            defaultCol = new Color(0, 0, 1);
+            defaultCol = gameObject.GetComponent<Checker>().startColor;
             UpdateMaterial(defaultCol);
         }
 

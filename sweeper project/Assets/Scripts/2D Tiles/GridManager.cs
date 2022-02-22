@@ -36,6 +36,8 @@ namespace Tiles2D
         [Tooltip("1 = arctic, 2 = asia, 3 = desert")]
         public int area;
         public int level;
+        public Color emptyTileColor = Color.black;
+        public Color startColor = Color.blue;
 
         private string difficultyStars;
         private bool firstTime = true; // used to avoid bug, clean solution needs to be fixed!

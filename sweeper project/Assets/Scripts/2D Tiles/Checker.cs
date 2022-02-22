@@ -7,6 +7,18 @@ namespace Tiles2D
     {
         public Collider[] hitColliders;
 
+        private GridManager gridManager;
+        public Color emptyTileColor;
+        public Color startColor;
+
+        protected override void Start()
+        {
+            base.Start();
+            gridManager = transform.parent.GetComponent<GridManager>();
+            emptyTileColor = gridManager.emptyTileColor;
+            startColor = gridManager.startColor;
+        }
+
         private void OnEnable()
         {
             EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
