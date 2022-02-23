@@ -276,6 +276,7 @@ MonoBehaviour:
 
 
 
+
     Special
     Thanks
 
@@ -971,15 +972,18 @@ MonoBehaviour:
 
     Youri Schuring
 
-    Raoul
+    Raoul Scholtens
 
-    Yasmin van Rooijen
+    Yasmin
+    van Rooijen
 
     Andries
 
-    Nan
+    Nan van Kallen
 
     Caspar
+
+    Michael Smith
 
 
     Kris
@@ -996,9 +1000,9 @@ MonoBehaviour:
 
     Youri Schuring
 
-    Valentijn
+    Valentijn Muijers
 
-    Aaron'
+    Aaron Oostdijk'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e464b532a37ac42409b407b7fa4a8cae, type: 2}
   m_sharedMaterial: {fileID: 7328866445344255039, guid: e464b532a37ac42409b407b7fa4a8cae, type: 2}
