@@ -14,15 +14,11 @@ public class Dialogues : MonoBehaviour
     public float startDelay, endDelay;
     private float totalWaitTime;
 
-    private void OnEnable()
-    {
-        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
-    }
-
     void Start()
     {
         DisableBar();
         StartCoroutine(DelayedMethods.FireMethod(EnableBar, startDelay));
+        StartCoroutine(DelayedMethods.FireMethod(RandomizeGrid, 10));
         totalWaitTime += startDelay - waitTimes[0];
 
         for (int i = 0; i < lines.Count; i++)
@@ -37,6 +33,11 @@ public class Dialogues : MonoBehaviour
     void EnableBar()
     {
         dialogueBar.SetActive(true);
+    }
+
+    void RandomizeGrid()
+    {
+        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
     }
 
     void DisableBar()
