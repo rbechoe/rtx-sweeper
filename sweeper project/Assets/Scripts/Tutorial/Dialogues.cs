@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Dialogues : MonoBehaviour
 {
@@ -35,11 +36,6 @@ public class Dialogues : MonoBehaviour
         dialogueBar.SetActive(true);
     }
 
-    void RandomizeGrid()
-    {
-        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
-    }
-
     void DisableBar()
     {
         dialogueBar.SetActive(false);
@@ -48,5 +44,20 @@ public class Dialogues : MonoBehaviour
     void Dialogue(int line)
     {
         text.text = lines[line];
+    }
+
+    public void RandomizeGrid()
+    {
+        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }

@@ -35,6 +35,7 @@ public class CartUpdater : MonoBehaviour
 
         if (timer <= 0)
         {
+            blackScreen.gameObject.SetActive(false);
             started = true;
         }
 
