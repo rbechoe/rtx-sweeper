@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Cinemachine;
 
 public class CartUpdater : MonoBehaviour
@@ -12,6 +13,12 @@ public class CartUpdater : MonoBehaviour
     CinemachineVirtualCamera vCam;
     CinemachineTrackedDolly dolly;
 
+    public RawImage blackScreen;
+
+    bool started;
+
+    float timer = 2;
+
     void Start()
     {
         vCam = gameObject.GetComponent<CinemachineVirtualCamera>();
@@ -20,10 +27,24 @@ public class CartUpdater : MonoBehaviour
 
     void Update()
     {
-        if ((checkPoints.Count > 0 && cartPos < checkPoints[0]) || checkPoints.Count == 0)
+        if (timer > 0)
         {
-            cartPos += Time.deltaTime * speed;
+            timer -= Time.deltaTime;
+            blackScreen.color = new Color(0.1f, 0.1f, 0.1f, timer / 2f);
         }
-        dolly.m_PathPosition = cartPos;
+
+        if (timer <= 0)
+        {
+            started = true;
+        }
+
+        if (started)
+        {
+            if ((checkPoints.Count > 0 && cartPos < checkPoints[0]) || checkPoints.Count == 0)
+            {
+                cartPos += Time.deltaTime * speed;
+            }
+            dolly.m_PathPosition = cartPos;
+        }
     }
 }
