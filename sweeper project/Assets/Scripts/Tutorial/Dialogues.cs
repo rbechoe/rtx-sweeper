@@ -14,6 +14,11 @@ public class Dialogues : MonoBehaviour
     public float startDelay, endDelay;
     private float totalWaitTime;
 
+    private void OnEnable()
+    {
+        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
+    }
+
     void Start()
     {
         DisableBar();

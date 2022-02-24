@@ -33,7 +33,7 @@ namespace Tiles2D
         public TextMeshProUGUI infoText;
 
         [Header("Level specific")]
-        [Tooltip("1 = arctic, 2 = asia, 3 = desert")]
+        [Tooltip("1 = arctic, 2 = asia, 3 = desert, 4 = tutorial")]
         public int area;
         public int level;
         public Color emptyTileColor = Color.black;
@@ -305,7 +305,9 @@ namespace Tiles2D
         }
 
         private void SaveData()
-        { 
+        {
+            if (area == 4) return;
+
             float efficiency = (initialBombAmount * (bombDensity - 1f)) / tileClicks * 50f;
             efficiency = Mathf.Clamp(efficiency, 0, 100);
 
