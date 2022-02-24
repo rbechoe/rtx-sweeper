@@ -902,7 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.5
   cartPos: 0
-  checkPoints: 
+  checkPoints: 16000000
   blackScreen: {fileID: 667280144}
 --- !u!1001 &25374516
 PrefabInstance:
@@ -7513,13 +7513,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lines:
-  - Hello this is line 1
-  - Hello this is line 2
-  - Hello this is line 3
-  - Hello this is line 4
-  waitTimes: 01000000020000000300000002000000
+  - Welcome to RTX Sweeper
+  - This magnificent world is being threatened by an evil villain
+  - It is your job to protect the world from destruction
+  - Your advanced toolkit consists of 2 items
+  - The left and the right mouse button
+  - The combination of the two gives you the power to solve puzzles
+  - With the left mouse button you can reveal a tile
+  - The right mouse button plants a flag
+  - With flags you can mark the location of a bomb
+  - The numbers indicate how many bombs are nearby
+  - Now, go off and rescue the world!
+  waitTimes: 0400000006000000080000000600000004000000060000000600000004000000060000000600000004000000
   text: {fileID: 1921296724}
   dialogueBar: {fileID: 336273346}
+  startDelay: 4
+  endDelay: 4
 --- !u!4 &254455788 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 450186, guid: 37959fcc174a554468158ae1d71189b0, type: 3}
@@ -18911,7 +18920,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -464.5333}
-  m_SizeDelta: {x: 1920, y: 150}
+  m_SizeDelta: {x: 1600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &336273348
 MonoBehaviour:
@@ -96136,7 +96145,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1800, y: 100}
+  m_SizeDelta: {x: 1500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1921296724
 MonoBehaviour:
@@ -105181,13 +105190,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057801372}
-  m_LocalRotation: {x: -0, y: -0.180637, z: -0, w: 0.98354983}
-  m_LocalPosition: {x: 8.17, y: -0.42438507, z: 21.26}
+  m_LocalRotation: {x: -0, y: -0.006227929, z: -0, w: 0.9999807}
+  m_LocalPosition: {x: 17.9, y: -0.42438507, z: 22.5}
   m_LocalScale: {x: 1, y: 16.309465, z: 16.564564}
   m_Children: []
   m_Father: {fileID: 513071546}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -20.814, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.714, z: 0}
 --- !u!114 &2057801377
 MonoBehaviour:
   m_ObjectHideFlags: 0

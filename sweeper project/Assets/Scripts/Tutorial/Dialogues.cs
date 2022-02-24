@@ -11,12 +11,14 @@ public class Dialogues : MonoBehaviour
     public TextMeshProUGUI text;
     public GameObject dialogueBar;
 
+    public float startDelay, endDelay;
     private float totalWaitTime;
 
     void Start()
     {
         DisableBar();
-        StartCoroutine(DelayedMethods.FireMethod(EnableBar, 2));
+        StartCoroutine(DelayedMethods.FireMethod(EnableBar, startDelay));
+        totalWaitTime += startDelay - waitTimes[0];
 
         for (int i = 0; i < lines.Count; i++)
         {
@@ -24,7 +26,7 @@ public class Dialogues : MonoBehaviour
             StartCoroutine(DelayedMethods<int>.FireMethod(Dialogue, i, totalWaitTime));
         }
 
-        StartCoroutine(DelayedMethods.FireMethod(DisableBar, totalWaitTime + 4));
+        StartCoroutine(DelayedMethods.FireMethod(DisableBar, totalWaitTime + endDelay));
     }
 
     void EnableBar()
