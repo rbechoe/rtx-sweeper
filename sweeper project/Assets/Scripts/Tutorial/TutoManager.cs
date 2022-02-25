@@ -10,8 +10,12 @@ public class TutoManager : MonoBehaviour
     public GameObject[] uiObjects;
     public TextMeshProUGUI bombCount, timer;
 
+    private DataSerializer dataSerializer;
+
     private void Start()
     {
+        dataSerializer = gameObject.GetComponent<DataSerializer>();
+
         DisableUIElements();
         DisableText();
         StartCoroutine(DelayedMethods.FireMethod(RandomizeGrid, 10));
@@ -31,6 +35,10 @@ public class TutoManager : MonoBehaviour
 
     void EnableText()
     {
+        AccountData userData = dataSerializer.GetUserData();
+        userData.tutorialVictories += 1;
+        dataSerializer.UpdateAccountData(userData);
+
         victoryText.SetActive(true);
     }
 

@@ -1,8 +1,9 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class MenuManager : Base
+public class MenuManager : MonoBehaviour
 {
     [SerializeField]
     private TMP_InputField xTMP;
@@ -11,10 +12,25 @@ public class MenuManager : Base
     [SerializeField]
     private TMP_InputField bombTMP;
 
+    public Button playBtn, asiaBtn, desertBtn;
+
     private int xSize;
     private int zSize;
     private int gridSize;
     private int bombAmount;
+
+    private DataSerializer dataSerializer;
+
+    private void Start()
+    {
+        // disable interactables based on savedata
+        dataSerializer = gameObject.GetComponent<DataSerializer>();
+        AccountData accountData = dataSerializer.GetUserData();
+        if (accountData.tutorialVictories > 0) playBtn.interactable = true;
+        if (accountData.arcticVictories > 0) asiaBtn.interactable = true;
+        if (accountData.asiaVictories > 0) desertBtn.interactable = true;
+        //if (accountData.desertVictories > 0) bossBtn.interactable = true;
+    }
 
     public void Easy2D()
     {

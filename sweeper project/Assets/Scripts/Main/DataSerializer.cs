@@ -42,56 +42,9 @@ public class DataSerializer : MonoBehaviour
     {
         AccountData AD = new AccountData();
 
-        // Create data
+        // Update data
         AD.versionNumber = versionNumber;
         AD.tsSaved = GetUnixTimestamp();
-        AD.gamesPlayed = 0;
-        AD.gamesWon = 0;
-        AD.gamesLost = 0;
-        AD.totalClicks = 0;
-        AD.totalTimePlayed = 0;
-
-        AD.arcticVictories = 0;
-        AD.arcticLoses = 0;
-        AD.arcticGamesPlayed = 0;
-        AD.arcticTotalClicks = 0;
-        AD.arcticTime1 = 0;
-        AD.arcticClicks1 = 0;
-        AD.arcticEfficiency1 = 0;
-        AD.arcticTime2 = 0;
-        AD.arcticClicks2 = 0;
-        AD.arcticEfficiency2 = 0;
-        AD.arcticTime3 = 0;
-        AD.arcticClicks3 = 0;
-        AD.arcticEfficiency3 = 0;
-
-        AD.asiaVictories = 0;
-        AD.asiaLoses = 0;
-        AD.asiaGamesPlayed = 0;
-        AD.asiaTotalClicks = 0;
-        AD.asiaTime1 = 0;
-        AD.asiaClicks1 = 0;
-        AD.asiaEfficiency1 = 0;
-        AD.asiaTime2 = 0;
-        AD.asiaClicks2 = 0;
-        AD.asiaEfficiency2 = 0;
-        AD.asiaTime3 = 0;
-        AD.asiaClicks3 = 0;
-        AD.asiaEfficiency3 = 0;
-
-        AD.desertVictories = 0;
-        AD.desertLoses = 0;
-        AD.desertGamesPlayed = 0;
-        AD.desertTotalClicks = 0;
-        AD.desertTime1 = 0;
-        AD.desertClicks1 = 0;
-        AD.desertEfficiency1 = 0;
-        AD.desertTime2 = 0;
-        AD.desertClicks2 = 0;
-        AD.desertEfficiency2 = 0;
-        AD.desertTime3 = 0;
-        AD.desertClicks3 = 0;
-        AD.desertEfficiency3 = 0;
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream fs = File.Open(Application.persistentDataPath + fileName, FileMode.OpenOrCreate);
@@ -212,4 +165,7 @@ public class AccountData
     public int desertClicks3 = 0;
     public int desertEfficiency3 = 0;
     public int desertVictories3 = 0;
+
+    // Tutorial
+    public int tutorialVictories = 0;
 }

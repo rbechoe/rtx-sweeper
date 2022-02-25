@@ -10550,7 +10550,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 439264400}
   m_OnClick:
     m_PersistentCalls:
@@ -73526,6 +73526,9 @@ MonoBehaviour:
   xTMP: {fileID: 8990987614468770236}
   zTMP: {fileID: 8990987614957741256}
   bombTMP: {fileID: 8990987614825833436}
+  playBtn: {fileID: 439264399}
+  asiaBtn: {fileID: 8990987614530998791}
+  desertBtn: {fileID: 8990987614742662900}
 --- !u!224 &8222405600793355235
 RectTransform:
   m_ObjectHideFlags: 0
@@ -74316,6 +74319,7 @@ GameObject:
   - component: {fileID: 8990987613344965855}
   - component: {fileID: 8990987613344965848}
   - component: {fileID: 7389621369151043414}
+  - component: {fileID: 8990987613344965850}
   m_Layer: 5
   m_Name: Canvas Menu
   m_TagString: Untagged
@@ -74323,6 +74327,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8990987613344965850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8990987613344965849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fe16ee171ad89545ac507d31215cf22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8990987613344965853
 RectTransform:
   m_ObjectHideFlags: 0
@@ -76921,7 +76937,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 8990987614530998790}
   m_OnClick:
     m_PersistentCalls:
@@ -77557,7 +77573,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 8990987614742662907}
   m_OnClick:
     m_PersistentCalls:
