@@ -11,7 +11,6 @@ public class Dialogues : MonoBehaviour
 
     public TextMeshProUGUI text;
     public GameObject dialogueBar;
-    public GameObject victoryText;
     public GameObject[] uiObjects;
 
     public float startDelay, endDelay;
@@ -20,11 +19,8 @@ public class Dialogues : MonoBehaviour
     void Start()
     {
         DisableBar();
-        DisableUIElements();
-        DisableText();
 
         StartCoroutine(DelayedMethods.FireMethod(EnableBar, startDelay));
-        StartCoroutine(DelayedMethods.FireMethod(RandomizeGrid, 10));
 
         totalWaitTime += startDelay - waitTimes[0];
 
@@ -36,18 +32,6 @@ public class Dialogues : MonoBehaviour
 
         StartCoroutine(DelayedMethods.FireMethod(DisableBar, totalWaitTime + endDelay));
         StartCoroutine(DelayedMethods.FireMethod(EnableUIElements, totalWaitTime));
-    }
-
-    private void OnEnable()
-    {
-        EventSystem.AddListener(EventType.WIN_GAME, EnableText);
-        EventSystem.AddListener(EventType.RESET_GAME, DisableText);
-    }
-
-    private void OnDisable()
-    {
-        EventSystem.RemoveListener(EventType.WIN_GAME, EnableText);
-        EventSystem.RemoveListener(EventType.RESET_GAME, DisableText);
     }
 
     void EnableBar()
@@ -65,45 +49,11 @@ public class Dialogues : MonoBehaviour
         text.text = lines[line];
     }
 
-    // TODO detach all below this comment and place it in a tutorial manager
-    void EnableText()
-    {
-        victoryText.SetActive(true);
-    }
-
-    void DisableText()
-    {
-        victoryText.SetActive(false);
-    }
-
-    void DisableUIElements()
-    {
-        foreach (GameObject ui in uiObjects)
-        {
-            ui.SetActive(false);
-        }
-    }
-
     void EnableUIElements()
     {
         foreach (GameObject ui in uiObjects)
         {
             ui.SetActive(true);
         }
-    }
-
-    public void RandomizeGrid()
-    {
-        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-
-    public void LoadMenu()
-    {
-        SceneManager.LoadScene("Menu");
     }
 }
