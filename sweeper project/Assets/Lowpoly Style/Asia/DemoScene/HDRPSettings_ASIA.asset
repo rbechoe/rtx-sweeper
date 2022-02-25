@@ -47,8 +47,8 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   postExposure:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 0.2
   contrast:
     m_OverrideState: 1
     m_Value: 15
@@ -414,13 +414,13 @@ MonoBehaviour:
     min: 0
   baseHeight:
     m_OverrideState: 1
-    m_Value: 80
+    m_Value: 0
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 120
+    m_Value: 200
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 1000
+    m_Value: 200
     min: 1
   enableVolumetricFog:
     m_OverrideState: 1
