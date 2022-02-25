@@ -60,7 +60,7 @@ MonoBehaviour:
     m_Value: 400
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 400
+    m_Value: 300
     min: 1
   enableVolumetricFog:
     m_OverrideState: 1
@@ -642,22 +642,22 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   indirectDiffuseLightingMultiplier:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 4
     min: 0
   indirectDiffuseLightingLayers:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 255
   reflectionLightingMultiplier:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 2
     min: 0
   reflectionLightingLayers:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 255
   reflectionProbeIntensityMultiplier:
     m_OverrideState: 1
-    m_Value: 1.1
+    m_Value: 1.5
     min: 0
 --- !u!114 &7502528774814404555
 MonoBehaviour:
