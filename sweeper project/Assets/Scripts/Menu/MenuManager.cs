@@ -12,7 +12,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private TMP_InputField bombTMP;
 
-    public Button playBtn, asiaBtn, desertBtn;
+    public Button playBtn, asiaBtn, desertBtn, bossBtn;
 
     private int xSize;
     private int zSize;
@@ -29,7 +29,7 @@ public class MenuManager : MonoBehaviour
         if (accountData.tutorialVictories > 0) playBtn.interactable = true;
         if (accountData.arcticVictories > 0) asiaBtn.interactable = true;
         if (accountData.asiaVictories > 0) desertBtn.interactable = true;
-        //if (accountData.desertVictories > 0) bossBtn.interactable = true;
+        if (accountData.desertVictories > 0) bossBtn.gameObject.SetActive(true);
     }
 
     public void Easy2D()

@@ -123,8 +123,7 @@ namespace BossTiles
 
             StartCoroutine(ShuffleBombs());
         }
-
-
+        
         private IEnumerator ShuffleBombs()
         {
             EventSystem.InvokeEvent(EventType.UNPLAYABLE);

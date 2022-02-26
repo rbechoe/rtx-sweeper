@@ -188,6 +188,19 @@ namespace BossTiles
                     bombCount++;
                 }
             }
+
+            if (state != BossTileStates.Bomb && state!= BossTileStates.Revealed)
+            {
+                if (bombCount > 0)
+                {
+                    state = BossTileStates.Number;
+                }
+                else
+                {
+                    state = BossTileStates.Empty;
+                }
+            }
+
             UpdateBombAmount(bombCount);
         }
 
