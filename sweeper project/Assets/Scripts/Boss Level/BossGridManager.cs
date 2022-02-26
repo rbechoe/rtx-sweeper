@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -95,7 +96,7 @@ namespace BossTiles
             EventSystem.AddListener(EventType.END_GAME, StopTimer);
             EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
             EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
-            EventSystem.AddListener(EventType.PLAY_CLICK, ShuffleGrid);
+            EventSystem.AddListener(EventType.SHUFFLE, ShuffleGrid);
             EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
             EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
         }
@@ -111,7 +112,7 @@ namespace BossTiles
             EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
             EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
             EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
-            EventSystem.RemoveListener(EventType.TILE_CLICK, ShuffleGrid);
+            EventSystem.RemoveListener(EventType.SHUFFLE, ShuffleGrid);
             EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
             EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
         }
@@ -123,107 +124,48 @@ namespace BossTiles
             StartCoroutine(ShuffleBombs());
         }
 
+
         private IEnumerator ShuffleBombs()
         {
-            int curTile = 0;
-            int tilesLeft = 0;
-            int spawnChance = 0;
-            int bombCount = 0;
-            int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
-            int curTileCount = 0;
-
             EventSystem.InvokeEvent(EventType.UNPLAYABLE);
-
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1f);
             
-            // check how many bombs have been flagged
+            List<GameObject> shuffles = new List<GameObject>();
+            List<Vector3> positions = new List<Vector3>();
             for (int tileId = 0; tileId < tiles.Count; tileId++)
             {
                 GameObject newTile = tiles[tileId];
-                if (newTile.GetComponent<BossTile>().state == BossTileStates.Bomb)
-                {
-                    // if flagged increase bombcount, meaning we have to shuffle less bombs
-                    Collider[] nearbyFlags = Physics.OverlapBox(newTile.transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
-                    if (nearbyFlags.Length > 0) bombCount++;
-                }
-            }
+                BossTile tileData = newTile.GetComponent<BossTile>();
 
-            // rearrange grid
-            List<GameObject> rearrangables = tiles;
-
-            // assign bombs
-            for (int tileId = 0; tileId < tiles.Count; tileId++)
-            {
-                GameObject newTile = tiles[tileId];
-
-                // formula: based on tiles and bombs left increase chance for next tile to be bomb
-                if (bombCount < bombAmount)
-                {
-                    tilesLeft = tiles.Count - curTile;
-                    spawnChance = tilesLeft / (bombAmount - bombCount);
-                }
-
-                // skip if flag is on top of tile
+                // if flagged skip
                 Collider[] nearbyFlags = Physics.OverlapBox(newTile.transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
                 if (nearbyFlags.Length > 0) continue;
 
-                BossTile tileData = newTile.GetComponent<BossTile>();
+                // if triggered skip
+                if (tileData.triggered) continue;
 
-                if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
-                {
-                    newTile.tag = "Bomb";
-                    newTile.layer = 11;
-                    tileData.state = BossTileStates.Bomb;
-                    bombCount++;
-                    rearrangables.Remove(newTile);
-                }
-
-                curTile++;
-                curTileCount++;
-
-                // continue next frame
-                if (curTileCount >= tilesPerFrame)
-                {
-                    curTileCount = 0;
-                    yield return new WaitForEndOfFrame();
-                }
+                shuffles.Add(newTile);
+                positions.Add(newTile.transform.position);
             }
-            
-            // assign empty and number tiles, can only be done after all bombs has been placed
-            for (int tileId = 0; tileId < rearrangables.Count; tileId++)
-            {
-                GameObject newTile = tiles[tileId];
-                BossTile tileData = newTile.GetComponent<BossTile>();
-                newTile.tag = "Empty";
-                newTile.layer = 12;
-
-                // check if there are bombs nearby
-                Collider[] nearbyBombs = Physics.OverlapBox(newTile.transform.position, Vector3.one * 0.25f, Quaternion.identity, bombMask);
-                if (nearbyBombs.Length > 0)
-                {
-                    // number
-                    tileData.state = BossTileStates.Number;
-                    tileData.UpdateBombAmount(nearbyBombs.Length);
-                }
-                else
-                {
-                    // empty
-                    tileData.state = BossTileStates.Empty;
-                    tileData.UpdateBombAmount(0);
-                }
-
-                curTile++;
-                curTileCount++;
-
-                // continue next frame
-                if (curTileCount >= tilesPerFrame)
-                {
-                    curTileCount = 0;
-                    yield return new WaitForEndOfFrame();
-                }
-            }
-
             yield return new WaitForEndOfFrame();
+
+            // shuffle positions
+            for (int i = 0; i < positions.Count; i++)
+            {
+                Vector3 temp = positions[i];
+                int randomIndex = Random.Range(i, positions.Count);
+                positions[i] = positions[randomIndex];
+                positions[randomIndex] = temp;
+            }
+            yield return new WaitForEndOfFrame();
+            
+            // assign new positions
+            for (int i = 0; i < shuffles.Count; i++)
+            {
+                shuffles[i].transform.position = positions[i];
+            }
+            yield return new WaitForEndOfFrame();
+            
             EventSystem.InvokeEvent(EventType.PLAYABLE);
         }
 

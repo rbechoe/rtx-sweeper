@@ -14,7 +14,7 @@ namespace BossTiles
         protected int bombCount;
         protected Material gridMat;
 
-        private bool triggered;
+        public bool triggered;
         private bool clickable;
         private bool previewClicked;
         private bool canReveal;
@@ -121,6 +121,11 @@ namespace BossTiles
                     EventSystem.InvokeEvent(EventType.TILE_CLICK);
                     DoAction();
                 }
+                
+                if (state != BossTileStates.Bomb)
+                {
+                    EventSystem.InvokeEvent(EventType.SHUFFLE);
+                }
 
                 // reveal all nearby tiles
                 if (previewClicked && canReveal)
@@ -170,6 +175,20 @@ namespace BossTiles
         private void Playable()
         {
             shuffling = false;
+
+            // count all nearby bombs
+            Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
+            int bombCount = 0;
+
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i].gameObject == gameObject) continue;
+                if (hitColliders[i].gameObject.CompareTag("Bomb"))
+                {
+                    bombCount++;
+                }
+            }
+            UpdateBombAmount(bombCount);
         }
 
         protected IEnumerator FireAction()
@@ -312,7 +331,6 @@ namespace BossTiles
                     break;
 
                 case BossTileStates.Number:
-                    // TODO, update numbers real time
                     EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
                     defaultCol = Color.grey;
                     gridMat.SetColor("_TextureColorTint", defaultCol);

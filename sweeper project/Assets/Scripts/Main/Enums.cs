@@ -23,6 +23,7 @@ public enum EventType
     GAME_LOSE,          // passes nothing
     UNPLAYABLE,         // passes nothing
     PLAYABLE,           // passes nothing
+    SHUFFLE,            // passes nothing
     // input related
     INPUT_LEFT,         // passes nothing
     INPUT_RIGHT,        // passes nothing
