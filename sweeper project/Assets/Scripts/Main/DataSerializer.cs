@@ -168,4 +168,14 @@ public class AccountData
 
     // Tutorial
     public int tutorialVictories = 0;
+
+    // Boss
+    public int bossVictories = 0;
+    public int bossLoses = 0;
+    public int bossGamesPlayed = 0;
+    public int bossTotalClicks = 0;
+    public int bossTime1 = 0;
+    public int bossClicks1 = 0;
+    public int bossEfficiency1 = 0;
+    public int bossVictories1 = 0;
 }

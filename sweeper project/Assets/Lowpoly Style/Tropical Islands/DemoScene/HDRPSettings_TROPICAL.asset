@@ -182,11 +182,11 @@ MonoBehaviour:
     min: 0
   upperHemisphereLuxValue:
     m_OverrideState: 0
-    m_Value: 0.48928875
+    m_Value: 2.137391
     min: 0
   upperHemisphereLuxColor:
     m_OverrideState: 0
-    m_Value: {x: 0.5, y: 0.42638287, z: 0.32229766}
+    m_Value: {x: 0.47998893, y: 0.5, z: 0.4905231}
   desiredLuxValue:
     m_OverrideState: 0
     m_Value: 20000
@@ -202,7 +202,7 @@ MonoBehaviour:
     m_Value: 0
   hdriSky:
     m_OverrideState: 1
-    m_Value: {fileID: 8900000, guid: 12c15a8e5a294be45819b1dd4b9b08d3, type: 3}
+    m_Value: {fileID: 8900000, guid: 3b5d67736d7b8ad4f8da4d58eaef0b98, type: 3}
   enableDistortion:
     m_OverrideState: 0
     m_Value: 0
@@ -446,7 +446,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   indirectDiffuseLightingMultiplier:
     m_OverrideState: 1
-    m_Value: 4
+    m_Value: 2.5
     min: 0
   indirectDiffuseLightingLayers:
     m_OverrideState: 1
@@ -460,7 +460,7 @@ MonoBehaviour:
     m_Value: 255
   reflectionProbeIntensityMultiplier:
     m_OverrideState: 1
-    m_Value: 1.1
+    m_Value: 1.5
     min: 0
 --- !u!114 &6338314280277658590
 MonoBehaviour:
@@ -612,7 +612,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   toeStrength:
     m_OverrideState: 0
     m_Value: 0
@@ -661,7 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953beb541740ddc499d005ee80c9ff29, type: 3}
   m_Name: Fog
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   quality:
     m_OverrideState: 1

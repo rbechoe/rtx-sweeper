@@ -30,3 +30,11 @@ public enum EventType
     INPUT_BACK,         // passes nothing
     INPUT_F12,          // passes nothing
 }
+
+public enum BossTileStates
+{
+    Revealed,
+    Number,
+    Bomb,
+    Empty
+}

@@ -1,0 +1,325 @@
+using System.Collections;
+using UnityEngine;
+
+namespace BossTiles
+{
+    public class BossTile : MonoBehaviour
+    {
+        [Header("Settings")]
+        public VFXManipulator vfx;
+
+        protected LayerMask flagMask;
+        protected LayerMask allMask;
+
+        protected int bombCount;
+        protected Material gridMat;
+
+        protected bool triggered;
+        protected bool clickable;
+        protected bool previewClicked;
+        protected bool canReveal;
+        protected Collider[] tilesPreviewed;
+
+        private float glowIntensity = 8192; // value is in nits
+        private BossGridManager manager;
+        private Color emptyTileColor; // received from grid manager
+        private Color startColor; // received from grid manager
+        private Color selectCol; // received from grid manager
+        private Color defaultCol;
+
+        public BossTileStates state = BossTileStates.Empty;
+
+        private void Start()
+        {
+            vfx = GetComponentInChildren<VFXManipulator>();
+            gridMat = vfx.gridTile.GetComponent<Renderer>().material;
+            gridMat.EnableKeyword("_EmissiveColor");
+            vfx.gameObject.SetActive(false);
+
+            flagMask = LayerMask.GetMask("Flag");
+            allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
+
+            manager = transform.parent.GetComponent<BossGridManager>();
+            emptyTileColor = manager.emptyTileColor;
+            startColor = manager.defaultColor;
+            selectCol = manager.selectColor;
+            defaultCol = startColor;
+
+            UpdateMaterial(defaultCol);
+            UpdateSettings();
+        }
+
+        private void OnEnable()
+        {
+            // listen
+            EventSystem.AddListener(EventType.START_GAME, Clickable);
+            EventSystem.AddListener(EventType.END_GAME, Unclickable);
+            EventSystem.AddListener(EventType.WIN_GAME, Unclickable);
+            EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
+            EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
+            EventSystem.AddListener(EventType.END_GAME, ResetSelf);
+        }
+
+        private void OnDisable()
+        {
+            // unlisten
+            EventSystem.RemoveListener(EventType.START_GAME, Clickable);
+            EventSystem.RemoveListener(EventType.END_GAME, Unclickable);
+            EventSystem.RemoveListener(EventType.WIN_GAME, Unclickable);
+            EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
+            EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
+            EventSystem.RemoveListener(EventType.END_GAME, ResetSelf);
+            vfx.gameObject.SetActive(true);
+        }
+
+        private void OnMouseOver()
+        {
+            if (clickable && !triggered)
+            {
+                UpdateMaterial(selectCol);
+            }
+
+            // press left button - highlight adjecant tiles that can be revealed if this tile is revealed
+            if (Input.GetMouseButton(0) && triggered && !previewClicked)
+            {
+                // use box to detect all nearby tiles that can be activated once amount bombs equals amount of flags, not more or less
+                Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, flagMask);
+                Collider[] allTiles = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, allMask);
+
+                if (bombCount == nearbyFlags.Length)
+                {
+                    canReveal = true;
+                }
+                else
+                {
+                    canReveal = false;
+                }
+
+                foreach (Collider tile in allTiles)
+                {
+                    BossTile bossTile = tile.GetComponent<BossTile>();
+                    bossTile?.PreviewTileSelection();
+                }
+
+                tilesPreviewed = allTiles;
+                previewClicked = true;
+            }
+
+            // release left button - reveal tile
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (clickable)
+                {
+                    EventSystem.InvokeEvent(EventType.PLAY_CLICK);
+                    EventSystem.InvokeEvent(EventType.TILE_CLICK);
+                    DoAction();
+                }
+
+                // reveal all nearby tiles
+                if (previewClicked && canReveal)
+                {
+                    foreach (Collider _tile in tilesPreviewed)
+                    {
+                        _tile.GetComponent<BossTile>()?.DoAction();
+                    }
+                    previewClicked = false;
+                    tilesPreviewed = null;
+                }
+            }
+
+            // right click - place flag
+            if (Input.GetMouseButtonUp(1) && !triggered)
+            {
+                EventSystem.InvokeEvent(EventType.PLAY_FLAG);
+                EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
+            }
+        }
+
+        private void OnMouseExit()
+        {
+            // set tile back to base color
+            if (clickable && !triggered)
+            {
+                UpdateMaterial(defaultCol);
+            }
+
+            // set all nearby tiles back to base color
+            if (previewClicked)
+            {
+                foreach (Collider _tile in tilesPreviewed)
+                {
+                    _tile.GetComponent<BossTile>()?.SetToDefaultCol();
+                }
+                previewClicked = false;
+                tilesPreviewed = null;
+            }
+        }
+
+        protected IEnumerator FireAction()
+        {
+            yield return new WaitForEndOfFrame();
+
+            if (triggered)
+            {
+                yield break;
+            }
+
+            // return if there is a flag on this position
+            Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
+            if (nearbyFlags.Length > 0)
+            {
+                yield break;
+            }
+
+            triggered = true;
+
+            defaultCol = emptyTileColor;
+            UpdateMaterial(defaultCol, 1);
+
+            TypeSpecificAction();
+        }
+
+        protected void SetToDefaultCol()
+        {
+            if (clickable && !triggered)
+            {
+                UpdateMaterial(defaultCol);
+            }
+        }
+
+        protected void RevealBomb()
+        {
+            if (gameObject.CompareTag("Bomb"))
+            {
+                defaultCol = new Color(0.5f, 0f, 0f);
+                UpdateMaterial(defaultCol);
+                Instantiate(vfx.bombEffect, transform.position, Quaternion.identity);
+            }
+        }
+
+        protected void ShowBombAmount()
+        {
+            if (bombCount < 1) return;
+
+            if (!vfx.gameObject.activeSelf) vfx.gameObject.SetActive(true);
+            vfx.UpdateEffect(bombCount);
+        }
+
+        protected void Clickable()
+        {
+            clickable = true;
+        }
+
+        protected void Unclickable()
+        {
+            clickable = false;
+        }
+
+        protected void UpdateMaterial(Color color, float intensity = -10)
+        {
+            if (intensity == -10) intensity = glowIntensity;
+
+            gridMat?.SetColor("_EmissiveColor", color * intensity);
+            gridMat?.SetColor("_BaseColor", color);
+        }
+
+        public void DoAction()
+        {
+            StartCoroutine(FireAction());
+        }
+
+        public void PreviewTileSelection()
+        {
+            // do nothing when revealed
+            if (state == BossTileStates.Revealed) return;
+
+            // return if there is a flag on this position
+            Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
+            if (nearbyFlags.Length > 0) return;
+
+            if (clickable && !triggered)
+            {
+                UpdateMaterial(Color.white);
+            }
+        }
+
+        public void FirstTile()
+        {
+            defaultCol = gameObject.GetComponent<BossChecker>().startColor;
+            UpdateMaterial(defaultCol);
+        }
+
+        public void NoBombReveal()
+        {
+            DoAction();
+        }
+
+        public void SetBombCount(int amount)
+        {
+            bombCount = amount;
+            UpdateBombAmount(bombCount);
+        }
+
+        public void UpdateBombAmount(int amount)
+        {
+            bombCount = amount;
+            vfx.UpdateEffect(bombCount);
+        }
+
+        public void ResetSelf()
+        {
+            clickable = true;
+            triggered = false;
+            defaultCol = startColor;
+            UpdateMaterial(defaultCol);
+            vfx.gameObject.SetActive(false);
+        }
+
+        public void TypeSpecificAction()
+        {
+            switch (state)
+            {
+                case BossTileStates.Bomb:
+                    EventSystem.InvokeEvent(EventType.GAME_LOSE);
+                    break;
+
+                case BossTileStates.Empty:
+                    EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
+                    Collider[] tiles = Physics.OverlapBox(gameObject.transform.position, new Vector3(1, 1, 1) * 1.25f, Quaternion.identity);
+                    for (int i = 0; i < tiles.Length; i++)
+                    {
+                        tiles[i].GetComponent<BossTile>()?.NoBombReveal();
+                    }
+                    gridMat.SetColor("_TextureColorTint", new Color(0.1f, 0.1f, 0.1f, 0));
+                    state = BossTileStates.Revealed;
+                    break;
+
+                case BossTileStates.Number:
+                    // TODO, update numbers real time
+                    EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
+                    defaultCol = Color.grey;
+                    gridMat.SetColor("_TextureColorTint", defaultCol);
+                    ShowBombAmount();
+                    state = BossTileStates.Revealed;
+                    break;
+            }
+        }
+
+        // TODO, update settings real time
+        public void UpdateSettings()
+        {
+            switch (state)
+            {
+                case BossTileStates.Bomb:
+                    gameObject.tag = "Bomb";
+                    gameObject.layer = 11;
+                    break;
+
+                default:
+                    gameObject.tag = "Untagged";
+                    gameObject.layer = 0;
+                    break;
+            }
+        }
+    }
+}

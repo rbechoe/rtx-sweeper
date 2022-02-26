@@ -84,6 +84,11 @@ namespace Tiles2D
                 {
                     canReveal = true;
                 }
+                else
+                {
+                    // TODO check if this was an actual issue
+                    canReveal = false;
+                }
 
                 foreach (Collider _tile in allTiles)
                 {
