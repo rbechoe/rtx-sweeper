@@ -14,11 +14,12 @@ namespace BossTiles
         protected int bombCount;
         protected Material gridMat;
 
-        protected bool triggered;
-        protected bool clickable;
-        protected bool previewClicked;
-        protected bool canReveal;
-        protected Collider[] tilesPreviewed;
+        private bool triggered;
+        private bool clickable;
+        private bool previewClicked;
+        private bool canReveal;
+        private bool shuffling;
+        private Collider[] tilesPreviewed;
 
         private float glowIntensity = 8192; // value is in nits
         private BossGridManager manager;
@@ -58,6 +59,8 @@ namespace BossTiles
             EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
             EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
             EventSystem.AddListener(EventType.END_GAME, ResetSelf);
+            EventSystem.AddListener(EventType.UNPLAYABLE, Unplayable);
+            EventSystem.AddListener(EventType.PLAYABLE, Playable);
         }
 
         private void OnDisable()
@@ -69,6 +72,8 @@ namespace BossTiles
             EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
             EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
             EventSystem.RemoveListener(EventType.END_GAME, ResetSelf);
+            EventSystem.RemoveListener(EventType.UNPLAYABLE, Unplayable);
+            EventSystem.RemoveListener(EventType.PLAYABLE, Playable);
             vfx.gameObject.SetActive(true);
         }
 
@@ -78,6 +83,8 @@ namespace BossTiles
             {
                 UpdateMaterial(selectCol);
             }
+
+            if (shuffling) return;
 
             // press left button - highlight adjecant tiles that can be revealed if this tile is revealed
             if (Input.GetMouseButton(0) && triggered && !previewClicked)
@@ -153,6 +160,16 @@ namespace BossTiles
                 previewClicked = false;
                 tilesPreviewed = null;
             }
+        }
+
+        private void Unplayable()
+        {
+            shuffling = true;
+        }
+
+        private void Playable()
+        {
+            shuffling = false;
         }
 
         protected IEnumerator FireAction()

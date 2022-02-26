@@ -21,6 +21,8 @@ public enum EventType
     END_GAME,           // passes nothing
     WIN_GAME,           // passes nothing
     GAME_LOSE,          // passes nothing
+    UNPLAYABLE,         // passes nothing
+    PLAYABLE,           // passes nothing
     // input related
     INPUT_LEFT,         // passes nothing
     INPUT_RIGHT,        // passes nothing
