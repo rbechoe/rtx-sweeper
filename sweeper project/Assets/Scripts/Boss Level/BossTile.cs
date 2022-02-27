@@ -182,7 +182,7 @@ namespace BossTiles
                 }
             }
 
-            if (state != BossTileStates.Bomb && state!= BossTileStates.Revealed)
+            if (state != BossTileStates.Bomb && state != BossTileStates.Revealed)
             {
                 if (bombCount > 0)
                 {
