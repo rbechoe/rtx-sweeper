@@ -6,8 +6,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class DataSerializer : MonoBehaviour
 {
     string fileName = "/gamestats.dat";
-    float versionNumber = 0.69f;
-    float requiredVersion = 0.5f;
+    float versionNumber;
+    float requiredVersion = 0.75f;
 
     private void Start()
     {
