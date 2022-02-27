@@ -59,6 +59,7 @@ namespace BossTiles
             EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
             EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
             EventSystem.AddListener(EventType.END_GAME, ResetSelf);
+            EventSystem.AddListener(EventType.PREPARE_GAME, ResetSelf);
             EventSystem.AddListener(EventType.UNPLAYABLE, Unplayable);
             EventSystem.AddListener(EventType.PLAYABLE, Playable);
         }
@@ -72,6 +73,7 @@ namespace BossTiles
             EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
             EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
             EventSystem.RemoveListener(EventType.END_GAME, ResetSelf);
+            EventSystem.RemoveListener(EventType.PREPARE_GAME, ResetSelf);
             EventSystem.RemoveListener(EventType.UNPLAYABLE, Unplayable);
             EventSystem.RemoveListener(EventType.PLAYABLE, Playable);
             vfx.gameObject.SetActive(true);
