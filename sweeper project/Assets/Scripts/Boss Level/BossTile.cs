@@ -8,11 +8,11 @@ namespace BossTiles
         [Header("Settings")]
         public VFXManipulator vfx;
 
-        protected LayerMask flagMask;
-        protected LayerMask allMask;
+        private LayerMask flagMask;
+        private LayerMask allMask;
 
-        protected int bombCount;
-        protected Material gridMat;
+        private int bombCount;
+        private Material gridMat;
 
         public bool triggered;
         private bool clickable;
@@ -79,10 +79,7 @@ namespace BossTiles
 
         private void OnMouseOver()
         {
-            if (clickable && !triggered)
-            {
-                UpdateMaterial(selectCol);
-            }
+            UpdateMaterial(selectCol);
 
             if (shuffling) return;
 
@@ -149,11 +146,7 @@ namespace BossTiles
 
         private void OnMouseExit()
         {
-            // set tile back to base color
-            if (clickable && !triggered)
-            {
-                UpdateMaterial(defaultCol);
-            }
+            UpdateMaterial(defaultCol);
 
             // set all nearby tiles back to base color
             if (previewClicked)
@@ -174,8 +167,6 @@ namespace BossTiles
 
         private void Playable()
         {
-            shuffling = false;
-
             // count all nearby bombs
             Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
             int bombCount = 0;
@@ -202,9 +193,11 @@ namespace BossTiles
             }
 
             UpdateBombAmount(bombCount);
+
+            shuffling = false;
         }
 
-        protected IEnumerator FireAction()
+        private IEnumerator FireAction()
         {
             yield return new WaitForEndOfFrame();
 
@@ -228,7 +221,7 @@ namespace BossTiles
             TypeSpecificAction();
         }
 
-        protected void SetToDefaultCol()
+        private void SetToDefaultCol()
         {
             if (clickable && !triggered)
             {
@@ -236,7 +229,7 @@ namespace BossTiles
             }
         }
 
-        protected void RevealBomb()
+        private void RevealBomb()
         {
             if (gameObject.CompareTag("Bomb"))
             {
@@ -246,7 +239,7 @@ namespace BossTiles
             }
         }
 
-        protected void ShowBombAmount()
+        private void ShowBombAmount()
         {
             if (bombCount < 1) return;
 
@@ -254,21 +247,21 @@ namespace BossTiles
             vfx.UpdateEffect(bombCount);
         }
 
-        protected void Clickable()
+        private void Clickable()
         {
             clickable = true;
         }
 
-        protected void Unclickable()
+        private void Unclickable()
         {
             clickable = false;
         }
 
-        protected void UpdateMaterial(Color color, float intensity = -10)
+        private void UpdateMaterial(Color color, float intensity = -10)
         {
             if (intensity == -10) intensity = glowIntensity;
 
-            gridMat?.SetColor("_EmissiveColor", color * intensity);
+            if (state != BossTileStates.Revealed) gridMat?.SetColor("_EmissiveColor", color * intensity);
             gridMat?.SetColor("_BaseColor", color);
         }
 
@@ -313,6 +306,14 @@ namespace BossTiles
         {
             bombCount = amount;
             vfx.UpdateEffect(bombCount);
+            if (bombCount > 0 && state == BossTileStates.Revealed)
+            {
+                vfx.gameObject.SetActive(true);
+            }
+            if (bombCount == 0)
+            {
+                vfx.gameObject.SetActive(false);
+            }
         }
 
         public void ResetSelf()
@@ -339,14 +340,11 @@ namespace BossTiles
                     {
                         tiles[i].GetComponent<BossTile>()?.NoBombReveal();
                     }
-                    gridMat.SetColor("_TextureColorTint", new Color(0.1f, 0.1f, 0.1f, 0));
                     state = BossTileStates.Revealed;
                     break;
 
                 case BossTileStates.Number:
                     EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
-                    defaultCol = Color.grey;
-                    gridMat.SetColor("_TextureColorTint", defaultCol);
                     ShowBombAmount();
                     state = BossTileStates.Revealed;
                     break;

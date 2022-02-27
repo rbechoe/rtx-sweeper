@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class GameUI : Base
+public class GameUI : MonoBehaviour
 {
     public GameObject victoryText;
     public TextMeshProUGUI bombText;
@@ -10,7 +10,7 @@ public class GameUI : Base
 
     private int bombAmount;
 
-    protected override void Start()
+    private void Start()
     {
         victoryText.SetActive(false);
         bombText.text = bombAmount.ToString();
