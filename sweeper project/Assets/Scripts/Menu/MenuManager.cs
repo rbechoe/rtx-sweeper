@@ -109,6 +109,11 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("Asia");
     }
 
+    public void LoadBoss()
+    {
+        SceneManager.LoadScene("Boss Scene");
+    }
+
     public void LoadDesert()
     {
         SceneManager.LoadScene("Desert");

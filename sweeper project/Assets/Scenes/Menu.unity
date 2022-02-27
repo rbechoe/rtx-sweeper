@@ -54227,7 +54227,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7389621369151043414}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: LoadAsia
+        m_MethodName: LoadBoss
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

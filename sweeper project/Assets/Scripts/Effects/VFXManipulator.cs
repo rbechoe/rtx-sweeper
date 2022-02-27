@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class VFXManipulator : MonoBehaviour
 {
@@ -12,9 +13,10 @@ public class VFXManipulator : MonoBehaviour
     public Renderer shapeMat;
     public Renderer pulseMat1;
     public Renderer pulseMat2;
-    public Texture2D[] textures;
+    public Texture2D texture;
     public GameObject gridTile;
     public GameObject bombEffect;
+    public TextMeshPro text;
 
     void Update()
     {
@@ -29,14 +31,54 @@ public class VFXManipulator : MonoBehaviour
     {
         if (bombCount <= 0) bombCount = 9; // 9th entry = 0
 
-        float sub = bombCount / 5f;
-        Color color = (bombCount < 5) ? new Color(0f + sub, 1, 0) : new Color(1, 1f - sub / 2f, 0);
+        if (text != null)
+        {
+            if (bombCount == 9)
+                text.text = "";
+            else
+                text.text = "" + bombCount;
+        }
 
-        shapeMat.material.SetTexture("_MainMask", textures[bombCount - 1]);
+        float sub = bombCount / 5f;
+        Color color;// = (bombCount < 5) ? new Color(0f + sub, 1, 0) : new Color(1, 1f - sub / 2f, 0);
+
+        // assign color per bomb amount
+        switch (bombCount)
+        {
+            default:
+                color = Color.white;
+                break;
+            case 1:
+                color = new Color(0, 1, 0);
+                break;
+            case 2:
+                color = new Color(.5f, 1, 0);
+                break;
+            case 3:
+                color = new Color(1, 1, 0);
+                break;
+            case 4:
+                color = new Color(1, .5f, 0);
+                break;
+            case 5:
+                color = new Color(1, 0, 0);
+                break;
+            case 6:
+                color = new Color(1, 0, .5f);
+                break;
+            case 7:
+                color = new Color(.5f, 0, 1);
+                break;
+            case 8:
+                color = new Color(0, 0, 1);
+                break;
+        }
+
+        shapeMat.material.SetTexture("_MainMask", texture);
         shapeMat.material.SetColor("_RampColorTint", color);
-        pulseMat1.material.SetTexture("_MainMask", textures[bombCount - 1]);
+        pulseMat1.material.SetTexture("_MainMask", texture);
         pulseMat1.material.SetColor("_RampColorTint", color);
-        pulseMat2.material.SetTexture("_MainMask", textures[bombCount - 1]);
+        pulseMat2.material.SetTexture("_MainMask", texture);
         pulseMat2.material.SetColor("_RampColorTint", color);
     }
 }
