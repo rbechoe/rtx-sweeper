@@ -188,6 +188,7 @@ namespace BossTiles
 
             // Step 5: once all tiles are playable can shuffle again
             yield return new WaitForEndOfFrame();
+            ResetChecks();
             canShuffle = true;
         }
 
