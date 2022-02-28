@@ -127,8 +127,8 @@ namespace BossTiles
         private IEnumerator ShuffleBombs()
         {
             EventSystem.InvokeEvent(EventType.UNPLAYABLE);
-            yield return new WaitForSeconds(1f);
-            
+            yield return new WaitForSeconds(.25f);
+
             List<GameObject> shuffles = new List<GameObject>();
             List<Vector3> positions = new List<Vector3>();
             for (int tileId = 0; tileId < tiles.Count; tileId++)
@@ -163,8 +163,8 @@ namespace BossTiles
             {
                 shuffles[i].transform.position = positions[i];
             }
-            yield return new WaitForEndOfFrame();
-            
+
+            yield return new WaitForSeconds(.25f);
             EventSystem.InvokeEvent(EventType.PLAYABLE);
         }
 
