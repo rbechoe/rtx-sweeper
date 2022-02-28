@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -8,6 +7,9 @@ namespace BossTiles
 {
     public class BossGridManager : MonoBehaviour
     {
+        public List<bool> checks = new List<bool>(); // used to check if each tile has performed required logic
+        public int busyTiles = 0; // when not zero tiles are busy getting revealed
+
         private List<GameObject> tiles = new List<GameObject>();
         private List<GameObject> activeFlags = new List<GameObject>();
         private List<GameObject> inactiveFlags = new List<GameObject>();
@@ -26,6 +28,7 @@ namespace BossTiles
         private LayerMask flagMask;
         private LayerMask bombMask;
 
+        private bool canShuffle;
         private bool timeStarted;
         private bool inReset;
         private bool wonGame;
@@ -49,6 +52,7 @@ namespace BossTiles
         {
             flagMask = LayerMask.GetMask("Flag");
             bombMask = LayerMask.GetMask("Bomb");
+            canShuffle = true;
 
             difficultyStars = "Difficulty: ***"; // base +3 due to boss stage
             for (int i = 0; i < (10 - bombDensity); i++)
@@ -56,11 +60,15 @@ namespace BossTiles
                 difficultyStars += "*";
             }
 
+            int count = 0;
             foreach (Transform child in transform)
             {
                 if (child.GetComponent<BossChecker>())
                 {
                     tiles.Add(child.gameObject);
+                    child.GetComponent<BossTile>().myId = count;
+                    checks.Add(false);
+                    count++;
                 }
             }
 
@@ -78,10 +86,7 @@ namespace BossTiles
 
         private void Update()
         {
-            if (timeStarted)
-            {
-                timer += Time.deltaTime;
-            }
+            if (timeStarted) timer += Time.deltaTime;
             EventSystem<float>.InvokeEvent(EventType.UPDATE_TIME, timer);
         }
 
@@ -117,18 +122,36 @@ namespace BossTiles
             EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
         }
 
-        private void ShuffleGrid()
+        public void ShuffleGrid()
         {
             if (tileClicks <= 1) return;
 
-            StartCoroutine(ShuffleBombs());
+            if (canShuffle) StartCoroutine(ShuffleBombs());
+            //if (canShuffle && busyTiles <= 0) StartCoroutine(ShuffleBombs());
         }
         
         private IEnumerator ShuffleBombs()
         {
-            EventSystem.InvokeEvent(EventType.UNPLAYABLE);
-            yield return new WaitForSeconds(.25f);
+            // TODO wait for all tiles to be revealed before continuing!
+            // TODO each tile gives a count when clicked to the manager
+            // after each action it removes 1 from the manager
+            // once the count = 0 the shuffle gets fired
 
+
+            // Step 0: can not shuffle
+            canShuffle = false;
+            yield return new WaitForSeconds(.5f);
+            ResetChecks();
+            yield return new WaitForEndOfFrame();
+
+            // Step 1: mark all tiles as unplayable
+            EventSystem.InvokeEvent(EventType.UNPLAYABLE);
+            while (!AllChecked())
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            // Step 2: shuffle all positions
             List<GameObject> shuffles = new List<GameObject>();
             List<Vector3> positions = new List<Vector3>();
             for (int tileId = 0; tileId < tiles.Count; tileId++)
@@ -147,8 +170,7 @@ namespace BossTiles
                 positions.Add(newTile.transform.position);
             }
             yield return new WaitForEndOfFrame();
-
-            // shuffle positions
+            
             for (int i = 0; i < positions.Count; i++)
             {
                 Vector3 temp = positions[i];
@@ -157,15 +179,25 @@ namespace BossTiles
                 positions[randomIndex] = temp;
             }
             yield return new WaitForEndOfFrame();
-            
-            // assign new positions
+
+            // Step 3: assign new positions
             for (int i = 0; i < shuffles.Count; i++)
             {
                 shuffles[i].transform.position = positions[i];
             }
+            ResetChecks();
+            yield return new WaitForEndOfFrame();
 
-            yield return new WaitForSeconds(.25f);
+            // Step 4: mark all tiles as playable
             EventSystem.InvokeEvent(EventType.PLAYABLE);
+            while (!AllChecked())
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            // Step 5: once all tiles are playable can shuffle again
+            yield return new WaitForEndOfFrame();
+            canShuffle = true;
         }
 
         private IEnumerator RandomizeGrid()
@@ -217,6 +249,24 @@ namespace BossTiles
             EventSystem.InvokeEvent(EventType.PREPARE_GAME);
             StartGame();
             yield return new WaitForEndOfFrame();
+        }
+
+        private void ResetChecks()
+        {
+            for (int i = 0; i < checks.Count; i++)
+            {
+                checks[i] = false;
+            }
+        }
+
+        private bool AllChecked()
+        {
+            for (int i = 0; i < checks.Count; i++)
+            {
+                if (!checks[i]) return false;
+            }
+
+            return true;
         }
 
         // activate a flag and place it above the tile

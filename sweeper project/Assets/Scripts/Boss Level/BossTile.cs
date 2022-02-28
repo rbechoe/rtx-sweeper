@@ -14,6 +14,7 @@ namespace BossTiles
         private int bombCount;
         private Material gridMat;
 
+        public int myId; // used to update checks on manager
         public bool triggered;
         private bool clickable;
         private bool previewClicked;
@@ -118,9 +119,10 @@ namespace BossTiles
                 {
                     EventSystem.InvokeEvent(EventType.PLAY_CLICK);
                     EventSystem.InvokeEvent(EventType.TILE_CLICK);
+                    manager.busyTiles++;
                     DoAction();
                 }
-                
+
                 if (state != BossTileStates.Bomb)
                 {
                     EventSystem.InvokeEvent(EventType.SHUFFLE);
@@ -131,7 +133,12 @@ namespace BossTiles
                 {
                     foreach (Collider _tile in tilesPreviewed)
                     {
-                        _tile.GetComponent<BossTile>()?.DoAction();
+                        BossTile bossTile = _tile.GetComponent<BossTile>();
+                        if (bossTile != null)
+                        {
+                            bossTile?.DoAction();
+                            manager.busyTiles++;
+                        }
                     }
                     previewClicked = false;
                     tilesPreviewed = null;
@@ -165,6 +172,7 @@ namespace BossTiles
         private void Unplayable()
         {
             shuffling = true;
+            manager.checks[myId] = true;
         }
 
         private void Playable()
@@ -195,7 +203,8 @@ namespace BossTiles
             }
 
             UpdateBombAmount(bombCount);
-
+            
+            manager.checks[myId] = true;
             shuffling = false;
         }
 
@@ -221,6 +230,12 @@ namespace BossTiles
             UpdateMaterial(defaultCol, 1);
 
             TypeSpecificAction();
+
+            manager.busyTiles--;
+            if (manager.busyTiles <= 0)
+            {
+                //TODO: manager.ShuffleGrid();
+            }
         }
 
         private void SetToDefaultCol()
