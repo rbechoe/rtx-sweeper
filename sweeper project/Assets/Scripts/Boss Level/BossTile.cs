@@ -16,6 +16,7 @@ namespace BossTiles
 
         public int myId; // used to update checks on manager
         public bool triggered;
+        private bool gameEnded;
         private bool clickable;
         private bool previewClicked;
         private bool canReveal;
@@ -58,6 +59,9 @@ namespace BossTiles
             EventSystem.AddListener(EventType.END_GAME, Unclickable);
             EventSystem.AddListener(EventType.WIN_GAME, Unclickable);
             EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
+            EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
+            EventSystem.AddListener(EventType.WIN_GAME, EndGame);
+            EventSystem.AddListener(EventType.GAME_LOSE, EndGame);
             EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
             EventSystem.AddListener(EventType.END_GAME, ResetSelf);
             EventSystem.AddListener(EventType.PREPARE_GAME, ResetSelf);
@@ -72,6 +76,9 @@ namespace BossTiles
             EventSystem.RemoveListener(EventType.END_GAME, Unclickable);
             EventSystem.RemoveListener(EventType.WIN_GAME, Unclickable);
             EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
+            EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
+            EventSystem.RemoveListener(EventType.WIN_GAME, EndGame);
+            EventSystem.RemoveListener(EventType.GAME_LOSE, EndGame);
             EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
             EventSystem.RemoveListener(EventType.END_GAME, ResetSelf);
             EventSystem.RemoveListener(EventType.PREPARE_GAME, ResetSelf);
@@ -80,11 +87,25 @@ namespace BossTiles
             vfx.gameObject.SetActive(true);
         }
 
+        private void EndGame()
+        {
+            gameEnded = true;
+        }
+
+        private void StartGame()
+        {
+            gameEnded = false;
+        }
+
         private void OnMouseOver()
         {
             UpdateMaterial(selectCol);
 
-            if (shuffling) return;
+            if (shuffling || gameEnded)
+            {
+                UpdateMaterial(defaultCol);
+                return;
+            }
 
             // press left button - highlight adjecant tiles that can be revealed if this tile is revealed
             if (Input.GetMouseButton(0) && triggered && !previewClicked)

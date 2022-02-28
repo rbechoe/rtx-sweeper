@@ -28,6 +28,7 @@ namespace BossTiles
         private LayerMask flagMask;
         private LayerMask bombMask;
 
+        private bool gameActive;
         private bool canShuffle;
         private bool timeStarted;
         private bool inReset;
@@ -97,8 +98,11 @@ namespace BossTiles
             EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
             EventSystem<GameObject>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
             EventSystem.AddListener(EventType.RANDOM_GRID, ResetGame);
+            EventSystem.AddListener(EventType.RANDOM_GRID, GameActive);
             EventSystem.AddListener(EventType.WIN_GAME, StopTimer);
             EventSystem.AddListener(EventType.END_GAME, StopTimer);
+            EventSystem.AddListener(EventType.END_GAME, GameInactive);
+            EventSystem.AddListener(EventType.GAME_LOSE, GameInactive);
             EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
             EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
             EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
@@ -112,10 +116,13 @@ namespace BossTiles
             EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
             EventSystem<GameObject>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
             EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGame);
+            EventSystem.RemoveListener(EventType.RANDOM_GRID, GameActive);
             EventSystem.RemoveListener(EventType.WIN_GAME, StopTimer);
             EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
             EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
             EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
+            EventSystem.RemoveListener(EventType.END_GAME, GameInactive);
+            EventSystem.RemoveListener(EventType.GAME_LOSE, GameInactive);
             EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
             EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
         }
@@ -124,14 +131,13 @@ namespace BossTiles
         {
             if (tileClicks <= 1) return;
 
-            if (canShuffle && busyTiles == 0) StartCoroutine(ShuffleBombs());
+            if (canShuffle && busyTiles == 0 && gameActive) StartCoroutine(ShuffleBombs());
         }
         
         private IEnumerator ShuffleBombs()
         {
             // Step 0: can not shuffle
             canShuffle = false;
-            yield return new WaitForSeconds(.5f);
             ResetChecks();
             yield return new WaitForEndOfFrame();
 
@@ -448,6 +454,16 @@ namespace BossTiles
                 "Best time: " + data.bossTime1 + "s\n" +
                 "Efficiency: " + data.bossEfficiency1 + "\n" +
                 "Victories: " + data.bossVictories1 + "\n";
+        }
+
+        private void GameActive()
+        {
+            gameActive = true;
+        }
+
+        private void GameInactive()
+        {
+            gameActive = false;
         }
     }
 }
