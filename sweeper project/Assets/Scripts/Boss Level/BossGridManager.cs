@@ -101,7 +101,6 @@ namespace BossTiles
             EventSystem.AddListener(EventType.END_GAME, StopTimer);
             EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
             EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
-            EventSystem.AddListener(EventType.SHUFFLE, ShuffleGrid);
             EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
             EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
         }
@@ -117,7 +116,6 @@ namespace BossTiles
             EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
             EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
             EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
-            EventSystem.RemoveListener(EventType.SHUFFLE, ShuffleGrid);
             EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
             EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
         }
@@ -126,18 +124,11 @@ namespace BossTiles
         {
             if (tileClicks <= 1) return;
 
-            if (canShuffle) StartCoroutine(ShuffleBombs());
-            //if (canShuffle && busyTiles <= 0) StartCoroutine(ShuffleBombs());
+            if (canShuffle && busyTiles == 0) StartCoroutine(ShuffleBombs());
         }
         
         private IEnumerator ShuffleBombs()
         {
-            // TODO wait for all tiles to be revealed before continuing!
-            // TODO each tile gives a count when clicked to the manager
-            // after each action it removes 1 from the manager
-            // once the count = 0 the shuffle gets fired
-
-
             // Step 0: can not shuffle
             canShuffle = false;
             yield return new WaitForSeconds(.5f);

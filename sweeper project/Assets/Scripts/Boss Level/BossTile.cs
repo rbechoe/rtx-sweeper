@@ -119,13 +119,7 @@ namespace BossTiles
                 {
                     EventSystem.InvokeEvent(EventType.PLAY_CLICK);
                     EventSystem.InvokeEvent(EventType.TILE_CLICK);
-                    manager.busyTiles++;
                     DoAction();
-                }
-
-                if (state != BossTileStates.Bomb)
-                {
-                    EventSystem.InvokeEvent(EventType.SHUFFLE);
                 }
 
                 // reveal all nearby tiles
@@ -137,7 +131,6 @@ namespace BossTiles
                         if (bossTile != null)
                         {
                             bossTile?.DoAction();
-                            manager.busyTiles++;
                         }
                     }
                     previewClicked = false;
@@ -210,10 +203,12 @@ namespace BossTiles
 
         private IEnumerator FireAction()
         {
+            manager.busyTiles++;
             yield return new WaitForEndOfFrame();
 
             if (triggered)
             {
+                manager.busyTiles--;
                 yield break;
             }
 
@@ -221,6 +216,7 @@ namespace BossTiles
             Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
             if (nearbyFlags.Length > 0)
             {
+                manager.busyTiles--;
                 yield break;
             }
 
@@ -231,10 +227,13 @@ namespace BossTiles
 
             TypeSpecificAction();
 
+            yield return new WaitForEndOfFrame();
             manager.busyTiles--;
-            if (manager.busyTiles <= 0)
+
+            // shuffle if all tiles are done and this was the last one in the queue
+            if (manager.busyTiles == 0)
             {
-                //TODO: manager.ShuffleGrid();
+                manager.ShuffleGrid();
             }
         }
 
@@ -368,7 +367,6 @@ namespace BossTiles
             }
         }
 
-        // TODO, update settings real time
         public void UpdateSettings()
         {
             switch (state)
