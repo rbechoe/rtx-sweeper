@@ -52,6 +52,11 @@ namespace BossTiles
             UpdateSettings();
         }
 
+        private void FixedUpdate()
+        {
+            CheckBombs();
+        }
+
         private void OnEnable()
         {
             // listen
@@ -191,6 +196,12 @@ namespace BossTiles
 
         private void Playable()
         {
+            manager.checks[myId] = true;
+            shuffling = false;
+        }
+
+        private void CheckBombs()
+        {
             // count all nearby bombs
             Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
             int bombCount = 0;
@@ -217,9 +228,6 @@ namespace BossTiles
             }
 
             UpdateBombAmount(bombCount);
-            
-            manager.checks[myId] = true;
-            shuffling = false;
         }
 
         private IEnumerator FireAction()
