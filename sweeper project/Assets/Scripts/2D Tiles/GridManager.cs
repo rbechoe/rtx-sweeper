@@ -25,7 +25,7 @@ namespace Tiles2D
         private bool timeStarted;
         private bool inReset;
         private bool wonGame;
-        public int tileClicks;
+        private int tileClicks;
         private float timer;
 
         private DataSerializer DS;
