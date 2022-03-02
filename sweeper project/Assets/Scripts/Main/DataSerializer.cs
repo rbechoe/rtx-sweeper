@@ -7,7 +7,7 @@ public class DataSerializer : MonoBehaviour
 {
     string fileName = "/gamestats.dat";
     float versionNumber;
-    float requiredVersion = 0.75f;
+    float requiredVersion = 0.9f;
 
     private void Start()
     {

@@ -27,6 +27,7 @@ public class LevelCompleted : MonoBehaviour
     void FireDialogue()
     {
         StartCoroutine(DelayedMethods.FireMethod(EnableBar));
+        text.text = "";
 
         for (int i = 0; i < lines.Count; i++)
         {

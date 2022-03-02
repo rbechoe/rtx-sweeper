@@ -86,7 +86,6 @@ namespace Tiles2D
                 }
                 else
                 {
-                    // TODO check if this was an actual issue
                     canReveal = false;
                 }
 
