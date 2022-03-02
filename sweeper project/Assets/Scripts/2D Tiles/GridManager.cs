@@ -315,6 +315,7 @@ namespace Tiles2D
             AD.totalClicks = AD.totalClicks + tileClicks;
             int timer = (int)this.timer;
             AD.totalTimePlayed = AD.totalTimePlayed + timer;
+
             if (wonGame)
                 AD.gamesWon = AD.gamesWon + 1;
             else

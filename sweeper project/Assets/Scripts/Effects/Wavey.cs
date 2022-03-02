@@ -14,7 +14,7 @@ public class Wavey : MonoBehaviour
 
     private void Start()
     {
-        startEuler = transform.eulerAngles;
+        startEuler = transform.localEulerAngles;
         timeOffset = Random.Range(0, 1000);
     }
 
@@ -24,6 +24,6 @@ public class Wavey : MonoBehaviour
         float valX = (axisX) ? val : 0;
         float valY = (axisY) ? val : 0;
         float valZ = (axisZ) ? val : 0;
-        transform.eulerAngles = startEuler + new Vector3(startEuler.x + valX, startEuler.y + valY, startEuler.z + valZ);
+        transform.localEulerAngles = startEuler + new Vector3(valX, valY, valZ);
     }
 }
