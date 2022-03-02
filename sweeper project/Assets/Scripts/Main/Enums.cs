@@ -13,6 +13,7 @@ public enum EventType
     PLAY_CLICK,         // passes nothing
     PLAY_FLAG,          // passes nothing
     TILE_CLICK,         // passes nothing
+    REVEAL_TILE,        // passes nothing
     // gameflow related
     PREPARE_GAME,       // passes nothing
     RANDOM_GRID,        // passes nothing
@@ -23,7 +24,6 @@ public enum EventType
     GAME_LOSE,          // passes nothing
     UNPLAYABLE,         // passes nothing
     PLAYABLE,           // passes nothing
-    //SHUFFLE,            // passes nothing
     // input related
     INPUT_LEFT,         // passes nothing
     INPUT_RIGHT,        // passes nothing

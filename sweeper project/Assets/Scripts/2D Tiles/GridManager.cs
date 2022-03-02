@@ -25,7 +25,7 @@ namespace Tiles2D
         private bool timeStarted;
         private bool inReset;
         private bool wonGame;
-        private int tileClicks;
+        public int tileClicks;
         private float timer;
 
         private DataSerializer DS;
@@ -92,6 +92,7 @@ namespace Tiles2D
             EventSystem.AddListener(EventType.END_GAME, StopTimer);
             EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
             EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
+            EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
             EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
             EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
         }
@@ -107,6 +108,7 @@ namespace Tiles2D
             EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
             EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
             EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
+            EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
             EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
             EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
         }
@@ -308,12 +310,12 @@ namespace Tiles2D
         {
             if (area == 4) return;
 
-            float efficiency = (initialBombAmount * (bombDensity - 1f)) / tileClicks * 50f;
+            float efficiency = 1f * (tiles.Count - initialBombAmount) / tileClicks * 100f;
             efficiency = Mathf.Clamp(efficiency, 0, 100);
 
             AccountData AD = DS.GetUserData();
             AD.totalClicks = AD.totalClicks + tileClicks;
-            int timer = (int)this.timer;
+            float timer = RoundToThreeDecimals(this.timer);
             AD.totalTimePlayed = AD.totalTimePlayed + timer;
 
             if (wonGame)
@@ -338,7 +340,7 @@ namespace Tiles2D
                                 if (timer < AD.arcticTime1 || (timer == AD.arcticTime1 && efficiency > AD.arcticEfficiency1) || AD.arcticTime1 == 0)
                                 {
                                     AD.arcticTime1 = timer;
-                                    AD.arcticEfficiency1 = (int)efficiency;
+                                    AD.arcticEfficiency1 = efficiency;
                                     AD.arcticClicks1 = tileClicks;
                                 }
                                 break;
@@ -349,7 +351,7 @@ namespace Tiles2D
                                 if (timer < AD.arcticTime2 || (timer == AD.arcticTime2 && efficiency > AD.arcticEfficiency2) || AD.arcticTime2 == 0)
                                 {
                                     AD.arcticTime2 = timer;
-                                    AD.arcticEfficiency2 = (int)efficiency;
+                                    AD.arcticEfficiency2 = efficiency;
                                     AD.arcticClicks2 = tileClicks;
                                 }
                                 break;
@@ -360,7 +362,7 @@ namespace Tiles2D
                                 if (timer < AD.arcticTime3 || (timer == AD.arcticTime3 && efficiency > AD.arcticEfficiency3) || AD.arcticTime1 == 0)
                                 {
                                     AD.arcticTime3 = timer;
-                                    AD.arcticEfficiency3 = (int)efficiency;
+                                    AD.arcticEfficiency3 = efficiency;
                                     AD.arcticClicks3 = tileClicks;
                                 }
                                 break;
@@ -383,7 +385,7 @@ namespace Tiles2D
                                 if (timer < AD.asiaTime1 || (timer == AD.asiaTime1 && efficiency > AD.asiaEfficiency1) || AD.asiaTime1 == 0)
                                 {
                                     AD.asiaTime1 = timer;
-                                    AD.asiaEfficiency1 = (int)efficiency;
+                                    AD.asiaEfficiency1 = efficiency;
                                     AD.asiaClicks1 = tileClicks;
                                 }
                                 break;
@@ -394,7 +396,7 @@ namespace Tiles2D
                                 if (timer < AD.asiaTime2 || (timer == AD.asiaTime2 && efficiency > AD.asiaEfficiency2) || AD.asiaTime2 == 0)
                                 {
                                     AD.asiaTime2 = timer;
-                                    AD.asiaEfficiency2 = (int)efficiency;
+                                    AD.asiaEfficiency2 = efficiency;
                                     AD.asiaClicks2 = tileClicks;
                                 }
                                 break;
@@ -405,7 +407,7 @@ namespace Tiles2D
                                 if (timer < AD.asiaTime3 || (timer == AD.asiaTime3 && efficiency > AD.asiaEfficiency3) || AD.asiaTime1 == 0)
                                 {
                                     AD.asiaTime3 = timer;
-                                    AD.asiaEfficiency3 = (int)efficiency;
+                                    AD.asiaEfficiency3 = efficiency;
                                     AD.asiaClicks3 = tileClicks;
                                 }
                                 break;
@@ -428,7 +430,7 @@ namespace Tiles2D
                                 if (timer < AD.desertTime1 || (timer == AD.desertTime1 && efficiency > AD.desertEfficiency1) || AD.desertTime1 == 0)
                                 {
                                     AD.desertTime1 = timer;
-                                    AD.desertEfficiency1 = (int)efficiency;
+                                    AD.desertEfficiency1 = efficiency;
                                     AD.desertClicks1 = tileClicks;
                                 }
                                 break;
@@ -439,7 +441,7 @@ namespace Tiles2D
                                 if (timer < AD.desertTime2 || (timer == AD.desertTime2 && efficiency > AD.desertEfficiency2) || AD.desertTime2 == 0)
                                 {
                                     AD.desertTime2 = timer;
-                                    AD.desertEfficiency2 = (int)efficiency;
+                                    AD.desertEfficiency2 = efficiency;
                                     AD.desertClicks2 = tileClicks;
                                 }
                                 break;
@@ -450,7 +452,7 @@ namespace Tiles2D
                                 if (timer < AD.desertTime3 || (timer == AD.desertTime3 && efficiency > AD.desertEfficiency3) || AD.desertTime1 == 0)
                                 {
                                     AD.desertTime3 = timer;
-                                    AD.desertEfficiency3 = (int)efficiency;
+                                    AD.desertEfficiency3 = efficiency;
                                     AD.desertClicks3 = tileClicks;
                                 }
                                 break;
@@ -476,20 +478,20 @@ namespace Tiles2D
                     {
                         case 1: // level 1
                             infoText.text = difficultyStars + "\n" +
-                                "Best time: " + data.arcticTime1 + "s\n" +
-                                "Efficiency: " + data.arcticEfficiency1 + "\n" +
+                                "Time: " + RoundToThreeDecimals(data.arcticTime1) + "s\n" +
+                                "Skill: " + RoundToThreeDecimals(data.arcticEfficiency1) + "%\n" +
                                 "Victories: " + data.arcticVictories1 + "\n";
                             break;
                         case 2: // level 2
                             infoText.text = difficultyStars + "\n" +
-                                "Best time: " + data.arcticTime2 + "s\n" +
-                                "Efficiency: " + data.arcticEfficiency2 + "\n" +
+                                "Time: " + RoundToThreeDecimals(data.arcticTime2) + "s\n" +
+                                "Skill: " + RoundToThreeDecimals(data.arcticEfficiency2) + "%\n" +
                                 "Victories: " + data.arcticVictories2 + "\n";
                             break;
                         case 3: // level 3
                             infoText.text = difficultyStars + "\n" +
-                                "Best time: " + data.arcticTime3 + "s\n" +
-                                "Efficiency: " + data.arcticEfficiency3 + "\n" +
+                                "Time: " + RoundToThreeDecimals(data.arcticTime3) + "s\n" +
+                                "Skill: " + RoundToThreeDecimals(data.arcticEfficiency3) + "%\n" +
                                 "Victories: " + data.arcticVictories3 + "\n";
                             break;
                     }
@@ -500,20 +502,20 @@ namespace Tiles2D
                     {
                         case 1: // level 1
                             infoText.text = difficultyStars + "\n" +
-                                "Best time: " + data.asiaTime1 + "s\n" +
-                                "Efficiency: " + data.asiaEfficiency1 + "\n" +
+                                "Time: " + RoundToThreeDecimals(data.asiaTime1) + "s\n" +
+                                "Skill: " + RoundToThreeDecimals(data.asiaEfficiency1) + "%\n" +
                                 "Victories: " + data.asiaVictories1 + "\n";
                             break;
                         case 2: // level 2
                             infoText.text = difficultyStars + "\n" +
-                                "Best time: " + data.asiaTime2 + "s\n" +
-                                "Efficiency: " + data.asiaEfficiency2 + "\n" +
+                                "Time: " + RoundToThreeDecimals(data.asiaTime2) + "s\n" +
+                                "Skill: " + RoundToThreeDecimals(data.asiaEfficiency2) + "%\n" +
                                 "Victories: " + data.asiaVictories2 + "\n";
                             break;
                         case 3: // level 3
                             infoText.text = difficultyStars + "\n" +
-                                "Best time: " + data.asiaTime3 + "s\n" +
-                                "Efficiency: " + data.asiaEfficiency3 + "\n" +
+                                "Time: " + RoundToThreeDecimals(data.asiaTime3) + "s\n" +
+                                "Skill: " + RoundToThreeDecimals(data.asiaEfficiency3) + "%\n" +
                                 "Victories: " + data.asiaVictories3 + "\n";
                             break;
                     }
@@ -524,25 +526,30 @@ namespace Tiles2D
                     {
                         case 1: // level 1
                             infoText.text = difficultyStars + "\n" +
-                                "Best time: " + data.desertTime1 + "s\n" +
-                                "Efficiency: " + data.desertEfficiency1 + "\n" +
+                                "Time: " + RoundToThreeDecimals(data.desertTime1) + "s\n" +
+                                "Skill: " + RoundToThreeDecimals(data.desertEfficiency1) + "%\n" +
                                 "Victories: " + data.desertVictories1 + "\n";
                             break;
                         case 2: // level 2
                             infoText.text = difficultyStars + "\n" +
-                                "Best time: " + data.desertTime2 + "s\n" +
-                                "Efficiency: " + data.desertEfficiency2 + "\n" +
+                                "Time: " + RoundToThreeDecimals(data.desertTime2) + "s\n" +
+                                "Skill: " + RoundToThreeDecimals(data.desertEfficiency2) + "%\n" +
                                 "Victories: " + data.desertVictories2 + "\n";
                             break;
                         case 3: // level 3
                             infoText.text = difficultyStars + "\n" +
-                                "Best time: " + data.desertTime3 + "s\n" +
-                                "Efficiency: " + data.desertEfficiency3 + "\n" +
+                                "Time: " + RoundToThreeDecimals(data.desertTime3) + "s\n" +
+                                "Efficiency: " + RoundToThreeDecimals(data.desertEfficiency3) + "%\n" +
                                 "Victories: " + data.desertVictories3 + "\n";
                             break;
                     }
                     break;
             }
+        }
+
+        float RoundToThreeDecimals(float val)
+        {
+            return Mathf.Round(val * 1000.0f) / 1000.0f;
         }
     }
 }

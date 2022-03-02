@@ -110,24 +110,24 @@ public class AccountData
     public int gamesWon = 0;
     public int gamesLost = 0;
     public int totalClicks = 0;
-    public int totalTimePlayed = 0;
+    public float totalTimePlayed = 0;
 
     // arctic
     public int arcticVictories = 0;
     public int arcticLoses = 0;
     public int arcticGamesPlayed = 0;
     public int arcticTotalClicks = 0;
-    public int arcticTime1 = 0;
+    public float arcticTime1 = 0;
     public int arcticClicks1 = 0;
-    public int arcticEfficiency1 = 0;
+    public float arcticEfficiency1 = 0;
     public int arcticVictories1 = 0;
-    public int arcticTime2 = 0;
+    public float arcticTime2 = 0;
     public int arcticClicks2 = 0;
-    public int arcticEfficiency2 = 0;
+    public float arcticEfficiency2 = 0;
     public int arcticVictories2 = 0;
-    public int arcticTime3 = 0;
+    public float arcticTime3 = 0;
     public int arcticClicks3 = 0;
-    public int arcticEfficiency3 = 0;
+    public float arcticEfficiency3 = 0;
     public int arcticVictories3 = 0;
 
     // Asia
@@ -135,17 +135,17 @@ public class AccountData
     public int asiaLoses = 0;
     public int asiaGamesPlayed = 0;
     public int asiaTotalClicks = 0;
-    public int asiaTime1 = 0;
+    public float asiaTime1 = 0;
     public int asiaClicks1 = 0;
-    public int asiaEfficiency1 = 0;
+    public float asiaEfficiency1 = 0;
     public int asiaVictories1 = 0;
-    public int asiaTime2 = 0;
+    public float asiaTime2 = 0;
     public int asiaClicks2 = 0;
-    public int asiaEfficiency2 = 0;
+    public float asiaEfficiency2 = 0;
     public int asiaVictories2 = 0;
-    public int asiaTime3 = 0;
+    public float asiaTime3 = 0;
     public int asiaClicks3 = 0;
-    public int asiaEfficiency3 = 0;
+    public float asiaEfficiency3 = 0;
     public int asiaVictories3 = 0;
 
     // Desert
@@ -153,17 +153,17 @@ public class AccountData
     public int desertLoses = 0;
     public int desertGamesPlayed = 0;
     public int desertTotalClicks = 0;
-    public int desertTime1 = 0;
+    public float desertTime1 = 0;
     public int desertClicks1 = 0;
-    public int desertEfficiency1 = 0;
+    public float desertEfficiency1 = 0;
     public int desertVictories1 = 0;
-    public int desertTime2 = 0;
+    public float desertTime2 = 0;
     public int desertClicks2 = 0;
-    public int desertEfficiency2 = 0;
+    public float desertEfficiency2 = 0;
     public int desertVictories2 = 0;
-    public int desertTime3 = 0;
+    public float desertTime3 = 0;
     public int desertClicks3 = 0;
-    public int desertEfficiency3 = 0;
+    public float desertEfficiency3 = 0;
     public int desertVictories3 = 0;
 
     // Tutorial
@@ -174,8 +174,8 @@ public class AccountData
     public int bossLoses = 0;
     public int bossGamesPlayed = 0;
     public int bossTotalClicks = 0;
-    public int bossTime1 = 0;
+    public float bossTime1 = 0;
     public int bossClicks1 = 0;
-    public int bossEfficiency1 = 0;
+    public float bossEfficiency1 = 0;
     public int bossVictories1 = 0;
 }

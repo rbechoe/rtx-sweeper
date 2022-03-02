@@ -412,12 +412,12 @@ namespace BossTiles
 
         private void SaveData()
         {
-            float efficiency = (initialBombAmount * (bombDensity - 1f)) / tileClicks * 50f;
+            float efficiency = 1f * (tiles.Count - initialBombAmount) / tileClicks * 100f;
             efficiency = Mathf.Clamp(efficiency, 0, 100);
 
             AccountData AD = DS.GetUserData();
             AD.totalClicks = AD.totalClicks + tileClicks;
-            int timer = (int)this.timer;
+            float timer = RoundToThreeDecimals(this.timer);
             AD.totalTimePlayed = AD.totalTimePlayed + timer;
             if (wonGame)
                 AD.gamesWon = AD.gamesWon + 1;
@@ -435,7 +435,7 @@ namespace BossTiles
                 if (timer < AD.bossTime1 || (timer == AD.bossTime1 && efficiency > AD.bossEfficiency1) || AD.bossTime1 == 0)
                 {
                     AD.bossTime1 = timer;
-                    AD.bossEfficiency1 = (int)efficiency;
+                    AD.bossEfficiency1 = efficiency;
                     AD.bossClicks1 = tileClicks;
                 }
             }
@@ -451,8 +451,8 @@ namespace BossTiles
             if (data == null) data = DS.GetUserData();
             
             infoText.text = difficultyStars + "\n" +
-                "Best time: " + data.bossTime1 + "s\n" +
-                "Efficiency: " + data.bossEfficiency1 + "\n" +
+                "Time: " + RoundToThreeDecimals(data.bossTime1) + "s\n" +
+                "Skill: " + RoundToThreeDecimals(data.bossEfficiency1) + "%\n" +
                 "Victories: " + data.bossVictories1 + "\n";
         }
 
@@ -464,6 +464,11 @@ namespace BossTiles
         private void GameInactive()
         {
             gameActive = false;
+        }
+
+        float RoundToThreeDecimals(float val)
+        {
+            return Mathf.Round(val * 1000.0f) / 1000.0f;
         }
     }
 }

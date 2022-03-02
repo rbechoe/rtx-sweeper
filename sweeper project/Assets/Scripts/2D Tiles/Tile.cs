@@ -89,9 +89,9 @@ namespace Tiles2D
                     canReveal = false;
                 }
 
-                foreach (Collider _tile in allTiles)
+                foreach (Collider tile in allTiles)
                 {
-                    _tile.GetComponent<Tile>()?.PreviewTileSelection();
+                    tile.GetComponent<Tile>()?.PreviewTileSelection();
                 }
 
                 tilesPreviewed = allTiles;
@@ -111,9 +111,9 @@ namespace Tiles2D
                 // reveal all nearby tiles
                 if (previewClicked && canReveal)
                 {
-                    foreach (Collider _tile in tilesPreviewed)
+                    foreach (Collider tile in tilesPreviewed)
                     {
-                        _tile.GetComponent<Tile>()?.DoAction();
+                        tile.GetComponent<Tile>()?.DoAction(true);
                     }
                     previewClicked = false;
                     tilesPreviewed = null;
@@ -148,7 +148,7 @@ namespace Tiles2D
             }
         }
 
-        protected IEnumerator FireAction()
+        protected IEnumerator FireAction(bool sequenced = false)
         {
             yield return new WaitForEndOfFrame();
 
@@ -163,6 +163,8 @@ namespace Tiles2D
             {
                 yield break;
             }
+
+            if (sequenced) EventSystem.InvokeEvent(EventType.REVEAL_TILE);
 
             triggered = true;
 
@@ -221,9 +223,9 @@ namespace Tiles2D
             gridMat?.SetColor("_BaseColor", color);
         }
 
-        public void DoAction()
+        public void DoAction(bool sequenced = false)
         {
-            StartCoroutine(FireAction());
+            StartCoroutine(FireAction(sequenced));
         }
 
         public void PreviewTileSelection()
@@ -242,7 +244,7 @@ namespace Tiles2D
 
         public void NoBombReveal()
         {
-            DoAction();
+            DoAction(true);
         }
 
         public void SetBombCount(int amount)

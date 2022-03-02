@@ -49,7 +49,7 @@ public class GameUI : MonoBehaviour
 
     private void SetTimer(float time)
     {
-        timeText.text = "" + Mathf.FloorToInt(time);
+        timeText.text = "" + Mathf.Round(time * 1000.0f) / 1000.0f;
     }
 
     private void SetBombsLeft(int amount)
