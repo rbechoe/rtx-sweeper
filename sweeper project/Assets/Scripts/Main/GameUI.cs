@@ -50,7 +50,7 @@ public class GameUI : MonoBehaviour
 
     private void SetTimer(float time)
     {
-        timeText.text = "<mspace=mspace=21>" + Math.Round(time, 3);
+        timeText.text = "<mspace=mspace=21>" + Math.Round(time, 3).ToString("N3");
     }
 
     private void SetBombsLeft(int amount)
@@ -72,5 +72,10 @@ public class GameUI : MonoBehaviour
     public void ResetGrid()
     {
         EventSystem.InvokeEvent(EventType.RESET_GAME);
+    }
+
+    public void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
