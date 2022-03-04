@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameUI : MonoBehaviour
 {
@@ -49,7 +50,7 @@ public class GameUI : MonoBehaviour
 
     private void SetTimer(float time)
     {
-        timeText.text = "" + Mathf.Round(time * 1000.0f) / 1000.0f;
+        timeText.text = "<mspace=mspace=21>" + Math.Round(time, 3);
     }
 
     private void SetBombsLeft(int amount)
