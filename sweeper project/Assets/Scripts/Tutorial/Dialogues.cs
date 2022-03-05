@@ -11,7 +11,6 @@ public class Dialogues : MonoBehaviour
 
     public TextMeshProUGUI text;
     public GameObject dialogueBar;
-    public GameObject[] uiObjects;
 
     public float startDelay, endDelay;
     private float totalWaitTime;
@@ -31,7 +30,6 @@ public class Dialogues : MonoBehaviour
         }
 
         StartCoroutine(DelayedMethods.FireMethod(DisableBar, totalWaitTime + endDelay));
-        StartCoroutine(DelayedMethods.FireMethod(EnableUIElements, totalWaitTime));
     }
 
     void EnableBar()
@@ -47,13 +45,5 @@ public class Dialogues : MonoBehaviour
     void Dialogue(int line)
     {
         text.text = lines[line];
-    }
-
-    void EnableUIElements()
-    {
-        foreach (GameObject ui in uiObjects)
-        {
-            ui.SetActive(true);
-        }
     }
 }
