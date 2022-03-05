@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
@@ -9,12 +10,19 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI bombText;
     public TextMeshProUGUI timeText;
 
+    public Slider BGMSlider, SFXSlider, mainSFXSlider;
+
     private int bombAmount;
 
     private void Start()
     {
         victoryText.SetActive(false);
         bombText.text = bombAmount.ToString();
+
+        Settings settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
+        BGMSlider.value = settings.GetBGMVolume();
+        SFXSlider.value = settings.GetSFXVolume();
+        mainSFXSlider.value = settings.GetMainSFXVolume();
     }
 
     private void OnEnable()
@@ -33,6 +41,21 @@ public class GameUI : MonoBehaviour
         EventSystem.RemoveListener(EventType.WIN_GAME, WinGame);
         EventSystem<int>.RemoveListener(EventType.BOMB_UPDATE, SetBombsLeft);
         EventSystem<float>.RemoveListener(EventType.UPDATE_TIME, SetTimer);
+    }
+
+    public void UpdateBGMVolume()
+    {
+        EventSystem<float>.InvokeEvent(EventType.UPDATE_BGM, BGMSlider.value);
+    }
+
+    public void UpdateSFXVolume()
+    {
+        EventSystem<float>.InvokeEvent(EventType.UPDATE_SFX, SFXSlider.value);
+    }
+
+    public void UpdateMainSFXVolume()
+    {
+        EventSystem<float>.InvokeEvent(EventType.UPDATE_SFX_MAIN, mainSFXSlider.value);
     }
 
     private void WinGame()

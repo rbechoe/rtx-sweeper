@@ -24,6 +24,11 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
+        Settings settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
+        BGMSlider.value = settings.GetBGMVolume();
+        SFXSlider.value = settings.GetSFXVolume();
+        mainSFXSlider.value = settings.GetMainSFXVolume();
+
         // disable interactables based on savedata
         dataSerializer = gameObject.GetComponent<DataSerializer>();
         AccountData accountData = dataSerializer.GetUserData();
