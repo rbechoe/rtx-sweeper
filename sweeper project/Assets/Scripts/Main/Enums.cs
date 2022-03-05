@@ -32,6 +32,10 @@ public enum EventType
     INPUT_FORWARD,      // passes nothing
     INPUT_BACK,         // passes nothing
     INPUT_F12,          // passes nothing
+    // other stuff
+    UPDATE_BGM,         // passes float
+    UPDATE_SFX,         // passes float
+    UPDATE_SFX_MAIN,    // passes float
 }
 
 public enum BossTileStates

@@ -13,6 +13,7 @@ public class MenuManager : MonoBehaviour
     private TMP_InputField bombTMP;
 
     public Button playBtn, asiaBtn, desertBtn, bossBtn;
+    public Slider BGMSlider, SFXSlider, mainSFXSlider;
 
     private int xSize;
     private int zSize;
@@ -102,6 +103,26 @@ public class MenuManager : MonoBehaviour
         TheCreator.Instance.gridSize = gridSize;
         TheCreator.Instance.bombAmount = bombAmount;
         SceneManager.LoadScene("Universe");
+    }
+
+    public void UpdateBGMVolume()
+    {
+        EventSystem<float>.InvokeEvent(EventType.UPDATE_BGM, BGMSlider.value);
+    }
+
+    public void UpdateSFXVolume()
+    {
+        EventSystem<float>.InvokeEvent(EventType.UPDATE_SFX, SFXSlider.value);
+    }
+
+    public void UpdateMainSFXVolume()
+    {
+        EventSystem<float>.InvokeEvent(EventType.UPDATE_SFX_MAIN, mainSFXSlider.value);
+    }
+
+    public void SaveSettings()
+    {
+
     }
 
     public void LoadAsia()
