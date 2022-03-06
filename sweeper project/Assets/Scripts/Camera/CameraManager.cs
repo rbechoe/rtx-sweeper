@@ -17,7 +17,8 @@ public class CameraManager : Base
 
     private float animationTime = 0;
     private float animationEndTime = 0;
-    private float speed = 1f; // higher is slower
+    [Tooltip("Higher is slower")]
+    public float speed = 1f; 
 
     protected override void Start()
     {

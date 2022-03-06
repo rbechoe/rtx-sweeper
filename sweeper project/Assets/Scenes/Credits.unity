@@ -259,6 +259,7 @@ MonoBehaviour:
 
 
 
+
     Visual Effects
 
 
@@ -517,7 +518,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -3536}
+  m_AnchoredPosition: {x: 0, y: -3778}
   m_SizeDelta: {x: 1500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1328929188
@@ -1004,8 +1005,10 @@ MonoBehaviour:
 
     CH Assets
 
-    Sabri
-    Ayes
+    Kris
+    de Haas
+
+    Sabri Ayes
 
     IGIIID
 
@@ -1014,64 +1017,65 @@ MonoBehaviour:
 
     Ravi Bechoe
 
-    D.K.V. Studio
+    D.K.V.
+    Studio
 
 
     Imphenzia
 
-    John
-    Leonard French
+    John Leonard French
 
 
     Kris de Haas
 
-    Youri Schuring
+    Youri
+    Schuring
 
     Raoul Scholtens
 
-    Yasmin
-    van Rooijen
+    Yasmin van Rooijen
 
     Andries Graeff
 
-    Liselotte Beijen
+    Liselotte
+    Beijen
 
     Nan van Kallen
 
-    Caspar
-    Gelderman
+    Caspar Gelderman
 
     Michael Smith
 
-    Mareyn Koenderman
+    Mareyn
+    Koenderman
 
     Jesse van Eijmeren
 
-    Inger
-    Smit
+    Inger Smit
 
     Rutger van Teutem
 
 
-    Kris de Haas
+    Kris
+    de Haas
 
     Yasmin van Rooijen
 
-    Wild
-    Mage Games
+    Wild Mage Games
 
     Andries Graeff
 
-    Bas van Seeters
+    Bas
+    van Seeters
 
     Youri Schuring
 
-    Valentijn
-    Muijrers
+    Valentijn Muijrers
 
     Aaron Oostdijk
 
-    Geoffrey Hendrikx'
+    Geoffrey
+    Hendrikx'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e464b532a37ac42409b407b7fa4a8cae, type: 2}
   m_sharedMaterial: {fileID: 7328866445344255039, guid: e464b532a37ac42409b407b7fa4a8cae, type: 2}
