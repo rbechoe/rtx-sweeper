@@ -11,8 +11,6 @@ public class VFXManipulator : MonoBehaviour
 
     [Header("Assignables")]
     public Renderer shapeMat;
-    public Renderer pulseMat1;
-    public Renderer pulseMat2;
     public Texture2D texture;
     public GameObject gridTile;
     public GameObject bombEffect;
@@ -76,9 +74,5 @@ public class VFXManipulator : MonoBehaviour
 
         shapeMat.material.SetTexture("_MainMask", texture);
         shapeMat.material.SetColor("_RampColorTint", color);
-        pulseMat1.material.SetTexture("_MainMask", texture);
-        pulseMat1.material.SetColor("_RampColorTint", color);
-        pulseMat2.material.SetTexture("_MainMask", texture);
-        pulseMat2.material.SetColor("_RampColorTint", color);
     }
 }

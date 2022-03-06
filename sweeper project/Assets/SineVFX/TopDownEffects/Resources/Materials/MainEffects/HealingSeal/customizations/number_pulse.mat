@@ -209,8 +209,8 @@ Material:
     - _FinalPower: 2
     - _Float4: 0.25
     - _MainMaskExp: 1
-    - _MainMaskScaleU: 2
-    - _MainMaskScaleV: 2
+    - _MainMaskScaleU: 1
+    - _MainMaskScaleV: 1
     - _MainMaskScrollSpeedU: 0
     - _MainMaskScrollSpeedV: 0
     - _NOISE01RADIAL: 1
@@ -249,7 +249,7 @@ Material:
     - _SecondMaskAffectsNoise01Negate: 1
     - _SecondMaskAffectsRamp: 0
     - _SecondMaskBoostsEmission: 4
-    - _SecondMaskFractShrink: 2
+    - _SecondMaskFractShrink: -2
     - _SecondMaskFractSwitch: 1
     - _SecondMaskNegate: 0
     - _SecondMaskProfileNegateSwitch: 0
