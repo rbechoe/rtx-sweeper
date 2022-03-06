@@ -71,27 +71,26 @@ public class DataSerializer : MonoBehaviour
         // Set required params
         newData.tsSaved = GetUnixTimestamp();
         newData.versionNumber = versionNumber;
+
         Write(newData);
     }
 
     private void Write(AccountData accountData)
     {
-        // Remove current file, otherwise it wont work
-        if (File.Exists(Application.persistentDataPath + fileName))
-            File.Delete(Application.persistentDataPath + fileName);
-        
+        RemoveFile();
+
         BinaryFormatter bf = new BinaryFormatter();
         FileStream fs = File.Open(Application.persistentDataPath + fileName, FileMode.OpenOrCreate);
 
         bf.Serialize(fs, accountData);
         fs.Close();
 
-        // TODO encrypt saved file
+        //Encrypt();
     }
 
     private AccountData Read()
     {
-        // TODO decrypt saved file
+        //Decrypt();
 
         // Open and deserialize data
         BinaryFormatter bf = new BinaryFormatter();
@@ -99,7 +98,49 @@ public class DataSerializer : MonoBehaviour
         AccountData AD = (AccountData)bf.Deserialize(fs);
         fs.Close();
 
+        //Encrypt();
+
         return AD;
+    }
+
+    private void Encrypt()
+    {
+        // Encrypt saved file
+        // load, read, encrypt, write
+        string path = Application.persistentDataPath + fileName;
+        StreamReader reader = new StreamReader(path);
+        string newData = AES.EncryptToString(reader.ReadToEnd());
+        reader.Close();
+
+        RemoveFile();
+
+        StreamWriter writer = new StreamWriter(path);
+        writer.Write(newData);
+        writer.Close();
+    }
+
+    private void Decrypt()
+    {
+        // Decrypt saved file
+        // load, read, decrypt, write
+        string path = Application.persistentDataPath + fileName;
+        StreamReader reader = new StreamReader(path);
+        string newData = AES.Decrypt(System.Text.Encoding.UTF8.GetBytes(reader.ReadToEnd())); // TODO invalid padding?
+        //string newData = AES.DecryptString(reader.ReadToEnd()); // TODO doesn't decrypt entire string somehow
+        reader.Close();
+
+        RemoveFile();
+
+        StreamWriter writer = new StreamWriter(path);
+        writer.Write(newData);
+        writer.Close();
+    }
+
+    private void RemoveFile()
+    {
+        // Remove current file, otherwise it wont work
+        if (File.Exists(Application.persistentDataPath + fileName))
+            File.Delete(Application.persistentDataPath + fileName);
     }
 }
 
