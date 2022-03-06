@@ -9,6 +9,7 @@ public class DataSerializer : MonoBehaviour
     float versionNumber;
     float requiredVersion = 0.9f;
     SimpleAES AES = new SimpleAES();
+    DataTest test = new DataTest();
 
     private void Start()
     {
