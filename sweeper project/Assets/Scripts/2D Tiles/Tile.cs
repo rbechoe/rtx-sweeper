@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tiles2D
 {
-    public class Tile : Base
+    public class Tile : MonoBehaviour
     {
         [Header("Settings")]
         public Color defaultCol = Color.grey;
@@ -25,10 +25,8 @@ namespace Tiles2D
         private float glowIntensity = 8192; // value is in nits
         private Color emptyTileColor; // received from grid manager
 
-        protected override void Start()
+        private void Start()
         {
-            base.Start();
-
             vfx = GetComponentInChildren<VFXManipulator>();
             gridMat = vfx.gridTile.GetComponent<Renderer>().material;
             gridMat.EnableKeyword("_EmissiveColor");

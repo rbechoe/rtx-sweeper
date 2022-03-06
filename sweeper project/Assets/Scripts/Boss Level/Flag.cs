@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BossTiles
 {
-    public class Flag : Base
+    public class Flag : MonoBehaviour
     {
         private void OnMouseOver()
         {

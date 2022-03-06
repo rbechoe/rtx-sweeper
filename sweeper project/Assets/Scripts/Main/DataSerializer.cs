@@ -7,9 +7,8 @@ public class DataSerializer : MonoBehaviour
 {
     string fileName = "/gamestats.dat";
     float versionNumber;
-    float requiredVersion = 0.9f;
-    SimpleAES AES = new SimpleAES();
-    DataTest crypto = new DataTest();
+    float requiredVersion = 0.96f;
+    CryptoManager crypto = new CryptoManager();
 
     private void Start()
     {
@@ -80,11 +79,8 @@ public class DataSerializer : MonoBehaviour
     {
         RemoveFile();
 
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream fs = File.Open(Application.persistentDataPath + fileName, FileMode.OpenOrCreate);
-
-        bf.Serialize(fs, accountData);
-        fs.Close();
+        string data = JsonUtility.ToJson(accountData);
+        File.WriteAllText(Application.persistentDataPath + fileName, data);
 
         Encrypt();
     }
@@ -93,11 +89,8 @@ public class DataSerializer : MonoBehaviour
     {
         Decrypt();
 
-        // Open and deserialize data
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream fs = File.Open(Application.persistentDataPath + fileName, FileMode.Open);
-        AccountData AD = (AccountData)bf.Deserialize(fs);
-        fs.Close();
+        string data = File.ReadAllText(Application.persistentDataPath + fileName);
+        AccountData AD = JsonUtility.FromJson<AccountData>(data);
 
         Encrypt();
 

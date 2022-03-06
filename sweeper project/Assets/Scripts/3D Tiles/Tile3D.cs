@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using Tiles2D;
 
-public class Tile3D : Base
+public class Tile3D : MonoBehaviour
 {
     [Header("Settings")]
     public Color defaultCol = Color.grey;
@@ -35,7 +35,7 @@ public class Tile3D : Base
         bombCountTMP = GetComponentInChildren<TMP_Text>();
     }
 
-    protected override void Start()
+    private void Start()
     {
         myMat = gameObject.GetComponent<Renderer>().material;
         myMat.EnableKeyword("_EMISSION");
@@ -70,7 +70,7 @@ public class Tile3D : Base
         EventSystem.RemoveListener(EventType.END_GAME, RevealBomb);
     }
 
-    protected override void Update()
+    private void Update()
     {
         if (clickable)
         {

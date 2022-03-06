@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraMovement : Base
+public class CameraMovement : MonoBehaviour
 {
     private const float MOVESPEED = 5;
 

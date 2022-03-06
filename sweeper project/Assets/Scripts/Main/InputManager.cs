@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : Base
+public class InputManager : MonoBehaviour
 {
     public Dictionary<KeyCode, EventType> keybindings = new Dictionary<KeyCode, EventType>();
     public Dictionary<KeyCode, EventType> keybindingsUp = new Dictionary<KeyCode, EventType>();
@@ -17,7 +17,7 @@ public class InputManager : Base
         EventSystem.RemoveListener(EventType.INPUT_F12, ToggleFullscreen);
     }
 
-    protected override void Start()
+    private void Start()
     {
         // TODO read from txt file as settings
         keybindings.Add(KeyCode.A,           EventType.INPUT_LEFT);
@@ -38,7 +38,7 @@ public class InputManager : Base
         }
     }
 
-    protected override void Update()
+    private void Update()
     {
         // check if any key is pressed and fire event related to it
         foreach (KeyValuePair<KeyCode, EventType> keybinding in keybindings)

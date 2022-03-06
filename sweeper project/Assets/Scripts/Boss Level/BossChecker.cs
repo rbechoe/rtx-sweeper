@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace BossTiles
 {
-    public class BossChecker : Base
+    public class BossChecker : MonoBehaviour
     {
         public Collider[] hitColliders;
 
@@ -11,9 +11,8 @@ namespace BossTiles
         public Color emptyTileColor;
         public Color startColor;
 
-        protected override void Start()
+        private void Start()
         {
-            base.Start();
             gridManager = transform.parent.GetComponent<BossGridManager>();
             emptyTileColor = gridManager.emptyTileColor;
             startColor = gridManager.startColor;

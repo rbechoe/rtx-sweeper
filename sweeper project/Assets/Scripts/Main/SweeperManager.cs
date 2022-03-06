@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SweeperManager : Base
+public class SweeperManager : MonoBehaviour
 {
     public void StartGame()
     {

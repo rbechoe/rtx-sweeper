@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DifficultSpawner : Base
+public class DifficultSpawner : MonoBehaviour
 {
     [Header("Prefabs")]
     public GameObject tile;
@@ -26,9 +26,8 @@ public class DifficultSpawner : Base
     private GameObject firstTile;
     private List<GameObject> emptyTiles = new List<GameObject>();
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         gridSize = TheCreator.Instance.gridSize;
         bombAmount = TheCreator.Instance.bombAmount;
         Vector3 position = new Vector3(gridSize / 2f, gridSize, gridSize / 2f);
@@ -106,7 +105,7 @@ public class DifficultSpawner : Base
                     }
                     else
                     {
-                        newTile.AddComponent<Empty3D>();
+                        // TODO newTile.AddComponent<Empty3D>();
                     }
 
                     curTile++;

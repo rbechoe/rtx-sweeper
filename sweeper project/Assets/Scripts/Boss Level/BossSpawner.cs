@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BossTiles
 {
-    public class BossSpawner : Base
+    public class BossSpawner : MonoBehaviour
     {
         [Header("Prefabs")]
         public GameObject tile;
@@ -27,9 +27,8 @@ namespace BossTiles
         private GameObject firstTile;
         private List<GameObject> emptyTiles = new List<GameObject>();
 
-        protected override void Start()
+        private void Start()
         {
-            base.Start();
             xSize = TheCreator.Instance.xSize;
             zSize = TheCreator.Instance.zSize;
             gridSize = TheCreator.Instance.gridSize;

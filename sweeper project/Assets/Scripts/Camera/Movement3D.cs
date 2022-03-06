@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement3D : Base
+public class Movement3D : MonoBehaviour
 {
     [SerializeField]
     private GameObject parentObj;
@@ -21,9 +21,8 @@ public class Movement3D : Base
     private float moveCd = 0;
     private float moveCdReset = .25f;
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         frontSelection.transform.localScale = new Vector3(100, .9f, 100);
         midSelection.transform.localScale = new Vector3(100, .9f, 100);
         endSelection.transform.localScale = new Vector3(100, .9f, 100);
@@ -50,9 +49,8 @@ public class Movement3D : Base
         EventSystem.RemoveListener(EventType.INPUT_DOWN, MoveDown);
     }
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
         if (moveCd > 0)
         {
             moveCd -= Time.deltaTime;

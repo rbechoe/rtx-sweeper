@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameManager : Base
+public class GameManager : MonoBehaviour
 {
     [Header("Settings")]
     public int gridSize;
@@ -11,9 +11,8 @@ public class GameManager : Base
     public float timer { get; private set; }
     public bool gameActive { get; set; }
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         gridSize = TheCreator.Instance.gridSize;
         bombAmount = TheCreator.Instance.bombAmount;
     }
@@ -30,10 +29,8 @@ public class GameManager : Base
         EventSystem.RemoveListener(EventType.GAME_LOSE, StartGame);
     }
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
-
         if (gameActive)
         {
             timer += Time.deltaTime;

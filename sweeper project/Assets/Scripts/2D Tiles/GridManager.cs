@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tiles2D
 {
-    public class GridManager : Base
+    public class GridManager : MonoBehaviour
     {
         private List<GameObject> tiles = new List<GameObject>();
         private List<GameObject> activeFlags = new List<GameObject>();
@@ -42,10 +42,8 @@ namespace Tiles2D
         private string difficultyStars;
         private bool firstTime = true; // used to avoid bug, clean solution needs to be fixed!
 
-        protected override void Start()
+        private void Start()
         {
-            base.Start();
-
             difficultyStars = "Difficulty: ";
             for (int i = 0; i < (10 - bombDensity); i++)
             {
@@ -72,7 +70,7 @@ namespace Tiles2D
             SetText();
         }
 
-        protected override void Update()
+        private void Update()
         {
             if (timeStarted)
             {

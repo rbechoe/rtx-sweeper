@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Flag3D : Base
+public class Flag3D : MonoBehaviour
 {
     private bool hovered;
 
-    protected override void Update()
+    private void Update()
     {
         if (Input.GetMouseButtonUp(1) && hovered)
         {

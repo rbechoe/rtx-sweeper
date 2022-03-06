@@ -1,4 +1,6 @@
-public class TheCreator : Base
+using UnityEngine;
+
+public class TheCreator : MonoBehaviour
 {
     private static TheCreator instance;
 

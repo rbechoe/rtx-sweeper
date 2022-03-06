@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class LookAt : Base
+public class LookAt : MonoBehaviour
 {
     private GameObject target;
     public TMP_Text bombCountTMP;
@@ -10,7 +10,7 @@ public class LookAt : Base
     public Color defaultNone;
     public Color defaultSide;
 
-    protected override void Start()
+    private void Start()
     {
         target = GameObject.FindGameObjectWithTag("LookTarget");
         bombCountTMP = GetComponentInChildren<TMP_Text>();
@@ -20,7 +20,7 @@ public class LookAt : Base
         selectionLayers = LayerMask.GetMask("Selector", "Transparent");
     }
 
-    protected override void Update()
+    private void Update()
     {
         transform.LookAt(target.transform.position);
 

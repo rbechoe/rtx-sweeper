@@ -4,7 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using Tiles2D;
 
-public class CameraManager : Base
+public class CameraManager : MonoBehaviour
 {
     private CinemachineTrackedDolly trackedDolly;
     [SerializeField] private CinemachineVirtualCamera virtualCam;
@@ -20,12 +20,12 @@ public class CameraManager : Base
     [Tooltip("Higher is slower")]
     public float speed = 1f; 
 
-    protected override void Start()
+    private void Start()
     {
         trackedDolly = virtualCam.GetCinemachineComponent<CinemachineTrackedDolly>();
     }
 
-    protected override void Update()
+    private void Update()
     {
         if (animationTime < animationEndTime)
         {

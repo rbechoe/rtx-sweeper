@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Checker3D : Base
+public class Checker3D : MonoBehaviour
 {
     public Collider[] hitColliders;
 

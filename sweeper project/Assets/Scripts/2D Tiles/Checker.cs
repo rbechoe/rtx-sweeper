@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Tiles2D
 {
-    public class Checker : Base
+    public class Checker : MonoBehaviour
     {
         public Collider[] hitColliders;
 
@@ -11,9 +11,8 @@ namespace Tiles2D
         public Color emptyTileColor;
         public Color startColor;
 
-        protected override void Start()
+        private void Start()
         {
-            base.Start();
             gridManager = transform.parent.GetComponent<GridManager>();
             emptyTileColor = gridManager.emptyTileColor;
             startColor = gridManager.startColor;
