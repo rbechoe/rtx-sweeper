@@ -20,6 +20,7 @@ namespace Tiles2D
         protected bool clickable;
         protected bool previewClicked;
         protected bool canReveal;
+        protected bool gameEnded;
         protected Collider[] tilesPreviewed;
 
         private float glowIntensity = 8192; // value is in nits
@@ -50,6 +51,9 @@ namespace Tiles2D
             EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
             EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
             EventSystem.AddListener(EventType.END_GAME, RemoveSelf);
+            EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
+            EventSystem.AddListener(EventType.WIN_GAME, EndGame);
+            EventSystem.AddListener(EventType.GAME_LOSE, EndGame);
         }
 
         private void OnDisable()
@@ -61,14 +65,30 @@ namespace Tiles2D
             EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
             EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
             EventSystem.RemoveListener(EventType.END_GAME, RemoveSelf);
+            EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
+            EventSystem.RemoveListener(EventType.WIN_GAME, EndGame);
+            EventSystem.RemoveListener(EventType.GAME_LOSE, EndGame);
             vfx.gameObject.SetActive(true);
+        }
+
+        private void EndGame()
+        {
+            gameEnded = true;
+        }
+
+        private void StartGame()
+        {
+            gameEnded = false;
         }
 
         private void OnMouseOver()
         {
-            if (clickable && !triggered)
+            UpdateMaterial(selectCol);
+
+            if (gameEnded || (bombCount == 0 && triggered))
             {
-                UpdateMaterial(selectCol);
+                UpdateMaterial(defaultCol);
+                return;
             }
 
             // press left button - highlight adjecant tiles that can be revealed if this tile is revealed
@@ -129,10 +149,7 @@ namespace Tiles2D
         private void OnMouseExit()
         {
             // set tile back to base color
-            if (clickable && !triggered)
-            {
-                UpdateMaterial(defaultCol);
-            }
+            UpdateMaterial(defaultCol);
 
             // set all nearby tiles back to base color
             if (previewClicked)
@@ -216,8 +233,10 @@ namespace Tiles2D
         protected void UpdateMaterial(Color color, float intensity = -10)
         {
             if (intensity == -10) intensity = glowIntensity;
+            
+            if (!triggered) gridMat?.SetColor("_EmissiveColor", color * intensity);
+            if (triggered) gridMat?.SetColor("_EmissiveColor", color * 0);
 
-            gridMat?.SetColor("_EmissiveColor", color * intensity);
             gridMat?.SetColor("_BaseColor", color);
         }
 
