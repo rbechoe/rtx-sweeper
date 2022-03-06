@@ -8,6 +8,7 @@ public class DataSerializer : MonoBehaviour
     string fileName = "/gamestats.dat";
     float versionNumber;
     float requiredVersion = 0.9f;
+    SimpleAES AES = new SimpleAES();
 
     private void Start()
     {
@@ -46,12 +47,7 @@ public class DataSerializer : MonoBehaviour
         AD.versionNumber = versionNumber;
         AD.tsSaved = GetUnixTimestamp();
 
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream fs = File.Open(Application.persistentDataPath + fileName, FileMode.OpenOrCreate);
-
-        // Save changes
-        bf.Serialize(fs, AD);
-        fs.Close();
+        Write(AD);
 
         return AD;
     }
@@ -59,42 +55,51 @@ public class DataSerializer : MonoBehaviour
     // Retrieve account data
     public AccountData GetUserData()
     {
-        AccountData AD = new AccountData();
-
         if (!File.Exists(Application.persistentDataPath + fileName))
         {
-            AD = CreateNewFile();
+            return CreateNewFile();
         }
         else
         {
-            // Open and deserialize data
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream fs = File.Open(Application.persistentDataPath + fileName, FileMode.Open);
-            AD = (AccountData)bf.Deserialize(fs);
-            fs.Close();
+            return Read();
         }
-
-        return AD;
     }
 
     // Update user data
     public void UpdateAccountData(AccountData newData)
     {
-        // Remove current file, otherwise it wont work
-        if (File.Exists(Application.persistentDataPath + fileName))
-            File.Delete(Application.persistentDataPath + fileName);
-
-        // Create new file
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream fs = File.Open(Application.persistentDataPath + fileName, FileMode.OpenOrCreate);
-
         // Set required params
         newData.tsSaved = GetUnixTimestamp();
         newData.versionNumber = versionNumber;
+        Write(newData);
+    }
 
-        // Save new file
-        bf.Serialize(fs, newData);
+    private void Write(AccountData accountData)
+    {
+        // Remove current file, otherwise it wont work
+        if (File.Exists(Application.persistentDataPath + fileName))
+            File.Delete(Application.persistentDataPath + fileName);
+        
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream fs = File.Open(Application.persistentDataPath + fileName, FileMode.OpenOrCreate);
+
+        bf.Serialize(fs, accountData);
         fs.Close();
+
+        // TODO encrypt saved file
+    }
+
+    private AccountData Read()
+    {
+        // TODO decrypt saved file
+
+        // Open and deserialize data
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream fs = File.Open(Application.persistentDataPath + fileName, FileMode.Open);
+        AccountData AD = (AccountData)bf.Deserialize(fs);
+        fs.Close();
+
+        return AD;
     }
 }
 
