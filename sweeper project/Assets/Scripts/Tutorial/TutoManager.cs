@@ -7,7 +7,6 @@ using TMPro;
 public class TutoManager : MonoBehaviour
 {
     public GameObject victoryText;
-    public GameObject[] uiObjects;
     public TextMeshProUGUI bombCount, timer;
 
     private DataSerializer dataSerializer;
@@ -16,7 +15,6 @@ public class TutoManager : MonoBehaviour
     {
         dataSerializer = gameObject.GetComponent<DataSerializer>();
 
-        DisableUIElements();
         DisableText();
         StartCoroutine(DelayedMethods.FireMethod(RandomizeGrid, 10));
     }
@@ -45,14 +43,6 @@ public class TutoManager : MonoBehaviour
     void DisableText()
     {
         victoryText.SetActive(false);
-    }
-
-    void DisableUIElements()
-    {
-        foreach (GameObject ui in uiObjects)
-        {
-            ui.SetActive(false);
-        }
     }
 
     public void RandomizeGrid()
