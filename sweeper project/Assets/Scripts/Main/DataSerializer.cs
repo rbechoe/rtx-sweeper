@@ -9,7 +9,7 @@ public class DataSerializer : MonoBehaviour
     float versionNumber;
     float requiredVersion = 0.9f;
     SimpleAES AES = new SimpleAES();
-    DataTest test = new DataTest();
+    DataTest crypto = new DataTest();
 
     private void Start()
     {
@@ -86,12 +86,12 @@ public class DataSerializer : MonoBehaviour
         bf.Serialize(fs, accountData);
         fs.Close();
 
-        //Encrypt();
+        Encrypt();
     }
 
     private AccountData Read()
     {
-        //Decrypt();
+        Decrypt();
 
         // Open and deserialize data
         BinaryFormatter bf = new BinaryFormatter();
@@ -99,7 +99,7 @@ public class DataSerializer : MonoBehaviour
         AccountData AD = (AccountData)bf.Deserialize(fs);
         fs.Close();
 
-        //Encrypt();
+        Encrypt();
 
         return AD;
     }
@@ -110,7 +110,7 @@ public class DataSerializer : MonoBehaviour
         // load, read, encrypt, write
         string path = Application.persistentDataPath + fileName;
         StreamReader reader = new StreamReader(path);
-        string newData = AES.EncryptToString(reader.ReadToEnd());
+        string newData = crypto.Encrypt(reader.ReadToEnd());
         reader.Close();
 
         RemoveFile();
@@ -126,8 +126,7 @@ public class DataSerializer : MonoBehaviour
         // load, read, decrypt, write
         string path = Application.persistentDataPath + fileName;
         StreamReader reader = new StreamReader(path);
-        string newData = AES.Decrypt(System.Text.Encoding.UTF8.GetBytes(reader.ReadToEnd())); // TODO invalid padding?
-        //string newData = AES.DecryptString(reader.ReadToEnd()); // TODO doesn't decrypt entire string somehow
+        string newData = crypto.Decrypt(reader.ReadToEnd());
         reader.Close();
 
         RemoveFile();
