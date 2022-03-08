@@ -7,6 +7,21 @@ public class RTXHandler : MonoBehaviour
     public List<GameObject> rtxObjects = new List<GameObject>();
     public List<GameObject> defaultObjects = new List<GameObject>();
 
+    private Settings settings;
+
+    private void Start()
+    {
+        settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
+        if (settings.GetRTX())
+        {
+            EnableRTX();
+        }
+        else
+        {
+            DisableRTX();
+        }
+    }
+
     private void OnEnable()
     {
         EventSystem.AddListener(EventType.ENABLE_RTX, EnableRTX);

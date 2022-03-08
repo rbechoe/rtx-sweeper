@@ -28,6 +28,8 @@ public class Settings : MonoBehaviour
         EventSystem<float>.AddListener(EventType.UPDATE_SFX, SetSFXVolume);
         EventSystem<float>.AddListener(EventType.UPDATE_BGM, SetBGMVolume);
         EventSystem<float>.AddListener(EventType.UPDATE_SFX_MAIN, SetMainSFXVolume);
+        EventSystem.AddListener(EventType.ENABLE_RTX, EnableRTX);
+        EventSystem.AddListener(EventType.DISABLE_RTX, DisableRTX);
     }
 
     private void OnDisable()
@@ -35,6 +37,8 @@ public class Settings : MonoBehaviour
         EventSystem<float>.RemoveListener(EventType.UPDATE_SFX, SetSFXVolume);
         EventSystem<float>.RemoveListener(EventType.UPDATE_BGM, SetBGMVolume);
         EventSystem<float>.RemoveListener(EventType.UPDATE_SFX_MAIN, SetMainSFXVolume);
+        EventSystem.RemoveListener(EventType.ENABLE_RTX, EnableRTX);
+        EventSystem.RemoveListener(EventType.DISABLE_RTX, DisableRTX);
     }
 
     public void SetSFXVolume(float value)
@@ -75,12 +79,10 @@ public class Settings : MonoBehaviour
     public void EnableRTX()
     {
         rtxEnabled = true;
-        EventSystem.InvokeEvent(EventType.ENABLE_RTX);
     }
 
     public void DisableRTX()
     {
         rtxEnabled = false;
-        EventSystem.InvokeEvent(EventType.DISABLE_RTX);
     }
 }

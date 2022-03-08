@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 969558174}
-  m_IndirectSpecularColor: {r: 465.02805, g: 666.30835, b: 797.0322, a: 1}
+  m_IndirectSpecularColor: {r: 464.92972, g: 666.2429, b: 796.999, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3483,17 +3483,6 @@ MonoBehaviour:
   axisX: 1
   axisY: 0
   axisZ: 0
---- !u!114 &141522121 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8654327641654584314, guid: 3497cdc06ce95b140b3ace1d172da1fe, type: 3}
-  m_PrefabInstance: {fileID: 8654327641174896132}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998d307e890a6114e94ddb1e31e2798d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &142097008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24827,8 +24816,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 141522121}
-        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+      - m_Target: {fileID: 7389621369151043414}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
         m_MethodName: DisableRTX
         m_Mode: 1
         m_Arguments:
@@ -39166,8 +39155,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 141522121}
-        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+      - m_Target: {fileID: 7389621369151043414}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
         m_MethodName: EnableRTX
         m_Mode: 1
         m_Arguments:
@@ -55076,6 +55065,42 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 650676064}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 196821974}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 907617280}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 339385166}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -77749,6 +77774,9 @@ MonoBehaviour:
   asiaBtn: {fileID: 8990987614530998791}
   desertBtn: {fileID: 8990987614742662900}
   bossBtn: {fileID: 1465571990}
+  graphicsBtn: {fileID: 907617282}
+  rtxOnBtn: {fileID: 909403877}
+  rtxOffBtn: {fileID: 755523554}
   BGMSlider: {fileID: 764383068}
   SFXSlider: {fileID: 1299170081}
   mainSFXSlider: {fileID: 193152687}

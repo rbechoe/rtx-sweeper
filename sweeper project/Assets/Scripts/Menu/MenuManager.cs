@@ -12,7 +12,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private TMP_InputField bombTMP;
 
-    public Button playBtn, asiaBtn, desertBtn, bossBtn;
+    public Button playBtn, asiaBtn, desertBtn, bossBtn, graphicsBtn, rtxOnBtn, rtxOffBtn;
     public Slider BGMSlider, SFXSlider, mainSFXSlider;
 
     private int xSize;
@@ -28,6 +28,20 @@ public class MenuManager : MonoBehaviour
         BGMSlider.value = settings.GetBGMVolume();
         SFXSlider.value = settings.GetSFXVolume();
         mainSFXSlider.value = settings.GetMainSFXVolume();
+
+        // enable disable correct rtx buttons
+        if (settings.GetRTX())
+        {
+            rtxOnBtn.gameObject.SetActive(false);
+            rtxOffBtn.gameObject.SetActive(true);
+        }
+        else
+        {
+            rtxOnBtn.gameObject.SetActive(true);
+            rtxOffBtn.gameObject.SetActive(false);
+        }
+
+        print("Version: ");
 
         // disable interactables based on savedata
         dataSerializer = gameObject.GetComponent<DataSerializer>();
@@ -127,7 +141,17 @@ public class MenuManager : MonoBehaviour
 
     public void SaveSettings()
     {
+        // implement by writing to settings file
+    }
 
+    public void EnableRTX()
+    {
+        EventSystem.InvokeEvent(EventType.ENABLE_RTX);
+    }
+
+    public void DisableRTX()
+    {
+        EventSystem.InvokeEvent(EventType.DISABLE_RTX);
     }
 
     public void LoadAsia()
