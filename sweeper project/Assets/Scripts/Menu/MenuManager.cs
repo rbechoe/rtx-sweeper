@@ -42,6 +42,7 @@ public class MenuManager : MonoBehaviour
         }
 
         print("Version: ");
+        // if version is 12 then enable graphics button otherwise disable it
 
         // disable interactables based on savedata
         dataSerializer = gameObject.GetComponent<DataSerializer>();
