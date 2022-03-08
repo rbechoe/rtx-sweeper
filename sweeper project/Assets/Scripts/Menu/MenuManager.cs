@@ -41,8 +41,16 @@ public class MenuManager : MonoBehaviour
             rtxOffBtn.gameObject.SetActive(false);
         }
 
-        print("Version: ");
         // if version is 12 then enable graphics button otherwise disable it
+        string dxVersion = SystemInfo.graphicsDeviceVersion;
+        if (dxVersion.Contains("Direct3D 12"))
+        {
+            graphicsBtn.interactable = true;
+        }
+        else
+        {
+            graphicsBtn.interactable = false;
+        }
 
         // disable interactables based on savedata
         dataSerializer = gameObject.GetComponent<DataSerializer>();
