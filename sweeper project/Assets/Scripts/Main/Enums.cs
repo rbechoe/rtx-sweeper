@@ -36,6 +36,8 @@ public enum EventType
     UPDATE_BGM,         // passes float
     UPDATE_SFX,         // passes float
     UPDATE_SFX_MAIN,    // passes float
+    ENABLE_RTX,         // passes nothing
+    DISABLE_RTX,        // passes nothing
 }
 
 public enum BossTileStates

@@ -8,6 +8,8 @@ public class Settings : MonoBehaviour
 
     private float SFXVolume = 0.1f, BGMVolume = 0.1f, mainSFXVolume = 1f;
 
+    private bool rtxEnabled = false;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -63,5 +65,22 @@ public class Settings : MonoBehaviour
     public float GetMainSFXVolume()
     {
         return mainSFXVolume;
+    }
+
+    public bool GetRTX()
+    {
+        return rtxEnabled;
+    }
+
+    public void EnableRTX()
+    {
+        rtxEnabled = true;
+        EventSystem.InvokeEvent(EventType.ENABLE_RTX);
+    }
+
+    public void DisableRTX()
+    {
+        rtxEnabled = false;
+        EventSystem.InvokeEvent(EventType.DISABLE_RTX);
     }
 }
