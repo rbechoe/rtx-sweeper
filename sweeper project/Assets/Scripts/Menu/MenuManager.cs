@@ -15,6 +15,8 @@ public class MenuManager : MonoBehaviour
     public Button playBtn, asiaBtn, desertBtn, bossBtn, graphicsBtn, rtxOnBtn, rtxOffBtn;
     public Slider BGMSlider, SFXSlider, mainSFXSlider;
 
+    public Locker tutorial, arctic, asia, desert, islands;
+
     private int xSize;
     private int zSize;
     private int gridSize;
@@ -59,6 +61,13 @@ public class MenuManager : MonoBehaviour
         if (accountData.arcticVictories > 0) asiaBtn.interactable = true;
         if (accountData.asiaVictories > 0) desertBtn.interactable = true;
         if (accountData.desertVictories > 0) bossBtn.gameObject.SetActive(true);
+
+        // enable pretty environments based on progression
+        if (accountData.tutorialVictories > 0) tutorial.UnlockAreas();
+        if (accountData.arcticVictories > 0) arctic.UnlockAreas();
+        if (accountData.asiaVictories > 0) asia.UnlockAreas();
+        if (accountData.desertVictories > 0) desert.UnlockAreas();
+        if (accountData.bossVictories > 0) islands.UnlockAreas();
     }
 
     public void Easy2D()
