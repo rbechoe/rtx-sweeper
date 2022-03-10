@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 969558174}
-  m_IndirectSpecularColor: {r: 1836.0118, g: 2641.7295, b: 3166.9023, a: 1}
+  m_IndirectSpecularColor: {r: 1836.1825, g: 2641.7334, b: 3166.9727, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6365,6 +6365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: {fileID: 25387608}
   unlocked: {fileID: 152062434}
+  delayed: 0
 --- !u!1001 &221205264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20122,6 +20123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: {fileID: 1895547813}
   unlocked: {fileID: 904221693}
+  delayed: 0
 --- !u!1001 &533026582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43117,6 +43119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: {fileID: 1588116490}
   unlocked: {fileID: 818646784}
+  delayed: 0
 --- !u!1001 &979970156
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44591,6 +44594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: {fileID: 1237996287}
   unlocked: {fileID: 751312533}
+  delayed: 1
 --- !u!4 &1040457787
 Transform:
   m_ObjectHideFlags: 0
@@ -59750,6 +59754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: {fileID: 910831579}
   unlocked: {fileID: 1968816102}
+  delayed: 0
 --- !u!1001 &1449247986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60342,7 +60347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -615, y: -331}
+  m_AnchoredPosition: {x: -615, y: -349}
   m_SizeDelta: {x: 360, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1465571990
@@ -83764,7 +83769,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 728, y: -264}
+  m_AnchoredPosition: {x: 602, y: -327}
   m_SizeDelta: {x: 360, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8990987613622116435
@@ -86238,7 +86243,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 147, y: -273}
+  m_AnchoredPosition: {x: 63, y: -273}
   m_SizeDelta: {x: 360, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8990987614742662902
