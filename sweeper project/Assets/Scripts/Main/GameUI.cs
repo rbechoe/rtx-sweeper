@@ -9,10 +9,13 @@ public class GameUI : MonoBehaviour
     public GameObject victoryText;
     public TextMeshProUGUI bombText;
     public TextMeshProUGUI timeText;
+    public TextMeshProUGUI victoryTimeText;
+    public TextMeshProUGUI victorySkillText;
 
     public Slider BGMSlider, SFXSlider, mainSFXSlider;
 
     private int bombAmount;
+    private float currentTime;
 
     private void Start()
     {
@@ -60,6 +63,7 @@ public class GameUI : MonoBehaviour
 
     private void WinGame()
     {
+        victoryTimeText.text = "<mspace=mspace=21>" + Math.Round(currentTime, 3).ToString("N3");
         victoryText.SetActive(true);
     }
 
@@ -69,11 +73,14 @@ public class GameUI : MonoBehaviour
         bombAmount = 0;
         timeText.text = "0";
         bombText.text = "0";
+        victorySkillText.text = "0%";
+        victoryTimeText.text = "0";
     }
 
     private void SetTimer(float time)
     {
-        timeText.text = "<mspace=mspace=21>" + Math.Round(time, 3).ToString("N3");
+        currentTime = time;
+        timeText.text = "<mspace=mspace=21>" + (int)currentTime;
     }
 
     private void SetBombsLeft(int amount)
@@ -100,5 +107,10 @@ public class GameUI : MonoBehaviour
     public void ReloadLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void SetEfficiency(float value)
+    {
+        victorySkillText.text = "<mspace=mspace=21>" + Math.Round(value, 3).ToString("N3") + "%";
     }
 }

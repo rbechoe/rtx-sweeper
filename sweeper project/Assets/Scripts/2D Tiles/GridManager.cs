@@ -29,6 +29,7 @@ namespace Tiles2D
         private float timer;
 
         private DataSerializer DS;
+        public GameUI uiManager;
 
         public TextMeshProUGUI infoText;
 
@@ -310,6 +311,7 @@ namespace Tiles2D
 
             float efficiency = 1f * (tiles.Count - initialBombAmount) / tileClicks * 100f;
             efficiency = Mathf.Clamp(efficiency, 0, 100);
+            uiManager.SetEfficiency(efficiency);
 
             AccountData AD = DS.GetUserData();
             AD.totalClicks = AD.totalClicks + tileClicks;
