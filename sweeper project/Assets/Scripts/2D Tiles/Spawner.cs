@@ -93,7 +93,7 @@ namespace Tiles2D
                     newTile = Instantiate(tile, new Vector3(x, 0, z), Quaternion.identity);
                     if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
                     {
-                        newTile.GetComponent<Tile>().state = TileStates.Bomb;
+                        newTile.GetComponent<Tile2D>().state = TileStates.Bomb;
                         bombCount++;
 
                         // create flag for the pool, 1 flag per bomb
@@ -104,7 +104,7 @@ namespace Tiles2D
                     }
                     else
                     {
-                        newTile.GetComponent<Tile>().state = TileStates.Empty;
+                        newTile.GetComponent<Tile2D>().state = TileStates.Empty;
                     }
 
                     curTile++;
@@ -164,7 +164,7 @@ namespace Tiles2D
             if (emptyTiles.Count > 0)
             {
                 firstTile = emptyTiles[Random.Range(0, emptyTiles.Count)];
-                firstTile.GetComponent<Tile>().FirstTile();
+                firstTile.GetComponent<Tile2D>().FirstTile();
             }
         }
 

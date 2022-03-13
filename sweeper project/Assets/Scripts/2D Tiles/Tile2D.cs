@@ -1,0 +1,146 @@
+using System.Collections;
+using UnityEngine;
+
+public class Tile2D : BaseTile
+{
+    protected override void OnEnable()
+    {
+        // listen
+        EventSystem.AddListener(EventType.START_GAME, Clickable);
+        EventSystem.AddListener(EventType.END_GAME, Unclickable);
+        EventSystem.AddListener(EventType.WIN_GAME, Unclickable);
+        EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
+        EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
+        EventSystem.AddListener(EventType.END_GAME, ResetSelf);
+        EventSystem.AddListener(EventType.PREPARE_GAME, ResetSelf);
+        EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
+        EventSystem.AddListener(EventType.WIN_GAME, EndGame);
+        EventSystem.AddListener(EventType.GAME_LOSE, EndGame);
+        EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
+    }
+
+    protected override void OnDisable()
+    {
+        // unlisten
+        EventSystem.RemoveListener(EventType.START_GAME, Clickable);
+        EventSystem.RemoveListener(EventType.END_GAME, Unclickable);
+        EventSystem.RemoveListener(EventType.WIN_GAME, Unclickable);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
+        EventSystem.RemoveListener(EventType.END_GAME, ResetSelf);
+        EventSystem.RemoveListener(EventType.PREPARE_GAME, ResetSelf);
+        EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
+        EventSystem.RemoveListener(EventType.WIN_GAME, EndGame);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, EndGame);
+        EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
+        vfx.gameObject.SetActive(true);
+    }
+
+    protected override void OnMouseOver()
+    {
+        UpdateMaterial(selectCol);
+
+        if (gameEnded || (bombCount == 0 && triggered))
+        {
+            UpdateMaterial(defaultCol);
+            return;
+        }
+
+        // press left button - highlight adjecant tiles that can be revealed if this tile is revealed
+        if (Input.GetMouseButton(0) && triggered && !previewClicked)
+        {
+            // use box to detect all nearby tiles that can be activated once amount bombs equals amount of flags, not more or less
+            Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, flagMask);
+            Collider[] allTiles = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, allMask);
+
+            if (bombCount == nearbyFlags.Length)
+            {
+                canReveal = true;
+            }
+            else
+            {
+                canReveal = false;
+            }
+
+            foreach (Collider tile in allTiles)
+            {
+                tile.GetComponent<Tile2D>()?.PreviewTileSelection();
+            }
+
+            tilesPreviewed = allTiles;
+            previewClicked = true;
+        }
+
+        // release left button - reveal tile
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (clickable)
+            {
+                EventSystem.InvokeEvent(EventType.PLAY_CLICK);
+                EventSystem.InvokeEvent(EventType.TILE_CLICK);
+                DoAction();
+            }
+
+            // reveal all nearby tiles
+            if (previewClicked && canReveal)
+            {
+                foreach (Collider tile in tilesPreviewed)
+                {
+                    tile.GetComponent<Tile2D>()?.DoAction(true);
+                }
+                previewClicked = false;
+                tilesPreviewed = null;
+            }
+        }
+
+        // right click - place flag
+        if (Input.GetMouseButtonUp(1) && !triggered)
+        {
+            EventSystem.InvokeEvent(EventType.PLAY_FLAG);
+            EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
+        }
+    }
+
+    protected override void UpdateMaterial(Color color, float intensity = -10)
+    {
+        if (intensity == -10) intensity = glowIntensity;
+            
+        if (!triggered) gridMat?.SetColor("_EmissiveColor", color * intensity);
+        if (triggered) gridMat?.SetColor("_EmissiveColor", color * 0);
+
+        gridMat?.SetColor("_BaseColor", color);
+    }
+
+    private IEnumerator FireAction(bool sequenced = false)
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (triggered)
+        {
+            yield break;
+        }
+
+        // return if there is a flag on this position
+        Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
+        if (nearbyFlags.Length > 0)
+        {
+            yield break;
+        }
+
+        if (sequenced) EventSystem.InvokeEvent(EventType.REVEAL_TILE);
+
+        triggered = true;
+
+        defaultCol = emptyTileColor;
+        UpdateMaterial(defaultCol, 1);
+
+        TypeSpecificAction();
+    }
+
+    public override void DoAction(bool sequenced = false)
+    {
+        StartCoroutine(FireAction(sequenced));
+    }
+
+    public override void TypeSettings() { }
+}

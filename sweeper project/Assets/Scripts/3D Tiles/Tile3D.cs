@@ -96,7 +96,7 @@ public class Tile3D : MonoBehaviour
 
                 foreach (Collider _tile in allTiles)
                 {
-                    _tile.GetComponent<Tile>()?.PreviewTileSelection();
+                    _tile.GetComponent<Tile2D>()?.PreviewTileSelection();
                 }
 
                 tilesPreviewed = allTiles;
@@ -113,7 +113,7 @@ public class Tile3D : MonoBehaviour
                 {
                     foreach (Collider _tile in tilesPreviewed)
                     {
-                        _tile.GetComponent<Tile>()?.DoAction();
+                        _tile.GetComponent<Tile2D>()?.DoAction();
                     }
                     previewClicked = false;
                     tilesPreviewed = null;
