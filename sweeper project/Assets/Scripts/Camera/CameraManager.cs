@@ -33,36 +33,30 @@ public class CameraManager : MonoBehaviour
             trackedDolly.m_PathPosition = animationTime;
         }
     }
-
-    // go to 13x14 grid - 1 layer
+    
     public void StartToMidAnimation()
     {
         DisableManagers();
-        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
         midManager.enabled = true;
         midManager.gameObject.SetActive(true);
         trackedDolly.m_Path = startToMid;
         animationTime = 0;
         animationEndTime = startToMid.PathLength;
     }
-
-    // go to 13x20 grid - 1 layer
+    
     public void StartToRightAnimation()
     {
         DisableManagers();
-        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
         rightManager.enabled = true;
         rightManager.gameObject.SetActive(true);
         trackedDolly.m_Path = startToRight;
         animationTime = 0;
         animationEndTime = startToRight.PathLength;
     }
-
-    // go to 10x9 grid - 1 layer
+    
     public void StartToLeftAnimation()
     {
         DisableManagers();
-        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
         leftManager.enabled = true;
         leftManager.gameObject.SetActive(true);
         trackedDolly.m_Path = startToLeft;

@@ -21,6 +21,7 @@ public class FlickerLight : MonoBehaviour
     {
         _lt = GetComponent<Light>();
         _lastIntensity = _lt.intensity;
+        _timePassed += Random.Range(0, 500) / 500f;
         FixedUpdate();
     }
 

@@ -52,4 +52,9 @@ public class AudioEffects : MonoBehaviour
     {
         audioSource.PlayOneShot(flagRemove);
     }
+
+    public void UIClick()
+    {
+        audioSource.PlayOneShot(tileClick);
+    }
 }
