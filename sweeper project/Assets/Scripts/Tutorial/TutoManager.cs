@@ -10,6 +10,7 @@ public class TutoManager : MonoBehaviour
     public TextMeshProUGUI bombCount, timer;
 
     private DataSerializer dataSerializer;
+    public GameUI uiManager;
 
     private void Start()
     {
@@ -34,6 +35,7 @@ public class TutoManager : MonoBehaviour
     void EnableText()
     {
         AccountData userData = dataSerializer.GetUserData();
+        uiManager.SetEfficiency(100);
         userData.tutorialVictories += 1;
         dataSerializer.UpdateAccountData(userData);
 
