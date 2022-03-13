@@ -25,6 +25,7 @@ public abstract class BaseGridManager : MonoBehaviour
     protected bool wonGame;
     protected int tileClicks;
     protected float timer;
+    public float progress;
 
     protected DataSerializer DS;
     public GameUI uiManager;
@@ -215,6 +216,7 @@ public abstract class BaseGridManager : MonoBehaviour
 
     protected virtual void CheckForVictory()
     {
+        progress = goodTiles / (tiles.Count - initialBombAmount);
         if (goodTiles == (tiles.Count - initialBombAmount))
         {
             wonGame = true;

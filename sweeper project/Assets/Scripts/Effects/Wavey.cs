@@ -6,16 +6,18 @@ public class Wavey : MonoBehaviour
 {
     public float distance = 1f;
     public float speed = 1f;
-    private float timeOffset = 0; // makes it a bit random
+    public float timeOffset = 0; // makes it a bit random
 
     public bool axisX, axisY, axisZ;
 
     private Vector3 startEuler;
 
+    public bool noRandom;
+
     private void Start()
     {
         startEuler = transform.localEulerAngles;
-        timeOffset = Random.Range(0, 1000);
+        if (!noRandom) timeOffset = Random.Range(0, 1000);
     }
 
     private void Update()
