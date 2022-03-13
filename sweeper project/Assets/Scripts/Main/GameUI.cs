@@ -111,6 +111,6 @@ public class GameUI : MonoBehaviour
 
     public void SetEfficiency(float value)
     {
-        victorySkillText.text = "<mspace=mspace=21>" + Math.Round(value, 3).ToString("N3") + "%";
+        victorySkillText.text = "<mspace=mspace=21>" + Math.Round(value, 3) + "%";
     }
 }
