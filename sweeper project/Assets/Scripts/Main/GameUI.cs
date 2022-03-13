@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
-    public GameObject victoryText;
+    public GameObject victoryText, loserText;
     public TextMeshProUGUI bombText;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI victoryTimeText;
@@ -20,6 +20,7 @@ public class GameUI : MonoBehaviour
     private void Start()
     {
         victoryText.SetActive(false);
+        loserText.SetActive(false);
         bombText.text = bombAmount.ToString();
 
         Settings settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
@@ -31,6 +32,7 @@ public class GameUI : MonoBehaviour
     private void OnEnable()
     {
         EventSystem.AddListener(EventType.RESET_GAME, ResetGame);
+        EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.AddListener(EventType.RANDOM_GRID, ResetGrid);
         EventSystem.AddListener(EventType.WIN_GAME, WinGame);    
         EventSystem<int>.AddListener(EventType.BOMB_UPDATE, SetBombsLeft);
@@ -40,6 +42,7 @@ public class GameUI : MonoBehaviour
     private void OnDisable()
     {
         EventSystem.RemoveListener(EventType.RESET_GAME, ResetGame);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGrid);
         EventSystem.RemoveListener(EventType.WIN_GAME, WinGame);
         EventSystem<int>.RemoveListener(EventType.BOMB_UPDATE, SetBombsLeft);
@@ -67,9 +70,15 @@ public class GameUI : MonoBehaviour
         victoryText.SetActive(true);
     }
 
+    private void LoseGame()
+    {
+        loserText.SetActive(true);
+    }
+
     private void ResetGame()
     {
         victoryText.SetActive(false);
+        loserText.SetActive(false);
         bombAmount = 0;
         timeText.text = "0";
         bombText.text = "0";
