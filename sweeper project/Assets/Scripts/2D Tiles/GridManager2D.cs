@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GridManager : BaseGridManager
+public class GridManager2D : BaseGridManager
 {
     protected override void Start()
     {

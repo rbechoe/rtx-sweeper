@@ -11,9 +11,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private CinemachineSmoothPath startToMid;
     [SerializeField] private CinemachineSmoothPath startToLeft;
     [SerializeField] private CinemachineSmoothPath startToRight;
-    [SerializeField] private GridManager midManager;
-    [SerializeField] private GridManager leftManager;
-    [SerializeField] private GridManager rightManager;
+    [SerializeField] private GridManager2D midManager;
+    [SerializeField] private GridManager2D leftManager;
+    [SerializeField] private GridManager2D rightManager;
 
     private float animationTime = 0;
     private float animationEndTime = 0;
