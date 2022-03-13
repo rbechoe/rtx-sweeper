@@ -39,6 +39,8 @@ namespace Tiles2D
         public int level;
         public Color emptyTileColor = Color.black;
         public Color startColor = Color.blue;
+        public Color defaultColor = Color.grey;
+        public Color selectColor = Color.green;
 
         private string difficultyStars;
         private bool firstTime = true; // used to avoid bug, clean solution needs to be fixed!
@@ -53,7 +55,7 @@ namespace Tiles2D
 
             foreach (Transform child in transform)
             {
-                if (child.GetComponent<Checker>())
+                if (child.GetComponent<Tile>())
                 {
                     tiles.Add(child.gameObject);
                 }
@@ -73,10 +75,7 @@ namespace Tiles2D
 
         private void Update()
         {
-            if (timeStarted)
-            {
-                timer += Time.deltaTime;
-            }
+            if (timeStarted) timer += Time.deltaTime;
             EventSystem<float>.InvokeEvent(EventType.UPDATE_TIME, timer);
         }
 
@@ -135,13 +134,14 @@ namespace Tiles2D
                 {
                     newTile.tag = "Bomb";
                     newTile.layer = 11;
-                    newTile.AddComponent<BombTile>();
+                    newTile.GetComponent<Tile>().state = TileStates.Bomb;
                     bombCount++;
                 }
                 else
                 {
                     newTile.tag = "Empty";
                     newTile.layer = 12;
+                    newTile.GetComponent<Tile>().state = TileStates.Empty;
                 }
 
                 curTile++;

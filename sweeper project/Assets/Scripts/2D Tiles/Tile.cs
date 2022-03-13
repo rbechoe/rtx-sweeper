@@ -5,41 +5,50 @@ namespace Tiles2D
 {
     public class Tile : MonoBehaviour
     {
-        [Header("Settings")]
-        public Color defaultCol = Color.grey;
-        public Color selectCol = Color.green;
-        public VFXManipulator vfx;
+        private VFXManipulator vfx;
 
-        protected LayerMask flagMask;
-        protected LayerMask allMask;
+        private LayerMask flagMask;
+        private LayerMask allMask;
 
-        protected int bombCount;
-        protected Material gridMat;
+        private int bombCount;
+        private Material gridMat;
 
-        protected bool triggered;
-        protected bool clickable;
-        protected bool previewClicked;
-        protected bool canReveal;
-        protected bool gameEnded;
-        protected Collider[] tilesPreviewed;
+        private bool triggered;
+        private bool clickable;
+        private bool previewClicked;
+        private bool canReveal;
+        private bool gameEnded;
+        private Collider[] tilesPreviewed;
 
         private float glowIntensity = 8192; // value is in nits
+        private GridManager manager;
         private Color emptyTileColor; // received from grid manager
+        private Color startColor; // received from grid manager
+        private Color selectCol; // received from grid manager
+        private Color defaultCol;
+
+        public TileStates state = TileStates.Empty;
+        public GameObject rewardObj; // show object after clearing tile
+        public GameObject breakObj; // remove object when clicking on tile
 
         private void Start()
         {
             vfx = GetComponentInChildren<VFXManipulator>();
             gridMat = vfx.gridTile.GetComponent<Renderer>().material;
             gridMat.EnableKeyword("_EmissiveColor");
-            UpdateMaterial(defaultCol);
             vfx.gameObject.SetActive(false);
 
             flagMask = LayerMask.GetMask("Flag");
             allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
 
-            emptyTileColor = gameObject.GetComponent<Checker>().emptyTileColor;
+            manager = transform.parent.GetComponent<GridManager>();
+            emptyTileColor = manager.emptyTileColor;
+            startColor = manager.startColor;
+            selectCol = manager.selectColor;
+            defaultCol = manager.defaultColor;
 
-            StartSettings();
+            UpdateMaterial(defaultCol);
+            UpdateSettings();
         }
 
         private void OnEnable()
@@ -50,10 +59,12 @@ namespace Tiles2D
             EventSystem.AddListener(EventType.WIN_GAME, Unclickable);
             EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
             EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
-            EventSystem.AddListener(EventType.END_GAME, RemoveSelf);
+            EventSystem.AddListener(EventType.END_GAME, ResetSelf);
+            EventSystem.AddListener(EventType.PREPARE_GAME, ResetSelf);
             EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
             EventSystem.AddListener(EventType.WIN_GAME, EndGame);
             EventSystem.AddListener(EventType.GAME_LOSE, EndGame);
+            EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
         }
 
         private void OnDisable()
@@ -64,10 +75,12 @@ namespace Tiles2D
             EventSystem.RemoveListener(EventType.WIN_GAME, Unclickable);
             EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
             EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
-            EventSystem.RemoveListener(EventType.END_GAME, RemoveSelf);
+            EventSystem.RemoveListener(EventType.END_GAME, ResetSelf);
+            EventSystem.RemoveListener(EventType.PREPARE_GAME, ResetSelf);
             EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
             EventSystem.RemoveListener(EventType.WIN_GAME, EndGame);
             EventSystem.RemoveListener(EventType.GAME_LOSE, EndGame);
+            EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
             vfx.gameObject.SetActive(true);
         }
 
@@ -78,6 +91,8 @@ namespace Tiles2D
 
         private void StartGame()
         {
+            if (rewardObj != null) rewardObj.SetActive(false);
+            if (breakObj != null) breakObj.SetActive(true);
             gameEnded = false;
         }
 
@@ -148,22 +163,52 @@ namespace Tiles2D
 
         private void OnMouseExit()
         {
-            // set tile back to base color
             UpdateMaterial(defaultCol);
 
             // set all nearby tiles back to base color
             if (previewClicked)
             {
-                foreach (Collider _tile in tilesPreviewed)
+                foreach (Collider tile in tilesPreviewed)
                 {
-                    _tile.GetComponent<Tile>()?.SetToDefaultCol();
+                    tile.GetComponent<Tile>()?.SetToDefaultCol();
                 }
                 previewClicked = false;
                 tilesPreviewed = null;
             }
         }
 
-        protected IEnumerator FireAction(bool sequenced = false)
+        private void CheckBombs()
+        {
+            // count all nearby bombs
+            Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
+            int bombCount = 0;
+
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i].gameObject == gameObject) continue;
+                if (hitColliders[i].gameObject.CompareTag("Bomb"))
+                {
+                    bombCount++;
+                }
+            }
+
+            if (state != TileStates.Bomb && state != TileStates.Revealed)
+            {
+                if (bombCount > 0)
+                {
+                    state = TileStates.Number;
+                }
+                else
+                {
+                    EventSystem<GameObject>.InvokeEvent(EventType.ADD_EMPTY, gameObject);
+                    state = TileStates.Empty;
+                }
+            }
+
+            UpdateBombAmount(bombCount);
+        }
+
+        private IEnumerator FireAction(bool sequenced = false)
         {
             yield return new WaitForEndOfFrame();
 
@@ -189,7 +234,7 @@ namespace Tiles2D
             TypeSpecificAction();
         }
 
-        protected void SetToDefaultCol()
+        private void SetToDefaultCol()
         {
             if (clickable && !triggered)
             {
@@ -197,7 +242,7 @@ namespace Tiles2D
             }
         }
 
-        protected void RevealBomb()
+        private void RevealBomb()
         {
             if (gameObject.CompareTag("Bomb"))
             {
@@ -207,7 +252,7 @@ namespace Tiles2D
             }
         }
 
-        protected void ShowBombAmount()
+        private void ShowBombAmount()
         {
             if (bombCount < 1) return;
 
@@ -215,22 +260,17 @@ namespace Tiles2D
             vfx.UpdateEffect(bombCount);
         }
 
-        protected void Clickable()
+        private void Clickable()
         {
             clickable = true;
         }
 
-        protected void Unclickable()
+        private void Unclickable()
         {
             clickable = false;
         }
 
-        protected void RemoveSelf()
-        {
-            Destroy(this);
-        }
-
-        protected void UpdateMaterial(Color color, float intensity = -10)
+        private void UpdateMaterial(Color color, float intensity = -10)
         {
             if (intensity == -10) intensity = glowIntensity;
             
@@ -247,6 +287,13 @@ namespace Tiles2D
 
         public void PreviewTileSelection()
         {
+            // do nothing when revealed
+            if (state == TileStates.Revealed) return;
+
+            // return if there is a flag on this position
+            Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
+            if (nearbyFlags.Length > 0) return;
+
             if (clickable && !triggered)
             {
                 UpdateMaterial(Color.white);
@@ -255,7 +302,7 @@ namespace Tiles2D
 
         public void FirstTile()
         {
-            defaultCol = gameObject.GetComponent<Checker>().startColor;
+            defaultCol = startColor;
             UpdateMaterial(defaultCol);
         }
 
@@ -267,10 +314,77 @@ namespace Tiles2D
         public void SetBombCount(int amount)
         {
             bombCount = amount;
+            UpdateBombAmount(bombCount);
         }
 
-        protected virtual void TypeSpecificAction() { }
+        public void UpdateBombAmount(int amount)
+        {
+            bombCount = amount;
+            vfx.UpdateEffect(bombCount);
+            if (bombCount > 0 && state == TileStates.Revealed)
+            {
+                vfx.gameObject.SetActive(true);
+            }
+            if (bombCount == 0)
+            {
+                vfx.gameObject.SetActive(false);
+            }
+        }
 
-        protected virtual void StartSettings() { }
+        public void ResetSelf()
+        {
+            clickable = true;
+            triggered = false;
+            defaultCol = manager.defaultColor;
+            UpdateMaterial(defaultCol);
+            vfx.gameObject.SetActive(false);
+        }
+
+        public void TypeSpecificAction()
+        {
+            switch (state)
+            {
+                case TileStates.Bomb:
+                    EventSystem.InvokeEvent(EventType.GAME_LOSE);
+                    UpdateMaterial(Color.red);
+                    break;
+
+                case TileStates.Empty:
+                    EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
+                    Collider[] tiles = Physics.OverlapBox(gameObject.transform.position, new Vector3(1, 1, 1) * 1.25f, Quaternion.identity);
+                    for (int i = 0; i < tiles.Length; i++)
+                    {
+                        tiles[i].GetComponent<Tile>()?.NoBombReveal();
+                    }
+                    state = TileStates.Revealed;
+                    if (rewardObj != null) rewardObj.SetActive(true);
+                    if (breakObj != null) breakObj.SetActive(false);
+                    break;
+
+                case TileStates.Number:
+                    EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
+                    ShowBombAmount();
+                    state = TileStates.Revealed;
+                    if (rewardObj != null) rewardObj.SetActive(true);
+                    if (breakObj != null) breakObj.SetActive(false);
+                    break;
+            }
+        }
+
+        public void UpdateSettings()
+        {
+            switch (state)
+            {
+                case TileStates.Bomb:
+                    gameObject.tag = "Bomb";
+                    gameObject.layer = 11;
+                    break;
+
+                default:
+                    gameObject.tag = "Untagged";
+                    gameObject.layer = 0;
+                    break;
+            }
+        }
     }
 }

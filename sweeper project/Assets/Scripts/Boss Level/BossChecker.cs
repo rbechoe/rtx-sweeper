@@ -53,11 +53,11 @@ namespace BossTiles
                 {
                     // set as potential first tile
                     EventSystem<GameObject>.InvokeEvent(EventType.ADD_EMPTY, gameObject);
-                    gameObject.GetComponent<BossTile>().state = BossTileStates.Empty;
+                    gameObject.GetComponent<BossTile>().state = TileStates.Empty;
                 }
                 else
                 {
-                    gameObject.GetComponent<BossTile>().state = BossTileStates.Number;
+                    gameObject.GetComponent<BossTile>().state = TileStates.Number;
                     gameObject.GetComponent<BossTile>().SetBombCount(bombCount);
                 }
             }

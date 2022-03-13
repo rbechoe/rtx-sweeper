@@ -222,14 +222,14 @@ namespace BossTiles
                 {
                     newTile.tag = "Bomb";
                     newTile.layer = 11;
-                    newTile.GetComponent<BossTile>().state = BossTileStates.Bomb;
+                    newTile.GetComponent<BossTile>().state = TileStates.Bomb;
                     bombCount++;
                 }
                 else
                 {
                     newTile.tag = "Empty";
                     newTile.layer = 12;
-                    newTile.GetComponent<BossTile>().state = BossTileStates.Empty;
+                    newTile.GetComponent<BossTile>().state = TileStates.Empty;
                 }
 
                 curTile++;

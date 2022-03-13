@@ -40,7 +40,7 @@ public enum EventType
     DISABLE_RTX,        // passes nothing
 }
 
-public enum BossTileStates
+public enum TileStates
 {
     Revealed,
     Number,

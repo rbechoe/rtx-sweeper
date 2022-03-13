@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5318673126723917577}
   - component: {fileID: 5318673126723917578}
   - component: {fileID: 838340957336101132}
-  - component: {fileID: 251965082404529092}
+  - component: {fileID: 1717571037067989320}
   m_Layer: 12
   m_Name: Tile
   m_TagString: Empty
@@ -52,7 +52,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5318673126723917579}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -116,7 +116,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &251965082404529092
+--- !u!114 &1717571037067989320
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,12 +125,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5318673126723917579}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 083f13d7879e9ef43b3b385c1bbdd6e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a70f6d55082d0c4888da2bd128d45a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitColliders: []
-  emptyTileColor: {r: 0, g: 0, b: 0, a: 0}
-  startColor: {r: 0, g: 0, b: 0, a: 0}
+  state: 3
+  rewardObj: {fileID: 0}
+  breakObj: {fileID: 0}
 --- !u!1 &8736993601024333194
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +161,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5357895670134019758}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -270, y: 17.699997, z: -27}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

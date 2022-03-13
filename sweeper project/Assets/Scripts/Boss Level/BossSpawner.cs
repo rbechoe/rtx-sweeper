@@ -116,7 +116,7 @@ namespace BossTiles
             
             foreach (GameObject tile in tiles)
             {
-                tile.GetComponent<BossTile>().state = BossTileStates.Empty;
+                tile.GetComponent<BossTile>().state = TileStates.Empty;
             }
             yield return new WaitForEndOfFrame();
 

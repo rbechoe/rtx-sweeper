@@ -30,7 +30,7 @@ namespace BossTiles
         private Color selectCol; // received from grid manager
         private Color defaultCol;
 
-        public BossTileStates state = BossTileStates.Empty;
+        public TileStates state = TileStates.Empty;
 
         private void Start()
         {
@@ -151,13 +151,9 @@ namespace BossTiles
                 // reveal all nearby tiles
                 if (previewClicked && canReveal)
                 {
-                    foreach (Collider _tile in tilesPreviewed)
+                    foreach (Collider tile in tilesPreviewed)
                     {
-                        BossTile bossTile = _tile.GetComponent<BossTile>();
-                        if (bossTile != null)
-                        {
-                            bossTile?.DoAction();
-                        }
+                        tile.GetComponent<BossTile>()?.DoAction();
                     }
                     previewClicked = false;
                     tilesPreviewed = null;
@@ -179,9 +175,9 @@ namespace BossTiles
             // set all nearby tiles back to base color
             if (previewClicked)
             {
-                foreach (Collider _tile in tilesPreviewed)
+                foreach (Collider tile in tilesPreviewed)
                 {
-                    _tile.GetComponent<BossTile>()?.SetToDefaultCol();
+                    tile.GetComponent<BossTile>()?.SetToDefaultCol();
                 }
                 previewClicked = false;
                 tilesPreviewed = null;
@@ -215,15 +211,15 @@ namespace BossTiles
                 }
             }
 
-            if (state != BossTileStates.Bomb && state != BossTileStates.Revealed)
+            if (state != TileStates.Bomb && state != TileStates.Revealed)
             {
                 if (bombCount > 0)
                 {
-                    state = BossTileStates.Number;
+                    state = TileStates.Number;
                 }
                 else
                 {
-                    state = BossTileStates.Empty;
+                    state = TileStates.Empty;
                 }
             }
 
@@ -306,7 +302,7 @@ namespace BossTiles
         {
             if (intensity == -10) intensity = glowIntensity;
 
-            if (state != BossTileStates.Revealed) gridMat?.SetColor("_EmissiveColor", color * intensity);
+            if (state != TileStates.Revealed) gridMat?.SetColor("_EmissiveColor", color * intensity);
             gridMat?.SetColor("_BaseColor", color);
         }
 
@@ -318,7 +314,7 @@ namespace BossTiles
         public void PreviewTileSelection()
         {
             // do nothing when revealed
-            if (state == BossTileStates.Revealed) return;
+            if (state == TileStates.Revealed) return;
 
             // return if there is a flag on this position
             Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
@@ -351,7 +347,7 @@ namespace BossTiles
         {
             bombCount = amount;
             vfx.UpdateEffect(bombCount);
-            if (bombCount > 0 && state == BossTileStates.Revealed)
+            if (bombCount > 0 && state == TileStates.Revealed)
             {
                 vfx.gameObject.SetActive(true);
             }
@@ -374,24 +370,24 @@ namespace BossTiles
         {
             switch (state)
             {
-                case BossTileStates.Bomb:
+                case TileStates.Bomb:
                     EventSystem.InvokeEvent(EventType.GAME_LOSE);
                     break;
 
-                case BossTileStates.Empty:
+                case TileStates.Empty:
                     EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
                     Collider[] tiles = Physics.OverlapBox(gameObject.transform.position, new Vector3(1, 1, 1) * 1.25f, Quaternion.identity);
                     for (int i = 0; i < tiles.Length; i++)
                     {
                         tiles[i].GetComponent<BossTile>()?.NoBombReveal();
                     }
-                    state = BossTileStates.Revealed;
+                    state = TileStates.Revealed;
                     break;
 
-                case BossTileStates.Number:
+                case TileStates.Number:
                     EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
                     ShowBombAmount();
-                    state = BossTileStates.Revealed;
+                    state = TileStates.Revealed;
                     break;
             }
         }
@@ -400,7 +396,7 @@ namespace BossTiles
         {
             switch (state)
             {
-                case BossTileStates.Bomb:
+                case TileStates.Bomb:
                     gameObject.tag = "Bomb";
                     gameObject.layer = 11;
                     break;
