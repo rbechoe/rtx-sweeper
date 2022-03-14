@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Koi : MonoBehaviour
 {
+    [Header("Assignables")]
+    public KoiManager manager;
     public Transform head;
     public Transform[] pieces;
-    public KoiManager manager;
 
+    [Header("Fish Settings")]
     public float swimSpeed = 1f;
     public float rotationSpeed = 2f;
     public float animationSpeed = 5f;
+    public float fastMultiplier = 5f;
     public float multiplier = 5;
     public float stepModifier = 0.2f;
+    public float maxRange = 2f;
     private float sine = 0;
     private float frequency = 0;
     private float step;
@@ -40,7 +44,7 @@ public class Koi : MonoBehaviour
         // calculate swim speed
         if (mouseEntered)
         {
-            currentSwimSpeed = swimSpeed * 5;
+            currentSwimSpeed = swimSpeed * fastMultiplier;
         }
         else
         {
@@ -60,7 +64,7 @@ public class Koi : MonoBehaviour
         transform.position += transform.forward * currentSwimSpeed * Time.deltaTime;
 
         // Update destination
-        if (Vector3.Distance(transform.position, destination.position) < 1)
+        if (Vector3.Distance(transform.position, destination.position) < maxRange)
         {
             destination = manager.GetPosition();
         }
