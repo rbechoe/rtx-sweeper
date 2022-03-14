@@ -285,6 +285,7 @@ MonoBehaviour:
 
 
 
+
     Special
     Thanks
 
@@ -519,7 +520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -3778}
+  m_AnchoredPosition: {x: 0, y: -3967}
   m_SizeDelta: {x: 1500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1328929188
@@ -1041,42 +1042,44 @@ MonoBehaviour:
     Andries
     Graeff
 
+    Carien Moossdorff
+
     Liselotte Beijen
 
     Nan van Kallen
 
-    Caspar Gelderman
+    Caspar
+    Gelderman
 
-    Michael
-    Smith
+    Michael Smith
 
     Mareyn Koenderman
 
     Jesse van Eijmeren
 
-    Inger Smit
+    Inger
+    Smit
 
-    Rutger
-    van Teutem
+    Rutger van Teutem
 
 
     Kris de Haas
 
     Yasmin van Rooijen
 
-    Valentijn Muijrers
+    Valentijn
+    Muijrers
 
-    Youri
-    Schuring
+    Youri Schuring
 
     Wild Mage Games
 
     Andries Graeff
 
-    Bas van Seeters
+    Bas
+    van Seeters
 
-    Aaron
-    Oostdijk
+    Aaron Oostdijk
 
     Geoffrey Hendrikx'
   m_isRightToLeft: 0
