@@ -58,9 +58,12 @@ public class MenuManager : MonoBehaviour
         dataSerializer = gameObject.GetComponent<DataSerializer>();
         AccountData accountData = dataSerializer.GetUserData();
         if (accountData.tutorialVictories > 0) playBtn.interactable = true;
-        if (accountData.arcticVictories > 0) asiaBtn.interactable = true;
-        if (accountData.asiaVictories > 0) desertBtn.interactable = true;
+        if (accountData.arcticVictories > 0) asiaBtn.gameObject.SetActive(true);
+        else asiaBtn.gameObject.SetActive(false);
+        if (accountData.asiaVictories > 0) desertBtn.gameObject.SetActive(true);
+        else desertBtn.gameObject.SetActive(false);
         if (accountData.desertVictories > 0) bossBtn.gameObject.SetActive(true);
+        else bossBtn.gameObject.SetActive(false);
 
         // enable pretty environments based on progression
         if (accountData.tutorialVictories > 0) tutorial.UnlockAreas();
