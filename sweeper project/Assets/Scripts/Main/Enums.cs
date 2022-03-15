@@ -28,10 +28,13 @@ public enum EventType
     INPUT_LEFT,         // passes nothing
     INPUT_RIGHT,        // passes nothing
     INPUT_UP,           // passes nothing
+    INPUT_SCROLL_UP,    // passes nothing
     INPUT_DOWN,         // passes nothing
+    INPUT_SCROLL_DOWN,  // passes nothing
     INPUT_FORWARD,      // passes nothing
     INPUT_BACK,         // passes nothing
     INPUT_FS,           // passes nothing
+    INPUT_SPEED,        // passes nothing
     // other stuff
     UPDATE_BGM,         // passes float
     UPDATE_SFX,         // passes float

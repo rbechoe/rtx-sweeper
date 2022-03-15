@@ -11,6 +11,8 @@ public class BossCart : MonoBehaviour
 
     CinemachineTrackedDolly trackedDolly;
 
+    public CameraManager cameraManager;
+
     private void Start()
     {
         trackedDolly = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTrackedDolly>();
@@ -18,7 +20,15 @@ public class BossCart : MonoBehaviour
 
     private void Update()
     {
-        if (moving && pathPosition < 12) pathPosition += Time.deltaTime * speed;
+        if (moving && pathPosition < 12)
+        {
+            pathPosition += Time.deltaTime * speed;
+        }
+        else if (pathPosition >= 12)
+        {
+            cameraManager.SetMoveableCam();
+            Destroy(this);
+        }
         trackedDolly.m_PathPosition = pathPosition;
     }
 

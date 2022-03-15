@@ -26,7 +26,10 @@ public class InputManager : MonoBehaviour
         keybindings.Add(KeyCode.S,           EventType.INPUT_BACK);
         keybindings.Add(KeyCode.Space,       EventType.INPUT_UP);
         keybindings.Add(KeyCode.LeftControl, EventType.INPUT_DOWN);
-        keybindingsUp.Add(KeyCode.F,       EventType.INPUT_FS);
+        keybindings.Add(KeyCode.RightControl, EventType.INPUT_DOWN);
+        keybindings.Add(KeyCode.LeftShift,   EventType.INPUT_SPEED);
+        keybindings.Add(KeyCode.RightShift,  EventType.INPUT_SPEED);
+        keybindingsUp.Add(KeyCode.F,         EventType.INPUT_FS);
 
         if (!Screen.fullScreen)
         {
@@ -56,6 +59,15 @@ public class InputManager : MonoBehaviour
             {
                 EventSystem.InvokeEvent(keybinding.Value);
             }
+        }
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f) // zoom in 
+        {
+            EventSystem.InvokeEvent(EventType.INPUT_SCROLL_DOWN);
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f) // zoom out
+        {
+            EventSystem.InvokeEvent(EventType.INPUT_SCROLL_UP);
         }
     }
 

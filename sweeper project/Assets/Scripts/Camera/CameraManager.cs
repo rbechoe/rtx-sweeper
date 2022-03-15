@@ -18,7 +18,23 @@ public class CameraManager : MonoBehaviour
     public float animationTime = 0;
     public float animationEndTime = 0;
     [Tooltip("Higher is slower")]
+    public bool disableAnimations;
     public float speed = 1f;
+    
+    private Transform emptyParent;
+    private Transform baseTransform;
+    private float currentSpeed = 5f;
+    private bool shiftPressed;
+    private float xCount;
+    private float zCount;
+
+    [Header("Movement Settings")]
+    public float baseSpeed = 5f;
+    public float fastSpeed = 10f;
+    public int relativeXRange = 10;
+    public int minHeight = 10;
+    public int maxHeight = 40;
+    public int relativeZRange = 10;
 
     private void OnEnable()
     {
@@ -28,6 +44,9 @@ public class CameraManager : MonoBehaviour
         EventSystem.AddListener(EventType.INPUT_RIGHT, MoveRight);
         EventSystem.AddListener(EventType.INPUT_UP, MoveUp);
         EventSystem.AddListener(EventType.INPUT_DOWN, MoveDown);
+        EventSystem.AddListener(EventType.INPUT_SCROLL_DOWN, ScrollDown);
+        EventSystem.AddListener(EventType.INPUT_SCROLL_UP, ScrollUp);
+        EventSystem.AddListener(EventType.INPUT_SPEED, FastSpeed);
     }
 
     private void OnDisable()
@@ -38,6 +57,9 @@ public class CameraManager : MonoBehaviour
         EventSystem.RemoveListener(EventType.INPUT_RIGHT, MoveRight);
         EventSystem.RemoveListener(EventType.INPUT_UP, MoveUp);
         EventSystem.RemoveListener(EventType.INPUT_DOWN, MoveDown);
+        EventSystem.RemoveListener(EventType.INPUT_SCROLL_DOWN, ScrollDown);
+        EventSystem.RemoveListener(EventType.INPUT_SCROLL_UP, ScrollUp);
+        EventSystem.RemoveListener(EventType.INPUT_SPEED, FastSpeed);
     }
 
     private void Start()
@@ -48,16 +70,35 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        if (animationTime < animationEndTime)
+        if (!disableAnimations)
         {
-            animationTime += Time.deltaTime / speed;
-            trackedDolly.m_PathPosition = animationTime;
+            if (animationTime < animationEndTime)
+            {
+                animationTime += Time.deltaTime / speed;
+                trackedDolly.m_PathPosition = animationTime;
+            }
+
+            if (animationEndTime != 0 && animationTime >= animationEndTime && virtualCam.enabled)
+            {
+                SetMoveableCam();
+            }
         }
 
-        if (animationEndTime != 0 && animationTime >= animationEndTime && virtualCam.enabled)
-        {
-            virtualCam.enabled = false;
-        }
+        currentSpeed = (shiftPressed) ? fastSpeed : baseSpeed;
+        if (shiftPressed) shiftPressed = false;
+    }
+
+    public void SetMoveableCam()
+    {
+        virtualCam.enabled = false;
+        GameObject emptyParent = new GameObject();
+        emptyParent.transform.eulerAngles = new Vector3(0, camera.transform.eulerAngles.y, 0);
+        emptyParent.transform.position = camera.transform.position;
+        camera.transform.parent = emptyParent.transform;
+        baseTransform = emptyParent.transform;
+        xCount = 0;
+        zCount = 0;
+        this.emptyParent = emptyParent.transform;
     }
     
     public void StartToMidAnimation()
@@ -101,33 +142,84 @@ public class CameraManager : MonoBehaviour
         rightManager.gameObject.SetActive(false);
     }
 
+    private void FastSpeed()
+    {
+        shiftPressed = true;
+    }
+
     private void MoveForward()
     {
-        camera.transform.position += camera.transform.forward * Time.deltaTime * 5f;
+        if (emptyParent == null) return;
+
+        if (zCount < relativeZRange)
+        {
+            zCount += Time.deltaTime * currentSpeed;
+            emptyParent.position += emptyParent.forward * Time.deltaTime * currentSpeed;
+        }
     }
 
     private void MoveBack()
     {
-        camera.transform.position -= camera.transform.forward * Time.deltaTime * 5f;
+        if (emptyParent == null) return;
+
+        if (zCount > -relativeZRange)
+        {
+            zCount -= Time.deltaTime * currentSpeed;
+            emptyParent.position -= emptyParent.forward * Time.deltaTime * currentSpeed;
+        }
     }
 
     private void MoveLeft()
     {
-        camera.transform.position -= camera.transform.right * Time.deltaTime * 5f;
+        if (emptyParent == null) return;
+
+        if (xCount > -relativeXRange)
+        {
+            xCount -= Time.deltaTime * currentSpeed;
+            emptyParent.position -= emptyParent.right * Time.deltaTime * currentSpeed;
+        }
     }
 
     private void MoveRight()
     {
-        camera.transform.position += camera.transform.right * Time.deltaTime * 5f;
+        if (emptyParent == null) return;
+
+        if (xCount < relativeXRange)
+        {
+            xCount += Time.deltaTime * currentSpeed;
+            emptyParent.position += emptyParent.right * Time.deltaTime * currentSpeed;
+        }
     }
 
     private void MoveUp()
     {
-        camera.transform.position += Vector3.up * Time.deltaTime * 5f;
+        if (emptyParent == null) return;
+
+        if (emptyParent.position.y <= maxHeight)
+            emptyParent.position += Vector3.up * Time.deltaTime * currentSpeed;
     }
 
     private void MoveDown()
     {
-        camera.transform.position += Vector3.down * Time.deltaTime * 5f;
+        if (emptyParent == null) return;
+
+        if (emptyParent.position.y >= minHeight)
+            emptyParent.position += Vector3.down * Time.deltaTime * currentSpeed;
+    }
+
+    private void ScrollUp()
+    {
+        if (emptyParent == null) return;
+
+        if (emptyParent.position.y <= maxHeight)
+            emptyParent.position += Vector3.up * Time.deltaTime * (currentSpeed * currentSpeed);
+    }
+
+    private void ScrollDown()
+    {
+        if (emptyParent == null) return;
+
+        if (emptyParent.position.y >= minHeight)
+            emptyParent.position += Vector3.down * Time.deltaTime * (currentSpeed * currentSpeed);
     }
 }
