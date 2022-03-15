@@ -31,7 +31,7 @@ public enum EventType
     INPUT_DOWN,         // passes nothing
     INPUT_FORWARD,      // passes nothing
     INPUT_BACK,         // passes nothing
-    INPUT_F12,          // passes nothing
+    INPUT_FS,           // passes nothing
     // other stuff
     UPDATE_BGM,         // passes float
     UPDATE_SFX,         // passes float

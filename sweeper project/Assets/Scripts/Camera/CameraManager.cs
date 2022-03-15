@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using Tiles2D;
 
 public class CameraManager : MonoBehaviour
 {
+    private GameObject camera;
     private CinemachineTrackedDolly trackedDolly;
     [SerializeField] private CinemachineVirtualCamera virtualCam;
     [SerializeField] private CinemachineSmoothPath startToMid;
@@ -15,14 +15,35 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private GridManager2D leftManager;
     [SerializeField] private GridManager2D rightManager;
 
-    private float animationTime = 0;
-    private float animationEndTime = 0;
+    public float animationTime = 0;
+    public float animationEndTime = 0;
     [Tooltip("Higher is slower")]
-    public float speed = 1f; 
+    public float speed = 1f;
+
+    private void OnEnable()
+    {
+        EventSystem.AddListener(EventType.INPUT_FORWARD, MoveForward);
+        EventSystem.AddListener(EventType.INPUT_BACK, MoveBack);
+        EventSystem.AddListener(EventType.INPUT_LEFT, MoveLeft);
+        EventSystem.AddListener(EventType.INPUT_RIGHT, MoveRight);
+        EventSystem.AddListener(EventType.INPUT_UP, MoveUp);
+        EventSystem.AddListener(EventType.INPUT_DOWN, MoveDown);
+    }
+
+    private void OnDisable()
+    {
+        EventSystem.RemoveListener(EventType.INPUT_FORWARD, MoveForward);
+        EventSystem.RemoveListener(EventType.INPUT_BACK, MoveBack);
+        EventSystem.RemoveListener(EventType.INPUT_LEFT, MoveLeft);
+        EventSystem.RemoveListener(EventType.INPUT_RIGHT, MoveRight);
+        EventSystem.RemoveListener(EventType.INPUT_UP, MoveUp);
+        EventSystem.RemoveListener(EventType.INPUT_DOWN, MoveDown);
+    }
 
     private void Start()
     {
         trackedDolly = virtualCam.GetCinemachineComponent<CinemachineTrackedDolly>();
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     private void Update()
@@ -32,6 +53,11 @@ public class CameraManager : MonoBehaviour
             animationTime += Time.deltaTime / speed;
             trackedDolly.m_PathPosition = animationTime;
         }
+
+        if (animationEndTime != 0 && animationTime >= animationEndTime && virtualCam.enabled)
+        {
+            virtualCam.enabled = false;
+        }
     }
     
     public void StartToMidAnimation()
@@ -39,9 +65,7 @@ public class CameraManager : MonoBehaviour
         DisableManagers();
         midManager.enabled = true;
         midManager.gameObject.SetActive(true);
-        trackedDolly.m_Path = startToMid;
-        animationTime = 0;
-        animationEndTime = startToMid.PathLength;
+        SetTrack(startToMid);
     }
     
     public void StartToRightAnimation()
@@ -49,9 +73,7 @@ public class CameraManager : MonoBehaviour
         DisableManagers();
         rightManager.enabled = true;
         rightManager.gameObject.SetActive(true);
-        trackedDolly.m_Path = startToRight;
-        animationTime = 0;
-        animationEndTime = startToRight.PathLength;
+        SetTrack(startToRight);
     }
     
     public void StartToLeftAnimation()
@@ -59,9 +81,14 @@ public class CameraManager : MonoBehaviour
         DisableManagers();
         leftManager.enabled = true;
         leftManager.gameObject.SetActive(true);
-        trackedDolly.m_Path = startToLeft;
+        SetTrack(startToLeft);
+    } 
+
+    private void SetTrack(CinemachineSmoothPath path)
+    {
+        trackedDolly.m_Path = path;
         animationTime = 0;
-        animationEndTime = startToLeft.PathLength;
+        animationEndTime = path.m_Waypoints.Length;
     }
 
     private void DisableManagers()
@@ -72,5 +99,35 @@ public class CameraManager : MonoBehaviour
         midManager.gameObject.SetActive(false);
         leftManager.gameObject.SetActive(false);
         rightManager.gameObject.SetActive(false);
+    }
+
+    private void MoveForward()
+    {
+        camera.transform.position += camera.transform.forward * Time.deltaTime * 5f;
+    }
+
+    private void MoveBack()
+    {
+        camera.transform.position -= camera.transform.forward * Time.deltaTime * 5f;
+    }
+
+    private void MoveLeft()
+    {
+        camera.transform.position -= camera.transform.right * Time.deltaTime * 5f;
+    }
+
+    private void MoveRight()
+    {
+        camera.transform.position += camera.transform.right * Time.deltaTime * 5f;
+    }
+
+    private void MoveUp()
+    {
+        camera.transform.position += Vector3.up * Time.deltaTime * 5f;
+    }
+
+    private void MoveDown()
+    {
+        camera.transform.position += Vector3.down * Time.deltaTime * 5f;
     }
 }

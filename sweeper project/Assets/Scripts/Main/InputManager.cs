@@ -9,12 +9,12 @@ public class InputManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.INPUT_F12, ToggleFullscreen);
+        EventSystem.AddListener(EventType.INPUT_FS, ToggleFullscreen);
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.INPUT_F12, ToggleFullscreen);
+        EventSystem.RemoveListener(EventType.INPUT_FS, ToggleFullscreen);
     }
 
     private void Start()
@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour
         keybindings.Add(KeyCode.S,           EventType.INPUT_BACK);
         keybindings.Add(KeyCode.Space,       EventType.INPUT_UP);
         keybindings.Add(KeyCode.LeftControl, EventType.INPUT_DOWN);
-        keybindingsUp.Add(KeyCode.F12,       EventType.INPUT_F12);
+        keybindingsUp.Add(KeyCode.F,       EventType.INPUT_FS);
 
         if (!Screen.fullScreen)
         {
