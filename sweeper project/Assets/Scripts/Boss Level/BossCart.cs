@@ -20,11 +20,11 @@ public class BossCart : MonoBehaviour
 
     private void Update()
     {
-        if (moving && pathPosition < 12)
+        if (moving && pathPosition < 13)
         {
             pathPosition += Time.deltaTime * speed;
         }
-        else if (pathPosition >= 12)
+        else if (pathPosition >= 13)
         {
             cameraManager.SetMoveableCam();
             Destroy(this);
