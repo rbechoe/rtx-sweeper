@@ -29,7 +29,7 @@ public class InputManager : MonoBehaviour
         keybindings.Add(KeyCode.RightControl, EventType.INPUT_DOWN);
         keybindings.Add(KeyCode.LeftShift,   EventType.INPUT_SPEED);
         keybindings.Add(KeyCode.RightShift,  EventType.INPUT_SPEED);
-        keybindingsUp.Add(KeyCode.F,         EventType.INPUT_FS);
+        //keybindingsUp.Add(KeyCode.F,         EventType.INPUT_FS); // TODO DX12 full screen does not work!
 
         if (!Screen.fullScreen)
         {
