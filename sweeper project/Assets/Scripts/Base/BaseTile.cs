@@ -133,7 +133,7 @@ public abstract class BaseTile : MonoBehaviour
         {
             defaultCol = new Color(0.5f, 0f, 0f);
             UpdateMaterial(defaultCol);
-            Instantiate(vfx.bombEffect, transform.position, Quaternion.identity);
+            //Instantiate(vfx.bombEffect, transform.position, Quaternion.identity);
         }
     }
 

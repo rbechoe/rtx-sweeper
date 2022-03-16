@@ -13,7 +13,7 @@ public class VFXManipulator : MonoBehaviour
     public Renderer shapeMat;
     public Texture2D texture;
     public GameObject gridTile;
-    public GameObject bombEffect;
+    //public GameObject bombEffect;
     public TextMeshPro text;
 
     void Update()
