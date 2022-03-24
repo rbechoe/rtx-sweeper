@@ -287,7 +287,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 20000
   updateMode:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   updatePeriod:
     m_OverrideState: 0
@@ -387,8 +387,8 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   skyAmbientMode:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1
   fogType:
     m_OverrideState: 0
     m_Value: 0
@@ -420,13 +420,13 @@ MonoBehaviour:
     m_Value: 9.76
   compensation:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   limitMin:
     m_OverrideState: 1
     m_Value: 10.5
   limitMax:
     m_OverrideState: 1
-    m_Value: 19.6
+    m_Value: 15
   curveMap:
     m_OverrideState: 0
     m_Value:
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   indirectDiffuseLightingMultiplier:
     m_OverrideState: 1
-    m_Value: 4
+    m_Value: 1.5
     min: 0
   indirectDiffuseLightingLayers:
     m_OverrideState: 1

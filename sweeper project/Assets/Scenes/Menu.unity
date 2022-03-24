@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 969558174}
-  m_IndirectSpecularColor: {r: 1836.1747, g: 2641.7412, b: 3166.9805, a: 1}
+  m_IndirectSpecularColor: {r: 1836.1825, g: 2641.7334, b: 3166.9727, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13483,7 +13483,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 439264400}
   m_OnClick:
     m_PersistentCalls:
