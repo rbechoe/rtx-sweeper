@@ -73,6 +73,12 @@ public class DataSerializer : MonoBehaviour
         newData.versionNumber = versionNumber;
 
         Write(newData);
+
+        // Update achievement statistics
+        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     }
 
     private void Write(AccountData accountData)
