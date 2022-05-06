@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 public class DataSerializer : MonoBehaviour
 {
@@ -9,9 +8,11 @@ public class DataSerializer : MonoBehaviour
     float versionNumber;
     float requiredVersion = 0.96f;
     CryptoManager crypto = new CryptoManager();
+    SteamAPIManager steamAPI;
 
     private void Start()
     {
+        steamAPI = SteamAPIManager.Instance;
         versionNumber = float.Parse(Application.version);
         PurgeFilesCheck();
     }
@@ -74,11 +75,8 @@ public class DataSerializer : MonoBehaviour
 
         Write(newData);
 
-        // Update achievement statistics
-        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        // push achievement statistics
+        steamAPI.PushToCloud();
     }
 
     private void Write(AccountData accountData)

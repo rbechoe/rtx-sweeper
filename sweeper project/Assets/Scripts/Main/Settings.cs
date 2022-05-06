@@ -10,6 +10,8 @@ public class Settings : MonoBehaviour
 
     private bool rtxEnabled = false;
 
+    SteamAPIManager steamAPI;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -20,6 +22,19 @@ public class Settings : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        steamAPI = SteamAPIManager.Instance;
+    }
+
+    private void Update()
+    {
+        if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetKey(KeyCode.F4))
+        {
+            steamAPI.SetAchievement(UserAchievements.ragequit);
         }
     }
 

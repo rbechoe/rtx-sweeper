@@ -8,6 +8,21 @@ public class SteamAPIManager : MonoBehaviour
     private Dictionary<UserAchievements, string> apiAchName = new Dictionary<UserAchievements, string>();
     private Dictionary<UserStats, string> apiStatName = new Dictionary<UserStats, string>();
 
+    private static SteamAPIManager instance;
+    public static SteamAPIManager Instance { get { return instance; } }
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+
     private void Start()
     {
         // populating achievements

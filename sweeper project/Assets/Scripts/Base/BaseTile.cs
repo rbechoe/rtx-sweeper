@@ -202,6 +202,9 @@ public abstract class BaseTile : MonoBehaviour
     public virtual void UpdateBombAmount(int amount)
     {
         bombCount = amount;
+
+        if (bombCount == 8) SteamAPIManager.Instance.SetAchievement(UserAchievements.eight);
+
         vfx.UpdateEffect(bombCount);
         if (bombCount > 0 && state == TileStates.Revealed)
         {

@@ -2,8 +2,12 @@ using UnityEngine;
 
 public class GridManager2D : BaseGridManager
 {
+    SteamAPIManager steamAPI;
+
     protected override void Start()
     {
+        steamAPI = SteamAPIManager.Instance;
+
         difficultyStars = "Difficulty: ";
         for (int i = 0; i < (10 - bombDensity); i++)
         {
@@ -42,6 +46,7 @@ public class GridManager2D : BaseGridManager
         EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
         EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
         EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
+        EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
         EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
     }
@@ -58,6 +63,7 @@ public class GridManager2D : BaseGridManager
         EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
         EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
         EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
         EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
     }
@@ -75,10 +81,26 @@ public class GridManager2D : BaseGridManager
         float timer = Helpers.RoundToThreeDecimals(this.timer);
         AD.totalTimePlayed = AD.totalTimePlayed + timer;
 
+        if (timer < 10) steamAPI.SetAchievement(UserAchievements.speedrunPro);
+        if (timer < 20) steamAPI.SetAchievement(UserAchievements.speedrun);
+
+        steamAPI.SetStat(UserStats.totalGamesPlayed, 1);
+        steamAPI.SetStat(UserStats.totalClicks, tileClicks);
+
+        if (tileClicks == 1 && loseGame) steamAPI.SetAchievement(UserAchievements.tasteOfMisery);
+
         if (wonGame)
+        {
             AD.gamesWon = AD.gamesWon + 1;
+
+            steamAPI.SetStat(UserStats.totalGamesWon, 1);
+            if (!usedFlag) steamAPI.SetAchievement(UserAchievements.noFlags);
+            if (!usedFlag && (10 - bombDensity) >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
+        }
         else
+        {
             AD.gamesLost = AD.gamesLost + 1;
+        }
 
         switch (area)
         {
@@ -99,7 +121,12 @@ public class GridManager2D : BaseGridManager
                                 AD.arcticTime1 = timer;
                                 AD.arcticEfficiency1 = efficiency;
                                 AD.arcticClicks1 = tileClicks;
+
+                                steamAPI.SetStat(UserStats.ice1BestTime, 1);
                             }
+
+                            steamAPI.SetStat(UserStats.ice1GamesPlayed, 1);
+                            steamAPI.SetStat(UserStats.ice1Victories, 1);
                             break;
 
                         case 2: // level 2
@@ -110,7 +137,12 @@ public class GridManager2D : BaseGridManager
                                 AD.arcticTime2 = timer;
                                 AD.arcticEfficiency2 = efficiency;
                                 AD.arcticClicks2 = tileClicks;
+
+                                steamAPI.SetStat(UserStats.ice2BestTime, 1);
                             }
+
+                            steamAPI.SetStat(UserStats.ice2GamesPlayed, 1);
+                            steamAPI.SetStat(UserStats.ice2Victories, 1);
                             break;
 
                         case 3: // level 3
@@ -121,10 +153,18 @@ public class GridManager2D : BaseGridManager
                                 AD.arcticTime3 = timer;
                                 AD.arcticEfficiency3 = efficiency;
                                 AD.arcticClicks3 = tileClicks;
+
+                                steamAPI.SetStat(UserStats.ice3BestTime, 1);
                             }
+
+                            steamAPI.SetStat(UserStats.ice3GamesPlayed, 1);
+                            steamAPI.SetStat(UserStats.ice3Victories, 1);
                             break;
                     }
+
+                    steamAPI.SetStat(UserStats.iceGamesWon, 1);
                 }
+                steamAPI.SetStat(UserStats.iceGamesPlayed, 1);
                 break;
 
             case 2: // asia
@@ -144,7 +184,12 @@ public class GridManager2D : BaseGridManager
                                 AD.asiaTime1 = timer;
                                 AD.asiaEfficiency1 = efficiency;
                                 AD.asiaClicks1 = tileClicks;
+
+                                steamAPI.SetStat(UserStats.asia1BestTime, 1);
                             }
+
+                            steamAPI.SetStat(UserStats.asia1GamesPlayed, 1);
+                            steamAPI.SetStat(UserStats.asia1Victories, 1);
                             break;
 
                         case 2: // level 2
@@ -155,7 +200,12 @@ public class GridManager2D : BaseGridManager
                                 AD.asiaTime2 = timer;
                                 AD.asiaEfficiency2 = efficiency;
                                 AD.asiaClicks2 = tileClicks;
+
+                                steamAPI.SetStat(UserStats.asia2BestTime, 1);
                             }
+
+                            steamAPI.SetStat(UserStats.asia2GamesPlayed, 1);
+                            steamAPI.SetStat(UserStats.asia2Victories, 1);
                             break;
 
                         case 3: // level 3
@@ -166,10 +216,18 @@ public class GridManager2D : BaseGridManager
                                 AD.asiaTime3 = timer;
                                 AD.asiaEfficiency3 = efficiency;
                                 AD.asiaClicks3 = tileClicks;
+
+                                steamAPI.SetStat(UserStats.asia3BestTime, 1);
                             }
+
+                            steamAPI.SetStat(UserStats.asia3GamesPlayed, 1);
+                            steamAPI.SetStat(UserStats.asia3Victories, 1);
                             break;
                     }
+
+                    steamAPI.SetStat(UserStats.asiaGamesWon, 1);
                 }
+                steamAPI.SetStat(UserStats.asiaGamesPlayed, 1);
                 break;
 
             case 3: // desert
@@ -189,7 +247,12 @@ public class GridManager2D : BaseGridManager
                                 AD.desertTime1 = timer;
                                 AD.desertEfficiency1 = efficiency;
                                 AD.desertClicks1 = tileClicks;
+
+                                steamAPI.SetStat(UserStats.desert1BestTime, 1);
                             }
+
+                            steamAPI.SetStat(UserStats.desert1GamesPlayed, 1);
+                            steamAPI.SetStat(UserStats.desert1Victories, 1);
                             break;
 
                         case 2: // level 2
@@ -200,7 +263,12 @@ public class GridManager2D : BaseGridManager
                                 AD.desertTime2 = timer;
                                 AD.desertEfficiency2 = efficiency;
                                 AD.desertClicks2 = tileClicks;
+
+                                steamAPI.SetStat(UserStats.desert2BestTime, 1);
                             }
+
+                            steamAPI.SetStat(UserStats.desert2GamesPlayed, 1);
+                            steamAPI.SetStat(UserStats.desert2Victories, 1);
                             break;
 
                         case 3: // level 3
@@ -211,10 +279,18 @@ public class GridManager2D : BaseGridManager
                                 AD.desertTime3 = timer;
                                 AD.desertEfficiency3 = efficiency;
                                 AD.desertClicks3 = tileClicks;
+
+                                steamAPI.SetStat(UserStats.desert3BestTime, 1);
                             }
+
+                            steamAPI.SetStat(UserStats.desert3GamesPlayed, 1);
+                            steamAPI.SetStat(UserStats.desert3Victories, 1);
                             break;
                     }
+
+                    steamAPI.SetStat(UserStats.desertGamesWon, 1);
                 }
+                steamAPI.SetStat(UserStats.desertGamesPlayed, 1);
                 break;
         }
 

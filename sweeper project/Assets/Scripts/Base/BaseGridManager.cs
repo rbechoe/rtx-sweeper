@@ -23,6 +23,8 @@ public abstract class BaseGridManager : MonoBehaviour
     protected bool timeStarted;
     protected bool inReset;
     protected bool wonGame;
+    protected bool usedFlag;
+    protected bool loseGame;
     protected int tileClicks;
     protected float timer;
     public float progress;
@@ -141,6 +143,11 @@ public abstract class BaseGridManager : MonoBehaviour
         EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
     }
 
+    protected virtual void LoseGame()
+    {
+        loseGame = true;
+    }
+
     protected virtual void AddEmptyTile(GameObject gameobject)
     {
         emptyTiles.Add(gameobject);
@@ -166,6 +173,8 @@ public abstract class BaseGridManager : MonoBehaviour
             inReset = true;
             firstTile = null;
             timeStarted = false;
+            loseGame = false;
+            usedFlag = false;
             goodTiles = 0;
             timer = 0;
             tileClicks = 0;
@@ -237,6 +246,7 @@ public abstract class BaseGridManager : MonoBehaviour
     protected virtual void FlagClick(GameObject flag)
     {
         tileClicks++;
+        usedFlag = true;
     }
 
     protected virtual void StopTimer()

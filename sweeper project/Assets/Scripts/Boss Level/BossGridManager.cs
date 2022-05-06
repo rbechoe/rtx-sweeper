@@ -13,8 +13,12 @@ public class BossGridManager : BaseGridManager
     private bool gameActive;
     private bool canShuffle;
 
+    SteamAPIManager steamAPI;
+
     protected override void Start()
     {
+        steamAPI = SteamAPIManager.Instance;
+
         flagMask = LayerMask.GetMask("Flag");
         bombMask = LayerMask.GetMask("Bomb");
         canShuffle = true;
@@ -63,6 +67,7 @@ public class BossGridManager : BaseGridManager
         EventSystem.AddListener(EventType.GAME_LOSE, GameInactive);
         EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
         EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
+        EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
         EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
     }
@@ -81,6 +86,7 @@ public class BossGridManager : BaseGridManager
         EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
         EventSystem.RemoveListener(EventType.END_GAME, GameInactive);
         EventSystem.RemoveListener(EventType.GAME_LOSE, GameInactive);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
         EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
     }
@@ -184,15 +190,34 @@ public class BossGridManager : BaseGridManager
         AD.totalClicks = AD.totalClicks + tileClicks;
         float timer = Helpers.RoundToThreeDecimals(this.timer);
         AD.totalTimePlayed = AD.totalTimePlayed + timer;
+
+        if (timer < 10) steamAPI.SetAchievement(UserAchievements.speedrunPro);
+        if (timer < 20) steamAPI.SetAchievement(UserAchievements.speedrun);
+
+        steamAPI.SetStat(UserStats.totalGamesPlayed, 1);
+        steamAPI.SetStat(UserStats.totalClicks, tileClicks);
+
+        if (tileClicks == 1 && loseGame) steamAPI.SetAchievement(UserAchievements.tasteOfMisery);
+
         if (wonGame)
+        {
             AD.gamesWon = AD.gamesWon + 1;
+
+            steamAPI.SetStat(UserStats.totalGamesWon, 1);
+            if (!usedFlag) steamAPI.SetAchievement(UserAchievements.kris);
+            if (!usedFlag) steamAPI.SetAchievement(UserAchievements.noFlags);
+            if (!usedFlag && (10 - bombDensity) >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
+        }
         else
+        {
             AD.gamesLost = AD.gamesLost + 1;
+        }
             
         AD.bossVictories = (wonGame) ? AD.bossVictories + 1 : AD.bossVictories;
         AD.bossTotalClicks += tileClicks;
         AD.bossGamesPlayed += 1;
 
+        // used for future purposes when more bosses will be added
         if (wonGame)
         {
             AD.bossVictories1 += 1;
@@ -202,8 +227,15 @@ public class BossGridManager : BaseGridManager
                 AD.bossTime1 = timer;
                 AD.bossEfficiency1 = efficiency;
                 AD.bossClicks1 = tileClicks;
+
+                steamAPI.SetStat(UserStats.islands1BestTime, 1);
+                steamAPI.SetStat(UserStats.islands1GamesPlayed, 1);
+                steamAPI.SetStat(UserStats.islands1Victories, 1);
             }
+
+            steamAPI.SetStat(UserStats.islandsGamesWon, 1);
         }
+        steamAPI.SetStat(UserStats.islandsGamesPlayed, 1);
 
         DS.UpdateAccountData(AD);
         SetText();
