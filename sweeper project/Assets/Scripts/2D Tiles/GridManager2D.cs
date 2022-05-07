@@ -86,7 +86,7 @@ public class GridManager2D : BaseGridManager
         if (timer < 20) steamAPI.SetAchievement(UserAchievements.speedrun);
 
         steamAPI.SetStatInt(UserStats.totalGamesPlayed, AD.gamesPlayed);
-        steamAPI.SetStatInt(UserStats.totalClicks, tileClicks);
+        steamAPI.SetStatInt(UserStats.totalClicks, AD.totalClicks);
 
         steamAPI.UpdateLeaderBoard(LeaderboardStats.clicks, AD.totalClicks);
         steamAPI.UpdateLeaderBoard(LeaderboardStats.gamesPlayed, AD.gamesPlayed);
