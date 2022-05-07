@@ -43,10 +43,10 @@ public class GridManager2D : BaseGridManager
         EventSystem.AddListener(EventType.RANDOM_GRID, ResetGame);
         EventSystem.AddListener(EventType.WIN_GAME, StopTimer);
         EventSystem.AddListener(EventType.END_GAME, StopTimer);
+        EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
         EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
         EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
         EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
     }
@@ -60,10 +60,10 @@ public class GridManager2D : BaseGridManager
         EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGame);
         EventSystem.RemoveListener(EventType.WIN_GAME, StopTimer);
         EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
         EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
         EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
         EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
     }
@@ -78,6 +78,7 @@ public class GridManager2D : BaseGridManager
 
         AccountData AD = DS.GetUserData();
         AD.totalClicks = AD.totalClicks + tileClicks;
+        AD.gamesPlayed = AD.gamesPlayed + 1;
         float timer = Helpers.RoundToThreeDecimals(this.timer);
         AD.totalTimePlayed = AD.totalTimePlayed + timer;
 

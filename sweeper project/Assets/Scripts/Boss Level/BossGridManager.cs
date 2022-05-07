@@ -188,6 +188,7 @@ public class BossGridManager : BaseGridManager
 
         AccountData AD = DS.GetUserData();
         AD.totalClicks = AD.totalClicks + tileClicks;
+        AD.gamesPlayed = AD.gamesPlayed + 1;
         float timer = Helpers.RoundToThreeDecimals(this.timer);
         AD.totalTimePlayed = AD.totalTimePlayed + timer;
 

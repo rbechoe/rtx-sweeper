@@ -173,7 +173,6 @@ public abstract class BaseGridManager : MonoBehaviour
             inReset = true;
             firstTile = null;
             timeStarted = false;
-            loseGame = false;
             usedFlag = false;
             goodTiles = 0;
             timer = 0;
@@ -211,6 +210,7 @@ public abstract class BaseGridManager : MonoBehaviour
         EventSystem.InvokeEvent(EventType.START_GAME);
         EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
         inReset = false;
+        loseGame = false;
     }
 
     protected virtual void AddGoodTile(GameObject tile)
