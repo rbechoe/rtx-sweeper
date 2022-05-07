@@ -11,9 +11,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private CinemachineSmoothPath startToMid;
     [SerializeField] private CinemachineSmoothPath startToLeft;
     [SerializeField] private CinemachineSmoothPath startToRight;
-    [SerializeField] private GridManager2D midManager;
-    [SerializeField] private GridManager2D leftManager;
-    [SerializeField] private GridManager2D rightManager;
+    [SerializeField] private BaseGridManager midManager;
+    [SerializeField] private BaseGridManager leftManager;
+    [SerializeField] private BaseGridManager rightManager;
 
     public float animationTime = 0;
     public float animationEndTime = 0;
@@ -75,6 +75,12 @@ public class CameraManager : MonoBehaviour
             if (animationTime < animationEndTime)
             {
                 animationTime += Time.deltaTime / speed;
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    animationTime = animationEndTime - 1;
+                }
+
                 trackedDolly.m_PathPosition = animationTime;
             }
 
@@ -91,6 +97,12 @@ public class CameraManager : MonoBehaviour
     public void SetMoveableCam()
     {
         virtualCam.enabled = false;
+        if (this.emptyParent != null)
+        {
+            camera.transform.parent = null;
+            Destroy(this.emptyParent.gameObject);
+        }
+
         GameObject emptyParent = new GameObject();
         emptyParent.transform.eulerAngles = new Vector3(0, camera.transform.eulerAngles.y, 0);
         emptyParent.transform.position = camera.transform.position;
@@ -125,6 +137,14 @@ public class CameraManager : MonoBehaviour
         SetTrack(startToLeft);
     } 
 
+    public void ResetToStart()
+    {
+        animationTime = 0;
+        animationEndTime = 0;
+        trackedDolly.m_PathPosition = 0;
+        virtualCam.enabled = true;
+    }
+
     private void SetTrack(CinemachineSmoothPath path)
     {
         trackedDolly.m_Path = path;
@@ -134,12 +154,12 @@ public class CameraManager : MonoBehaviour
 
     private void DisableManagers()
     {
-        midManager.enabled = false;
-        leftManager.enabled = false;
-        rightManager.enabled = false;
-        midManager.gameObject.SetActive(false);
-        leftManager.gameObject.SetActive(false);
-        rightManager.gameObject.SetActive(false);
+        if (midManager != null) midManager.enabled = false;
+        if (leftManager != null) leftManager.enabled = false;
+        if (rightManager != null) rightManager.enabled = false;
+        if (midManager != null) midManager.gameObject.SetActive(false);
+        if (leftManager != null) leftManager.gameObject.SetActive(false);
+        if (rightManager != null) rightManager.gameObject.SetActive(false);
     }
 
     private void FastSpeed()

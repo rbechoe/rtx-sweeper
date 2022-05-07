@@ -8,12 +8,6 @@ public class GridManager2D : BaseGridManager
     {
         steamAPI = SteamAPIManager.Instance;
 
-        difficultyStars = "Difficulty: ";
-        for (int i = 0; i < (10 - bombDensity); i++)
-        {
-            difficultyStars += "*";
-        }
-
         foreach (Transform child in transform)
         {
             if (child.GetComponent<Tile2D>())
@@ -28,6 +22,12 @@ public class GridManager2D : BaseGridManager
             {
                 inactiveFlags.Add(child.gameObject);
             }
+        }
+
+        difficultyStars = "Difficulty: ";
+        for (int i = 0; i < ((10 - bombDensity) + (tiles.Count / 200)); i++)
+        {
+            difficultyStars += "*";
         }
 
         DS = gameObject.GetComponent<DataSerializer>();
@@ -119,7 +119,7 @@ public class GridManager2D : BaseGridManager
                 {
                     switch (level)
                     {
-                        case 1: // level 1
+                        case 1: // level 1 - ice land
                             AD.arcticVictories1 += 1;
 
                             if (timer < AD.arcticTime1 || (timer == AD.arcticTime1 && efficiency > AD.arcticEfficiency1) || AD.arcticTime1 == 0)
@@ -136,7 +136,7 @@ public class GridManager2D : BaseGridManager
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.ice1BestTime, (int)(AD.arcticTime1 * 1000));
                             break;
 
-                        case 2: // level 2
+                        case 2: // level 2 - castle plaza
                             AD.arcticVictories2 += 1;
 
                             if (timer < AD.arcticTime2 || (timer == AD.arcticTime2 && efficiency > AD.arcticEfficiency2) || AD.arcticTime2 == 0)
@@ -153,10 +153,10 @@ public class GridManager2D : BaseGridManager
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.ice2BestTime, (int)(AD.arcticTime2 * 1000));
                             break;
 
-                        case 3: // level 3
+                        case 3: // level 3 - village
                             AD.arcticVictories3 += 1;
 
-                            if (timer < AD.arcticTime3 || (timer == AD.arcticTime3 && efficiency > AD.arcticEfficiency3) || AD.arcticTime1 == 0)
+                            if (timer < AD.arcticTime3 || (timer == AD.arcticTime3 && efficiency > AD.arcticEfficiency3) || AD.arcticTime3 == 0)
                             {
                                 AD.arcticTime3 = timer;
                                 AD.arcticEfficiency3 = efficiency;
@@ -187,7 +187,7 @@ public class GridManager2D : BaseGridManager
                 {
                     switch (level)
                     {
-                        case 1: // level 1
+                        case 1: // level 1 - cliff
                             AD.asiaVictories1 += 1;
 
                             if (timer < AD.asiaTime1 || (timer == AD.asiaTime1 && efficiency > AD.asiaEfficiency1) || AD.asiaTime1 == 0)
@@ -204,7 +204,7 @@ public class GridManager2D : BaseGridManager
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.asia1BestTime, (int)(AD.asiaTime1 * 1000));
                             break;
 
-                        case 2: // level 2
+                        case 2: // level 2 - waterfalls
                             AD.asiaVictories2 += 1;
 
                             if (timer < AD.asiaTime2 || (timer == AD.asiaTime2 && efficiency > AD.asiaEfficiency2) || AD.asiaTime2 == 0)
@@ -221,10 +221,10 @@ public class GridManager2D : BaseGridManager
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.asia2BestTime, (int)(AD.asiaTime2 * 1000));
                             break;
 
-                        case 3: // level 3
+                        case 3: // level 3 - gate
                             AD.asiaVictories3 += 1;
 
-                            if (timer < AD.asiaTime3 || (timer == AD.asiaTime3 && efficiency > AD.asiaEfficiency3) || AD.asiaTime1 == 0)
+                            if (timer < AD.asiaTime3 || (timer == AD.asiaTime3 && efficiency > AD.asiaEfficiency3) || AD.asiaTime3 == 0)
                             {
                                 AD.asiaTime3 = timer;
                                 AD.asiaEfficiency3 = efficiency;
@@ -255,7 +255,7 @@ public class GridManager2D : BaseGridManager
                 {
                     switch (level)
                     {
-                        case 1: // level 1
+                        case 1: // level 1 - camp
                             AD.desertVictories1 += 1;
 
                             if (timer < AD.desertTime1 || (timer == AD.desertTime1 && efficiency > AD.desertEfficiency1) || AD.desertTime1 == 0)
@@ -272,7 +272,7 @@ public class GridManager2D : BaseGridManager
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.desert1BestTime, (int)(AD.desertTime1 * 1000));
                             break;
 
-                        case 2: // level 2
+                        case 2: // level 2 - village
                             AD.desertVictories2 += 1;
 
                             if (timer < AD.desertTime2 || (timer == AD.desertTime2 && efficiency > AD.desertEfficiency2) || AD.desertTime2 == 0)
@@ -289,10 +289,10 @@ public class GridManager2D : BaseGridManager
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.desert2BestTime, (int)(AD.desertTime2 * 1000));
                             break;
 
-                        case 3: // level 3
+                        case 3: // level 3 - desert
                             AD.desertVictories3 += 1;
 
-                            if (timer < AD.desertTime3 || (timer == AD.desertTime3 && efficiency > AD.desertEfficiency3) || AD.desertTime1 == 0)
+                            if (timer < AD.desertTime3 || (timer == AD.desertTime3 && efficiency > AD.desertEfficiency3) || AD.desertTime3 == 0)
                             {
                                 AD.desertTime3 = timer;
                                 AD.desertEfficiency3 = efficiency;

@@ -23,12 +23,6 @@ public class BossGridManager : BaseGridManager
         bombMask = LayerMask.GetMask("Bomb");
         canShuffle = true;
 
-        difficultyStars = "Difficulty: ***"; // base +3 due to boss stage
-        for (int i = 0; i < (10 - bombDensity); i++)
-        {
-            difficultyStars += "*";
-        }
-
         int count = 0;
         foreach (Transform child in transform)
         {
@@ -47,6 +41,12 @@ public class BossGridManager : BaseGridManager
             {
                 inactiveFlags.Add(child.gameObject);
             }
+        }
+
+        difficultyStars = "Difficulty: ***"; // base +3 due to boss stage
+        for (int i = 0; i < ((10 - bombDensity) + (tiles.Count / 200)); i++)
+        {
+            difficultyStars += "*";
         }
 
         DS = gameObject.GetComponent<DataSerializer>();
@@ -196,6 +196,9 @@ public class BossGridManager : BaseGridManager
 
         steamAPI.SetStatInt(UserStats.totalGamesPlayed, 1);
         steamAPI.SetStatInt(UserStats.totalClicks, tileClicks);
+
+        steamAPI.UpdateLeaderBoard(LeaderboardStats.clicks, AD.totalClicks);
+        steamAPI.UpdateLeaderBoard(LeaderboardStats.gamesPlayed, AD.gamesPlayed);
 
         if (tileClicks == 1 && loseGame) steamAPI.SetAchievement(UserAchievements.tasteOfMisery);
 

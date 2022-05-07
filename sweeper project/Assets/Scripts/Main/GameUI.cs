@@ -11,6 +11,7 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI victoryTimeText;
     public TextMeshProUGUI victorySkillText;
+    private CameraManager cameraManager;
 
     public Slider BGMSlider, SFXSlider, mainSFXSlider;
 
@@ -27,6 +28,7 @@ public class GameUI : MonoBehaviour
         BGMSlider.value = settings.GetBGMVolume();
         SFXSlider.value = settings.GetSFXVolume();
         mainSFXSlider.value = settings.GetMainSFXVolume();
+        cameraManager = gameObject.GetComponent<CameraManager>();
     }
 
     private void OnEnable()
@@ -115,7 +117,7 @@ public class GameUI : MonoBehaviour
 
     public void ReloadLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        cameraManager.ResetToStart();
     }
 
     public void SetEfficiency(float value)
