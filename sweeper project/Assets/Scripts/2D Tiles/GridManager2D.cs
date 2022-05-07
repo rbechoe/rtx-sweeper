@@ -4,9 +4,13 @@ public class GridManager2D : BaseGridManager
 {
     SteamAPIManager steamAPI;
 
+    private int difficulty;
+
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
+        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 1;
+        print(difficulty);
 
         foreach (Transform child in transform)
         {
@@ -25,7 +29,7 @@ public class GridManager2D : BaseGridManager
         }
 
         difficultyStars = "Difficulty: ";
-        for (int i = 0; i < ((10 - bombDensity) + (tiles.Count / 200)); i++)
+        for (int i = 0; i < difficulty; i++)
         {
             difficultyStars += "*";
         }
@@ -99,7 +103,7 @@ public class GridManager2D : BaseGridManager
 
             steamAPI.SetStatInt(UserStats.totalGamesWon, AD.gamesWon);
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.noFlags);
-            if (!usedFlag && (10 - bombDensity) >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
+            if (!usedFlag && difficulty >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
 
             steamAPI.UpdateLeaderBoard(LeaderboardStats.gamesWon, AD.gamesWon);
             steamAPI.UpdateLeaderBoard(LeaderboardStats.timePlayed, (int)(AD.totalTimePlayed / 60f));

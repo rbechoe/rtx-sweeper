@@ -7,6 +7,8 @@ public class BossGridManager : BaseGridManager
     public List<bool> checks = new List<bool>(); // used to check if each tile has performed required logic
     public int busyTiles = 0; // when not zero tiles are busy getting revealed
 
+    private int difficulty;
+
     private LayerMask flagMask;
     private LayerMask bombMask;
 
@@ -18,6 +20,7 @@ public class BossGridManager : BaseGridManager
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
+        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 3; // base +3 due to boss stage
 
         flagMask = LayerMask.GetMask("Flag");
         bombMask = LayerMask.GetMask("Bomb");
@@ -43,8 +46,8 @@ public class BossGridManager : BaseGridManager
             }
         }
 
-        difficultyStars = "Difficulty: ***"; // base +3 due to boss stage
-        for (int i = 0; i < ((10 - bombDensity) + (tiles.Count / 200)); i++)
+        difficultyStars = "Difficulty: ";
+        for (int i = 0; i < difficulty; i++)
         {
             difficultyStars += "*";
         }
@@ -210,7 +213,7 @@ public class BossGridManager : BaseGridManager
             steamAPI.SetStatInt(UserStats.totalGamesWon, AD.gamesWon);
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.kris);
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.noFlags);
-            if (!usedFlag && (10 - bombDensity) >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
+            if (!usedFlag && difficulty >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
 
             steamAPI.UpdateLeaderBoard(LeaderboardStats.timePlayed, (int)(AD.totalTimePlayed / 60f));
         }

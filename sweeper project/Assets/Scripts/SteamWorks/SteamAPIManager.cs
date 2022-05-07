@@ -203,11 +203,6 @@ public class SteamAPIManager : MonoBehaviour
             Debug.Log("Error uploading high score to leaderboard: " + lbStatName[lb]);
             yield break;
         }
-
-        if (leaderboardScore.m_bScoreChanged == 1)
-        {
-            //Debug.Log("Improved highscore!");
-        }
     }
 
     public void PushToCloud()
