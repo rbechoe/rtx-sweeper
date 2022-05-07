@@ -7,6 +7,7 @@ public class SteamAPIManager : MonoBehaviour
 {
     private Dictionary<UserAchievements, string> apiAchName = new Dictionary<UserAchievements, string>();
     private Dictionary<UserStats, string> apiStatName = new Dictionary<UserStats, string>();
+    private Dictionary<LeaderboardStats, string> lbStatName = new Dictionary<LeaderboardStats, string>();
 
     private static SteamAPIManager instance;
     public static SteamAPIManager Instance { get { return instance; } }
@@ -76,6 +77,29 @@ public class SteamAPIManager : MonoBehaviour
         apiStatName.Add(UserStats.islands1Victories, "islands_1_victories");
         apiStatName.Add(UserStats.islands1BestTime, "islands_1_best_time");
         apiStatName.Add(UserStats.islands1GamesPlayed, "islands_1_games_played");
+        // populating leaderboards
+        lbStatName.Add(LeaderboardStats.clicks, "lb_clicks");
+        lbStatName.Add(LeaderboardStats.gamesPlayed, "lb_games_played");
+        lbStatName.Add(LeaderboardStats.gamesWon, "lb_games_won");
+        lbStatName.Add(LeaderboardStats.timePlayed, "lb_time_played");
+        lbStatName.Add(LeaderboardStats.iceGamesWon, "lb_ice_games_won");
+        lbStatName.Add(LeaderboardStats.iceGamesPlayed, "lb_ice_games_played");
+        lbStatName.Add(LeaderboardStats.ice1BestTime, "lb_ice_1_best_time");
+        lbStatName.Add(LeaderboardStats.ice2BestTime, "lb_ice_2_best_time");
+        lbStatName.Add(LeaderboardStats.ice3BestTime, "lb_ice_3_best_time");
+        lbStatName.Add(LeaderboardStats.asiaGamesWon, "lb_asia_games_won");
+        lbStatName.Add(LeaderboardStats.asiaGamesPlayed, "lb_asia_games_played");
+        lbStatName.Add(LeaderboardStats.asia1BestTime, "lb_asia_1_best_time");
+        lbStatName.Add(LeaderboardStats.asia2BestTime, "lb_asia_2_best_time");
+        lbStatName.Add(LeaderboardStats.asia3BestTime, "lb_asia_3_best_time");
+        lbStatName.Add(LeaderboardStats.desertGamesWon, "lb_desert_games_won");
+        lbStatName.Add(LeaderboardStats.desertGamesPlayed, "lb_desert_games_played");
+        lbStatName.Add(LeaderboardStats.desert1BestTime, "lb_desert_1_best_time");
+        lbStatName.Add(LeaderboardStats.desert2BestTime, "lb_desert_2_best_time");
+        lbStatName.Add(LeaderboardStats.desert3BestTime, "lb_desert_3_best_time");
+        lbStatName.Add(LeaderboardStats.islandsGamesWon, "lb_islands_games_won");
+        lbStatName.Add(LeaderboardStats.islandsGamesPlayed, "lb_islands_games_played");
+        lbStatName.Add(LeaderboardStats.islands1BestTime, "lb_islands_1_best_time");
     }
 
     public void SetAchievement(UserAchievements name)
@@ -89,7 +113,7 @@ public class SteamAPIManager : MonoBehaviour
         SteamUserStats.SetAchievement(apiAchName[name]);
     }
 
-    public void SetStat(UserStats name, float value)
+    public void SetStatInt(UserStats name, int value)
     {
         if (!SteamManager.Initialized)
         {
@@ -98,6 +122,92 @@ public class SteamAPIManager : MonoBehaviour
         }
 
         SteamUserStats.SetStat(apiStatName[name], value);
+    }
+
+    public void SetStatFloat(UserStats name, float value)
+    {
+        if (!SteamManager.Initialized)
+        {
+            Debug.Log("Steam manager not initialized!");
+            return;
+        }
+
+        SteamUserStats.SetStat(apiStatName[name], value);
+    }
+
+    /// <summary>
+    /// Used to update leaderboards
+    /// </summary>
+    /// <param name="lb"></param>
+    /// <param name="val">for timings do x1000 for ms based lb</param>
+    public void UpdateLeaderBoard(LeaderboardStats lb, int val)
+    {
+        StartCoroutine(LBUpdate(lb, val));
+    }
+
+    private IEnumerator LBUpdate(LeaderboardStats lb, int score)
+    {
+        bool error = false;
+
+        SteamLeaderboard_t highScoreLeaderboard = new SteamLeaderboard_t();
+        bool findLeaderboardCallCompleted = false;
+
+        var findLeaderboardCall = SteamUserStats.FindLeaderboard(lbStatName[lb]);
+        var findLeaderboardCallResult = CallResult<LeaderboardFindResult_t>.Create();
+        findLeaderboardCallResult.Set(findLeaderboardCall, (leaderboardFindResult, failure) =>
+        {
+            if (!failure && leaderboardFindResult.m_bLeaderboardFound == 1)
+            {
+                highScoreLeaderboard = leaderboardFindResult.m_hSteamLeaderboard;
+            }
+            else
+            {
+                error = true;
+            }
+
+            findLeaderboardCallCompleted = true;
+        });
+
+        while (!findLeaderboardCallCompleted) yield return null;
+
+        if (error)
+        {
+            Debug.Log("Error finding leaderboard: " + lbStatName[lb]);
+            yield break;
+        }
+
+        LeaderboardScoreUploaded_t leaderboardScore = new LeaderboardScoreUploaded_t();
+        bool uploadLeaderboardScoreCallCompleted = false;
+
+        var uploadLeaderboardScoreCall = SteamUserStats.UploadLeaderboardScore(highScoreLeaderboard,
+            ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, score, new int[0], 0);
+        var uploadLeaderboardScoreCallResult = CallResult<LeaderboardScoreUploaded_t>.Create();
+        uploadLeaderboardScoreCallResult.Set(uploadLeaderboardScoreCall, (scoreUploadedResult, failure) =>
+        {
+            if (!failure && scoreUploadedResult.m_bSuccess == 1)
+            {
+                leaderboardScore = scoreUploadedResult;
+            }
+            else
+            {
+                error = true;
+            }
+
+            uploadLeaderboardScoreCallCompleted = true;
+        });
+
+        while (!uploadLeaderboardScoreCallCompleted) yield return null;
+
+        if (error)
+        {
+            Debug.Log("Error uploading high score to leaderboard: " + lbStatName[lb]);
+            yield break;
+        }
+
+        if (leaderboardScore.m_bScoreChanged == 1)
+        {
+            //Debug.Log("Improved highscore!");
+        }
     }
 
     public void PushToCloud()
@@ -161,4 +271,30 @@ public enum UserStats
     islands1Victories,
     islands1BestTime,
     islands1GamesPlayed
+}
+
+public enum LeaderboardStats
+{
+    clicks,
+    gamesPlayed,
+    gamesWon,
+    timePlayed,
+    iceGamesWon,
+    iceGamesPlayed,
+    ice1BestTime,
+    ice2BestTime,
+    ice3BestTime,
+    asiaGamesWon,
+    asiaGamesPlayed,
+    asia1BestTime,
+    asia2BestTime,
+    asia3BestTime,
+    desertGamesWon,
+    desertGamesPlayed,
+    desert1BestTime,
+    desert2BestTime,
+    desert3BestTime,
+    islandsGamesWon,
+    islandsGamesPlayed,
+    islands1BestTime
 }

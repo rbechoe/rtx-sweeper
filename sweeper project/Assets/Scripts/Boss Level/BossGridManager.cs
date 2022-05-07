@@ -194,8 +194,8 @@ public class BossGridManager : BaseGridManager
         if (timer < 10) steamAPI.SetAchievement(UserAchievements.speedrunPro);
         if (timer < 20) steamAPI.SetAchievement(UserAchievements.speedrun);
 
-        steamAPI.SetStat(UserStats.totalGamesPlayed, 1);
-        steamAPI.SetStat(UserStats.totalClicks, tileClicks);
+        steamAPI.SetStatInt(UserStats.totalGamesPlayed, 1);
+        steamAPI.SetStatInt(UserStats.totalClicks, tileClicks);
 
         if (tileClicks == 1 && loseGame) steamAPI.SetAchievement(UserAchievements.tasteOfMisery);
 
@@ -203,10 +203,12 @@ public class BossGridManager : BaseGridManager
         {
             AD.gamesWon = AD.gamesWon + 1;
 
-            steamAPI.SetStat(UserStats.totalGamesWon, 1);
+            steamAPI.SetStatInt(UserStats.totalGamesWon, 1);
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.kris);
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.noFlags);
             if (!usedFlag && (10 - bombDensity) >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
+
+            steamAPI.UpdateLeaderBoard(LeaderboardStats.timePlayed, (int)(AD.totalTimePlayed / 60f));
         }
         else
         {
@@ -228,14 +230,17 @@ public class BossGridManager : BaseGridManager
                 AD.bossEfficiency1 = efficiency;
                 AD.bossClicks1 = tileClicks;
 
-                steamAPI.SetStat(UserStats.islands1BestTime, 1);
-                steamAPI.SetStat(UserStats.islands1GamesPlayed, 1);
-                steamAPI.SetStat(UserStats.islands1Victories, 1);
+                steamAPI.SetStatFloat(UserStats.islands1BestTime, timer);
             }
+            steamAPI.SetStatInt(UserStats.islands1GamesPlayed, 1);
+            steamAPI.SetStatInt(UserStats.islands1Victories, 1);
+            steamAPI.SetStatInt(UserStats.islandsGamesWon, 1);
 
-            steamAPI.SetStat(UserStats.islandsGamesWon, 1);
+            steamAPI.UpdateLeaderBoard(LeaderboardStats.islands1BestTime, (int)(AD.bossTime1 * 1000));
+            steamAPI.UpdateLeaderBoard(LeaderboardStats.islandsGamesWon, AD.bossVictories);
         }
-        steamAPI.SetStat(UserStats.islandsGamesPlayed, 1);
+        steamAPI.SetStatInt(UserStats.islandsGamesPlayed, 1);
+        steamAPI.UpdateLeaderBoard(LeaderboardStats.islandsGamesPlayed, AD.bossGamesPlayed);
 
         DS.UpdateAccountData(AD);
         SetText();
