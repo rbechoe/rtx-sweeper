@@ -195,7 +195,7 @@ public class BossGridManager : BaseGridManager
         if (timer < 10) steamAPI.SetAchievement(UserAchievements.speedrunPro);
         if (timer < 20) steamAPI.SetAchievement(UserAchievements.speedrun);
 
-        steamAPI.SetStatInt(UserStats.totalGamesPlayed, 1);
+        steamAPI.SetStatInt(UserStats.totalGamesPlayed, AD.gamesPlayed);
         steamAPI.SetStatInt(UserStats.totalClicks, tileClicks);
 
         steamAPI.UpdateLeaderBoard(LeaderboardStats.clicks, AD.totalClicks);
@@ -207,7 +207,7 @@ public class BossGridManager : BaseGridManager
         {
             AD.gamesWon = AD.gamesWon + 1;
 
-            steamAPI.SetStatInt(UserStats.totalGamesWon, 1);
+            steamAPI.SetStatInt(UserStats.totalGamesWon, AD.gamesWon);
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.kris);
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.noFlags);
             if (!usedFlag && (10 - bombDensity) >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
@@ -236,9 +236,8 @@ public class BossGridManager : BaseGridManager
 
                 steamAPI.SetStatFloat(UserStats.islands1BestTime, timer);
             }
-            steamAPI.SetStatInt(UserStats.islands1GamesPlayed, 1);
-            steamAPI.SetStatInt(UserStats.islands1Victories, 1);
-            steamAPI.SetStatInt(UserStats.islandsGamesWon, 1);
+            steamAPI.SetStatInt(UserStats.islands1Victories, AD.bossVictories1);
+            steamAPI.SetStatInt(UserStats.islandsGamesWon, AD.bossVictories);
 
             steamAPI.UpdateLeaderBoard(LeaderboardStats.islands1BestTime, (int)(AD.bossTime1 * 1000));
             steamAPI.UpdateLeaderBoard(LeaderboardStats.islandsGamesWon, AD.bossVictories);

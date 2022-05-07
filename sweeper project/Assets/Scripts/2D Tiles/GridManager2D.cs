@@ -85,7 +85,7 @@ public class GridManager2D : BaseGridManager
         if (timer < 10) steamAPI.SetAchievement(UserAchievements.speedrunPro);
         if (timer < 20) steamAPI.SetAchievement(UserAchievements.speedrun);
 
-        steamAPI.SetStatInt(UserStats.totalGamesPlayed, 1);
+        steamAPI.SetStatInt(UserStats.totalGamesPlayed, AD.gamesPlayed);
         steamAPI.SetStatInt(UserStats.totalClicks, tileClicks);
 
         steamAPI.UpdateLeaderBoard(LeaderboardStats.clicks, AD.totalClicks);
@@ -97,7 +97,7 @@ public class GridManager2D : BaseGridManager
         {
             AD.gamesWon = AD.gamesWon + 1;
 
-            steamAPI.SetStatInt(UserStats.totalGamesWon, 1);
+            steamAPI.SetStatInt(UserStats.totalGamesWon, AD.gamesWon);
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.noFlags);
             if (!usedFlag && (10 - bombDensity) >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
 
@@ -132,8 +132,7 @@ public class GridManager2D : BaseGridManager
                                 steamAPI.SetStatFloat(UserStats.ice1BestTime, timer);
                             }
 
-                            steamAPI.SetStatInt(UserStats.ice1GamesPlayed, 1);
-                            steamAPI.SetStatInt(UserStats.ice1Victories, 1);
+                            steamAPI.SetStatInt(UserStats.ice1Victories, AD.arcticVictories1);
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.ice1BestTime, (int)(AD.arcticTime1 * 1000));
                             break;
 
@@ -149,8 +148,7 @@ public class GridManager2D : BaseGridManager
                                 steamAPI.SetStatFloat(UserStats.ice2BestTime, timer);
                             }
 
-                            steamAPI.SetStatInt(UserStats.ice2GamesPlayed, 1);
-                            steamAPI.SetStatInt(UserStats.ice2Victories, 1);
+                            steamAPI.SetStatInt(UserStats.ice2Victories, AD.arcticVictories2);
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.ice2BestTime, (int)(AD.arcticTime2 * 1000));
                             break;
 
@@ -166,16 +164,15 @@ public class GridManager2D : BaseGridManager
                                 steamAPI.SetStatFloat(UserStats.ice3BestTime, timer);
                             }
 
-                            steamAPI.SetStatInt(UserStats.ice3GamesPlayed, 1);
-                            steamAPI.SetStatInt(UserStats.ice3Victories, 1);
+                            steamAPI.SetStatInt(UserStats.ice3Victories, AD.arcticVictories3);
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.ice3BestTime, (int)(AD.arcticTime3 * 1000));
                             break;
                     }
 
-                    steamAPI.SetStatInt(UserStats.iceGamesWon, 1);
+                    steamAPI.SetStatInt(UserStats.iceGamesWon, AD.arcticVictories);
                     steamAPI.UpdateLeaderBoard(LeaderboardStats.iceGamesWon, AD.arcticVictories);
                 }
-                steamAPI.SetStatInt(UserStats.iceGamesPlayed, 1);
+                steamAPI.SetStatInt(UserStats.iceGamesPlayed, AD.arcticGamesPlayed);
                 steamAPI.UpdateLeaderBoard(LeaderboardStats.iceGamesPlayed, AD.arcticGamesPlayed);
                 break;
 
@@ -200,8 +197,7 @@ public class GridManager2D : BaseGridManager
                                 steamAPI.SetStatFloat(UserStats.asia1BestTime, timer);
                             }
 
-                            steamAPI.SetStatInt(UserStats.asia1GamesPlayed, 1);
-                            steamAPI.SetStatInt(UserStats.asia1Victories, 1);
+                            steamAPI.SetStatInt(UserStats.asia1Victories, AD.asiaVictories1);
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.asia1BestTime, (int)(AD.asiaTime1 * 1000));
                             break;
 
@@ -217,8 +213,7 @@ public class GridManager2D : BaseGridManager
                                 steamAPI.SetStatFloat(UserStats.asia2BestTime, timer);
                             }
 
-                            steamAPI.SetStatInt(UserStats.asia2GamesPlayed, 1);
-                            steamAPI.SetStatInt(UserStats.asia2Victories, 1);
+                            steamAPI.SetStatInt(UserStats.asia2Victories, AD.asiaVictories2);
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.asia2BestTime, (int)(AD.asiaTime2 * 1000));
                             break;
 
@@ -234,16 +229,15 @@ public class GridManager2D : BaseGridManager
                                 steamAPI.SetStatFloat(UserStats.asia3BestTime, timer);
                             }
 
-                            steamAPI.SetStatInt(UserStats.asia3GamesPlayed, 1);
-                            steamAPI.SetStatInt(UserStats.asia3Victories, 1);
+                            steamAPI.SetStatInt(UserStats.asia3Victories, AD.asiaVictories3);
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.asia3BestTime, (int)(AD.asiaTime3 * 1000));
                             break;
                     }
 
-                    steamAPI.SetStatInt(UserStats.asiaGamesWon, 1);
+                    steamAPI.SetStatInt(UserStats.asiaGamesWon, AD.asiaVictories);
                     steamAPI.UpdateLeaderBoard(LeaderboardStats.asiaGamesWon, AD.asiaVictories);
                 }
-                steamAPI.SetStatInt(UserStats.asiaGamesPlayed, 1);
+                steamAPI.SetStatInt(UserStats.asiaGamesPlayed, AD.asiaGamesPlayed);
                 steamAPI.UpdateLeaderBoard(LeaderboardStats.asiaGamesPlayed, AD.asiaGamesPlayed);
                 break;
 
@@ -268,8 +262,7 @@ public class GridManager2D : BaseGridManager
                                 steamAPI.SetStatFloat(UserStats.desert1BestTime, timer);
                             }
 
-                            steamAPI.SetStatInt(UserStats.desert1GamesPlayed, 1);
-                            steamAPI.SetStatInt(UserStats.desert1Victories, 1);
+                            steamAPI.SetStatInt(UserStats.desert1Victories, AD.desertVictories1);
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.desert1BestTime, (int)(AD.desertTime1 * 1000));
                             break;
 
@@ -285,8 +278,7 @@ public class GridManager2D : BaseGridManager
                                 steamAPI.SetStatFloat(UserStats.desert2BestTime, timer);
                             }
 
-                            steamAPI.SetStatInt(UserStats.desert2GamesPlayed, 1);
-                            steamAPI.SetStatInt(UserStats.desert2Victories, 1);
+                            steamAPI.SetStatInt(UserStats.desert2Victories, AD.desertVictories2);
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.desert2BestTime, (int)(AD.desertTime2 * 1000));
                             break;
 
@@ -302,16 +294,15 @@ public class GridManager2D : BaseGridManager
                                 steamAPI.SetStatFloat(UserStats.desert3BestTime, timer);
                             }
 
-                            steamAPI.SetStatInt(UserStats.desert3GamesPlayed, 1);
-                            steamAPI.SetStatInt(UserStats.desert3Victories, 1);
+                            steamAPI.SetStatInt(UserStats.desert3Victories, AD.desertVictories3);
                             steamAPI.UpdateLeaderBoard(LeaderboardStats.desert3BestTime, (int)(AD.desertTime3 * 1000));
                             break;
                     }
 
-                    steamAPI.SetStatInt(UserStats.desertGamesWon, 1);
+                    steamAPI.SetStatInt(UserStats.desertGamesWon, AD.desertVictories);
                     steamAPI.UpdateLeaderBoard(LeaderboardStats.desertGamesWon, AD.desertVictories);
                 }
-                steamAPI.SetStatInt(UserStats.desertGamesPlayed, 1);
+                steamAPI.SetStatInt(UserStats.desertGamesPlayed, AD.desertGamesPlayed);
                 steamAPI.UpdateLeaderBoard(LeaderboardStats.desertGamesPlayed, AD.desertGamesPlayed);
                 break;
         }
