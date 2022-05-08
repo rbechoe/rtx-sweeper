@@ -28,8 +28,6 @@ public class DifficultSpawner : MonoBehaviour
 
     private void Start()
     {
-        gridSize = TheCreator.Instance.gridSize;
-        bombAmount = TheCreator.Instance.bombAmount;
         Vector3 position = new Vector3(gridSize / 2f, gridSize, gridSize / 2f);
         EventSystem<Vector3>.InvokeEvent(EventType.START_POS, position);
         CreateGrid(gridSize, bombAmount);

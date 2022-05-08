@@ -12,10 +12,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private TMP_InputField bombTMP;
 
-    public Button playBtn, asiaBtn, desertBtn, bossBtn, graphicsBtn, rtxOnBtn, rtxOffBtn;
+    public Button playBtn, asiaBtn, desertBtn, bossBtn, galaxyBtn, graphicsBtn, rtxOnBtn, rtxOffBtn;
     public Slider BGMSlider, SFXSlider, mainSFXSlider;
 
-    public Locker tutorial, arctic, asia, desert, islands;
+    public Locker tutorial, arctic, asia, desert, islands, galaxy;
 
     private int xSize;
     private int zSize;
@@ -65,6 +65,8 @@ public class MenuManager : MonoBehaviour
         else desertBtn.gameObject.SetActive(false);
         if (accountData.desertVictories > 0) bossBtn.gameObject.SetActive(true);
         else bossBtn.gameObject.SetActive(false);
+        if (accountData.bossVictories > 0) galaxyBtn.gameObject.SetActive(true);
+        else galaxyBtn.gameObject.SetActive(false);
 
         // enable pretty environments based on progression
         if (accountData.tutorialVictories > 0) tutorial.UnlockAreas();
@@ -72,6 +74,7 @@ public class MenuManager : MonoBehaviour
         if (accountData.asiaVictories > 0) asia.UnlockAreas();
         if (accountData.desertVictories > 0) desert.UnlockAreas();
         if (accountData.bossVictories > 0) islands.UnlockAreas();
+        if (accountData.galaxyVictories > 0) galaxy.UnlockAreas();
     }
 
     public void Easy2D()
@@ -109,24 +112,8 @@ public class MenuManager : MonoBehaviour
         NewGame2D();
     }
 
-    public void Easy3D()
-    {
-        gridSize = 4;
-        bombAmount = 8;
-        NewGame3D();
-    }
-
     public void Medium3D()
     {
-        gridSize = 6;
-        bombAmount = 30;
-        NewGame3D();
-    }
-
-    public void Hard3D()
-    {
-        gridSize = 10;
-        bombAmount = 80;
         NewGame3D();
     }
 
@@ -141,8 +128,6 @@ public class MenuManager : MonoBehaviour
 
     private void NewGame3D()
     {
-        TheCreator.Instance.gridSize = gridSize;
-        TheCreator.Instance.bombAmount = bombAmount;
         SceneManager.LoadScene("Universe");
     }
 

@@ -33,14 +33,14 @@ public class Tile3D : MonoBehaviour
     private void Awake()
     {
         bombCountTMP = GetComponentInChildren<TMP_Text>();
-    }
-
-    private void Start()
-    {
         myMat = gameObject.GetComponent<Renderer>().material;
         myMat.EnableKeyword("_EMISSION");
         myMat.color = defaultCol;
         myMat.SetColor("_EmissiveColor", defaultCol);
+    }
+
+    private void Start()
+    {
         defaultMid = new Color(0.25f, 1, 0.25f, 0.5f);
         defaultNone = new Color(0.1f, 0.1f, 0.1f, 0.01f);
         defaultSide = new Color(1, 1, 1, 0.1f);

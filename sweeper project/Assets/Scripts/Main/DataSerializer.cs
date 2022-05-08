@@ -221,4 +221,14 @@ public class AccountData
     public int bossClicks1 = 0;
     public float bossEfficiency1 = 0;
     public int bossVictories1 = 0;
+
+    // Galaxy
+    public int galaxyVictories = 0;
+    public int galaxyLoses = 0;
+    public int galaxyGamesPlayed = 0;
+    public int galaxyTotalClicks = 0;
+    public float galaxyTime1 = 0;
+    public int galaxyClicks1 = 0;
+    public float galaxyEfficiency1 = 0;
+    public int galaxyVictories1 = 0;
 }

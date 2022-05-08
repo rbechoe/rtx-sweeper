@@ -10,7 +10,6 @@ public class GridManager2D : BaseGridManager
     {
         steamAPI = SteamAPIManager.Instance;
         difficulty = (10 - bombDensity) + (tiles.Count / 200) + 1;
-        print(difficulty);
 
         foreach (Transform child in transform)
         {

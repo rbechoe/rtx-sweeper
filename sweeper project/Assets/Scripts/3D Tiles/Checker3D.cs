@@ -34,7 +34,7 @@ public class Checker3D : MonoBehaviour
             }
         }
 
-        Tile3D tile = gameObject.GetComponent<Tile3D>();
+        BaseTile tile = gameObject.GetComponent<BaseTile>();
         tile.SetBombCount(bombCount);
         tile.ShowBombAmount();
 

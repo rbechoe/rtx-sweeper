@@ -31,8 +31,11 @@ public abstract class BaseTile : MonoBehaviour
     protected virtual void Start()
     {
         vfx = GetComponentInChildren<VFXManipulator>();
-        gridMat = vfx.gridTile.GetComponent<Renderer>().material;
-        gridMat.EnableKeyword("_EmissiveColor");
+        if (vfx.gridTile != null)
+        {
+            gridMat = vfx.gridTile.GetComponent<Renderer>().material;
+            gridMat.EnableKeyword("_EmissiveColor");
+        }
         vfx.gameObject.SetActive(false);
 
         flagMask = LayerMask.GetMask("Flag");
@@ -137,7 +140,7 @@ public abstract class BaseTile : MonoBehaviour
         }
     }
 
-    protected virtual void ShowBombAmount()
+    public virtual void ShowBombAmount()
     {
         if (bombCount < 1) return;
 

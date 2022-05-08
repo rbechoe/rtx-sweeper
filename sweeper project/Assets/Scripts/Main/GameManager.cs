@@ -11,12 +11,6 @@ public class GameManager : MonoBehaviour
     public float timer { get; private set; }
     public bool gameActive { get; set; }
 
-    private void Start()
-    {
-        gridSize = TheCreator.Instance.gridSize;
-        bombAmount = TheCreator.Instance.bombAmount;
-    }
-
     private void OnEnable()
     {
         EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);

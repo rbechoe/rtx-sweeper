@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2685168119620687835}
   - component: {fileID: 2685168119620687834}
   - component: {fileID: 6155620323563193095}
+  - component: {fileID: 2071799831316730183}
   m_Layer: 12
   m_Name: 3D Tile
   m_TagString: Empty
@@ -105,12 +106,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2685168119620687833}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 629d9c76a3d6fc4429e7efdc5ca723a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hitColliders: []
+--- !u!114 &2071799831316730183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2685168119620687833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a70f6d55082d0c4888da2bd128d45a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggered: 0
+  state: 3
+  rewardObj: {fileID: 0}
+  breakObj: {fileID: 0}
 --- !u!1 &8972983688656368597
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,6 +141,7 @@ GameObject:
   - component: {fileID: 2315544254603145683}
   - component: {fileID: 5451509073592196273}
   - component: {fileID: 8350796044138339365}
+  - component: {fileID: 4651831361760593303}
   m_Layer: 15
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -296,6 +314,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcfa43af67c5a724c8e9f3d6f3b4564d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bombCountTMP: {fileID: 0}
+  defaultMid: {r: 0, g: 0, b: 0, a: 0}
+  defaultNone: {r: 0, g: 0, b: 0, a: 0}
+  defaultSide: {r: 0, g: 0, b: 0, a: 0}
 --- !u!65 &8350796044138339365
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -309,3 +331,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0.005863309, y: -0.0036564022, z: 0}
+--- !u!114 &4651831361760593303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972983688656368597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efced1e01fc0f6346a18ec12e69185e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombCount: 0
+  forceUpdate: 0
+  shapeMat: {fileID: 0}
+  texture: {fileID: 0}
+  gridTile: {fileID: 0}
+  text: {fileID: 2315544254603145683}
