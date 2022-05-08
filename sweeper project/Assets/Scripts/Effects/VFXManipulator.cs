@@ -72,7 +72,8 @@ public class VFXManipulator : MonoBehaviour
                 break;
         }
 
-        shapeMat?.material.SetTexture("_MainMask", texture);
-        shapeMat?.material.SetColor("_RampColorTint", color);
+        if (shapeMat == null) return;
+        shapeMat.material.SetTexture("_MainMask", texture);
+        shapeMat.material.SetColor("_RampColorTint", color);
     }
 }
