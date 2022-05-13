@@ -37,6 +37,8 @@ public class GridManager3D : BaseGridManager
 
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
+
+        ResetGame();
     }
 
     protected override void OnEnable()

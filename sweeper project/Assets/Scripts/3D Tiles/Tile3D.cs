@@ -1,34 +1,22 @@
 using UnityEngine;
 using TMPro;
-using Tiles2D;
+using System.Collections;
 
-public class Tile3D : MonoBehaviour
+public class Tile3D : BaseTile
 {
     [Header("Settings")]
-    public Color defaultCol = Color.grey;
-    public Color selectCol = Color.green;
-    public Color defaultMid;
     public Color defaultNone;
-    public Color defaultSide;
 
-    private LayerMask flagMask;
-    private LayerMask allMask;
     private LayerMask selectionLayers;
     private TMP_Text bombCountTMP;
 
-    protected int bombCount;
     protected Material myMat;
 
     private GameManager gameManager;
     private MeshRenderer meshRenderer;
 
-    private bool triggered;
-    private bool clickable;
-    private bool previewClicked;
-    private bool canReveal;
     private bool hovered;
     private bool startingTile;
-    private Collider[] tilesPreviewed;
 
     private void Awake()
     {
@@ -39,22 +27,7 @@ public class Tile3D : MonoBehaviour
         myMat.SetColor("_EmissiveColor", defaultCol);
     }
 
-    private void Start()
-    {
-        defaultMid = new Color(0.25f, 1, 0.25f, 0.5f);
-        defaultNone = new Color(0.1f, 0.1f, 0.1f, 0.01f);
-        defaultSide = new Color(1, 1, 1, 0.1f);
-        meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
-        meshRenderer.enabled = false;
-
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-
-        flagMask = LayerMask.GetMask("Flag");
-        allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
-        selectionLayers = LayerMask.GetMask("Selector", "Transparent");
-    }
-
-    private void OnEnable()
+    protected override void OnEnable()
     {
         // listen
         EventSystem.AddListener(EventType.START_GAME, Clickable);
@@ -62,7 +35,7 @@ public class Tile3D : MonoBehaviour
         EventSystem.AddListener(EventType.END_GAME, RevealBomb);
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
         // unlisten
         EventSystem.RemoveListener(EventType.START_GAME, Clickable);
@@ -144,15 +117,15 @@ public class Tile3D : MonoBehaviour
             {
                 if (col.CompareTag("Transparent"))
                 {
-                    defaultCol = defaultSide;
-                    SetColor();
+                    defaultCol = new Color(selectCol.r, selectCol.g, selectCol.b, 0.1f);
+                    UpdateMaterial(defaultCol);
                     break;
                 }
 
                 if (col.CompareTag("Opaque"))
                 {
-                    defaultCol = defaultMid;
-                    SetColor(2);
+                    defaultCol = selectCol;
+                    UpdateMaterial(defaultCol);
                     break;
                 }
             }
@@ -160,7 +133,7 @@ public class Tile3D : MonoBehaviour
         else
         {
             defaultCol = defaultNone;
-            SetColor();
+            UpdateMaterial(defaultCol);
         }
     }
 
@@ -239,59 +212,67 @@ public class Tile3D : MonoBehaviour
         myMat.SetColor("_EmissiveColor", defaultCol);
     }
 
-    public void SetToDefaultCol()
-    {
-        if (clickable && !triggered)
-        {
-            myMat.color = defaultCol;
-            myMat.SetColor("_EmissiveColor", defaultCol);
-        }
-    }
-
     private void SetColor(int _strenght = 1)
     {
         myMat.color = defaultCol;
         myMat.SetColor("_EmissiveColor", defaultCol * _strenght);
     }
 
-    private void RevealBomb()
-    {
-        if (gameObject.CompareTag("Bomb"))
-        {
-            DoAction();
-        }
-    }
-
-    public void NoBombReveal()
-    {
-        DoAction();
-    }
-
-    public void SetBombCount(int amount)
-    {
-        bombCount = amount;
-    }
-
-    public void ShowBombAmount()
+    public override void ShowBombAmount()
     {
         bombCountTMP.text = "" + bombCount;
     }
 
-    private void Clickable()
+    protected override void OnMouseOver()
     {
-        clickable = true;
+
     }
 
-    private void Unclickable()
+    protected override void OnMouseExit()
     {
-        clickable = false;
+
     }
 
-    public void FirstTile()
+    public override void DoAction(bool sequenced = false)
     {
-        startingTile = true;
-        defaultCol = new Color(0.9f, 0.1f, 0.7f);
-        myMat.color = defaultCol;
-        SetColor(2);
+        StartCoroutine(FireAction(sequenced));
+    }
+
+    public override void TypeSettings()
+    {
+        selectionLayers = LayerMask.GetMask("Selector", "Transparent");
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+
+        defaultNone = new Color(0.1f, 0.1f, 0.1f, 0.01f);
+        meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
+        meshRenderer.enabled = false;
+
+        gridMat = gameObject.GetComponent<Renderer>().material;
+    }
+
+    private IEnumerator FireAction(bool sequenced = false)
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (triggered)
+        {
+            yield break;
+        }
+
+        // return if there is a flag on this position
+        Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
+        if (nearbyFlags.Length > 0)
+        {
+            yield break;
+        }
+
+        if (sequenced) EventSystem.InvokeEvent(EventType.REVEAL_TILE);
+
+        triggered = true;
+
+        defaultCol = emptyTileColor;
+        UpdateMaterial(defaultCol, 1);
+
+        TypeSpecificAction();
     }
 }

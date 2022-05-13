@@ -26,7 +26,7 @@ public class Movement3D : MonoBehaviour
         frontSelection.transform.localScale = new Vector3(100, .9f, 100);
         midSelection.transform.localScale = new Vector3(100, .9f, 100);
         endSelection.transform.localScale = new Vector3(100, .9f, 100);
-        parentSelection.transform.position = new Vector3(0, .5f, 0);
+        parentSelection.transform.position = new Vector3(0, 0, 0);
     }
 
     private void OnEnable()
