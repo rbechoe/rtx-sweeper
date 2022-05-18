@@ -14,6 +14,8 @@ public class Movement3D : MonoBehaviour
     private GameObject endSelection;
     [SerializeField]
     private GameObject parentSelection;
+    [SerializeField]
+    private GameObject rotatorObject;
 
     private bool inRoutine;
 
@@ -81,7 +83,7 @@ public class Movement3D : MonoBehaviour
         {
             return;
         }
-        StartCoroutine(RoutineRotation(new Vector3(0, -speed, 0)));
+        StartCoroutine(RoutineRotation(new Vector3(0, 0, speed)));
     }
 
     private void RotateRight()
@@ -90,27 +92,35 @@ public class Movement3D : MonoBehaviour
         {
             return;
         }
-        StartCoroutine(RoutineRotation(new Vector3(0, speed, 0)));
+        StartCoroutine(RoutineRotation(new Vector3(0, 0, -speed)));
     }
 
     private IEnumerator RoutineRotation(Vector3 _speed)
     {
         inRoutine = true;
+
+        rotatorObject.transform.rotation = Quaternion.Euler(Vector3.zero);
+        rotatorObject.transform.position = Vector3.zero;
+        parentObj.transform.parent = rotatorObject.transform;
+
         for (int i = 0; i < 90 / speed; i++)
         {
-            parentObj.transform.rotation *= Quaternion.Euler(_speed);
+            rotatorObject.transform.rotation *= Quaternion.Euler(_speed);
             yield return new WaitForEndOfFrame();
         }
-        inRoutine = false;
         FloorAxis();
         yield return new WaitForEndOfFrame();
+
+        parentObj.transform.parent = null;
+        parentObj.transform.localScale = Vector3.one;   
+        inRoutine = false;
     }
 
     private void FloorAxis()
     {
-        parentObj.transform.eulerAngles = new Vector3(Mathf.RoundToInt(parentObj.transform.eulerAngles.x),
-                                                      Mathf.RoundToInt(parentObj.transform.eulerAngles.y),
-                                                      Mathf.RoundToInt(parentObj.transform.eulerAngles.z));
+        rotatorObject.transform.eulerAngles = new Vector3(Mathf.RoundToInt(rotatorObject.transform.eulerAngles.x),
+                                                      Mathf.RoundToInt(rotatorObject.transform.eulerAngles.y),
+                                                      Mathf.RoundToInt(rotatorObject.transform.eulerAngles.z));
     }
 
     private void MoveUp()
