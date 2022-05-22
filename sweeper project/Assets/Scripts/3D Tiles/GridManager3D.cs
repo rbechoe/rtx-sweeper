@@ -8,6 +8,8 @@ public class GridManager3D : BaseGridManager
 
     private int difficulty;
 
+    private bool saving;
+
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
@@ -75,6 +77,9 @@ public class GridManager3D : BaseGridManager
 
     protected override void SaveData()
     {
+        if (saving) return;
+        saving = true;
+
         float efficiency = 1f * (tiles.Count - initialBombAmount) / tileClicks * 100f;
         efficiency = Mathf.Clamp(efficiency, 0, 100);
         uiManager.SetEfficiency(efficiency);
@@ -128,6 +133,7 @@ public class GridManager3D : BaseGridManager
         DS.UpdateAccountData(AD);
 
         wonGame = false;
+        saving = false;
     }
 
     protected override void SetText(AccountData data = null)

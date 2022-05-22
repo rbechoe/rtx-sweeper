@@ -65,7 +65,6 @@ public class Tile3D : BaseTile
         bombCountTMP.text = "";
         defaultCol = manager.defaultColor;
         UpdateMaterial(defaultCol);
-        vfx.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -104,7 +103,12 @@ public class Tile3D : BaseTile
             // release left button - reveal tile
             if (Input.GetMouseButtonUp(0))
             {
-                DoAction();
+                if (clickable)
+                {
+                    EventSystem.InvokeEvent(EventType.PLAY_CLICK);
+                    EventSystem.InvokeEvent(EventType.TILE_CLICK);
+                    DoAction();
+                }
 
                 // reveal all nearby tiles
                 if (previewClicked && canReveal)
@@ -269,6 +273,7 @@ public class Tile3D : BaseTile
 
         defaultNone = new Color(0.1f, 0.1f, 0.1f, 0.01f);
         gridMat = gameObject.GetComponent<Renderer>().material;
+        vfx.gameObject.SetActive(true);
     }
 
     private IEnumerator FireAction(bool sequenced = false)
@@ -295,5 +300,43 @@ public class Tile3D : BaseTile
         UpdateMaterial(defaultCol, 1);
 
         TypeSpecificAction();
+    }
+
+    public override void TypeSpecificAction()
+    {
+        switch (state)
+        {
+            case TileStates.Bomb:
+                EventSystem.InvokeEvent(EventType.GAME_LOSE);
+                break;
+
+            case TileStates.Empty:
+                EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
+                Collider[] tiles = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
+                for (int i = 0; i < tiles.Length; i++)
+                {
+                    tiles[i].GetComponent<BaseTile>()?.NoBombReveal();
+                }
+                state = TileStates.Revealed;
+                if (rewardObj != null) rewardObj.SetActive(true);
+                if (breakObj != null) breakObj.SetActive(false);
+                break;
+
+            case TileStates.Number:
+                EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
+                ShowBombAmount();
+                state = TileStates.Revealed;
+                if (rewardObj != null) rewardObj.SetActive(true);
+                if (breakObj != null) breakObj.SetActive(false);
+                break;
+        }
+    }
+
+
+    public override void UpdateBombAmount(int amount)
+    {
+        bombCount = amount;
+
+        if (bombCount == 8) SteamAPIManager.Instance.SetAchievement(UserAchievements.eight);
     }
 }
