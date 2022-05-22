@@ -11,7 +11,7 @@ public class GridManager3D : BaseGridManager
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
-        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 1;
+        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 6;
 
         foreach (Transform child in transform)
         {
@@ -37,8 +37,6 @@ public class GridManager3D : BaseGridManager
 
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
-
-        ResetGame();
     }
 
     protected override void OnEnable()
@@ -134,5 +132,11 @@ public class GridManager3D : BaseGridManager
 
     protected override void SetText(AccountData data = null)
     {
+        if (data == null) data = DS.GetUserData();
+
+        infoText.text = difficultyStars + "\n" +
+            "Time: " + Helpers.RoundToThreeDecimals(data.galaxyTime1) + "s\n" +
+            "Skill: " + Helpers.RoundToThreeDecimals(data.galaxyEfficiency1) + "%\n" +
+            "Victories: " + data.galaxyVictories1 + "\n";
     }
 }

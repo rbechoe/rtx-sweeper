@@ -32,7 +32,15 @@ public class Tile3D : BaseTile
         // listen
         EventSystem.AddListener(EventType.START_GAME, Clickable);
         EventSystem.AddListener(EventType.END_GAME, Unclickable);
-        EventSystem.AddListener(EventType.END_GAME, RevealBomb);
+        EventSystem.AddListener(EventType.WIN_GAME, Unclickable);
+        EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
+        EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
+        EventSystem.AddListener(EventType.END_GAME, ResetSelf);
+        EventSystem.AddListener(EventType.PREPARE_GAME, ResetSelf);
+        EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
+        EventSystem.AddListener(EventType.WIN_GAME, EndGame);
+        EventSystem.AddListener(EventType.GAME_LOSE, EndGame);
+        EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
     }
 
     protected override void OnDisable()
@@ -40,7 +48,15 @@ public class Tile3D : BaseTile
         // unlisten
         EventSystem.RemoveListener(EventType.START_GAME, Clickable);
         EventSystem.RemoveListener(EventType.END_GAME, Unclickable);
-        EventSystem.RemoveListener(EventType.END_GAME, RevealBomb);
+        EventSystem.RemoveListener(EventType.WIN_GAME, Unclickable);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
+        EventSystem.RemoveListener(EventType.END_GAME, ResetSelf);
+        EventSystem.RemoveListener(EventType.PREPARE_GAME, ResetSelf);
+        EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
+        EventSystem.RemoveListener(EventType.WIN_GAME, EndGame);
+        EventSystem.RemoveListener(EventType.GAME_LOSE, EndGame);
+        EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
     }
 
     private void Update()
