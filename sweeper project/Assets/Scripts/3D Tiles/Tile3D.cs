@@ -13,7 +13,6 @@ public class Tile3D : BaseTile
     protected Material myMat;
 
     private GameManager gameManager;
-    private MeshRenderer meshRenderer;
 
     private bool hovered;
     private bool startingTile;
@@ -57,6 +56,16 @@ public class Tile3D : BaseTile
         EventSystem.RemoveListener(EventType.WIN_GAME, EndGame);
         EventSystem.RemoveListener(EventType.GAME_LOSE, EndGame);
         EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
+    }
+
+    public override void ResetSelf()
+    {
+        clickable = true;
+        triggered = false;
+        bombCountTMP.text = "";
+        defaultCol = manager.defaultColor;
+        UpdateMaterial(defaultCol);
+        vfx.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -207,7 +216,6 @@ public class Tile3D : BaseTile
         else
         {
             gameManager.AddGoodTile3D();
-            meshRenderer.enabled = true;
             defaultCol = Color.black;
             myMat.color = defaultCol;
             SetColor();
@@ -260,9 +268,6 @@ public class Tile3D : BaseTile
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 
         defaultNone = new Color(0.1f, 0.1f, 0.1f, 0.01f);
-        meshRenderer = bombCountTMP.gameObject.GetComponent<MeshRenderer>();
-        meshRenderer.enabled = false;
-
         gridMat = gameObject.GetComponent<Renderer>().material;
     }
 

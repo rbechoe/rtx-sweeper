@@ -127,11 +127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6011c1c02e5d77c4087317511f711700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCol: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  selectCol: {r: 0, g: 1, b: 0, a: 1}
-  defaultMid: {r: 1, g: 0.9764151, b: 0.9764151, a: 1}
+  triggered: 0
+  state: 3
+  rewardObj: {fileID: 0}
+  breakObj: {fileID: 0}
   defaultNone: {r: 1, g: 1, b: 1, a: 0}
-  defaultSide: {r: 1, g: 1, b: 1, a: 0.56078434}
 --- !u!1 &8972983688656368597
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8972983688656368597}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efced1e01fc0f6346a18ec12e69185e7, type: 3}
   m_Name: 
