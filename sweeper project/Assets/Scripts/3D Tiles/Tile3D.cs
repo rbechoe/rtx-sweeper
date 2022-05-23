@@ -190,76 +190,14 @@ public class Tile3D : BaseTile
         }
     }
 
-    public virtual void DoAction()
-    {
-        if (triggered)
-        {
-            return;
-        }
-
-        // return if there is a flag on this position
-        Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
-        if (nearbyFlags.Length > 0)
-        {
-            return;
-        }
-
-        triggered = true;
-
-        defaultCol = Color.black;
-        myMat.color = defaultCol;
-        SetColor();
-
-        if (gameObject.CompareTag("Bomb"))
-        {
-            gameManager.EndGame();
-            defaultCol = Color.red;
-            myMat.color = defaultCol;
-            SetColor();
-        }
-        else
-        {
-            gameManager.AddGoodTile3D();
-            defaultCol = Color.black;
-            myMat.color = defaultCol;
-            SetColor();
-        }
-
-        // only remove empty tiles that are not bombs
-        if (bombCount == 0 && !gameObject.CompareTag("Bomb"))
-        {
-            Collider[] tiles = Physics.OverlapBox(gameObject.transform.position, new Vector3(1, 1, 1) * 1.5f, Quaternion.identity);
-            for (int i = 0; i < tiles.Length; i++)
-            {
-                tiles[i].GetComponent<Tile3D>()?.NoBombReveal();
-            }
-
-            Destroy(gameObject);
-        }
-
-        myMat.SetColor("_EmissiveColor", defaultCol);
-    }
-
-    private void SetColor(int _strenght = 1)
-    {
-        myMat.color = defaultCol;
-        myMat.SetColor("_EmissiveColor", defaultCol * _strenght);
-    }
-
     public override void ShowBombAmount()
     {
         bombCountTMP.text = "" + bombCount;
     }
 
-    protected override void OnMouseOver()
-    {
+    protected override void OnMouseOver() { }
 
-    }
-
-    protected override void OnMouseExit()
-    {
-
-    }
+    protected override void OnMouseExit() { }
 
     public override void DoAction(bool sequenced = false)
     {
@@ -331,7 +269,6 @@ public class Tile3D : BaseTile
                 break;
         }
     }
-
 
     public override void UpdateBombAmount(int amount)
     {
