@@ -14,13 +14,11 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
-        EventSystem.AddListener(EventType.GAME_LOSE, StartGame);
     }
 
     private void OnDisable()
     {
         EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, StartGame);
     }
 
     private void Update()
