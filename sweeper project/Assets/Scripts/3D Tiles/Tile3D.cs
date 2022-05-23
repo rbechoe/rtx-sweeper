@@ -67,64 +67,62 @@ public class Tile3D : BaseTile
 
     private void Update()
     {
-        if (clickable)
-        {
-            UpdateColliders();
-            SelectTile();
-        }
+        if (!clickable) return;
+
+        UpdateColliders();
+        SelectTile();
     }
 
     private void SelectTile()
     {
-        if (hovered)
+        if (triggered || !hovered) return;
+
+        if (Input.GetMouseButton(0) && triggered && !previewClicked)
         {
-            if (Input.GetMouseButton(0) && triggered && !previewClicked)
+            // use box to detect all nearby tiles that can be activated once amount bombs equals amount of flags, not more or less
+            Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, flagMask);
+            Collider[] allTiles = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, allMask);
+
+            if (bombCount == nearbyFlags.Length)
             {
-                // use box to detect all nearby tiles that can be activated once amount bombs equals amount of flags, not more or less
-                Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, flagMask);
-                Collider[] allTiles = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, allMask);
-
-                if (bombCount == nearbyFlags.Length)
-                {
-                    canReveal = true;
-                }
-
-                foreach (Collider _tile in allTiles)
-                {
-                    _tile.GetComponent<Tile2D>()?.PreviewTileSelection();
-                }
-
-                tilesPreviewed = allTiles;
-                previewClicked = true;
+                canReveal = true;
             }
 
-            // release left button - reveal tile
-            if (Input.GetMouseButtonUp(0))
+            foreach (Collider _tile in allTiles)
             {
-                if (clickable)
-                {
-                    EventSystem.InvokeEvent(EventType.PLAY_CLICK);
-                    EventSystem.InvokeEvent(EventType.TILE_CLICK);
-                    DoAction();
-                }
-
-                // reveal all nearby tiles
-                if (previewClicked && canReveal)
-                {
-                    foreach (Collider _tile in tilesPreviewed)
-                    {
-                        _tile.GetComponent<Tile2D>()?.DoAction();
-                    }
-                    previewClicked = false;
-                    tilesPreviewed = null;
-                }
+                _tile.GetComponent<Tile2D>()?.PreviewTileSelection();
             }
 
-            // right click - place flag
-            if (Input.GetMouseButtonUp(1) && !triggered)
+            tilesPreviewed = allTiles;
+            previewClicked = true;
+        }
+
+        // release left button - reveal tile
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (clickable)
             {
-                EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
+                EventSystem.InvokeEvent(EventType.PLAY_CLICK);
+                EventSystem.InvokeEvent(EventType.TILE_CLICK);
+                DoAction();
             }
+
+            // reveal all nearby tiles
+            if (previewClicked && canReveal)
+            {
+                foreach (Collider _tile in tilesPreviewed)
+                {
+                    _tile.GetComponent<Tile2D>()?.DoAction();
+                }
+                previewClicked = false;
+                tilesPreviewed = null;
+            }
+        }
+
+        // right click - place flag
+        if (Input.GetMouseButtonUp(1) && !triggered)
+        {
+            EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
         }
     }
 
@@ -164,9 +162,18 @@ public class Tile3D : BaseTile
         }
     }
 
+    protected override void RevealBomb()
+    {
+        if (gameObject.CompareTag("Bomb"))
+        {
+            defaultCol = new Color(0.5f, 0f, 0f, 1);
+            UpdateMaterial(defaultCol, 2048);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Picker") && clickable)
+        if (collision.gameObject.CompareTag("Picker") && clickable && !triggered)
         {
             hovered = true;
 
@@ -178,7 +185,7 @@ public class Tile3D : BaseTile
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Picker") && clickable)
+        if (collision.gameObject.CompareTag("Picker") && clickable && !triggered)
         {
             hovered = false;
 

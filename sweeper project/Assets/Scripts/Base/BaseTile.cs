@@ -11,7 +11,7 @@ public abstract class BaseTile : MonoBehaviour
     protected Material gridMat;
 
     public bool triggered;
-    protected bool clickable;
+    public bool clickable;
     protected bool previewClicked;
     protected bool canReveal;
     protected bool gameEnded;
