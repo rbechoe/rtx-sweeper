@@ -60,6 +60,7 @@ public class Tile3D : BaseTile
     {
         clickable = true;
         triggered = false;
+        hovered = false;
         bombCountTMP.text = "";
         defaultCol = manager.defaultColor;
         UpdateMaterial(defaultCol);

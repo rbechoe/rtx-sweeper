@@ -105,6 +105,7 @@ public abstract class BaseGridManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         EventSystem.InvokeEvent(EventType.PREPARE_GAME);
+        yield return new WaitForEndOfFrame();
         StartGame();
         yield return new WaitForEndOfFrame();
     }
