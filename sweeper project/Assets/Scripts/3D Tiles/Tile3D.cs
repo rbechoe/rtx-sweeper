@@ -12,8 +12,6 @@ public class Tile3D : BaseTile
 
     protected Material myMat;
 
-    private GameManager gameManager;
-
     private bool hovered;
     private bool startingTile;
 
@@ -147,14 +145,14 @@ public class Tile3D : BaseTile
                 if (col.CompareTag("Transparent"))
                 {
                     defaultCol = new Color(selectCol.r, selectCol.g, selectCol.b, 0.1f);
-                    UpdateMaterial(defaultCol);
+                    UpdateMaterial(defaultCol, 256);
                     break;
                 }
 
                 if (col.CompareTag("Opaque"))
                 {
                     defaultCol = selectCol;
-                    UpdateMaterial(defaultCol);
+                    UpdateMaterial(defaultCol, 1024);
                     break;
                 }
             }
@@ -207,7 +205,6 @@ public class Tile3D : BaseTile
     public override void TypeSettings()
     {
         selectionLayers = LayerMask.GetMask("Selector", "Transparent");
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 
         defaultNone = new Color(0.1f, 0.1f, 0.1f, 0.01f);
         gridMat = gameObject.GetComponent<Renderer>().material;
