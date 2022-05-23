@@ -165,7 +165,7 @@ public class Tile3D : BaseTile
 
     protected override void RevealBomb()
     {
-        if (gameObject.CompareTag("Bomb"))
+        if (state == TileStates.Bomb)
         {
             defaultCol = new Color(0.5f, 0f, 0f, 1);
             UpdateMaterial(defaultCol, 2048);
@@ -216,7 +216,6 @@ public class Tile3D : BaseTile
 
         defaultNone = new Color(0.1f, 0.1f, 0.1f, 0.01f);
         gridMat = gameObject.GetComponent<Renderer>().material;
-        vfx.gameObject.SetActive(true);
     }
 
     private IEnumerator FireAction(bool sequenced = false)

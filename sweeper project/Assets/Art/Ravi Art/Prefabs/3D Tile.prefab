@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggered: 0
+  clickable: 0
   state: 3
   rewardObj: {fileID: 0}
   breakObj: {fileID: 0}
@@ -145,7 +146,6 @@ GameObject:
   - component: {fileID: 2315544254603145683}
   - component: {fileID: 5451509073592196273}
   - component: {fileID: 8350796044138339365}
-  - component: {fileID: 4651831361760593303}
   m_Layer: 15
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -335,21 +335,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0.005863309, y: -0.0036564022, z: 0}
---- !u!114 &4651831361760593303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8972983688656368597}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efced1e01fc0f6346a18ec12e69185e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bombCount: 0
-  forceUpdate: 0
-  shapeMat: {fileID: 0}
-  texture: {fileID: 0}
-  gridTile: {fileID: 0}
-  text: {fileID: 2315544254603145683}

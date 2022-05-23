@@ -31,12 +31,13 @@ public abstract class BaseTile : MonoBehaviour
     protected virtual void Start()
     {
         vfx = GetComponentInChildren<VFXManipulator>();
-        if (vfx.gridTile != null)
+        if (vfx != null && vfx.gridTile != null)
         {
             gridMat = vfx.gridTile.GetComponent<Renderer>().material;
             gridMat.EnableKeyword("_EmissiveColor");
         }
-        vfx.gameObject.SetActive(false);
+        vfx?.gameObject.SetActive(false);
+        if (vfx == null) Debug.LogWarning("VFX object not found on " + gameObject.name);
 
         flagMask = LayerMask.GetMask("Flag");
         allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
@@ -142,7 +143,7 @@ public abstract class BaseTile : MonoBehaviour
 
     public virtual void ShowBombAmount()
     {
-        if (bombCount < 1) return;
+        if (bombCount < 1 || vfx == null) return;
 
         if (!vfx.gameObject.activeSelf) vfx.gameObject.SetActive(true);
         vfx.UpdateEffect(bombCount);
@@ -207,6 +208,8 @@ public abstract class BaseTile : MonoBehaviour
         bombCount = amount;
 
         if (bombCount == 8) SteamAPIManager.Instance.SetAchievement(UserAchievements.eight);
+
+        if (vfx == null) return;
 
         vfx.UpdateEffect(bombCount);
         if (bombCount > 0 && state == TileStates.Revealed)
