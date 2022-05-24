@@ -39,6 +39,7 @@ public class Movement3D : MonoBehaviour
         EventSystem.AddListener(EventType.INPUT_LEFT, RotateLeft);
         EventSystem.AddListener(EventType.INPUT_UP, MoveUp);
         EventSystem.AddListener(EventType.INPUT_DOWN, MoveDown);
+        EventSystem.AddListener(EventType.PREPARE_GAME, RotateReset);
     }
 
     private void OnDisable()
@@ -49,6 +50,7 @@ public class Movement3D : MonoBehaviour
         EventSystem.RemoveListener(EventType.INPUT_LEFT, RotateLeft);
         EventSystem.RemoveListener(EventType.INPUT_UP, MoveUp);
         EventSystem.RemoveListener(EventType.INPUT_DOWN, MoveDown);
+        EventSystem.RemoveListener(EventType.PREPARE_GAME, RotateReset);
     }
 
     private void Update()
@@ -93,6 +95,16 @@ public class Movement3D : MonoBehaviour
             return;
         }
         StartCoroutine(RoutineRotation(new Vector3(0, 0, -speed)));
+    }
+
+    private void RotateReset()
+    {
+        rotatorObject.transform.rotation = Quaternion.Euler(Vector3.zero);
+        rotatorObject.transform.position = Vector3.zero;
+        parentObj.transform.parent = rotatorObject.transform;
+        parentObj.transform.localEulerAngles = Vector3.zero;
+        parentObj.transform.parent = null;
+        parentObj.transform.localScale = Vector3.one;
     }
 
     private IEnumerator RoutineRotation(Vector3 _speed)

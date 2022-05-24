@@ -15,21 +15,8 @@ public class GridManager3D : BaseGridManager
         steamAPI = SteamAPIManager.Instance;
         difficulty = (10 - bombDensity) + (tiles.Count / 200) + 6;
 
-        foreach (Transform child in transform)
-        {
-            if (child.GetComponent<Tile3D>())
-            {
-                tiles.Add(child.gameObject);
-            }
-        }
-
-        foreach (Transform child in flagParent.transform)
-        {
-            if (child.GetComponent<Flag3D>())
-            {
-                inactiveFlags.Add(child.gameObject);
-            }
-        }
+        Helpers.NestedChildToGob<Tile3D>(transform, tiles);
+        Helpers.NestedChildToGob<Flag3D>(flagParent.transform, inactiveFlags);
 
         difficultyStars = "Difficulty: ";
         for (int i = 0; i < difficulty; i++)

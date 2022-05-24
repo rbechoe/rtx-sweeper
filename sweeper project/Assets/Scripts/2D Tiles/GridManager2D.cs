@@ -11,21 +11,8 @@ public class GridManager2D : BaseGridManager
         steamAPI = SteamAPIManager.Instance;
         difficulty = (10 - bombDensity) + (tiles.Count / 200) + 1;
 
-        foreach (Transform child in transform)
-        {
-            if (child.GetComponent<Tile2D>())
-            {
-                tiles.Add(child.gameObject);
-            }
-        }
-
-        foreach (Transform child in flagParent.transform)
-        {
-            if (child.GetComponent<Flag2D>())
-            {
-                inactiveFlags.Add(child.gameObject);
-            }
-        }
+        Helpers.NestedChildToGob<Tile2D>(transform, tiles);
+        Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
 
         difficultyStars = "Difficulty: ";
         for (int i = 0; i < difficulty; i++)
