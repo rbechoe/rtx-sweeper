@@ -42,7 +42,8 @@ public abstract class BaseTile : MonoBehaviour
         flagMask = LayerMask.GetMask("Flag");
         allMask = LayerMask.GetMask("Empty", "Flag", "Bomb");
 
-        manager = transform.parent.GetComponent<BaseGridManager>();
+        manager = Helpers.FindInParent<BaseGridManager>(transform).GetComponent<BaseGridManager>();
+
         emptyTileColor = manager.emptyTileColor;
         startColor = manager.startColor;
         selectCol = manager.selectColor;

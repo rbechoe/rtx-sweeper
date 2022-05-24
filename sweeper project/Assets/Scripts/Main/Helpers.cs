@@ -19,4 +19,21 @@ public static class Helpers
             if (child.GetComponent<T>()) collection.Add(child.gameObject);
         }
     }
+
+    // recursive parent lookup
+    public static Transform FindInParent<T>(Transform trans)
+    {
+        if (trans.GetComponent<T>() != null)
+        {
+            return trans;
+        }
+        else if (trans.parent != null)
+        {
+            return FindInParent<T>(trans.parent);
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
