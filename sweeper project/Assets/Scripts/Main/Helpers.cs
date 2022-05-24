@@ -16,10 +16,7 @@ public static class Helpers
         {
             if (child.childCount > 0) NestedChildToGob<T>(child, collection);
 
-            if (child.GetComponent<T>())
-            {
-                collection.Add(child.gameObject);
-            }
+            if (child.GetComponent<T>()) collection.Add(child.gameObject);
         }
     }
 }
