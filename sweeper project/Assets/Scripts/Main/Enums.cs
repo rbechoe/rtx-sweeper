@@ -24,6 +24,7 @@ public enum EventType
     GAME_LOSE,          // passes nothing
     UNPLAYABLE,         // passes nothing
     PLAYABLE,           // passes nothing
+    ADD_LAYER,          // passes nothing
     // input related
     INPUT_LEFT,         // passes nothing
     INPUT_RIGHT,        // passes nothing

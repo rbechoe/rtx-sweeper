@@ -43,6 +43,8 @@ public class Movement3D : MonoBehaviour
         EventSystem.AddListener(EventType.INPUT_UP, MoveUp);
         EventSystem.AddListener(EventType.INPUT_DOWN, MoveDown);
         EventSystem.AddListener(EventType.PREPARE_GAME, RotateReset);
+        EventSystem.AddListener(EventType.RANDOM_GRID, ResetGrid);
+        EventSystem.AddListener(EventType.ADD_LAYER, AddLayer);
     }
 
     private void OnDisable()
@@ -54,6 +56,8 @@ public class Movement3D : MonoBehaviour
         EventSystem.RemoveListener(EventType.INPUT_UP, MoveUp);
         EventSystem.RemoveListener(EventType.INPUT_DOWN, MoveDown);
         EventSystem.RemoveListener(EventType.PREPARE_GAME, RotateReset);
+        EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGrid);
+        EventSystem.RemoveListener(EventType.ADD_LAYER, AddLayer);
     }
 
     private void Update()
@@ -62,6 +66,19 @@ public class Movement3D : MonoBehaviour
         {
             moveCd -= Time.deltaTime;
         }
+    }
+
+    private void AddLayer()
+    {
+        layersAvailable++;
+    }
+
+    private void ResetGrid()
+    {
+        // TODO fix magical numbers
+        lowestLevel = -2;
+        layersAvailable = 1;
+        parentSelection.transform.position = new Vector3(0, lowestLevel, 0);
     }
 
     private void RotateUp()

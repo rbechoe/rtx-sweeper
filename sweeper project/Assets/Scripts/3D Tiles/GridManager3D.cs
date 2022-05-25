@@ -41,6 +41,7 @@ public class GridManager3D : BaseGridManager
         EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
         EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
+        EventSystem.AddListener(EventType.REVEAL_TILE, LayerUnlock);
         EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
         EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
@@ -57,9 +58,35 @@ public class GridManager3D : BaseGridManager
         EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
         EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
+        EventSystem.RemoveListener(EventType.REVEAL_TILE, LayerUnlock);
         EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
         EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
+    }
+
+    // unlock a layer
+    private void LayerUnlock()
+    {
+        if (tileClicks >= 2 && goodTiles >= 2 && !layers[1].activeSelf)
+        {
+            layers[1].SetActive(true);
+            EventSystem.InvokeEvent(EventType.ADD_LAYER);
+        }
+        if (tileClicks >= 4 && goodTiles >= 4 && !layers[2].activeSelf)
+        {
+            layers[2].SetActive(true);
+            EventSystem.InvokeEvent(EventType.ADD_LAYER);
+        }
+        if (tileClicks >= 6 && goodTiles >= 6 && !layers[3].activeSelf)
+        {
+            layers[3].SetActive(true);
+            EventSystem.InvokeEvent(EventType.ADD_LAYER);
+        }
+        if (tileClicks >= 8 && goodTiles >= 8 && !layers[4].activeSelf)
+        {
+            layers[4].SetActive(true);
+            EventSystem.InvokeEvent(EventType.ADD_LAYER);
+        }
     }
 
     // place 4 bombs per layer
@@ -72,6 +99,12 @@ public class GridManager3D : BaseGridManager
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
         int curTileCount = 0;
         bombAmount = 4;
+
+        // TODO fix magical numbers
+        layers[1].SetActive(true);
+        layers[2].SetActive(true);
+        layers[3].SetActive(true);
+        layers[4].SetActive(true);
 
         foreach (GameObject layer in layers)
         {
@@ -124,6 +157,12 @@ public class GridManager3D : BaseGridManager
             }
         }
         yield return new WaitForEndOfFrame();
+
+        // TODO fix magical numbers
+        layers[1].SetActive(false);
+        layers[2].SetActive(false);
+        layers[3].SetActive(false);
+        layers[4].SetActive(false);
 
         EventSystem.InvokeEvent(EventType.PREPARE_GAME);
         yield return new WaitForEndOfFrame();
