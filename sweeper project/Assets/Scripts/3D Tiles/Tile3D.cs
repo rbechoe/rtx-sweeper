@@ -277,7 +277,5 @@ public class Tile3D : BaseTile
     public override void UpdateBombAmount(int amount)
     {
         bombCount = amount;
-
-        if (bombCount == 8) SteamAPIManager.Instance.SetAchievement(UserAchievements.eight);
     }
 }

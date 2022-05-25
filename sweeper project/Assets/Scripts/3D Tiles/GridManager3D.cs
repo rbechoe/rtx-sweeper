@@ -10,6 +10,8 @@ public class GridManager3D : BaseGridManager
 
     private bool saving;
 
+    public GameObject[] layers;
+
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
@@ -33,7 +35,6 @@ public class GridManager3D : BaseGridManager
         EventSystem<GameObject>.AddListener(EventType.ADD_GOOD_TILE, AddGoodTile);
         EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<GameObject>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
         EventSystem.AddListener(EventType.RANDOM_GRID, ResetGame);
         EventSystem.AddListener(EventType.WIN_GAME, StopTimer);
         EventSystem.AddListener(EventType.END_GAME, StopTimer);
@@ -50,7 +51,6 @@ public class GridManager3D : BaseGridManager
         EventSystem<GameObject>.RemoveListener(EventType.ADD_GOOD_TILE, AddGoodTile);
         EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
         EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGame);
         EventSystem.RemoveListener(EventType.WIN_GAME, StopTimer);
         EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
@@ -60,6 +60,75 @@ public class GridManager3D : BaseGridManager
         EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
         EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
+    }
+
+    // place 4 bombs per layer
+    protected override IEnumerator RandomizeGrid()
+    {
+        int curTile = 0;
+        int tilesLeft = 0;
+        int spawnChance = 0;
+        int bombCount = 0;
+        int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
+        int curTileCount = 0;
+        bombAmount = 4;
+
+        foreach (GameObject layer in layers)
+        {
+            curTile = 0;
+            tilesLeft = 0;
+            spawnChance = 0;
+            bombCount = 0;
+
+            for (int i = 0; i < layer.transform.childCount; i++)
+            {
+                // formula: based on tiles and bombs left increase chance for next tile to be bomb
+                if (bombCount < bombAmount)
+                {
+                    tilesLeft = layer.transform.childCount - curTile;
+                    spawnChance = tilesLeft / (bombAmount - bombCount);
+                }
+
+                GameObject newTile = layer.transform.GetChild(i).transform.gameObject;
+                if (newTile.GetComponent<StartingMarker>() != null)
+                {
+                    newTile.tag = "Empty";
+                    newTile.layer = 12;
+                    newTile.GetComponent<BaseTile>().state = TileStates.Empty;
+                    firstTile = newTile;
+                }
+                else if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
+                {
+                    newTile.tag = "Bomb";
+                    newTile.layer = 11;
+                    newTile.GetComponent<BaseTile>().state = TileStates.Bomb;
+                    bombCount++;
+                }
+                else
+                {
+                    newTile.tag = "Empty";
+                    newTile.layer = 12;
+                    newTile.GetComponent<BaseTile>().state = TileStates.Empty;
+                }
+
+                curTile++;
+                curTileCount++;
+                newTile.name = "tile " + curTile;
+
+                // continue next frame
+                if (curTileCount >= tilesPerFrame)
+                {
+                    curTileCount = 0;
+                    yield return new WaitForEndOfFrame();
+                }
+            }
+        }
+        yield return new WaitForEndOfFrame();
+
+        EventSystem.InvokeEvent(EventType.PREPARE_GAME);
+        yield return new WaitForEndOfFrame();
+        StartGame();
+        yield return new WaitForEndOfFrame();
     }
 
     protected override void SaveData()
@@ -131,5 +200,10 @@ public class GridManager3D : BaseGridManager
             "Time: " + Helpers.RoundToThreeDecimals(data.galaxyTime1) + "s\n" +
             "Skill: " + Helpers.RoundToThreeDecimals(data.galaxyEfficiency1) + "%\n" +
             "Victories: " + data.galaxyVictories1 + "\n";
+    }
+
+    protected override void PickStartingTile()
+    {
+        firstTile.GetComponent<BaseTile>().FirstTile();
     }
 }

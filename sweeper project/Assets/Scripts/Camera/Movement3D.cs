@@ -23,12 +23,15 @@ public class Movement3D : MonoBehaviour
     private float moveCd = 0;
     private float moveCdReset = .25f;
 
+    public int lowestLevel;
+    public int layersAvailable;
+
     private void Start()
     {
         frontSelection.transform.localScale = new Vector3(100, .9f, 100);
         midSelection.transform.localScale = new Vector3(100, .9f, 100);
         endSelection.transform.localScale = new Vector3(100, .9f, 100);
-        parentSelection.transform.position = new Vector3(0, 0, 0);
+        parentSelection.transform.position = new Vector3(0, lowestLevel, 0);
     }
 
     private void OnEnable()
@@ -137,6 +140,8 @@ public class Movement3D : MonoBehaviour
 
     private void MoveUp()
     {
+        if (parentSelection.transform.position.y >= lowestLevel + layersAvailable - 1) return;
+
         if (moveCd <= 0)
         {
             parentSelection.transform.position += Vector3.up;
@@ -146,6 +151,8 @@ public class Movement3D : MonoBehaviour
 
     private void MoveDown()
     {
+        if (parentSelection.transform.position.y <= lowestLevel) return;
+
         if (moveCd <= 0)
         {
             parentSelection.transform.position += Vector3.down;

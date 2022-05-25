@@ -58,7 +58,7 @@ public abstract class BaseGridManager : MonoBehaviour
 
     protected abstract void OnDisable();
 
-    protected IEnumerator RandomizeGrid()
+    protected virtual IEnumerator RandomizeGrid()
     {
         int curTile = 0;
         int tilesLeft = 0;
