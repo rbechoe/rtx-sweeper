@@ -61,6 +61,7 @@ public class Tile3D : BaseTile
         clickable = true;
         triggered = false;
         hovered = false;
+        startingTile = false;
         bombCountTMP.text = "";
         defaultCol = manager.defaultColor;
         UpdateMaterial(defaultCol);
@@ -143,14 +144,14 @@ public class Tile3D : BaseTile
             {
                 if (col.CompareTag("Transparent"))
                 {
-                    defaultCol = new Color(selectCol.r, selectCol.g, selectCol.b, 0.1f);
+                    defaultCol = new Color(manager.defaultColor.r, manager.defaultColor.g, manager.defaultColor.b, 0.1f);
                     UpdateMaterial(defaultCol, 256);
                     break;
                 }
 
                 if (col.CompareTag("Opaque"))
                 {
-                    defaultCol = selectCol;
+                    defaultCol = manager.defaultColor;
                     UpdateMaterial(defaultCol, 1024);
                     break;
                 }
@@ -167,7 +168,18 @@ public class Tile3D : BaseTile
     {
         gameObject.name = "first tile";
         defaultCol = startColor;
-        UpdateMaterial(defaultCol, 2048);
+        startingTile = true;
+        UpdateMaterial(defaultCol, 1024);
+    }
+
+    protected override void UpdateMaterial(Color color, float intensity = -10)
+    {
+        if (intensity == -10) intensity = glowIntensity;
+
+        if (!triggered) gridMat?.SetColor("_EmissiveColor", color * intensity);
+        if (triggered) gridMat?.SetColor("_EmissiveColor", color * 0);
+
+        gridMat?.SetColor("_BaseColor", color);
     }
 
     protected override void RevealBomb()
@@ -175,7 +187,7 @@ public class Tile3D : BaseTile
         if (state == TileStates.Bomb)
         {
             defaultCol = new Color(0.5f, 0f, 0f, 1);
-            UpdateMaterial(defaultCol, 2048);
+            UpdateMaterial(defaultCol, 1024);
         }
     }
 
@@ -185,9 +197,7 @@ public class Tile3D : BaseTile
         {
             hovered = true;
 
-            // set tile back to base color
-            myMat.color = selectCol;
-            myMat.SetColor("_EmissiveColor", selectCol * 10);
+            UpdateMaterial(selectCol, 1024);
         }
     }
 
@@ -197,9 +207,7 @@ public class Tile3D : BaseTile
         {
             hovered = false;
 
-            // set tile back to base color
-            myMat.color = defaultCol;
-            myMat.SetColor("_EmissiveColor", defaultCol);
+            UpdateMaterial(defaultCol, 1024);
         }
     }
 
