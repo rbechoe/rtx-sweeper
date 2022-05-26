@@ -264,6 +264,7 @@ public class Tile3D : BaseTile
         switch (state)
         {
             case TileStates.Bomb:
+                RevealBomb();
                 EventSystem.InvokeEvent(EventType.GAME_LOSE);
                 break;
 
