@@ -163,6 +163,13 @@ public class Tile3D : BaseTile
         }
     }
 
+    public override void FirstTile()
+    {
+        gameObject.name = "first tile";
+        defaultCol = startColor;
+        UpdateMaterial(defaultCol, 2048);
+    }
+
     protected override void RevealBomb()
     {
         if (state == TileStates.Bomb)

@@ -41,7 +41,7 @@ public class GridManager3D : BaseGridManager
         EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
         EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
-        EventSystem.AddListener(EventType.REVEAL_TILE, LayerUnlock);
+        EventSystem.AddListener(EventType.TILE_CLICK, LayerUnlock);
         EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
         EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
@@ -58,7 +58,7 @@ public class GridManager3D : BaseGridManager
         EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
         EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
-        EventSystem.RemoveListener(EventType.REVEAL_TILE, LayerUnlock);
+        EventSystem.RemoveListener(EventType.TILE_CLICK, LayerUnlock);
         EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
         EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
@@ -98,7 +98,7 @@ public class GridManager3D : BaseGridManager
         int bombCount = 0;
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
         int curTileCount = 0;
-        bombAmount = 4;
+        bombAmount = 3;
 
         // TODO fix magical numbers
         layers[1].SetActive(true);
