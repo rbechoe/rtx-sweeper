@@ -184,6 +184,8 @@ public class Tile3D : BaseTile
 
     protected override void RevealBomb()
     {
+        hovered = false;
+        triggered = false;
         if (state == TileStates.Bomb)
         {
             defaultCol = new Color(0.5f, 0f, 0f, 1);
@@ -264,7 +266,6 @@ public class Tile3D : BaseTile
         switch (state)
         {
             case TileStates.Bomb:
-                RevealBomb();
                 EventSystem.InvokeEvent(EventType.GAME_LOSE);
                 break;
 
