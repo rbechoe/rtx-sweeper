@@ -19,7 +19,7 @@ public class GridManager3D : BaseGridManager
         difficulty = (10 - bombDensity) + (tiles.Count / 200) + 6;
 
         Helpers.NestedChildToGob<Tile3D>(transform, tiles);
-        Helpers.NestedChildToGob<Flag3D>(flagParent.transform, inactiveFlags);
+        Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
 
         difficultyStars = "Difficulty: "; 
         for (int i = 0; i < difficulty; i++)
@@ -72,23 +72,54 @@ public class GridManager3D : BaseGridManager
         if (layerClick >= 2 && !layers[1].activeSelf)
         {
             layers[1].SetActive(true);
-            EventSystem.InvokeEvent(EventType.ADD_LAYER);
+            AddLayer();
         }
         if (layerClick >= 4 && !layers[2].activeSelf)
         {
             layers[2].SetActive(true);
-            EventSystem.InvokeEvent(EventType.ADD_LAYER);
+            AddLayer();
         }
         if (layerClick >= 6 && !layers[3].activeSelf)
         {
             layers[3].SetActive(true);
-            EventSystem.InvokeEvent(EventType.ADD_LAYER);
+            AddLayer();
         }
         if (layerClick >= 8 && !layers[4].activeSelf)
         {
             layers[4].SetActive(true);
-            EventSystem.InvokeEvent(EventType.ADD_LAYER);
+            AddLayer();
         }
+    }
+
+    private void AddLayer()
+    {
+        EventSystem.InvokeEvent(EventType.ADD_LAYER);
+        bombAmount += 3;
+        EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
+    }
+
+    // activate a flag and place it above the tile
+    protected override void ActivateFlag(Vector3[] vectors)
+    {
+        if (inactiveFlags.Count > 0 && bombAmount > 0)
+        {
+            inactiveFlags[0].transform.position = vectors[0];
+            inactiveFlags[0].transform.eulerAngles = Vector3.zero;
+            inactiveFlags[0].transform.parent = transform;
+            activeFlags.Add(inactiveFlags[0]);
+            inactiveFlags.RemoveAt(0);
+            AddFlag();
+        }
+    }
+
+    // remove a flag from the tile
+    public override void ReturnFlag(GameObject flag)
+    {
+        flag.transform.position = Vector3.up * 5000;
+        flag.transform.parent = null;
+        activeFlags.Remove(flag);
+        inactiveFlags.Add(flag);
+        RemoveFlag();
     }
 
     // place 4 bombs per layer
@@ -171,6 +202,17 @@ public class GridManager3D : BaseGridManager
         yield return new WaitForEndOfFrame();
         StartGame();
         yield return new WaitForEndOfFrame();
+    }
+
+    protected override void CheckForVictory()
+    {
+        // always 15 bombs total
+        progress = goodTiles / (tiles.Count - 15);
+        if (goodTiles == (tiles.Count - 15))
+        {
+            wonGame = true;
+            EventSystem.InvokeEvent(EventType.WIN_GAME);
+        }
     }
 
     protected override void SaveData()

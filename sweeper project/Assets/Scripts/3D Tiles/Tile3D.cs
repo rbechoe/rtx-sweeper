@@ -128,15 +128,30 @@ public class Tile3D : BaseTile
                 didSomething = true;
             }
 
-            if (!didSomething) EventSystem.InvokeEvent(EventType.OTHER_CLICK);
+            // if no flag on here perform function below
+            Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
+            if (nearbyFlags.Length == 0)
+            {
+                if (!didSomething) EventSystem.InvokeEvent(EventType.OTHER_CLICK);
+            }
         }
 
         // right click - place flag
         if (Input.GetMouseButtonUp(1) && !triggered)
         {
-            EventSystem.InvokeEvent(EventType.PLAY_FLAG);
-            EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
-            EventSystem.InvokeEvent(EventType.OTHER_CLICK);
+            // return if there is a flag on this position
+            Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
+            if (nearbyFlags.Length > 0)
+            {
+                EventSystem<GameObject>.InvokeEvent(EventType.REMOVE_FLAG, nearbyFlags[0].gameObject);
+                EventSystem.InvokeEvent(EventType.OTHER_CLICK);
+            }
+            else
+            {
+                EventSystem.InvokeEvent(EventType.PLAY_FLAG);
+                EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
+                EventSystem.InvokeEvent(EventType.OTHER_CLICK);
+            }
         }
     }
 
@@ -225,8 +240,19 @@ public class Tile3D : BaseTile
         }
     }
 
+    public override void UpdateBombAmount(int amount)
+    {
+        bombCount = amount;
+        ShowBombAmount();
+    }
+
     public override void ShowBombAmount()
     {
+        if (state != TileStates.Revealed || bombCount == 0)
+        {
+            bombCountTMP.text = "";
+            return;
+        }
         bombCountTMP.text = "" + bombCount;
     }
 
@@ -301,10 +327,5 @@ public class Tile3D : BaseTile
                 if (breakObj != null) breakObj.SetActive(false);
                 break;
         }
-    }
-
-    public override void UpdateBombAmount(int amount)
-    {
-        bombCount = amount;
     }
 }
