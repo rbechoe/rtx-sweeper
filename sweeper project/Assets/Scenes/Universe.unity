@@ -1120,7 +1120,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7757732, y: 1}
+    m_SensorSize: {x: 1.7785715, y: 1}
     Iso: 200
     ShutterSpeed: 0.005
     Aperture: 16
@@ -11481,7 +11481,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 9cbf7bbebffd6364db3d3bb698795f9f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

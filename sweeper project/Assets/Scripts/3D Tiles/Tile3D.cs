@@ -56,6 +56,11 @@ public class Tile3D : BaseTile
         EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
     }
 
+    private void FixedUpdate()
+    {
+        CheckBombs();
+    }
+
     public override void ResetSelf()
     {
         clickable = true;

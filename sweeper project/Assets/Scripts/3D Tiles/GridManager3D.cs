@@ -21,7 +21,7 @@ public class GridManager3D : BaseGridManager
         Helpers.NestedChildToGob<Tile3D>(transform, tiles);
         Helpers.NestedChildToGob<Flag3D>(flagParent.transform, inactiveFlags);
 
-        difficultyStars = "Difficulty: *****"; // +5 cuz why not
+        difficultyStars = "Difficulty: "; 
         for (int i = 0; i < difficulty; i++)
         {
             difficultyStars += "*";
