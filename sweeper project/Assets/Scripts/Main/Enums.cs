@@ -14,6 +14,7 @@ public enum EventType
     PLAY_FLAG,          // passes nothing
     TILE_CLICK,         // passes nothing
     REVEAL_TILE,        // passes nothing
+    OTHER_CLICK,        // passes nothing
     // gameflow related
     PREPARE_GAME,       // passes nothing
     RANDOM_GRID,        // passes nothing

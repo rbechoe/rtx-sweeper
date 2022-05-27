@@ -26,6 +26,9 @@ public abstract class BaseGridManager : MonoBehaviour
     protected bool usedFlag;
     protected bool loseGame;
     protected int tileClicks;
+    protected int otherClicks;
+    protected int shuffleReset = 2;
+    protected int curShuffle = 0;
     protected float timer;
     public float progress;
 
@@ -178,6 +181,9 @@ public abstract class BaseGridManager : MonoBehaviour
             goodTiles = 0;
             timer = 0;
             tileClicks = 0;
+            otherClicks = 0;
+            curShuffle = 0;
+            shuffleReset = 2;
             bombAmount = tiles.Count / bombDensity;
             initialBombAmount = bombAmount;
             emptyTiles = new List<GameObject>();
@@ -239,15 +245,19 @@ public abstract class BaseGridManager : MonoBehaviour
         tileClicks++;
     }
 
-    protected virtual void TileClick(Vector3[] vectors)
-    {
-        tileClicks++;
-    }
-
     protected virtual void FlagClick(GameObject flag)
     {
-        tileClicks++;
+        otherClicks++;
+    }
+
+    protected virtual void PlantFlag()
+    {
         usedFlag = true;
+    }
+
+    protected virtual void OtherClick()
+    {
+        otherClicks++;
     }
 
     protected virtual void StopTimer()

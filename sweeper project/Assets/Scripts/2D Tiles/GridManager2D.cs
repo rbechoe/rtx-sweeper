@@ -35,9 +35,9 @@ public class GridManager2D : BaseGridManager
         EventSystem.AddListener(EventType.END_GAME, StopTimer);
         EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
         EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
+        EventSystem.AddListener(EventType.OTHER_CLICK, OtherClick);
+        EventSystem.AddListener(EventType.PLAY_FLAG, PlantFlag);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
     }
 
@@ -52,9 +52,9 @@ public class GridManager2D : BaseGridManager
         EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
         EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
         EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
+        EventSystem.RemoveListener(EventType.OTHER_CLICK, OtherClick);
+        EventSystem.RemoveListener(EventType.PLAY_FLAG, PlantFlag);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
     }
 
@@ -62,7 +62,7 @@ public class GridManager2D : BaseGridManager
     {
         if (area == 4) return;
 
-        float efficiency = 1f * (tiles.Count - initialBombAmount) / tileClicks * 100f;
+        float efficiency = 1f * tileClicks / (tileClicks + otherClicks) * 100f;
         efficiency = Mathf.Clamp(efficiency, 0, 100);
         uiManager.SetEfficiency(efficiency);
 

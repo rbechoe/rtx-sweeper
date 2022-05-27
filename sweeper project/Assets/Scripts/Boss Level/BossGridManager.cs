@@ -10,7 +10,6 @@ public class BossGridManager : BaseGridManager
     private int difficulty;
 
     private LayerMask flagMask;
-    private LayerMask bombMask;
 
     private bool gameActive;
     private bool canShuffle;
@@ -23,7 +22,6 @@ public class BossGridManager : BaseGridManager
         difficulty = (10 - bombDensity) + (tiles.Count / 200) + 3; // base +3 due to boss stage
 
         flagMask = LayerMask.GetMask("Flag");
-        bombMask = LayerMask.GetMask("Bomb");
         canShuffle = true;
 
         int count = 0;
@@ -69,9 +67,10 @@ public class BossGridManager : BaseGridManager
         EventSystem.AddListener(EventType.END_GAME, GameInactive);
         EventSystem.AddListener(EventType.GAME_LOSE, GameInactive);
         EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
+        EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
         EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
+        EventSystem.AddListener(EventType.OTHER_CLICK, OtherClick);
+        EventSystem.AddListener(EventType.PLAY_FLAG, PlantFlag);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
     }
 
@@ -86,17 +85,21 @@ public class BossGridManager : BaseGridManager
         EventSystem.RemoveListener(EventType.WIN_GAME, StopTimer);
         EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
         EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
+        EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
         EventSystem.RemoveListener(EventType.END_GAME, GameInactive);
         EventSystem.RemoveListener(EventType.GAME_LOSE, GameInactive);
         EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
+        EventSystem.RemoveListener(EventType.OTHER_CLICK, OtherClick);
+        EventSystem.RemoveListener(EventType.PLAY_FLAG, PlantFlag);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
     }
 
     public void ShuffleGrid()
     {
-        if (tileClicks <= 1) return;
+        curShuffle++;
+        if (curShuffle <= shuffleReset) return;
+        curShuffle = 0;
+        shuffleReset--;
 
         if (canShuffle && busyTiles == 0 && gameActive) StartCoroutine(ShuffleBombs());
     }
@@ -185,7 +188,7 @@ public class BossGridManager : BaseGridManager
 
     protected override void SaveData()
     {
-        float efficiency = 1f * (tiles.Count - initialBombAmount) / tileClicks * 100f;
+        float efficiency = 1f * tileClicks / (tileClicks + otherClicks) * 100f;
         efficiency = Mathf.Clamp(efficiency, 0, 100);
         uiManager.SetEfficiency(efficiency);
 

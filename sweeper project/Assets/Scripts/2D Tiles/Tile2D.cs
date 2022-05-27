@@ -74,11 +74,13 @@ public class Tile2D : BaseTile
         // release left button - reveal tile
         if (Input.GetMouseButtonUp(0))
         {
+            bool didSomething = false;
             if (clickable)
             {
                 EventSystem.InvokeEvent(EventType.PLAY_CLICK);
                 EventSystem.InvokeEvent(EventType.TILE_CLICK);
                 DoAction();
+                didSomething = true;
             }
 
             // reveal all nearby tiles
@@ -90,7 +92,10 @@ public class Tile2D : BaseTile
                 }
                 previewClicked = false;
                 tilesPreviewed = null;
+                didSomething = true;
             }
+
+            if (!didSomething) EventSystem.InvokeEvent(EventType.OTHER_CLICK);
         }
 
         // right click - place flag
@@ -98,6 +103,7 @@ public class Tile2D : BaseTile
         {
             EventSystem.InvokeEvent(EventType.PLAY_FLAG);
             EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
+            EventSystem.InvokeEvent(EventType.OTHER_CLICK);
         }
     }
 

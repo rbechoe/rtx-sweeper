@@ -86,11 +86,13 @@ public class BossTile : BaseTile
         // release left button - reveal tile
         if (Input.GetMouseButtonUp(0))
         {
+            bool didSomething = false;
             if (clickable)
             {
                 EventSystem.InvokeEvent(EventType.PLAY_CLICK);
                 EventSystem.InvokeEvent(EventType.TILE_CLICK);
                 DoAction();
+                didSomething = true;
             }
 
             // reveal all nearby tiles
@@ -102,7 +104,10 @@ public class BossTile : BaseTile
                 }
                 previewClicked = false;
                 tilesPreviewed = null;
+                didSomething = true;
             }
+
+            if (!didSomething) EventSystem.InvokeEvent(EventType.OTHER_CLICK);
         }
 
         // right click - place flag
@@ -110,6 +115,7 @@ public class BossTile : BaseTile
         {
             EventSystem.InvokeEvent(EventType.PLAY_FLAG);
             EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
+            EventSystem.InvokeEvent(EventType.OTHER_CLICK);
         }
     }
 
@@ -158,6 +164,8 @@ public class BossTile : BaseTile
             bossManager.busyTiles--;
             yield break;
         }
+
+        EventSystem.InvokeEvent(EventType.REVEAL_TILE);
 
         triggered = true;
 

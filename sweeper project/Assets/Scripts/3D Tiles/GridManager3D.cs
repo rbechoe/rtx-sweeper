@@ -21,7 +21,7 @@ public class GridManager3D : BaseGridManager
         Helpers.NestedChildToGob<Tile3D>(transform, tiles);
         Helpers.NestedChildToGob<Flag3D>(flagParent.transform, inactiveFlags);
 
-        difficultyStars = "Difficulty: ";
+        difficultyStars = "Difficulty: *****"; // +5 cuz why not
         for (int i = 0; i < difficulty; i++)
         {
             difficultyStars += "*";
@@ -41,10 +41,10 @@ public class GridManager3D : BaseGridManager
         EventSystem.AddListener(EventType.END_GAME, StopTimer);
         EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.AddListener(EventType.TILE_CLICK, TileClick);
         EventSystem.AddListener(EventType.PLAY_CLICK, LayerUnlock);
         EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, TileClick);
+        EventSystem.AddListener(EventType.OTHER_CLICK, OtherClick);
+        EventSystem.AddListener(EventType.PLAY_FLAG, PlantFlag);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
     }
 
@@ -58,10 +58,10 @@ public class GridManager3D : BaseGridManager
         EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
         EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.RemoveListener(EventType.TILE_CLICK, TileClick);
         EventSystem.RemoveListener(EventType.PLAY_CLICK, LayerUnlock);
         EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, TileClick);
+        EventSystem.RemoveListener(EventType.OTHER_CLICK, OtherClick);
+        EventSystem.RemoveListener(EventType.PLAY_FLAG, PlantFlag);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
     }
 
@@ -178,7 +178,7 @@ public class GridManager3D : BaseGridManager
         if (saving) return;
         saving = true;
 
-        float efficiency = 1f * (tiles.Count - initialBombAmount) / tileClicks * 100f;
+        float efficiency = 1f * tileClicks / (tileClicks + otherClicks) * 100f;
         efficiency = Mathf.Clamp(efficiency, 0, 100);
         uiManager.SetEfficiency(efficiency);
 
