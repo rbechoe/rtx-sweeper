@@ -77,6 +77,11 @@ public class SteamAPIManager : MonoBehaviour
         apiStatName.Add(UserStats.islands1Victories, "islands_1_victories");
         apiStatName.Add(UserStats.islands1BestTime, "islands_1_best_time");
         apiStatName.Add(UserStats.islands1GamesPlayed, "islands_1_games_played");
+        apiStatName.Add(UserStats.galaxyGamesWon, "galaxy_games_won");
+        apiStatName.Add(UserStats.galaxyGamesPlayed, "galaxy_games_played");
+        apiStatName.Add(UserStats.galaxy1Victories, "galaxy_1_victories");
+        apiStatName.Add(UserStats.galaxy1BestTime, "galaxy_1_best_time");
+        apiStatName.Add(UserStats.galaxy1GamesPlayed, "galaxy_1_games_played");
         // populating leaderboards
         lbStatName.Add(LeaderboardStats.clicks, "lb_clicks");
         lbStatName.Add(LeaderboardStats.gamesPlayed, "lb_games_played");
@@ -100,6 +105,9 @@ public class SteamAPIManager : MonoBehaviour
         lbStatName.Add(LeaderboardStats.islandsGamesWon, "lb_islands_games_won");
         lbStatName.Add(LeaderboardStats.islandsGamesPlayed, "lb_islands_games_played");
         lbStatName.Add(LeaderboardStats.islands1BestTime, "lb_islands_1_best_time");
+        lbStatName.Add(LeaderboardStats.galaxyGamesWon, "lb_galaxy_games_won");
+        lbStatName.Add(LeaderboardStats.galaxyGamesPlayed, "lb_galaxy_games_played");
+        lbStatName.Add(LeaderboardStats.galaxy1BestTime, "lb_galaxy_1_best_time");
     }
 
     public void SetAchievement(UserAchievements name)
@@ -265,7 +273,12 @@ public enum UserStats
     islandsGamesPlayed,
     islands1Victories,
     islands1BestTime,
-    islands1GamesPlayed
+    islands1GamesPlayed,
+    galaxyGamesWon,
+    galaxyGamesPlayed,
+    galaxy1Victories,
+    galaxy1BestTime,
+    galaxy1GamesPlayed
 }
 
 public enum LeaderboardStats
@@ -291,5 +304,8 @@ public enum LeaderboardStats
     desert3BestTime,
     islandsGamesWon,
     islandsGamesPlayed,
-    islands1BestTime
+    islands1BestTime,
+    galaxyGamesWon,
+    galaxyGamesPlayed,
+    galaxy1BestTime
 }

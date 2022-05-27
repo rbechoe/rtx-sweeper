@@ -16,7 +16,7 @@ public class GridManager3D : BaseGridManager
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
-        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 6;
+        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 3;
 
         Helpers.NestedChildToGob<Tile3D>(transform, tiles);
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
@@ -249,26 +249,31 @@ public class GridManager3D : BaseGridManager
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.noFlags);
             if (!usedFlag && difficulty >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
 
+            AD.galaxyVictories += 1;
+            if (timer < AD.galaxyTime1 || (timer == AD.galaxyTime1 && efficiency > AD.galaxyEfficiency1) || AD.galaxyTime1 == 0)
+            {
+                AD.galaxyTime1 = timer;
+                AD.galaxyEfficiency1 = efficiency;
+                AD.galaxyClicks1 = tileClicks;
+
+                steamAPI.SetStatFloat(UserStats.galaxy1BestTime, timer);
+            }
+            steamAPI.SetStatInt(UserStats.galaxy1Victories, AD.galaxyVictories1);
+            steamAPI.SetStatInt(UserStats.galaxyGamesWon, AD.galaxyVictories);
+
             steamAPI.UpdateLeaderBoard(LeaderboardStats.gamesWon, AD.gamesWon);
             steamAPI.UpdateLeaderBoard(LeaderboardStats.timePlayed, (int)(AD.totalTimePlayed / 60f));
+
+            steamAPI.UpdateLeaderBoard(LeaderboardStats.galaxy1BestTime, (int)(AD.galaxyTime1 * 1000));
+            steamAPI.UpdateLeaderBoard(LeaderboardStats.galaxyGamesWon, AD.galaxyVictories);
         }
         else
         {
             AD.gamesLost = AD.gamesLost + 1;
         }
 
-        AD.galaxyVictories += 1;
-        if (timer < AD.galaxyTime1 || (timer == AD.galaxyTime1 && efficiency > AD.galaxyEfficiency1) || AD.galaxyTime1 == 0)
-        {
-            AD.galaxyTime1 = timer;
-            AD.galaxyEfficiency1 = efficiency;
-            AD.galaxyClicks1 = tileClicks;
-
-            //steamAPI.SetStatFloat(UserStats.galaxy1BestTime, timer);
-        }
-
-        //steamAPI.SetStatInt(UserStats.galaxy1Victories, AD.galaxyVictories1);
-        //steamAPI.UpdateLeaderBoard(LeaderboardStats.galaxy1BestTime, (int)(AD.galaxyTime1 * 1000));
+        steamAPI.SetStatInt(UserStats.galaxy1GamesPlayed, 1);
+        steamAPI.UpdateLeaderBoard(LeaderboardStats.galaxyGamesPlayed, AD.galaxyGamesPlayed);
 
         DS.UpdateAccountData(AD);
 

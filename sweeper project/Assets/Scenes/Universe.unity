@@ -1177,7 +1177,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7774295, y: 1}
+    m_SensorSize: {x: 1.7785888, y: 1}
     Iso: 200
     ShutterSpeed: 0.005
     Aperture: 16
@@ -9944,6 +9944,10 @@ PrefabInstance:
     - target: {fileID: 4244722945277134012, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067732369290950995, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6323678091658883033, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Color.b

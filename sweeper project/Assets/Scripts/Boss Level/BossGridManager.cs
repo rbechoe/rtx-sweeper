@@ -218,6 +218,7 @@ public class BossGridManager : BaseGridManager
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.noFlags);
             if (!usedFlag && difficulty >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
 
+            steamAPI.UpdateLeaderBoard(LeaderboardStats.gamesWon, AD.gamesWon);
             steamAPI.UpdateLeaderBoard(LeaderboardStats.timePlayed, (int)(AD.totalTimePlayed / 60f));
         }
         else
@@ -247,6 +248,10 @@ public class BossGridManager : BaseGridManager
 
             steamAPI.UpdateLeaderBoard(LeaderboardStats.islands1BestTime, (int)(AD.bossTime1 * 1000));
             steamAPI.UpdateLeaderBoard(LeaderboardStats.islandsGamesWon, AD.bossVictories);
+        }
+        else
+        {
+            AD.gamesLost = AD.gamesLost + 1;
         }
         steamAPI.SetStatInt(UserStats.islandsGamesPlayed, 1);
         steamAPI.UpdateLeaderBoard(LeaderboardStats.islandsGamesPlayed, AD.bossGamesPlayed);
