@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Movement3D : MonoBehaviour
 {
@@ -25,6 +26,10 @@ public class Movement3D : MonoBehaviour
 
     public int lowestLevel;
     public int layersAvailable;
+    private int layer = 0;
+
+    public Image level;
+    public Sprite[] levels;
 
     private void Start()
     {
@@ -32,6 +37,7 @@ public class Movement3D : MonoBehaviour
         midSelection.transform.localScale = new Vector3(100, .9f, 100);
         endSelection.transform.localScale = new Vector3(100, .9f, 100);
         parentSelection.transform.position = new Vector3(0, lowestLevel, 0);
+        UpdateLayer();
     }
 
     private void OnEnable()
@@ -78,10 +84,11 @@ public class Movement3D : MonoBehaviour
         // TODO fix magical numbers
         lowestLevel = -2;
         layersAvailable = 5;
+        layer = 0;
         parentSelection.transform.position = new Vector3(0, lowestLevel, 0);
     }
 
-    private void RotateUp()
+    public void RotateUp()
     {
         if (inRoutine)
         {
@@ -90,7 +97,7 @@ public class Movement3D : MonoBehaviour
         StartCoroutine(RoutineRotation(new Vector3(speed, 0, 0)));
     }
 
-    private void RotateDown()
+    public void RotateDown()
     {
         if (inRoutine)
         {
@@ -99,7 +106,7 @@ public class Movement3D : MonoBehaviour
         StartCoroutine(RoutineRotation(new Vector3(-speed, 0, 0)));
     }
 
-    private void RotateLeft()
+    public void RotateLeft()
     {
         if (inRoutine)
         {
@@ -108,7 +115,7 @@ public class Movement3D : MonoBehaviour
         StartCoroutine(RoutineRotation(new Vector3(0, 0, speed)));
     }
 
-    private void RotateRight()
+    public void RotateRight()
     {
         if (inRoutine)
         {
@@ -155,7 +162,7 @@ public class Movement3D : MonoBehaviour
                                                       Mathf.RoundToInt(rotatorObject.transform.eulerAngles.z));
     }
 
-    private void MoveUp()
+    public void MoveUp()
     {
         if (parentSelection.transform.position.y >= lowestLevel + layersAvailable - 1) return;
 
@@ -163,10 +170,12 @@ public class Movement3D : MonoBehaviour
         {
             parentSelection.transform.position += Vector3.up;
             moveCd = moveCdReset;
+            layer++;
+            UpdateLayer();
         }
     }
 
-    private void MoveDown()
+    public void MoveDown()
     {
         if (parentSelection.transform.position.y <= lowestLevel) return;
 
@@ -174,6 +183,13 @@ public class Movement3D : MonoBehaviour
         {
             parentSelection.transform.position += Vector3.down;
             moveCd = moveCdReset;
+            layer--;
+            UpdateLayer();
         }
+    }
+
+    private void UpdateLayer()
+    {
+        level.sprite = levels[layer+1]; // 0 = default
     }
 }

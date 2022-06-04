@@ -202,6 +202,7 @@ public class GridManager3D : BaseGridManager
         //layers[3].SetActive(false);
         //layers[4].SetActive(false);
 
+        bombAmount = 15;
         EventSystem.InvokeEvent(EventType.PREPARE_GAME);
         yield return new WaitForEndOfFrame();
         StartGame();
