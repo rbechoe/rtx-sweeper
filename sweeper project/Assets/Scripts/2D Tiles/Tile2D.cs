@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Tile2D : BaseTile
 {
+    private MeshRenderer myMesh;
     protected override void OnEnable()
     {
         // listen
@@ -12,6 +13,7 @@ public class Tile2D : BaseTile
         EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
         EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
         EventSystem.AddListener(EventType.END_GAME, ResetSelf);
+        EventSystem.AddListener(EventType.END_GAME, EnableMesh);
         EventSystem.AddListener(EventType.PREPARE_GAME, ResetSelf);
         EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
         EventSystem.AddListener(EventType.WIN_GAME, EndGame);
@@ -28,6 +30,7 @@ public class Tile2D : BaseTile
         EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
         EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
         EventSystem.RemoveListener(EventType.END_GAME, ResetSelf);
+        EventSystem.RemoveListener(EventType.END_GAME, EnableMesh);
         EventSystem.RemoveListener(EventType.PREPARE_GAME, ResetSelf);
         EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
         EventSystem.RemoveListener(EventType.WIN_GAME, EndGame);
@@ -139,8 +142,14 @@ public class Tile2D : BaseTile
 
         defaultCol = emptyTileColor;
         UpdateMaterial(defaultCol, 1);
+        myMesh.enabled = false;
 
         TypeSpecificAction();
+    }
+
+    private void EnableMesh()
+    {
+        myMesh.enabled = true;
     }
 
     public override void DoAction(bool sequenced = false)
@@ -148,5 +157,8 @@ public class Tile2D : BaseTile
         StartCoroutine(FireAction(sequenced));
     }
 
-    public override void TypeSettings() { }
+    public override void TypeSettings() 
+    {
+        myMesh = vfx.gridTile.GetComponent<MeshRenderer>();
+    }
 }
