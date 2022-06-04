@@ -77,7 +77,7 @@ public class Movement3D : MonoBehaviour
     {
         // TODO fix magical numbers
         lowestLevel = -2;
-        layersAvailable = 1;
+        layersAvailable = 5;
         parentSelection.transform.position = new Vector3(0, lowestLevel, 0);
     }
 

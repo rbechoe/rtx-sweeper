@@ -96,12 +96,14 @@ public class BossGridManager : BaseGridManager
 
     public void ShuffleGrid()
     {
-        curShuffle++;
-        if (curShuffle <= shuffleReset) return;
-        curShuffle = 0;
-        shuffleReset--;
+        if (!gameActive) return;
 
-        if (canShuffle && busyTiles == 0 && gameActive) StartCoroutine(ShuffleBombs());
+        if (canShuffle && busyTiles == 0)
+        {
+            shuffleCount++;
+            if (shuffleCount < 2) return;
+            StartCoroutine(ShuffleBombs());
+        }
     }
         
     private IEnumerator ShuffleBombs()

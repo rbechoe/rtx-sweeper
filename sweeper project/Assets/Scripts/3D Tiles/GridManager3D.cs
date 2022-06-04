@@ -68,6 +68,9 @@ public class GridManager3D : BaseGridManager
     // unlock a layer
     private void LayerUnlock()
     {
+        return;
+
+        // TODO might reimplement later?
         layerClick++;
         if (layerClick >= 2 && !layers[1].activeSelf)
         {
@@ -122,7 +125,7 @@ public class GridManager3D : BaseGridManager
         RemoveFlag();
     }
 
-    // place 4 bombs per layer
+    // place 3 bombs per layer
     protected override IEnumerator RandomizeGrid()
     {
         int curTile = 0;
@@ -135,10 +138,10 @@ public class GridManager3D : BaseGridManager
         bombAmount = 3;
 
         // TODO fix magical numbers
-        layers[1].SetActive(true);
-        layers[2].SetActive(true);
-        layers[3].SetActive(true);
-        layers[4].SetActive(true);
+        //layers[1].SetActive(true);
+        //layers[2].SetActive(true);
+        //layers[3].SetActive(true);
+        //layers[4].SetActive(true);
 
         foreach (GameObject layer in layers)
         {
@@ -157,14 +160,14 @@ public class GridManager3D : BaseGridManager
                 }
 
                 GameObject newTile = layer.transform.GetChild(i).transform.gameObject;
-                if (newTile.GetComponent<StartingMarker>() != null)
+                /*if (newTile.GetComponent<StartingMarker>() != null)
                 {
                     newTile.tag = "Empty";
                     newTile.layer = 12;
                     newTile.GetComponent<BaseTile>().state = TileStates.Empty;
                     firstTile = newTile;
                 }
-                else if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
+                else */if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
                 {
                     newTile.tag = "Bomb";
                     newTile.layer = 11;
@@ -176,6 +179,7 @@ public class GridManager3D : BaseGridManager
                     newTile.tag = "Empty";
                     newTile.layer = 12;
                     newTile.GetComponent<BaseTile>().state = TileStates.Empty;
+                    emptyTiles.Add(newTile);
                 }
 
                 curTile++;
@@ -193,10 +197,10 @@ public class GridManager3D : BaseGridManager
         yield return new WaitForEndOfFrame();
 
         // TODO fix magical numbers
-        layers[1].SetActive(false);
-        layers[2].SetActive(false);
-        layers[3].SetActive(false);
-        layers[4].SetActive(false);
+        //layers[1].SetActive(false);
+        //layers[2].SetActive(false);
+        //layers[3].SetActive(false);
+        //layers[4].SetActive(false);
 
         EventSystem.InvokeEvent(EventType.PREPARE_GAME);
         yield return new WaitForEndOfFrame();
@@ -289,10 +293,5 @@ public class GridManager3D : BaseGridManager
             "Time: " + Helpers.RoundToThreeDecimals(data.galaxyTime1) + "s\n" +
             "Skill: " + Helpers.RoundToThreeDecimals(data.galaxyEfficiency1) + "%\n" +
             "Victories: " + data.galaxyVictories1 + "\n";
-    }
-
-    protected override void PickStartingTile()
-    {
-        firstTile.GetComponent<BaseTile>().FirstTile();
     }
 }
