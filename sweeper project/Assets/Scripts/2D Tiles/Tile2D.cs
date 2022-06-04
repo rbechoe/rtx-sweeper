@@ -142,7 +142,9 @@ public class Tile2D : BaseTile
 
         defaultCol = emptyTileColor;
         UpdateMaterial(defaultCol, 1);
-        myMesh.enabled = false;
+
+        if (!gameObject.CompareTag("Bomb"))
+            myMesh.enabled = false;
 
         TypeSpecificAction();
     }
