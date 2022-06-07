@@ -165,8 +165,6 @@ public class BossTile : BaseTile
             yield break;
         }
 
-        EventSystem.InvokeEvent(EventType.REVEAL_TILE);
-
         triggered = true;
 
         defaultCol = emptyTileColor;
@@ -184,7 +182,7 @@ public class BossTile : BaseTile
         }
     }
 
-    public override void DoAction(bool sequenced = false)
+    public override void DoAction()
     {
         StartCoroutine(FireAction());
     }

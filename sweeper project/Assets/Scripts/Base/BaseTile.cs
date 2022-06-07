@@ -170,7 +170,7 @@ public abstract class BaseTile : MonoBehaviour
         gridMat?.SetColor("_BaseColor", color);
     }
 
-    public abstract void DoAction(bool sequenced = false);
+    public abstract void DoAction();
 
     public virtual void PreviewTileSelection()
     {
@@ -195,7 +195,7 @@ public abstract class BaseTile : MonoBehaviour
 
     public virtual void NoBombReveal()
     {
-        DoAction(true);
+        DoAction();
     }
 
     public virtual void SetBombCount(int amount)
@@ -234,6 +234,8 @@ public abstract class BaseTile : MonoBehaviour
 
     public virtual void TypeSpecificAction()
     {
+        if (state != TileStates.Revealed) EventSystem.InvokeEvent(EventType.REVEAL_TILE);
+
         switch (state)
         {
             case TileStates.Bomb:

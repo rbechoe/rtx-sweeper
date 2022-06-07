@@ -91,7 +91,7 @@ public class Tile2D : BaseTile
             {
                 foreach (Collider tile in tilesPreviewed)
                 {
-                    tile.GetComponent<Tile2D>()?.DoAction(true);
+                    tile.GetComponent<Tile2D>()?.DoAction();
                 }
                 previewClicked = false;
                 tilesPreviewed = null;
@@ -120,9 +120,9 @@ public class Tile2D : BaseTile
         gridMat?.SetColor("_BaseColor", color);
     }
 
-    private IEnumerator FireAction(bool sequenced = false)
+    private IEnumerator FireAction()
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame(); 
 
         if (triggered)
         {
@@ -135,8 +135,6 @@ public class Tile2D : BaseTile
         {
             yield break;
         }
-
-        if (sequenced) EventSystem.InvokeEvent(EventType.REVEAL_TILE);
 
         triggered = true;
 
@@ -154,9 +152,9 @@ public class Tile2D : BaseTile
         myMesh.enabled = true;
     }
 
-    public override void DoAction(bool sequenced = false)
+    public override void DoAction()
     {
-        StartCoroutine(FireAction(sequenced));
+        StartCoroutine(FireAction());
     }
 
     public override void TypeSettings() 

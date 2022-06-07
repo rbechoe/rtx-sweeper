@@ -260,9 +260,9 @@ public class Tile3D : BaseTile
 
     protected override void OnMouseExit() { }
 
-    public override void DoAction(bool sequenced = false)
+    public override void DoAction()
     {
-        StartCoroutine(FireAction(sequenced));
+        StartCoroutine(FireAction());
     }
 
     public override void TypeSettings()
@@ -273,7 +273,7 @@ public class Tile3D : BaseTile
         gridMat = gameObject.GetComponent<Renderer>().material;
     }
 
-    private IEnumerator FireAction(bool sequenced = false)
+    private IEnumerator FireAction()
     {
         yield return new WaitForEndOfFrame();
 
@@ -288,8 +288,6 @@ public class Tile3D : BaseTile
         {
             yield break;
         }
-
-        if (sequenced) EventSystem.InvokeEvent(EventType.REVEAL_TILE);
 
         triggered = true;
 

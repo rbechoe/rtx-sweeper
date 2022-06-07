@@ -188,6 +188,13 @@ public class BossGridManager : BaseGridManager
         return true;
     }
 
+    protected override void LoseGame()
+    {
+        loseGame = true;
+
+        if (tileClicks <= 1) steamAPI.SetAchievement(UserAchievements.tasteOfMisery);
+    }
+
     protected override void SaveData()
     {
         float efficiency = 1f * tileClicks / (tileClicks + otherClicks) * 100f;
@@ -209,7 +216,7 @@ public class BossGridManager : BaseGridManager
         steamAPI.UpdateLeaderBoard(LeaderboardStats.clicks, AD.totalClicks);
         steamAPI.UpdateLeaderBoard(LeaderboardStats.gamesPlayed, AD.gamesPlayed);
 
-        if (tileClicks == 1 && loseGame) steamAPI.SetAchievement(UserAchievements.tasteOfMisery);
+        if (tileClicks <= 1 && loseGame) steamAPI.SetAchievement(UserAchievements.tasteOfMisery);
 
         if (wonGame)
         {
