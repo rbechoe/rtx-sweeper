@@ -7,16 +7,6 @@ public class InputManager : MonoBehaviour
     public Dictionary<KeyCode, EventType> keybindings = new Dictionary<KeyCode, EventType>();
     public Dictionary<KeyCode, EventType> keybindingsUp = new Dictionary<KeyCode, EventType>();
 
-    private void OnEnable()
-    {
-        EventSystem.AddListener(EventType.INPUT_FS, ToggleFullscreen);
-    }
-
-    private void OnDisable()
-    {
-        EventSystem.RemoveListener(EventType.INPUT_FS, ToggleFullscreen);
-    }
-
     private void Start()
     {
         // TODO read from txt file as settings
@@ -26,19 +16,9 @@ public class InputManager : MonoBehaviour
         keybindings.Add(KeyCode.S,           EventType.INPUT_BACK);
         keybindings.Add(KeyCode.Space,       EventType.INPUT_UP);
         keybindings.Add(KeyCode.LeftControl, EventType.INPUT_DOWN);
-        keybindings.Add(KeyCode.RightControl, EventType.INPUT_DOWN);
+        keybindings.Add(KeyCode.RightControl,EventType.INPUT_DOWN);
         keybindings.Add(KeyCode.LeftShift,   EventType.INPUT_SPEED);
         keybindings.Add(KeyCode.RightShift,  EventType.INPUT_SPEED);
-        //keybindingsUp.Add(KeyCode.F,         EventType.INPUT_FS); // TODO DX12 full screen does not work!
-
-        if (!Screen.fullScreen)
-        {
-            Screen.SetResolution(1600, 900, false);
-        }
-        else
-        {
-            Screen.SetResolution(Screen.width, Screen.height, true);
-        }
     }
 
     private void Update()
@@ -71,15 +51,16 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void ToggleFullscreen()
+    private void OnApplicationQuit()
     {
-        if (!Screen.fullScreen)
-        {
-            Screen.SetResolution(Screen.width, Screen.height, true);
-        }
-        else
-        {
-            Screen.SetResolution(1600, 900, false);
-        }
+        // ensure that ragequit is triggered
+        Application.CancelQuit();
+        StartCoroutine(DelayedQuit());
+    }
+
+    private IEnumerator DelayedQuit()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Application.Quit();
     }
 }

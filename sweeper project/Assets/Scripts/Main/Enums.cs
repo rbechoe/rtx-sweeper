@@ -35,7 +35,6 @@ public enum EventType
     INPUT_SCROLL_DOWN,  // passes nothing
     INPUT_FORWARD,      // passes nothing
     INPUT_BACK,         // passes nothing
-    INPUT_FS,           // passes nothing
     INPUT_SPEED,        // passes nothing
     // other stuff
     UPDATE_BGM,         // passes float
