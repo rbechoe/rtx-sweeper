@@ -27,6 +27,19 @@ public class Settings : MonoBehaviour
 
     private void Start()
     {
+        int firstTime = PlayerPrefs.GetInt("First_Time");
+        if (firstTime == 0)
+        {
+            PlayerPrefs.SetInt("First_Time", 1);
+        }
+        else
+        {
+            SFXVolume = Mathf.Clamp01(PlayerPrefs.GetFloat("SFX_Volume"));
+            BGMVolume = Mathf.Clamp01(PlayerPrefs.GetFloat("BGM_Volume"));
+            mainSFXVolume = Mathf.Clamp01(PlayerPrefs.GetFloat("Main_SFX_Volume"));
+            rtxEnabled = (PlayerPrefs.GetInt("RTX") == 0) ? false : true;
+        }
+
         steamAPI = SteamAPIManager.Instance;
     }
 
@@ -59,6 +72,7 @@ public class Settings : MonoBehaviour
     public void SetSFXVolume(float value)
     {
         SFXVolume = value;
+        PlayerPrefs.SetFloat("SFX_Volume", SFXVolume);
     }
 
     public float GetSFXVolume()
@@ -69,6 +83,7 @@ public class Settings : MonoBehaviour
     public void SetBGMVolume(float value)
     {
         BGMVolume = value;
+        PlayerPrefs.SetFloat("BGM_Volume", BGMVolume);
     }
 
     public float GetBGMVolume()
@@ -79,6 +94,7 @@ public class Settings : MonoBehaviour
     public void SetMainSFXVolume(float value)
     {
         mainSFXVolume = value;
+        PlayerPrefs.SetFloat("Main_SFX_Volume", mainSFXVolume);
     }
 
     public float GetMainSFXVolume()
@@ -94,10 +110,12 @@ public class Settings : MonoBehaviour
     public void EnableRTX()
     {
         rtxEnabled = true;
+        PlayerPrefs.SetInt("RTX", 1);
     }
 
     public void DisableRTX()
     {
         rtxEnabled = false;
+        PlayerPrefs.SetInt("RTX", 0);
     }
 }
