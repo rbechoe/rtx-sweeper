@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour
 {
     public Dictionary<KeyCode, EventType> keybindings = new Dictionary<KeyCode, EventType>();
     public Dictionary<KeyCode, EventType> keybindingsUp = new Dictionary<KeyCode, EventType>();
+    private bool canQuit = false;
 
     private void Start()
     {
@@ -54,13 +55,17 @@ public class InputManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         // ensure that ragequit is triggered
-        Application.CancelQuit();
-        StartCoroutine(DelayedQuit());
+        if (!canQuit)
+        {
+            Application.CancelQuit();
+            StartCoroutine(DelayedQuit());
+        }
     }
 
     private IEnumerator DelayedQuit()
     {
         yield return new WaitForSeconds(0.5f);
+        canQuit = true;
         Application.Quit();
     }
 }
