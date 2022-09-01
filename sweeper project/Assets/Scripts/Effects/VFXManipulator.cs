@@ -29,6 +29,8 @@ public class VFXManipulator : MonoBehaviour
     {
         if (bombCount <= 0) bombCount = 9; // 9th entry = 0
 
+        print("updated color probably");
+
         if (text != null)
         {
             if (bombCount == 9)
@@ -75,5 +77,7 @@ public class VFXManipulator : MonoBehaviour
         if (shapeMat == null) return;
         shapeMat.material.SetTexture("_MainMask", texture);
         shapeMat.material.SetColor("_RampColorTint", color);
+
+        text.color = color;
     }
 }
