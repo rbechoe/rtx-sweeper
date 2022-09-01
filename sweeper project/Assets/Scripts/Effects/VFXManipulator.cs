@@ -13,7 +13,6 @@ public class VFXManipulator : MonoBehaviour
     public Renderer shapeMat;
     public Texture2D texture;
     public GameObject gridTile;
-    //public GameObject bombEffect;
     public TextMeshPro text;
 
     void Update()
@@ -27,7 +26,7 @@ public class VFXManipulator : MonoBehaviour
 
     public void UpdateEffect(int bombCount)
     {
-        if (bombCount <= 0) bombCount = 9; // 9th entry = 0
+        if (bombCount <= 0) bombCount = 9; // 9th entry = 0, obviously not intended for 3D
 
         if (text != null)
         {
@@ -38,9 +37,9 @@ public class VFXManipulator : MonoBehaviour
         }
 
         float sub = bombCount / 5f;
-        Color color;// = (bombCount < 5) ? new Color(0f + sub, 1, 0) : new Color(1, 1f - sub / 2f, 0);
+        Color color;
 
-        // assign color per bomb amount
+        // assign color per bomb amount, inspired by original Minesweeper colors
         switch (bombCount)
         {
             default:
