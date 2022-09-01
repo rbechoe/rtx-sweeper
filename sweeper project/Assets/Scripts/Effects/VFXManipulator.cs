@@ -29,8 +29,6 @@ public class VFXManipulator : MonoBehaviour
     {
         if (bombCount <= 0) bombCount = 9; // 9th entry = 0
 
-        print("updated color probably");
-
         if (text != null)
         {
             if (bombCount == 9)
