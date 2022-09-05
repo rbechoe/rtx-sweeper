@@ -13,7 +13,7 @@ public class LanguageDatabase : ScriptableObject
     /// <param name="ID">ID of the sentence</param>
     /// <param name="language">Language needed</param>
     /// <returns>localized string</returns>
-    public string GetSentence(string ID, int language)
+    public string GetSentence(string ID, Language language)
     {
         for (int i = 0; i < translations.Count; i++)
         {
