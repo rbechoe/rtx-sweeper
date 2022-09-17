@@ -33,6 +33,7 @@ public class LocalizedTextComponent : MonoBehaviour
         if (LANGUAGE_DATABASE)
         {
             // todo language manager
+            //Debug.Log(CultureInfo.InstalledUICulture.TwoLetterISOLanguageName);
             textComponent.text = LANGUAGE_DATABASE.GetSentence(TextIdentifier, LANGUAGE);
         }
     }

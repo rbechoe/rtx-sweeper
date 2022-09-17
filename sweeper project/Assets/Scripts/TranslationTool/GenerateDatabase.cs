@@ -63,11 +63,8 @@ public class GenerateDatabase : Editor
                     for (int i = 1; i < lineElement.Length; i++)
                     {
                         translation.Add(lineElement[i]);
-                        //Debug.Log(lineElement[i]);
                     }
-                    Debug.Log(lineElement[0] + " " + translation[0]);
                     Translate t = new Translate(lineElement[0], translation);
-                    Debug.Log(t.translation[0]);
                     SentenceTranslation.Add(new Translate(lineElement[0], translation));
                 }
             }
