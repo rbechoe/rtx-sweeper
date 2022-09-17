@@ -71,7 +71,7 @@ public class GenerateDatabase : Editor
             database.translations = new List<Translate>();
             database.translations = SentenceTranslation;
 
-            AssetDatabase.CreateAsset(database, "Assets/Languages.asset");
+            AssetDatabase.CreateAsset(database, "Assets/Resources/Languages.asset");
             AssetDatabase.Refresh();
 
             sr.Dispose();

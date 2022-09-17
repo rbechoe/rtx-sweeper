@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class LocalisationWindow : EditorWindow
     {
         get
         {
-            return Resources.Load<LanguageDatabase>("Localisation/Languages");
+            return Resources.Load<LanguageDatabase>("Languages");
         }
     }
 
@@ -78,6 +79,55 @@ public class LocalisationWindow : EditorWindow
                     Language l = (Language)i;
                     GUILayout.Label("Language = " + l.ToString());
                     sentencesFix[i] = GUILayout.TextField(sentencesFix[i]);
+                }
+            }
+        }
+
+        if (GUILayout.Button("Generate TSV File"))
+        {
+            GenerateTSV();
+        }
+
+        GUILayout.EndVertical();
+    }
+
+    public void GenerateTSV()
+    {
+        using (StreamWriter sr = new StreamWriter(Directory.GetCurrentDirectory() + "Assets/Resources/Localisation.tsv"))
+        {
+            string languageLine = "\t";
+            int languageLength = Enum.GetValues(typeof(Language)).Length;
+
+            for (int i = 0; i < languageLength; i++)
+            {
+                if (i < (languageLength - 1))
+                {
+                    languageLine += (Language)i + "\t";
+                }
+                else
+                {
+                    languageLine += (Language)i;
+                }
+            }
+            
+            sr.WriteLine(languageLine);
+
+            for (int i = 0; i < database.translations.Count; i++)
+            {
+                string line = database.translations[i].ID + "\t";
+                int count = database.translations[i].sentence.Count;
+
+                for (int j = 0; j < count; j++)
+                {
+                    if (j < count - 1)
+                    {
+                        line += database.translations[i].sentence[j] + "\t";
+                    }
+                    else
+                    {
+                        line += database.translations[i].sentence[j];
+                        sr.WriteLine(line);
+                    }
                 }
             }
         }
