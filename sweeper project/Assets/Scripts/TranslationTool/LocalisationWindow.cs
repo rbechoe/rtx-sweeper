@@ -18,7 +18,7 @@ public class LocalisationWindow : EditorWindow
         }
     }
 
-    [MenuItem("Window/Enchanted Works/Localisation")]
+    [MenuItem("Window/Geoffrey UPD/Localisation")]
     static void Init()
     {
         LocalisationWindow window = new LocalisationWindow();
@@ -114,18 +114,18 @@ public class LocalisationWindow : EditorWindow
 
             for (int i = 0; i < database.translations.Count; i++)
             {
-                string line = database.translations[i].ID + "\t";
-                int count = database.translations[i].sentence.Count;
+                string line = database.translations[i].id + "\t";
+                int count = database.translations[i].translation.Count;
 
                 for (int j = 0; j < count; j++)
                 {
                     if (j < count - 1)
                     {
-                        line += database.translations[i].sentence[j] + "\t";
+                        line += database.translations[i].translation[j] + "\t";
                     }
                     else
                     {
-                        line += database.translations[i].sentence[j];
+                        line += database.translations[i].translation[j];
                         sr.WriteLine(line);
                     }
                 }

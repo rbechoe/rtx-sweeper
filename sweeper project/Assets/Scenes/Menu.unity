@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 969558174}
-  m_IndirectSpecularColor: {r: 1836.1747, g: 2641.7412, b: 3166.9805, a: 1}
+  m_IndirectSpecularColor: {r: 1849.0713, g: 2655.6738, b: 3180.5742, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15202,7 +15202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4900f5a5ff7c1c4fbd475b66628871c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextIdentifier: tutorial_dialogue_2
+  TextIdentifier: tutorial_dialogue_1
 --- !u!114 &477867902
 MonoBehaviour:
   m_ObjectHideFlags: 0

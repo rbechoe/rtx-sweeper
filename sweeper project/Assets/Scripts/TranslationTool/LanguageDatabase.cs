@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Localisation", menuName = "Scriptable/")]
 public class LanguageDatabase : ScriptableObject
 {
     public List<Translate> translations;
@@ -18,10 +17,10 @@ public class LanguageDatabase : ScriptableObject
     {
         for (int i = 0; i < translations.Count; i++)
         {
-            if (translations[i].ID == ID)
+            if (translations[i].id == ID)
             {
                 Translate translate = translations[i];
-                return translate.sentence[(int)language];
+                return translate.translation[(int)language];
             }
         }
 
@@ -32,10 +31,10 @@ public class LanguageDatabase : ScriptableObject
     {
         for (int i = 0; i < translations.Count; i++)
         {
-            if (translations[i].ID == ID)
+            if (translations[i].id == ID)
             {
                 Translate translate = translations[i];
-                return translate.sentence;
+                return translate.translation;
             }
         }
 
@@ -60,7 +59,7 @@ public class LanguageDatabase : ScriptableObject
     {
         for (int i = 0; i < translations.Count; i++)
         {
-            if (translations[i].ID == ID)
+            if (translations[i].id == ID)
             {
                 translations.Remove(GetTranslateObject(ID));
             }
@@ -71,7 +70,7 @@ public class LanguageDatabase : ScriptableObject
     {
         for (int i = 0; i < translations.Count; i++)
         {
-            if (translations[i].ID == ID)
+            if (translations[i].id == ID)
             {
                 return translations[i];
             }

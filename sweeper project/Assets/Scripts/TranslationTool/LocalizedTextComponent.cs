@@ -8,7 +8,7 @@ public class LocalizedTextComponent : MonoBehaviour
 {
     public static LanguageDatabase LANGUAGE_DATABASE
     {
-        get => Resources.Load<LanguageDatabase>("Localisation/LanguageDatabase");
+        get => Resources.Load<LanguageDatabase>("Languages");
 
         set => LANGUAGE_DATABASE = value;
     }

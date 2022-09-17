@@ -6,7 +6,7 @@ using System.IO;
 
 public class GenerateDatabase : Editor
 {
-    [MenuItem("Window/Enchanted Works/Generate Localisation Scriptable")]
+    [MenuItem("Window/Geoffrey UPD/Generate Localisation Scriptable")]
     private static void Init()
     {
         string readPath = Directory.GetCurrentDirectory() + "/Assets/Resources/Localisation.tsv";
@@ -63,10 +63,15 @@ public class GenerateDatabase : Editor
                     for (int i = 1; i < lineElement.Length; i++)
                     {
                         translation.Add(lineElement[i]);
+                        //Debug.Log(lineElement[i]);
                     }
+                    Debug.Log(lineElement[0] + " " + translation[0]);
+                    Translate t = new Translate(lineElement[0], translation);
+                    Debug.Log(t.translation[0]);
                     SentenceTranslation.Add(new Translate(lineElement[0], translation));
                 }
             }
+            Debug.Log(SentenceTranslation.Count);
 
             database.translations = new List<Translate>();
             database.translations = SentenceTranslation;

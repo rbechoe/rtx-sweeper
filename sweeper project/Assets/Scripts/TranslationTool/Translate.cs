@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Translate : MonoBehaviour
+public class Translate
 {
-    public string ID;
-    [HideInInspector]
-    public List<string> sentence;
+    public string id;
+    public List<string> translation;
 
     public Translate(string id, List<string> translations)
     {
-        ID = id;
-        sentence = translations;
+        this.id = id;
+        this.translation = translations;
     }
 }
