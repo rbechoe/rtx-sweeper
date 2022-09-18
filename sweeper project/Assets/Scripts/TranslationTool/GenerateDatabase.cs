@@ -68,7 +68,6 @@ public class GenerateDatabase : Editor
                     SentenceTranslation.Add(new Translate(lineElement[0], translation));
                 }
             }
-            Debug.Log(SentenceTranslation.Count);
 
             database.translations = new List<Translate>();
             database.translations = SentenceTranslation;

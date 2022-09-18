@@ -12,6 +12,5 @@ public enum Language
 	zhTW= 9,
 	ru= 10,
 	hi= 11,
-	af= 12,
-	tr= 13
+	tr= 12
 }
