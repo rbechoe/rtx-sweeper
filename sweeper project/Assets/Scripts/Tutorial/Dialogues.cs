@@ -15,8 +15,19 @@ public class Dialogues : MonoBehaviour
     public float startDelay, endDelay;
     private float totalWaitTime;
 
+    private Language language;
+
+    public static LanguageDatabase LANGUAGE_DATABASE
+    {
+        get => Resources.Load<LanguageDatabase>("Languages");
+
+        set => LANGUAGE_DATABASE = value;
+    }
+
     void Start()
     {
+        language = Settings.Instance.GetLanguage();
+
         DisableBar();
 
         StartCoroutine(DelayedMethods.FireMethod(EnableBar, startDelay));
@@ -44,6 +55,6 @@ public class Dialogues : MonoBehaviour
 
     void Dialogue(int line)
     {
-        text.text = lines[line];
+        text.text = LANGUAGE_DATABASE.GetSentence(lines[line], language);
     }
 }
