@@ -21,6 +21,7 @@ public class LocalizedTextComponent : MonoBehaviour
 
     public void Awake()
     {
+        textComponent = GetComponent<TextMeshProUGUI>();
         EventSystem.AddListener(EventType.UPDATE_LANGUAGE, RefreshLanguage);
     }
 
@@ -31,7 +32,6 @@ public class LocalizedTextComponent : MonoBehaviour
 
     public void Start()
     {
-        textComponent = GetComponent<TextMeshProUGUI>();
         language = Settings.Instance.GetLanguage();
 
         if (TextIdentifier == string.Empty)
