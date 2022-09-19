@@ -17,29 +17,36 @@ public class LocalizedTextComponent : MonoBehaviour
     [SerializeField]
     private string TextIdentifier;
 
-    public static Language LANGUAGE
-    {
-        get;
-        set;
-    }
+    private Language language;
 
     public void Awake()
     {
+        EventSystem.AddListener(EventType.UPDATE_LANGUAGE, RefreshLanguage);
+    }
+
+    public void OnDestroy()
+    {
+        EventSystem.RemoveListener(EventType.UPDATE_LANGUAGE, RefreshLanguage);
+    }
+
+    public void Start()
+    {
         textComponent = GetComponent<TextMeshProUGUI>();
+        language = Settings.Instance.GetLanguage();
 
         if (TextIdentifier == string.Empty)
             return;
 
         if (LANGUAGE_DATABASE)
         {
-            // todo language manager
-            //Debug.Log(CultureInfo.InstalledUICulture.TwoLetterISOLanguageName);
-            textComponent.text = LANGUAGE_DATABASE.GetSentence(TextIdentifier, LANGUAGE);
+            textComponent.text = LANGUAGE_DATABASE.GetSentence(TextIdentifier, language);
         }
     }
 
     public void RefreshLanguage()
     {
-        textComponent.text = LANGUAGE_DATABASE.GetSentence(TextIdentifier, LANGUAGE);
+        language = Settings.Instance.GetLanguage();
+        textComponent.text = LANGUAGE_DATABASE.GetSentence(TextIdentifier, language);
+        // TODO update font of language as well so that it wont go blank
     }
 }

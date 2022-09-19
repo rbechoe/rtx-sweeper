@@ -7,10 +7,8 @@ public enum Language
 	fr= 4,
 	ja= 5,
 	ko= 6,
-	ar= 7,
-	zhCN= 8,
-	zhTW= 9,
-	ru= 10,
-	hi= 11,
-	tr= 12
+	zhTW= 7,
+	ru= 8,
+	hi= 9,
+	tr= 10
 }

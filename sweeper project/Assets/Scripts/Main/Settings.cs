@@ -10,6 +10,8 @@ public class Settings : MonoBehaviour
 
     private bool rtxEnabled = false;
 
+    public Language activeLanguage = Language.en;
+
     SteamAPIManager steamAPI;
 
     private void Awake()
@@ -117,5 +119,17 @@ public class Settings : MonoBehaviour
     {
         rtxEnabled = false;
         PlayerPrefs.SetInt("RTX", 0);
+    }
+
+    public void SetLanguage(Language language)
+    {
+        activeLanguage = language;
+        PlayerPrefs.SetInt("Language", (int)language);
+        EventSystem.InvokeEvent(EventType.UPDATE_LANGUAGE);
+    }
+
+    public Language GetLanguage()
+    {
+        return activeLanguage;
     }
 }

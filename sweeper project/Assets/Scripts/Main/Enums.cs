@@ -42,6 +42,7 @@ public enum EventType
     UPDATE_SFX_MAIN,    // passes float
     ENABLE_RTX,         // passes nothing
     DISABLE_RTX,        // passes nothing
+    UPDATE_LANGUAGE     // passes nothing
 }
 
 public enum TileStates
