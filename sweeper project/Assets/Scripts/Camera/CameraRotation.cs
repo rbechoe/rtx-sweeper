@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class CameraRotation : MonoBehaviour
 {
-    [SerializeField]
     private Vector3 mousePos, mouseStart, mouseDirection;
 
     private float xAxis, yAxis;
+
+    private float speedSlow = 5f;
 
     void Start()
     {
@@ -26,7 +27,7 @@ public class CameraRotation : MonoBehaviour
         {
             // update camera orientation
             mousePos = Input.mousePosition;
-            mouseDirection = (mouseStart - mousePos) / 10f;
+            mouseDirection = (mouseStart - mousePos) / speedSlow;
         }
         if (Input.GetMouseButtonUp(2))
         {

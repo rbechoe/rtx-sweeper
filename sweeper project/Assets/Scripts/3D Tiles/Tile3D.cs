@@ -11,6 +11,8 @@ public class Tile3D : BaseTile
     private TMP_Text bombCountTMP;
 
     protected Material myMat;
+    private MeshRenderer myMeshRenderer;
+    private BoxCollider myCollider;
 
     private bool hovered;
     private bool startingTile;
@@ -19,6 +21,8 @@ public class Tile3D : BaseTile
     {
         bombCountTMP = GetComponentInChildren<TMP_Text>();
         myMat = gameObject.GetComponent<Renderer>().material;
+        myMeshRenderer = gameObject.GetComponent<MeshRenderer>();
+        myCollider = gameObject.GetComponent<BoxCollider>();
         myMat.EnableKeyword("_EMISSION");
         myMat.color = defaultCol;
         myMat.SetColor("_EmissiveColor", defaultCol);
@@ -69,6 +73,8 @@ public class Tile3D : BaseTile
         startingTile = false;
         bombCountTMP.text = "";
         defaultCol = manager.defaultColor;
+        myMeshRenderer.enabled = true;
+        myCollider.enabled = true;
         UpdateMaterial(defaultCol);
     }
 
@@ -155,7 +161,6 @@ public class Tile3D : BaseTile
         }
     }
 
-    // update base colors based on layer object currently is in
     private void UpdateColliders()
     {
         if (hovered || triggered || startingTile)
@@ -163,32 +168,8 @@ public class Tile3D : BaseTile
             return;
         }
 
-        Collider[] selectorType = Physics.OverlapBox(transform.position, Vector3.one * 0.1f, Quaternion.identity, selectionLayers);
-
-        if (selectorType.Length > 0)
-        {
-            foreach (Collider col in selectorType)
-            {
-                if (col.CompareTag("Transparent"))
-                {
-                    defaultCol = new Color(manager.defaultColor.r, manager.defaultColor.g, manager.defaultColor.b, 1);
-                    UpdateMaterial(defaultCol, 256);
-                    break;
-                }
-
-                if (col.CompareTag("Opaque"))
-                {
-                    defaultCol = manager.defaultColor;
-                    UpdateMaterial(defaultCol, 1024);
-                    break;
-                }
-            }
-        }
-        else
-        {
-            defaultCol = defaultNone;
-            UpdateMaterial(defaultCol);
-        }
+        defaultCol = defaultNone;
+        UpdateMaterial(defaultCol);
     }
 
     public override void FirstTile()
@@ -238,6 +219,7 @@ public class Tile3D : BaseTile
 
     protected override void OnMouseOver() 
     {
+        if (!clickable) return;
         hovered = true;
 
         UpdateMaterial(selectCol, 1024);
@@ -245,6 +227,7 @@ public class Tile3D : BaseTile
 
     protected override void OnMouseExit()
     {
+        if (!clickable) return;
         hovered = false;
 
         UpdateMaterial(defaultCol, 1024);
@@ -302,18 +285,23 @@ public class Tile3D : BaseTile
                 {
                     tiles[i].GetComponent<BaseTile>()?.NoBombReveal();
                 }
-                state = TileStates.Revealed;
-                if (rewardObj != null) rewardObj.SetActive(true);
-                if (breakObj != null) breakObj.SetActive(false);
+                HideTile();
                 break;
 
             case TileStates.Number:
                 EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
                 ShowBombAmount();
-                state = TileStates.Revealed;
-                if (rewardObj != null) rewardObj.SetActive(true);
-                if (breakObj != null) breakObj.SetActive(false);
+                HideTile();
                 break;
         }
+    }
+
+    private void HideTile()
+    {
+        state = TileStates.Revealed;
+        if (rewardObj != null) rewardObj.SetActive(true);
+        if (breakObj != null) breakObj.SetActive(false);
+        myMeshRenderer.enabled = true;
+        myCollider.enabled = true;
     }
 }
