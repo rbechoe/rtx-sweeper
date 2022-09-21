@@ -9,7 +9,6 @@ public class GridManager3D : BaseGridManager
     private int difficulty;
 
     private bool saving;
-    private int layerClick;
 
     public GameObject[] layers;
 
@@ -41,7 +40,6 @@ public class GridManager3D : BaseGridManager
         EventSystem.AddListener(EventType.END_GAME, StopTimer);
         EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.AddListener(EventType.PLAY_CLICK, LayerUnlock);
         EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
         EventSystem.AddListener(EventType.OTHER_CLICK, OtherClick);
         EventSystem.AddListener(EventType.PLAY_FLAG, PlantFlag);
@@ -58,40 +56,10 @@ public class GridManager3D : BaseGridManager
         EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
         EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
         EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.RemoveListener(EventType.PLAY_CLICK, LayerUnlock);
         EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
         EventSystem.RemoveListener(EventType.OTHER_CLICK, OtherClick);
         EventSystem.RemoveListener(EventType.PLAY_FLAG, PlantFlag);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
-    }
-
-    // unlock a layer
-    private void LayerUnlock()
-    {
-        return;
-
-        // TODO might reimplement later?
-        layerClick++;
-        if (layerClick >= 2 && !layers[1].activeSelf)
-        {
-            layers[1].SetActive(true);
-            AddLayer();
-        }
-        if (layerClick >= 4 && !layers[2].activeSelf)
-        {
-            layers[2].SetActive(true);
-            AddLayer();
-        }
-        if (layerClick >= 6 && !layers[3].activeSelf)
-        {
-            layers[3].SetActive(true);
-            AddLayer();
-        }
-        if (layerClick >= 8 && !layers[4].activeSelf)
-        {
-            layers[4].SetActive(true);
-            AddLayer();
-        }
     }
 
     private void AddLayer()
@@ -134,14 +102,7 @@ public class GridManager3D : BaseGridManager
         int bombCount = 0;
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
         int curTileCount = 0;
-        layerClick = 0;
-        bombAmount = 3;
-
-        // TODO fix magical numbers
-        //layers[1].SetActive(true);
-        //layers[2].SetActive(true);
-        //layers[3].SetActive(true);
-        //layers[4].SetActive(true);
+        bombAmount = 3; // 3 per layer
 
         foreach (GameObject layer in layers)
         {
@@ -160,14 +121,8 @@ public class GridManager3D : BaseGridManager
                 }
 
                 GameObject newTile = layer.transform.GetChild(i).transform.gameObject;
-                /*if (newTile.GetComponent<StartingMarker>() != null)
-                {
-                    newTile.tag = "Empty";
-                    newTile.layer = 12;
-                    newTile.GetComponent<BaseTile>().state = TileStates.Empty;
-                    firstTile = newTile;
-                }
-                else */if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
+                
+                if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
                 {
                     newTile.tag = "Bomb";
                     newTile.layer = 11;
@@ -179,7 +134,13 @@ public class GridManager3D : BaseGridManager
                     newTile.tag = "Empty";
                     newTile.layer = 12;
                     newTile.GetComponent<BaseTile>().state = TileStates.Empty;
-                    emptyTiles.Add(newTile);
+
+                    // Less than 26 neighbours means that it is a tile on the edge
+                    Collider[] hits = Physics.OverlapBox(newTile.transform.position, Vector3.one * 0.75f);
+                    if (hits.Length < 26)
+                    {
+                        emptyTiles.Add(newTile);
+                    }
                 }
 
                 curTile++;
@@ -196,13 +157,28 @@ public class GridManager3D : BaseGridManager
         }
         yield return new WaitForEndOfFrame();
 
-        // TODO fix magical numbers
-        //layers[1].SetActive(false);
-        //layers[2].SetActive(false);
-        //layers[3].SetActive(false);
-        //layers[4].SetActive(false);
+        // Build new list based on fully empty tiles, select random as start, or use random from first list of no true empty
+        List<GameObject> trueEmpty = new List<GameObject>();
+        print(emptyTiles.Count);
+        foreach(GameObject tile in emptyTiles)
+        {
+            // TODO debug why bomb layer does not get detected anywhere
+            Collider[] hits = Physics.OverlapBox(tile.transform.position, Vector3.one * 0.75f, Quaternion.identity, 11);
+            if (hits.Length == 0)
+            {
+                trueEmpty.Add(tile);
+            }
+        }
+        if (trueEmpty.Count > 0)
+        {
+            emptyTiles = trueEmpty;
+        }
+        print(emptyTiles.Count);
+        print(trueEmpty.Count);
 
-        bombAmount = 15;
+        yield return new WaitForEndOfFrame();
+
+        bombAmount = 15; // 3 * 5 layers
         EventSystem.InvokeEvent(EventType.PREPARE_GAME);
         yield return new WaitForEndOfFrame();
         StartGame();
