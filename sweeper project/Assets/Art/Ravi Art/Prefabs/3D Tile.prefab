@@ -132,7 +132,7 @@ MonoBehaviour:
   state: 3
   rewardObj: {fileID: 0}
   breakObj: {fileID: 0}
-  defaultNone: {r: 1, g: 1, b: 1, a: 0}
+  defaultNone: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &8972983688656368597
 GameObject:
   m_ObjectHideFlags: 0

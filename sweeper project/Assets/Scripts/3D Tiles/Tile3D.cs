@@ -171,7 +171,7 @@ public class Tile3D : BaseTile
             {
                 if (col.CompareTag("Transparent"))
                 {
-                    defaultCol = new Color(manager.defaultColor.r, manager.defaultColor.g, manager.defaultColor.b, 0.1f);
+                    defaultCol = new Color(manager.defaultColor.r, manager.defaultColor.g, manager.defaultColor.b, 1);
                     UpdateMaterial(defaultCol, 256);
                     break;
                 }
@@ -220,26 +220,6 @@ public class Tile3D : BaseTile
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Picker") && clickable && !triggered)
-        {
-            hovered = true;
-
-            UpdateMaterial(selectCol, 1024);
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Picker") && clickable && !triggered)
-        {
-            hovered = false;
-
-            UpdateMaterial(defaultCol, 1024);
-        }
-    }
-
     public override void UpdateBombAmount(int amount)
     {
         bombCount = amount;
@@ -256,9 +236,19 @@ public class Tile3D : BaseTile
         bombCountTMP.text = "" + bombCount;
     }
 
-    protected override void OnMouseOver() { }
+    protected override void OnMouseOver() 
+    {
+        hovered = true;
 
-    protected override void OnMouseExit() { }
+        UpdateMaterial(selectCol, 1024);
+    }
+
+    protected override void OnMouseExit()
+    {
+        hovered = false;
+
+        UpdateMaterial(defaultCol, 1024);
+    }
 
     public override void DoAction()
     {
@@ -269,7 +259,7 @@ public class Tile3D : BaseTile
     {
         selectionLayers = LayerMask.GetMask("Selector", "Transparent");
 
-        defaultNone = new Color(0.1f, 0.1f, 0.1f, 0.01f);
+        defaultNone = new Color(0.1f, 0.1f, 0.1f, 1f);
         gridMat = gameObject.GetComponent<Renderer>().material;
     }
 
