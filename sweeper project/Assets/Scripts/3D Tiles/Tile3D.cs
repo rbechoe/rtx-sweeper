@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 using System.Collections;
 
 public class Tile3D : BaseTile
@@ -7,8 +6,7 @@ public class Tile3D : BaseTile
     [Header("Settings")]
     public Color defaultNone;
 
-    private LayerMask selectionLayers;
-    private TMP_Text bombCountTMP;
+    private TMPBomb3D bombCountTMP;
 
     protected Material myMat;
     private MeshRenderer myMeshRenderer;
@@ -19,7 +17,7 @@ public class Tile3D : BaseTile
 
     private void Awake()
     {
-        bombCountTMP = GetComponentInChildren<TMP_Text>();
+        bombCountTMP = GetComponentInChildren<TMPBomb3D>();
         myMat = gameObject.GetComponent<Renderer>().material;
         myMeshRenderer = gameObject.GetComponent<MeshRenderer>();
         myCollider = gameObject.GetComponent<BoxCollider>();
@@ -71,7 +69,6 @@ public class Tile3D : BaseTile
         triggered = false;
         hovered = false;
         startingTile = false;
-        bombCountTMP.text = "";
         defaultCol = manager.defaultColor;
         myMeshRenderer.enabled = true;
         myCollider.enabled = true;
@@ -211,10 +208,10 @@ public class Tile3D : BaseTile
     {
         if (state != TileStates.Revealed || bombCount == 0)
         {
-            bombCountTMP.text = "";
+            bombCountTMP.BombCount(0);
             return;
         }
-        bombCountTMP.text = "" + bombCount;
+        bombCountTMP.BombCount(bombCount);
     }
 
     protected override void OnMouseOver() 
@@ -240,8 +237,6 @@ public class Tile3D : BaseTile
 
     public override void TypeSettings()
     {
-        selectionLayers = LayerMask.GetMask("Selector", "Transparent");
-
         defaultNone = new Color(0.1f, 0.1f, 0.1f, 1f);
         gridMat = gameObject.GetComponent<Renderer>().material;
     }
@@ -301,7 +296,7 @@ public class Tile3D : BaseTile
         state = TileStates.Revealed;
         if (rewardObj != null) rewardObj.SetActive(true);
         if (breakObj != null) breakObj.SetActive(false);
-        myMeshRenderer.enabled = true;
-        myCollider.enabled = true;
+        myMeshRenderer.enabled = false;
+        myCollider.enabled = false;
     }
 }
