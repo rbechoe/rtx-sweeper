@@ -6,15 +6,31 @@ public class TMPBomb3D : MonoBehaviour
     private GameObject target;
     public TMP_Text bombCountTMP;
 
+    private bool centerLook;
+
     private void Start()
     {
-        target = GameObject.FindGameObjectWithTag("LookTarget");
+        target = GameObject.FindGameObjectWithTag("MainCamera");
         bombCountTMP = GetComponentInChildren<TMP_Text>();
     }
 
     private void Update()
     {
-        transform.LookAt(target.transform.position);
+        if (centerLook)
+        {
+            transform.localEulerAngles = Vector3.zero;
+            transform.parent.LookAt(Vector3.zero);
+        }
+        else
+        {
+            transform.localEulerAngles = new Vector3 (0, 180, 0);
+            transform.parent.LookAt(target.transform.position);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            centerLook = !centerLook;
+        }
     }
 
     public void BombCount(int amount)
