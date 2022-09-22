@@ -159,12 +159,18 @@ public class GridManager3D : BaseGridManager
 
         // Build new list based on fully empty tiles, select random as start, or use random from first list of no true empty
         List<GameObject> trueEmpty = new List<GameObject>();
-        print(emptyTiles.Count);
         foreach(GameObject tile in emptyTiles)
         {
-            // TODO debug why bomb layer does not get detected anywhere
-            Collider[] hits = Physics.OverlapBox(tile.transform.position, Vector3.one * 0.75f, Quaternion.identity, 11);
-            if (hits.Length == 0)
+            Collider[] hits = Physics.OverlapBox(tile.transform.position, Vector3.one * 0.75f);
+            bool hadBomb = false;
+            foreach (Collider col in hits)
+            {
+                if (col.gameObject.layer == 11)
+                {
+                    hadBomb = true;
+                }
+            }
+            if (!hadBomb)
             {
                 trueEmpty.Add(tile);
             }
@@ -173,8 +179,6 @@ public class GridManager3D : BaseGridManager
         {
             emptyTiles = trueEmpty;
         }
-        print(emptyTiles.Count);
-        print(trueEmpty.Count);
 
         yield return new WaitForEndOfFrame();
 
