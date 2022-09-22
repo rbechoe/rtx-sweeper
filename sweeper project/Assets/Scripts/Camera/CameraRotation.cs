@@ -37,6 +37,6 @@ public class CameraRotation : MonoBehaviour
         xAxis += mouseDirection.y * Time.deltaTime;
         yAxis += mouseDirection.x * Time.deltaTime;
 
-        transform.eulerAngles = new Vector3(xAxis, yAxis, 0);
+        transform.eulerAngles = new Vector3(-xAxis, yAxis, 0);
     }
 }

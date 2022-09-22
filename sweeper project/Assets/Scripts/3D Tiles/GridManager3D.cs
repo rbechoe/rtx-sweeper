@@ -174,6 +174,8 @@ public class GridManager3D : BaseGridManager
             {
                 trueEmpty.Add(tile);
             }
+
+            yield return new WaitForEndOfFrame();
         }
         if (trueEmpty.Count > 0)
         {
