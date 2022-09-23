@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5ff6835d18aa983448c09de4ac11ed3a, type: 2}
+  - {fileID: 2100000, guid: 43ac7652f50734349ab769864a16073f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -133,6 +133,8 @@ MonoBehaviour:
   rewardObj: {fileID: 0}
   breakObj: {fileID: 0}
   defaultNone: {r: 1, g: 1, b: 1, a: 1}
+  normalMat: {fileID: 2100000, guid: 43ac7652f50734349ab769864a16073f, type: 2}
+  wireframeMat: {fileID: 2100000, guid: 8e881db431a7fd249b235f31d9234fcb, type: 2}
 --- !u!1 &7630687693534800693
 GameObject:
   m_ObjectHideFlags: 0

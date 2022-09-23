@@ -16,6 +16,8 @@ public class Tile3D : BaseTile
     private bool hovered;
     private bool startingTile;
 
+    public Material normalMat, wireframeMat;
+
     private void Awake()
     {
         bombCountTMP = GetComponentInChildren<TMPBomb3D>();
@@ -71,8 +73,11 @@ public class Tile3D : BaseTile
         hovered = false;
         startingTile = false;
         defaultCol = manager.defaultColor;
-        myMeshRenderer.enabled = true;
+        myMeshRenderer.material = normalMat;
+        gridMat = myMeshRenderer.material;
+        gridMat.EnableKeyword("_EmissiveColor");
         myCollider.enabled = true;
+        myMeshRenderer.enabled = true;
         UpdateMaterial(defaultCol);
     }
 
@@ -297,7 +302,14 @@ public class Tile3D : BaseTile
         state = TileStates.Revealed;
         if (rewardObj != null) rewardObj.SetActive(true);
         if (breakObj != null) breakObj.SetActive(false);
-        myMeshRenderer.enabled = false;
+        myMeshRenderer.material = wireframeMat;
+        gridMat = myMeshRenderer.material;
+        gridMat.EnableKeyword("_EmissiveColor");
         myCollider.enabled = false;
+
+        if (bombCount == 0)
+        {
+            myMeshRenderer.enabled = false;
+        }
     }
 }
