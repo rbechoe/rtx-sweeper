@@ -108,6 +108,21 @@ public class SteamAPIManager : MonoBehaviour
         lbStatName.Add(LeaderboardStats.galaxyGamesWon, "lb_galaxy_games_won");
         lbStatName.Add(LeaderboardStats.galaxyGamesPlayed, "lb_galaxy_games_played");
         lbStatName.Add(LeaderboardStats.galaxy1BestTime, "lb_galaxy_1_best_time");
+
+
+
+        CheckDLC((AppId_t)2166670);
+    }
+
+    public bool CheckDLC(AppId_t id)
+    {
+        if (!SteamManager.Initialized)
+        {
+            Debug.Log("Steam manager not initialized!");
+            return false;
+        }
+
+        return SteamApps.BIsDlcInstalled(id);
     }
 
     public void SetAchievement(UserAchievements name)

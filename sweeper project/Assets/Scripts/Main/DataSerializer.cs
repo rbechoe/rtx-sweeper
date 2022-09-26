@@ -231,4 +231,7 @@ public class AccountData
     public int galaxyClicks1 = 0;
     public float galaxyEfficiency1 = 0;
     public int galaxyVictories1 = 0;
+
+    // DLC checks
+    public int hasCosmetics = 0;
 }

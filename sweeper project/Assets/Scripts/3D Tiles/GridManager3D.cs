@@ -104,6 +104,7 @@ public class GridManager3D : BaseGridManager
         int curTileCount = 0;
         bombAmount = 3; // 3 per layer
 
+        // TODO spread bombs per count instead of layer
         foreach (GameObject layer in layers)
         {
             curTile = 0;
