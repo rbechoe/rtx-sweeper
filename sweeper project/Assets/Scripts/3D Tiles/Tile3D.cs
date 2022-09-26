@@ -83,7 +83,7 @@ public class Tile3D : BaseTile
 
     private void Update()
     {
-        if (!clickable) return;
+        if (!clickable || gameEnded) return;
 
         UpdateColliders();
         SelectTile();
@@ -222,7 +222,7 @@ public class Tile3D : BaseTile
 
     protected override void OnMouseOver() 
     {
-        if (!clickable) return;
+        if (!clickable || gameEnded) return;
         hovered = true;
 
         UpdateMaterial(selectCol, 1024);
@@ -230,7 +230,7 @@ public class Tile3D : BaseTile
 
     protected override void OnMouseExit()
     {
-        if (!clickable) return;
+        if (!clickable || gameEnded) return;
         hovered = false;
 
         UpdateMaterial(defaultCol, 1024);

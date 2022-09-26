@@ -97,28 +97,21 @@ public class GridManager3D : BaseGridManager
     protected override IEnumerator RandomizeGrid()
     {
         int curTile = 0;
-        int tilesLeft = 0;
         int spawnChance = 0;
         int bombCount = 0;
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
-        int curTileCount = 0;
-        bombAmount = 3; // 3 per layer
+        int curTileCount = 0; // used for optimalization
+        bombAmount = 12;
 
-        // TODO spread bombs per count instead of layer
         foreach (GameObject layer in layers)
         {
-            curTile = 0;
-            tilesLeft = 0;
-            spawnChance = 0;
-            bombCount = 0;
-
             for (int i = 0; i < layer.transform.childCount; i++)
             {
                 // formula: based on tiles and bombs left increase chance for next tile to be bomb
                 if (bombCount < bombAmount)
                 {
-                    tilesLeft = layer.transform.childCount - curTile;
-                    spawnChance = tilesLeft / (bombAmount - bombCount);
+                    // 5 = amount of layers
+                    spawnChance = (layer.transform.childCount * 5 - curTile) / (bombAmount - bombCount);
                 }
 
                 GameObject newTile = layer.transform.GetChild(i).transform.gameObject;
@@ -185,7 +178,6 @@ public class GridManager3D : BaseGridManager
 
         yield return new WaitForEndOfFrame();
 
-        bombAmount = 15; // 3 * 5 layers
         EventSystem.InvokeEvent(EventType.PREPARE_GAME);
         yield return new WaitForEndOfFrame();
         StartGame();
