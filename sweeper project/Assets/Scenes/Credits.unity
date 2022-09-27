@@ -266,11 +266,13 @@ MonoBehaviour:
 
 
 
+
     Sounds
 
 
 
     Localisation
+    Tool
 
 
     Playtesters
@@ -289,8 +291,7 @@ MonoBehaviour:
 
 
 
-    Special
-    Thanks
+    Special Thanks
 
 
 '
@@ -523,7 +524,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -3967}
+  m_AnchoredPosition: {x: 0, y: -4067}
   m_SizeDelta: {x: 1500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1328929188
@@ -1027,67 +1028,70 @@ MonoBehaviour:
 
     D.K.V. Studio
 
+    Caspar Gelderman
+
 
     Imphenzia
 
-    John Leonard French
+    John Leonard
+    French
 
 
-    Geoffrey
-    Hendrikx
+    Geoffrey Hendrikx
 
 
     Kris de Haas
 
     Youri Schuring
 
-    Raoul Scholtens
+    Raoul
+    Scholtens
 
-    Yasmin
-    van Rooijen
+    Yasmin van Rooijen
 
     Andries Graeff
 
     Carien Moossdorff
 
-    Liselotte Beijen
+    Liselotte
+    Beijen
 
-    Nan
-    van Kallen
+    Nan van Kallen
 
     Caspar Gelderman
 
     Michael Smith
 
-    Mareyn Koenderman
+    Mareyn
+    Koenderman
 
-    Jesse
-    van Eijmeren
+    Jesse van Eijmeren
 
     Inger Smit
 
     Rutger van Teutem
 
 
-    Kris de Haas
+    Kris
+    de Haas
 
-    Yasmin
-    van Rooijen
+    Yasmin van Rooijen
 
     Valentijn Muijrers
 
     Youri Schuring
 
-    Wild Mage Games
+    Wild
+    Mage Games
 
-    Andries
-    Graeff
+    Andries Graeff
 
     Bas van Seeters
 
     Aaron Oostdijk
 
-    Geoffrey Hendrikx'
+    Geoffrey
+    Hendrikx'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e464b532a37ac42409b407b7fa4a8cae, type: 2}
   m_sharedMaterial: {fileID: 7328866445344255039, guid: e464b532a37ac42409b407b7fa4a8cae, type: 2}

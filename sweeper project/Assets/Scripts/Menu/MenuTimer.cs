@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuTimer : MonoBehaviour
 {
-    float timer = 60;
+    public float timer = 60;
 
     void Update()
     {
