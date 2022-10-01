@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace Tiles2D
 {
@@ -27,15 +28,14 @@ namespace Tiles2D
         private GameObject firstTile;
         private List<GameObject> emptyTiles = new List<GameObject>();
 
+        [Header("Assignables")]
+        public GameObject managerObj;
+        public TMP_InputField widthText, lengthText, bombText;
+
         private void Start()
         {
-            xSize = TheCreator.Instance.xSize;
-            zSize = TheCreator.Instance.zSize;
-            gridSize = TheCreator.Instance.gridSize;
-            bombAmount = TheCreator.Instance.bombAmount;
             Vector3 position = new Vector3(xSize / 2f, (xSize + zSize / 2f) * 0.5f, zSize / 2f);
             EventSystem<Vector3>.InvokeEvent(EventType.START_POS, position);
-            CreateGrid(xSize, zSize, bombAmount);
         }
 
         private void OnEnable()
@@ -60,11 +60,11 @@ namespace Tiles2D
             EventSystem<GameObject>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
         }
 
-        public void CreateGrid(int _x, int _z, int _bombAmount)
+        public void CreateGrid()
         {
-            bombAmount = _bombAmount;
-            xSize = _x;
-            zSize = _z;
+            bombAmount = int.Parse(bombText.text);
+            xSize = int.Parse(widthText.text);
+            zSize = int.Parse(lengthText.text);
             StartCoroutine(Grid());
         }
 
@@ -110,6 +110,7 @@ namespace Tiles2D
                     curTile++;
                     curTileCount++;
                     newTile.name = "tile " + curTile;
+                    newTile.transform.parent = managerObj.transform;
                     tiles.Add(newTile);
 
                     // continue next frame
