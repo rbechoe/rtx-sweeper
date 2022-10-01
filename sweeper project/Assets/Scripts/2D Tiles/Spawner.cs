@@ -30,6 +30,7 @@ namespace Tiles2D
 
         [Header("Assignables")]
         public GameObject managerObj;
+        public GameObject flagObj;
         public TMP_InputField widthText, lengthText, bombText;
 
         private void Start()
@@ -132,6 +133,7 @@ namespace Tiles2D
         private void AddNewFlag()
         {
             GameObject _flag = Instantiate(flag, Vector3.up * 5000, Quaternion.identity);
+            _flag.transform.parent = flagObj.transform;
             inactiveFlags.Add(_flag);
         }
 
