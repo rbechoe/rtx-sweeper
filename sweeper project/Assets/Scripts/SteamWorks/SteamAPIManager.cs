@@ -109,9 +109,11 @@ public class SteamAPIManager : MonoBehaviour
         lbStatName.Add(LeaderboardStats.galaxyGamesPlayed, "lb_galaxy_games_played");
         lbStatName.Add(LeaderboardStats.galaxy1BestTime, "lb_galaxy_1_best_time");
 
+        // check cosmetics
+        if (CheckDLC((AppId_t)2166670))
+        {
 
-
-        CheckDLC((AppId_t)2166670);
+        }
     }
 
     public bool CheckDLC(AppId_t id)

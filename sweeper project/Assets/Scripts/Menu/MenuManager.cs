@@ -1,3 +1,4 @@
+using Steamworks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,7 +13,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private TMP_InputField bombTMP;
 
-    public Button playBtn, asiaBtn, desertBtn, bossBtn, galaxyBtn, graphicsBtn, rtxOnBtn, rtxOffBtn;
+    public Button playBtn, asiaBtn, desertBtn, bossBtn, galaxyBtn, graphicsBtn, rtxOnBtn, rtxOffBtn, gardenPlusBtn;
     public Slider BGMSlider, SFXSlider, mainSFXSlider;
 
     public Locker tutorial, arctic, asia, desert, islands, galaxy;
@@ -24,9 +25,12 @@ public class MenuManager : MonoBehaviour
 
     private DataSerializer dataSerializer;
 
+    private SteamAPIManager steamAPI;
+
     private void Start()
     {
         Settings settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
+        steamAPI = SteamAPIManager.Instance;
         BGMSlider.value = settings.GetBGMVolume();
         SFXSlider.value = settings.GetSFXVolume();
         mainSFXSlider.value = settings.GetMainSFXVolume();
@@ -75,6 +79,15 @@ public class MenuManager : MonoBehaviour
         if (accountData.desertVictories > 0) desert.UnlockAreas();
         if (accountData.bossVictories > 0) islands.UnlockAreas();
         if (accountData.galaxyVictories > 0) galaxy.UnlockAreas();
+
+        // dlc's
+        if (accountData.hasCosmetics == 0 && steamAPI.CheckDLC((AppId_t)2166670))
+        {
+            accountData.hasCosmetics = 1;
+            dataSerializer.UpdateAccountData(accountData);
+        }
+        //if (accountData.hasCosmetics > 0) gardenBtn.gameObject.SetActive(true);
+        if (accountData.hasCosmetics > 0) gardenPlusBtn.gameObject.SetActive(true);
     }
 
     public void Easy2D()
@@ -179,6 +192,11 @@ public class MenuManager : MonoBehaviour
     public void LoadArctic()
     {
         SceneManager.LoadScene("Arctic");
+    }
+
+    public void LoadGardenPlus()
+    {
+        SceneManager.LoadScene("Garden Unlimited");
     }
 
     public void LoadTutorial()
