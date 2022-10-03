@@ -44,7 +44,8 @@ public class ColorPicker : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        gameObject.SetActive(false);
+        modifiedHsv = new HSV();
+        //gameObject.SetActive(false);
     }
 
 
@@ -268,7 +269,7 @@ public class ColorPicker : MonoBehaviour
         done = true;
         onCC?.Invoke(modifiedColor);
         onCS?.Invoke(modifiedColor);
-        instance.transform.gameObject.SetActive(false);
+        //instance.transform.gameObject.SetActive(false);
     }
     //HSV helper class
     private sealed class HSV
