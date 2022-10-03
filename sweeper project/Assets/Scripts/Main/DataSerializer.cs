@@ -10,7 +10,7 @@ public class DataSerializer : MonoBehaviour
     CryptoManager crypto = new CryptoManager();
     SteamAPIManager steamAPI;
 
-    private void Start()
+    private void Awake()
     {
         steamAPI = SteamAPIManager.Instance;
         versionNumber = float.Parse(Application.version);

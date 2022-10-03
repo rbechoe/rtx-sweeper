@@ -9,6 +9,5 @@ public enum Language
 	ko= 6,
 	zhTW= 7,
 	ru= 8,
-	hi= 9,
-	tr= 10
+	hi= 9
 }

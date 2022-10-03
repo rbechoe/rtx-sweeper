@@ -13,7 +13,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private TMP_InputField bombTMP;
 
-    public Button playBtn, asiaBtn, desertBtn, bossBtn, galaxyBtn, graphicsBtn, rtxOnBtn, rtxOffBtn, gardenPlusBtn;
+    public Button playBtn, asiaBtn, desertBtn, bossBtn, galaxyBtn, graphicsBtn, rtxOnBtn, rtxOffBtn, gardenBtn, gardenPlusBtn, skinsBtn;
     public Slider BGMSlider, SFXSlider, mainSFXSlider;
 
     public Locker tutorial, arctic, asia, desert, islands, galaxy;
@@ -86,8 +86,12 @@ public class MenuManager : MonoBehaviour
             accountData.hasCosmetics = 1;
             dataSerializer.UpdateAccountData(accountData);
         }
-        //if (accountData.hasCosmetics > 0) gardenBtn.gameObject.SetActive(true);
-        if (accountData.hasCosmetics > 0) gardenPlusBtn.gameObject.SetActive(true);
+        if (accountData.hasCosmetics > 0)
+        { 
+            gardenBtn.gameObject.SetActive(true);
+            gardenPlusBtn.gameObject.SetActive(true);
+            skinsBtn.gameObject.SetActive(true);
+        }
     }
 
     public void Easy2D()
