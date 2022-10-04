@@ -128,6 +128,46 @@ public class Settings : MonoBehaviour
         EventSystem.InvokeEvent(EventType.UPDATE_LANGUAGE);
     }
 
+    public void SetFlagColor(Color color)
+    {
+        PlayerPrefs.SetFloat("Flag_R", color.r);
+        PlayerPrefs.SetFloat("Flag_G", color.g);
+        PlayerPrefs.SetFloat("Flag_B", color.b);
+    }
+
+    public Color GetFlagColor()
+    {
+        if (PlayerPrefs.HasKey("Flag_R"))
+        {
+            return new Color(PlayerPrefs.GetFloat("Flag_R"), PlayerPrefs.GetFloat("Flag_G"), PlayerPrefs.GetFloat("Flag_B"));
+        }
+        else
+        {
+            // default blue color for flags
+            return new Color(93f / 255f, 172f / 255f, 255f / 255f);
+        }
+    }
+
+    public void SetBombColor(Color color)
+    {
+        PlayerPrefs.SetFloat("Bomb_R", color.r);
+        PlayerPrefs.SetFloat("Bomb_G", color.g);
+        PlayerPrefs.SetFloat("Bomb_B", color.b);
+    }
+
+    public Color GetBombColor()
+    {
+        if (PlayerPrefs.HasKey("Bomb_R"))
+        {
+            return new Color(PlayerPrefs.GetFloat("Bomb_R"), PlayerPrefs.GetFloat("Bomb_G"), PlayerPrefs.GetFloat("Bomb_B"));
+        }
+        else
+        {
+            // default red color for flags
+            return new Color(1, 0, 0);
+        }
+    }
+
     public Language GetLanguage()
     {
         return activeLanguage;

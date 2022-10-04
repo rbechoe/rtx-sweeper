@@ -6,17 +6,30 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+    [Header("Assignables")]
     [SerializeField]
     private TMP_InputField xTMP;
     [SerializeField]
     private TMP_InputField zTMP;
     [SerializeField]
     private TMP_InputField bombTMP;
-
-    public Button playBtn, asiaBtn, desertBtn, bossBtn, galaxyBtn, graphicsBtn, rtxOnBtn, rtxOffBtn, gardenBtn, gardenPlusBtn, skinsBtn;
-    public Slider BGMSlider, SFXSlider, mainSFXSlider;
-
     public Locker tutorial, arctic, asia, desert, islands, galaxy;
+
+    [Header("Buttons")]
+    public Button playBtn;
+    public Button asiaBtn, desertBtn, bossBtn, galaxyBtn, graphicsBtn, rtxOnBtn, rtxOffBtn, gardenBtn, gardenPlusBtn, skinsBtn;
+
+    [Header("Sliders")]
+    public Slider BGMSlider;
+    public Slider mainSFXSlider, SFXSlider;
+
+    // color picker settings
+    [Header("Customization")]
+    public RawImage flagColor;
+    public RawImage bombColor;
+    public Slider flagR, flagG, flagB, bombR, bombG, bombB;
+    public InputField inputFlagR, inputFlagG, inputFlagB, inputBombR, inputBombG, inputBombB;
+    public ColorPicker flagPicker, bombPicker;
 
     private int xSize;
     private int zSize;
@@ -27,9 +40,11 @@ public class MenuManager : MonoBehaviour
 
     private SteamAPIManager steamAPI;
 
+    private Settings settings;
+
     private void Start()
     {
-        Settings settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
+        settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
         steamAPI = SteamAPIManager.Instance;
         BGMSlider.value = settings.GetBGMVolume();
         SFXSlider.value = settings.GetSFXVolume();
@@ -91,6 +106,30 @@ public class MenuManager : MonoBehaviour
             gardenBtn.gameObject.SetActive(true);
             gardenPlusBtn.gameObject.SetActive(true);
             skinsBtn.gameObject.SetActive(true);
+
+            Color flagColor = settings.GetFlagColor();
+            flagR.value = flagColor.r * 255;
+            flagG.value = flagColor.g * 255;
+            flagB.value = flagColor.b * 255;
+            inputFlagR.text = "" + flagColor.r * 255;
+            inputFlagG.text = "" + flagColor.g * 255;
+            inputFlagB.text = "" + flagColor.b * 255;
+            flagPicker.SetR(flagColor.r * 255, true);
+            flagPicker.SetG(flagColor.g * 255, true);
+            flagPicker.SetB(flagColor.g * 255, true);
+            flagPicker.SetA(255, true);
+
+            Color bombColor = settings.GetBombColor();
+            bombR.value = bombColor.r * 255;
+            bombG.value = bombColor.g * 255;
+            bombB.value = bombColor.b * 255;
+            inputBombR.text = "" + bombColor.r * 255;
+            inputBombG.text = "" + bombColor.g * 255;
+            inputBombB.text = "" + bombColor.b * 255;
+            bombPicker.SetR(bombColor.r * 255, true);
+            bombPicker.SetG(bombColor.g * 255, true);
+            bombPicker.SetB(bombColor.g * 255, true);
+            bombPicker.SetA(255, true);
         }
     }
 
@@ -132,6 +171,12 @@ public class MenuManager : MonoBehaviour
     public void Medium3D()
     {
         NewGame3D();
+    }
+
+    public void UpdateColors()
+    {
+        settings.SetFlagColor(flagColor.color);
+        settings.SetBombColor(bombColor.color);
     }
 
     private void NewGame2D()
