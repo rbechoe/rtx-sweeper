@@ -26,11 +26,11 @@ ui_button_arctic	Arctic	Noordpoolgebied	Arktis	Ártico	Arctique	北極	북극	�
 ui_button_islands	Secret Islands	Geheime eilanden	Geheiminseln	Islas secretas	Îles secrètes	秘密の島	비밀 제도	秘密島嶼	Секретные острова	गुप्त द्वीप
 ui_button_garden	Garden	Tuin	Garten	Jardín	Jardin	公園	정원	花園	Сад	बगीचा
 ui_button_garden_plus	Garden Plus	Tuin plus	Garten Plus	Jardín más	Jardin plus	ガーデンプラス	가든 플러스	花園加	Сад плюс	उद्यान -प्लस
-ui_button_music	Background Music	Achtergrondmuziek	Hintergrundmusik	Música de fondo	Musique de fond	バックグラウンドミュージック	배경 음악	背景音樂	Фоновая музыка	पार्श्व संगीत
-ui_button_side_sfx	Ambient Sounds	Omgevingsgeluiden	Umgebungsgeräusche	Sonidos ambientales	Sons ambiants	アンビエントサウンド	주변 소리	環境聲音	Окружающие звуки	परिवेशी आवाज़
-ui_button_main_sfx	Main Sounds	Hoofdgeluiden	Hauptgeräusche	Sonidos principales	Sons principaux	主な音	메인 소리	主要聲音	Основные звуки	मुख्य आवाज़
-ui_button_rtx_on	RTX On	RTX op	RTX auf	Rtx en	RTX sur	rtx on	rtx on	RTX打開	Rtx on	आरटीएक्स ऑन
-ui_button_rtx_off	RTX Off	RTX UIT	RTX aus	Rtx apagado	Rtx off	rtxオフ	RTX OFF	RTX關閉	Rtx off	आरटीएक्स ऑफ
+ui_button_music	Music	Muziek	Musik	Música	Musique	音楽	음악	音樂	Музыка	संगीत
+ui_button_side_sfx	Ambience	Sfeer	Ambiente	Ambiente	Ambiance	雰囲気	분위기	環境	Атмосфера	माहौल
+ui_button_main_sfx	Effects	Effecten	Auswirkungen	Efectos	Effets	効果	효과	效果	Последствия	प्रभाव
+ui_button_rtx_on	RTX On	RTX Aan	RTX auf	Rtx en	RTX sur	rtx on	rtx on	RTX打開	Rtx on	आरटीएक्स ऑन
+ui_button_rtx_off	RTX Off	RTX Uit	RTX aus	Rtx apagado	Rtx off	rtxオフ	RTX OFF	RTX關閉	Rtx off	आरटीएक्स ऑफ
 ui_button_reset	Reset	Resetten	Zurücksetzen	Reiniciar	Réinitialiser	リセット	초기화	重置	Перезагрузить	रीसेट
 ui_button_area_select	Area Select	Gebied selecteren	Bereich auswählen	Área seleccionada	Sélection de zone	エリアセレクト	영역 선택	選擇區域	Выбор области	क्षेत्र चयन
 ui_button_main_menu	Main Menu	Hoofdmenu	Hauptmenü	Menú principal	Menu principal	メインメニュー	메인 메뉴	主菜單	Главное меню	मुख्य मेन्यू
