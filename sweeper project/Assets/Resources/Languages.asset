@@ -479,6 +479,30 @@ MonoBehaviour:
     - "\u4E3B\u83DC\u55AE"
     - "\u0413\u043B\u0430\u0432\u043D\u043E\u0435 \u043C\u0435\u043D\u044E"
     - "\u092E\u0941\u0916\u094D\u092F \u092E\u0947\u0928\u094D\u092F\u0942"
+  - id: ui_button_skins
+    translation:
+    - Customization
+    - Maatwerk
+    - Anpassung
+    - "Personalizaci\xF3n"
+    - Personnalisation
+    - "\u30AB\u30B9\u30BF\u30DE\u30A4\u30BA"
+    - "\uC0AC\uC6A9\uC790 \uC815\uC758"
+    - "\u5B9A\u5236"
+    - "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430"
+    - "\u0905\u0928\u0941\u0915\u0942\u0932\u0928"
+  - id: ui_window_skins
+    translation:
+    - Create a custom flag color
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
   - id: 
     translation:
     - 

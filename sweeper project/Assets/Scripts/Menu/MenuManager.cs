@@ -26,10 +26,9 @@ public class MenuManager : MonoBehaviour
     // color picker settings
     [Header("Customization")]
     public RawImage flagColor;
-    public RawImage bombColor;
-    public Slider flagR, flagG, flagB, bombR, bombG, bombB;
-    public InputField inputFlagR, inputFlagG, inputFlagB, inputBombR, inputBombG, inputBombB;
-    public ColorPicker flagPicker, bombPicker;
+    public Slider flagR, flagG, flagB;
+    public TMP_InputField inputFlagR, inputFlagG, inputFlagB;
+    public ColorPicker flagPicker;
 
     private int xSize;
     private int zSize;
@@ -114,22 +113,10 @@ public class MenuManager : MonoBehaviour
             inputFlagR.text = "" + flagColor.r * 255;
             inputFlagG.text = "" + flagColor.g * 255;
             inputFlagB.text = "" + flagColor.b * 255;
-            flagPicker.SetR(flagColor.r * 255, true);
-            flagPicker.SetG(flagColor.g * 255, true);
-            flagPicker.SetB(flagColor.g * 255, true);
+            flagPicker.SetRV(flagColor.r * 255);
+            flagPicker.SetGV(flagColor.g * 255);
+            flagPicker.SetBV(flagColor.b * 255);
             flagPicker.SetA(255, true);
-
-            Color bombColor = settings.GetBombColor();
-            bombR.value = bombColor.r * 255;
-            bombG.value = bombColor.g * 255;
-            bombB.value = bombColor.b * 255;
-            inputBombR.text = "" + bombColor.r * 255;
-            inputBombG.text = "" + bombColor.g * 255;
-            inputBombB.text = "" + bombColor.b * 255;
-            bombPicker.SetR(bombColor.r * 255, true);
-            bombPicker.SetG(bombColor.g * 255, true);
-            bombPicker.SetB(bombColor.g * 255, true);
-            bombPicker.SetA(255, true);
         }
     }
 
@@ -176,7 +163,6 @@ public class MenuManager : MonoBehaviour
     public void UpdateColors()
     {
         settings.SetFlagColor(flagColor.color);
-        settings.SetBombColor(bombColor.color);
     }
 
     private void NewGame2D()

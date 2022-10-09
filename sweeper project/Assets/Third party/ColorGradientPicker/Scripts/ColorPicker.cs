@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class ColorPicker : MonoBehaviour
 {
     /// <summary>
@@ -37,6 +38,9 @@ public class ColorPicker : MonoBehaviour
     public Slider rComponent;
     public Slider gComponent;
     public Slider bComponent;
+    public TMP_InputField rComp;
+    public TMP_InputField gComp;
+    public TMP_InputField bComp;
     public RawImage colorComponent;
 
     private void Awake()
@@ -98,11 +102,11 @@ public class ColorPicker : MonoBehaviour
             modifiedColor = modifiedHsv.ToColor();
         }
         rComponent.value = modifiedColor.r;
-        rComponent.transform.GetChild(3).GetComponent<InputField>().text = modifiedColor.r.ToString();
+        rComponent.transform.GetChild(3).GetComponent<TMP_InputField>().text = modifiedColor.r.ToString();
         gComponent.value = modifiedColor.g;
-        gComponent.transform.GetChild(3).GetComponent<InputField>().text = modifiedColor.g.ToString();
+        gComponent.transform.GetChild(3).GetComponent<TMP_InputField>().text = modifiedColor.g.ToString();
         bComponent.value = modifiedColor.b;
-        bComponent.transform.GetChild(3).GetComponent<InputField>().text = modifiedColor.b.ToString();
+        bComponent.transform.GetChild(3).GetComponent<TMP_InputField>().text = modifiedColor.b.ToString();
         mainComponent.value = (float)modifiedHsv.H;
         rComponent.transform.GetChild(0).GetComponent<RawImage>().color = new Color32(255, modifiedColor.g, modifiedColor.b, 255);
         rComponent.transform.GetChild(0).GetChild(0).GetComponent<RawImage>().color = new Color32(0, modifiedColor.g, modifiedColor.b, 255);
@@ -144,56 +148,74 @@ public class ColorPicker : MonoBehaviour
     }
 
     //gets r Slider value
-    public void SetR(float value, bool forced = false)
+    public void SetR()
     {
-        if (interact || forced)
+        if (interact)
         {
-            modifiedColor.r = (byte)value;
+            modifiedColor.r = (byte)rComponent.value;
             RecalculateMenu(true);
         }
     }
+    //sets r Slider value
+    public void SetRV(float value)
+    {
+        modifiedColor.r = (byte)value;
+        RecalculateMenu(true);
+    }
     //gets r InputField value
-    public void SetR(string value)
+    public void SetRI()
     {
         if(interact)
         {
-            modifiedColor.r = (byte)Mathf.Clamp(int.Parse(value), 0, 255);
+            modifiedColor.r = (byte)Mathf.Clamp(int.Parse(rComp.text), 0, 255);
             RecalculateMenu(true);
         }
     }
     //gets g Slider value
-    public void SetG(float value, bool forced = false)
+    public void SetG()
     {
-        if(interact || forced)
+        if(interact)
         {
-            modifiedColor.g = (byte)value;
+            modifiedColor.g = (byte)gComponent.value;
             RecalculateMenu(true);
         }
     }
+    //sets g Slider value
+    public void SetGV(float value)
+    {
+        modifiedColor.g = (byte)value;
+        RecalculateMenu(true);
+    }
     //gets g InputField value
-    public void SetG(string value)
+    public void SetGI()
     {
         if (interact)
         {
-            modifiedColor.g = (byte)Mathf.Clamp(int.Parse(value), 0, 255);
+            modifiedColor.g = (byte)Mathf.Clamp(int.Parse(gComp.text), 0, 255);
             RecalculateMenu(true);
         }
     }
     //gets b Slider value
-    public void SetB(float value, bool forced = false)
-    {
-        if (interact || forced)
-        {
-            modifiedColor.b = (byte)value;
-            RecalculateMenu(true);
-        }
-    }
-    //gets b InputField value
-    public void SetB(string value)
+    public void SetB()
     {
         if (interact)
         {
-            modifiedColor.b = (byte)Mathf.Clamp(int.Parse(value), 0, 255);
+            modifiedColor.b = (byte)bComponent.value;
+            RecalculateMenu(true);
+        }
+    }
+    //sets b Slider value
+    public void SetBV(float value)
+    {
+        modifiedColor.b = (byte)value;
+        RecalculateMenu(true);
+    }
+    //gets b InputField value
+    public void SetBI()
+    {
+        if (interact)
+        {
+            modifiedColor.b = (byte)Mathf.Clamp(int.Parse(bComp.text), 0, 255);
             RecalculateMenu(true);
         }
     }
@@ -228,33 +250,16 @@ public class ColorPicker : MonoBehaviour
             }
         }
     }
-    //cancel button call
-    public void CCancel()
-    {
-        Cancel();
-    }
-    /// <summary>
-    /// Manually cancel the ColorPicker and recover the default value
-    /// </summary>
     public static void Cancel()
     {
         modifiedColor = originalColor;
         Done();
     }
-    //done button call
-    public void CDone()
-    {
-        Done();
-    }
-    /// <summary>
-    /// Manually close the ColorPicker and apply the selected color
-    /// </summary>
     public static void Done()
     {
         done = true;
         onCC?.Invoke(modifiedColor);
         onCS?.Invoke(modifiedColor);
-        //instance.transform.gameObject.SetActive(false);
     }
     //HSV helper class
     private sealed class HSV

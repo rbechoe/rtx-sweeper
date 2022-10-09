@@ -148,26 +148,6 @@ public class Settings : MonoBehaviour
         }
     }
 
-    public void SetBombColor(Color color)
-    {
-        PlayerPrefs.SetFloat("Bomb_R", color.r);
-        PlayerPrefs.SetFloat("Bomb_G", color.g);
-        PlayerPrefs.SetFloat("Bomb_B", color.b);
-    }
-
-    public Color GetBombColor()
-    {
-        if (PlayerPrefs.HasKey("Bomb_R"))
-        {
-            return new Color(PlayerPrefs.GetFloat("Bomb_R"), PlayerPrefs.GetFloat("Bomb_G"), PlayerPrefs.GetFloat("Bomb_B"));
-        }
-        else
-        {
-            // default red color for flags
-            return new Color(1, 0, 0);
-        }
-    }
-
     public Language GetLanguage()
     {
         return activeLanguage;
