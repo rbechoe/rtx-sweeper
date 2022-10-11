@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
+[RequireComponent(typeof(Text))]
 public class LocalizedTextComponent : MonoBehaviour
 {
     public static LanguageDatabase LANGUAGE_DATABASE
@@ -13,7 +13,7 @@ public class LocalizedTextComponent : MonoBehaviour
         set => LANGUAGE_DATABASE = value;
     }
 
-    private TextMeshProUGUI textComponent;
+    private Text textComponent;
     [SerializeField]
     private string TextIdentifier;
 
@@ -21,7 +21,7 @@ public class LocalizedTextComponent : MonoBehaviour
 
     public void Awake()
     {
-        textComponent = GetComponent<TextMeshProUGUI>();
+        textComponent = GetComponent<Text>();
         EventSystem.AddListener(EventType.UPDATE_LANGUAGE, RefreshLanguage);
     }
 
@@ -47,6 +47,5 @@ public class LocalizedTextComponent : MonoBehaviour
     {
         language = Settings.Instance.GetLanguage();
         textComponent.text = LANGUAGE_DATABASE.GetSentence(TextIdentifier, language);
-        // TODO update font of language as well so that it wont go blank
     }
 }
