@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 using System;
 
+[RequireComponent(typeof(Dropdown))]
 public class LanguageChanger : MonoBehaviour
 {
-    TMP_Dropdown myDrownDown;
+    Dropdown myDrownDown;
 
     void Start()
     {
-        myDrownDown = GetComponent<TMP_Dropdown>();
+        myDrownDown = GetComponent<Dropdown>();
 
         if (PlayerPrefs.HasKey("Language"))
         {
