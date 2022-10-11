@@ -105,6 +105,7 @@ public class MenuManager : MonoBehaviour
             gardenBtn.gameObject.SetActive(true);
             gardenPlusBtn.gameObject.SetActive(true);
             skinsBtn.gameObject.SetActive(true);
+            settings.HasSkins();
 
             Color flagColor = settings.GetFlagColor();
             flagR.value = flagColor.r * 255;

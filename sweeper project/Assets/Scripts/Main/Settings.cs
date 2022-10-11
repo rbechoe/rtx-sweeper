@@ -9,6 +9,7 @@ public class Settings : MonoBehaviour
     private float SFXVolume = 0.1f, BGMVolume = 0.1f, mainSFXVolume = 1f;
 
     private bool rtxEnabled = false;
+    private bool hasSkins = false;
 
     public Language activeLanguage = Language.en;
 
@@ -137,19 +138,24 @@ public class Settings : MonoBehaviour
 
     public Color GetFlagColor()
     {
-        if (PlayerPrefs.HasKey("Flag_R"))
+        if (PlayerPrefs.HasKey("Flag_R") && hasSkins)
         {
             return new Color(PlayerPrefs.GetFloat("Flag_R"), PlayerPrefs.GetFloat("Flag_G"), PlayerPrefs.GetFloat("Flag_B"));
         }
         else
         {
             // default blue color for flags
-            return new Color(93f / 255f, 172f / 255f, 255f / 255f);
+            return new Color(123f / 255f, 172f / 255f, 255f / 255f);
         }
     }
 
     public Language GetLanguage()
     {
         return activeLanguage;
+    }
+
+    public void HasSkins()
+    {
+        hasSkins = true;
     }
 }
