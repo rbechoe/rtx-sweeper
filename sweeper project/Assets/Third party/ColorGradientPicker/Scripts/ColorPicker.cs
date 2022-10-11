@@ -42,6 +42,7 @@ public class ColorPicker : MonoBehaviour
     public TMP_InputField gComp;
     public TMP_InputField bComp;
     public RawImage colorComponent;
+    public PreviewColor previewColor;
 
     private void Awake()
     {
@@ -119,6 +120,7 @@ public class ColorPicker : MonoBehaviour
         positionIndicator.anchorMax = positionIndicator.anchorMin;
         colorComponent.color = modifiedColor;
         onCC?.Invoke(modifiedColor);
+        previewColor.UpdateColor();
         interact = true;
     }
 

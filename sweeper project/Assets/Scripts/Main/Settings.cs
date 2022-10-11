@@ -145,7 +145,7 @@ public class Settings : MonoBehaviour
         else
         {
             // default blue color for flags
-            return new Color(123f / 255f, 172f / 255f, 255f / 255f);
+            return new Color(0f / 255f, 123f / 255f, 255f / 255f);
         }
     }
 
