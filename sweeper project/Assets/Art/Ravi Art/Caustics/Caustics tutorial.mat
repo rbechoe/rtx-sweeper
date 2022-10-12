@@ -44,12 +44,12 @@ Material:
     m_Ints: []
     m_Floats:
     - Caustic_Alpha: 1
-    - Caustic_Brightness: 0.239
-    - Caustic_Distortion_Factor: 1.39
-    - Caustic_Distortion_Speed: 0.61
+    - Caustic_Brightness: 0.35
+    - Caustic_Distortion_Factor: 1.68
+    - Caustic_Distortion_Speed: 0.39
     - Caustic_Speed: -0.005
     - Caustic_Texture_Rotation: 90
-    - Caustic_Tile: 0.04
+    - Caustic_Tile: 0.07
     - _AddPrecomputedVelocity: 0
     - _AlphaCutoffEnable: 0
     - _AlphaDstBlend: 0
@@ -98,7 +98,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - Caustic_Color: {r: 0.08726415, g: 0.34746, b: 0.5, a: 1}
+    - Caustic_Color: {r: 0.14578141, g: 0.3647322, b: 0.49056602, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
