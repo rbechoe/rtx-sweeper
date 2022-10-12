@@ -68,7 +68,7 @@ public class GameUI : MonoBehaviour
 
     private void WinGame()
     {
-        victoryTimeText.text = "<mspace=mspace=21>" + Math.Round(currentTime, 3).ToString("N3");
+        victoryTimeText.text = "" + Math.Round(currentTime, 3).ToString("N3");
         victoryText.SetActive(true);
     }
 
@@ -91,7 +91,7 @@ public class GameUI : MonoBehaviour
     private void SetTimer(float time)
     {
         currentTime = time;
-        timeText.text = "<mspace=mspace=21>" + (int)currentTime;
+        timeText.text = "" + (int)currentTime;
     }
 
     private void SetBombsLeft(int amount)
@@ -122,6 +122,6 @@ public class GameUI : MonoBehaviour
 
     public void SetEfficiency(float value)
     {
-        victorySkillText.text = "<mspace=mspace=21>" + Math.Round(value, 3) + "%";
+        victorySkillText.text = "" + Math.Round(value, 3) + "%";
     }
 }
