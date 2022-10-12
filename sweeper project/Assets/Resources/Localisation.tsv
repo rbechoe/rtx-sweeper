@@ -35,8 +35,19 @@ ui_button_reset	Reset	Reset	Zurücksetzen	Reiniciar	Réinitialiser	リセット	
 ui_button_area_select	Area Select	Gebied selecteren	Bereich auswählen	Área seleccionada	Sélection de zone	エリアセレクト	영역 선택	選擇區域	Выбор области	क्षेत्र चयन
 ui_button_main_menu	Main Menu	Hoofdmenu	Hauptmenü	Menú principal	Menu principal	メインメニュー	메인 메뉴	主菜單	Главное меню	मुख्य मेन्यू
 ui_button_skins	Customization	Maatwerk	Anpassung	Personalización	Personnalisation	カスタマイズ	사용자 정의	定制	Настройка	अनुकूलन
+ui_button_play_again	Again	Opnieuw	Wieder	Otra vez	Encore	また	다시	再次	Опять таки	फिर से
+ui_button_grid_create	Generate	Genereren	Generieren	Generar	Générer	生成	생성하다	產生	Генерировать	बनाना
+ui_button_grid_length	Length	Lengte	Länge	Longitud	Longueur	長さ	길이	長度	Длина	लंबाई
+ui_button_grid_width	Width	Breedte	Breite	Ancho	Largeur	幅	너비	寬度	Ширина	चौड़ाई
+ui_button_grid_bomb	Bombs	Bommen	Bomben	Bombas	Bombes	爆弾	폭탄	炸彈	Бомбы	बम
+										
 ui_window_skins	Create a custom flag color	Maak een aangepaste vlagkleur	Erstellen Sie eine benutzerdefinierte Flaggenfarbe	Crear un color de bandera personalizado	Créer une couleur de drapeau personnalisé	カスタムフラグの色を作成します	사용자 정의 플래그 색상을 만듭니다	創建自定義標誌顏色	Создайте пользовательский цвет флага	एक कस्टम ध्वज रंग बनाएं
 ui_window_flags	Choose a flag	Kies een vlag	Wählen Sie eine Flagge	Elige una bandera	Choisissez un drapeau	フラグを選択してください	깃발을 선택하십시오	選擇一個標誌	Выберите флаг	एक झंडा चुनें
+ui_window_victory	Winner	Winnaar	Gewinner	Ganador	Gagnant	勝者	우승자	優勝者	Победитель	विजेता
+ui_window_game_over	Game Over	Spel is over	Spiel ist aus	Juego terminado	Jeu terminé	ゲームオーバー	게임 끝	遊戲結束	Игра закончена	खेल खत्म
+ui_window_time	Time	Tijd	Zeit	Tiempo	Temps	時間	시간	時間	Время	समय
+ui_window_skill	Skill	Vaardigheid	Können	Habilidad	Compétence	スキル	기술	技能	Навык	कौशल
+ui_window_version	Version:	Versie:	Ausführung:	Versión:	Version:	バージョン：	버전:	版本：	Версия:	संस्करण:
 										
 asia_dialogue_1	The beautiful environment of Asia is about to get destroyed	De prachtige omgeving van Azië staat op het punt vernietigd te worden	Die schöne Umgebung Asiens wird kurz vor dem Zerstören	El hermoso ambiente de Asia está a punto de ser destruido	Le bel environnement d'Asie est sur le point d'être détruit	アジアの美しい環境は破壊されようとしています	아시아의 아름다운 환경은 파괴 될 예정입니다	亞洲美麗的環境即將被摧毀	Прекрасная обстановка Азии собирается уничтожить	एशिया का सुंदर वातावरण नष्ट होने वाला है
 asia_dialogue_2	Solve the puzzles quickly to protect the nature!	Los de puzzels snel op om de natuur te beschermen!	Lösen Sie die Rätsel schnell, um die Natur zu schützen!	¡Resuelve los rompecabezas rápidamente para proteger la naturaleza!	Résolvez rapidement les puzzles pour protéger la nature!	自然を保護するためにパズルをすばやく解決してください！	자연을 보호하기 위해 퍼즐을 빠르게 해결하십시오!	迅速解決難題以保護自然！	Решите головоломки быстро, чтобы защитить природу!	प्रकृति की रक्षा के लिए पहेलियों को जल्दी से हल करें!

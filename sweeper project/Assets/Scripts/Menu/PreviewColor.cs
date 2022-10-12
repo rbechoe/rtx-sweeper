@@ -17,7 +17,7 @@ public class PreviewColor : MonoBehaviour
      * round
      * */
 
-    private int index = 0; // store this value and load it as well
+    private int index = 0;
 
     void Start()
     {
