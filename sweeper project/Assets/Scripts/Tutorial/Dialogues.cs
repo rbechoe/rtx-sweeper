@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Dialogues : MonoBehaviour
@@ -9,7 +9,7 @@ public class Dialogues : MonoBehaviour
     public List<string> lines;
     public List<int> waitTimes;
 
-    public TextMeshProUGUI text;
+    public Text text;
     public GameObject dialogueBar;
 
     public float startDelay, endDelay;

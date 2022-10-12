@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 namespace Tiles2D
 {
@@ -31,7 +31,7 @@ namespace Tiles2D
         [Header("Assignables")]
         public GameObject managerObj;
         public GameObject flagObj;
-        public TMP_InputField widthText, lengthText, bombText;
+        public InputField widthText, lengthText, bombText;
 
         private void Start()
         {

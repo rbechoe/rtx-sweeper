@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class GameUI : MonoBehaviour
 {
     public GameObject victoryText, loserText;
-    public TextMeshProUGUI bombText;
-    public TextMeshProUGUI timeText;
-    public TextMeshProUGUI victoryTimeText;
-    public TextMeshProUGUI victorySkillText;
+    public Text bombText;
+    public Text timeText;
+    public Text victoryTimeText;
+    public Text victorySkillText;
     private CameraManager cameraManager;
 
     public Slider BGMSlider, SFXSlider, mainSFXSlider;

@@ -177,6 +177,17 @@ MonoBehaviour:
   startColor: {r: 0, g: 0, b: 1, a: 1}
   defaultColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   selectColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &88592033 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8994905415259585763, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+  m_PrefabInstance: {fileID: 242794160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &100842328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2224,6 +2235,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextIdentifier: ui_button_grid_bomb
+--- !u!114 &908426610 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8996251870748440809, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+  m_PrefabInstance: {fileID: 242794160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &953285563
 GameObject:
   m_ObjectHideFlags: 0
@@ -2396,6 +2418,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104831124}
   m_CullTransparentMesh: 1
+--- !u!114 &1165027681 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 605720412778469442, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+  m_PrefabInstance: {fileID: 242794160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1294549205
 GameObject:
   m_ObjectHideFlags: 0
@@ -2640,6 +2673,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Generate
+--- !u!114 &1588197878 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 351626050850239124, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+  m_PrefabInstance: {fileID: 242794160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1638105910
 GameObject:
   m_ObjectHideFlags: 0
@@ -3196,9 +3240,9 @@ MonoBehaviour:
   bombCount: 0
   managerObj: {fileID: 23770301}
   flagObj: {fileID: 646499388}
-  widthText: {fileID: 0}
-  lengthText: {fileID: 0}
-  bombText: {fileID: 0}
+  widthText: {fileID: 457051396}
+  lengthText: {fileID: 1972387889}
+  bombText: {fileID: 485947409}
 --- !u!114 &1947806620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3227,10 +3271,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   victoryText: {fileID: 242794162}
   loserText: {fileID: 242794161}
-  bombText: {fileID: 0}
-  timeText: {fileID: 0}
-  victoryTimeText: {fileID: 0}
-  victorySkillText: {fileID: 0}
+  bombText: {fileID: 1165027681}
+  timeText: {fileID: 88592033}
+  victoryTimeText: {fileID: 1588197878}
+  victorySkillText: {fileID: 908426610}
   BGMSlider: {fileID: 242794165}
   SFXSlider: {fileID: 242794164}
   mainSFXSlider: {fileID: 242794163}
