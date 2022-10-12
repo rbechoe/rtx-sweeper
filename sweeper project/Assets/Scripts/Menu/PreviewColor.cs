@@ -42,7 +42,7 @@ public class PreviewColor : MonoBehaviour
     public void PreviousFlag()
     {
         index--;
-        if (index <= 0) index = flags.Length - 1;
+        if (index < 0) index = flags.Length - 1;
         myImg.texture = flags[index];
         Settings.Instance.SetFlagIndex(index);
     }

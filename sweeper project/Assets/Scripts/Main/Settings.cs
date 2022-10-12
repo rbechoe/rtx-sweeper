@@ -161,9 +161,9 @@ public class Settings : MonoBehaviour
 
     public int GetFlagIndex()
     {
-        if (PlayerPrefs.HasKey("Flag_Index") && hasSkins)
+        if (PlayerPrefs.HasKey("Flag_Type") && hasSkins)
         {
-            return PlayerPrefs.GetInt("Flag_Index");
+            return PlayerPrefs.GetInt("Flag_Type");
         }
         else
         {
@@ -174,6 +174,6 @@ public class Settings : MonoBehaviour
 
     public void SetFlagIndex(int flagIndex)
     {
-        PlayerPrefs.SetFloat("Flag_Index", flagIndex);
+        PlayerPrefs.SetInt("Flag_Type", flagIndex);
     }
 }
