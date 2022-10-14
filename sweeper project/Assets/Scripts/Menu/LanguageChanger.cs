@@ -2,32 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
-using UnityEngine.UI;
 using System;
 
-[RequireComponent(typeof(Dropdown))]
 public class LanguageChanger : MonoBehaviour
 {
-    Dropdown myDrownDown;
+    int curLanguage;
+    public LanguagePiece[] pieces;
 
     void Start()
     {
-        myDrownDown = GetComponent<Dropdown>();
-
         if (PlayerPrefs.HasKey("Language"))
         {
-            myDrownDown.value = PlayerPrefs.GetInt("Language");
+            curLanguage = PlayerPrefs.GetInt("Language");
         }
         else
         {
             string localLang = CultureInfo.InstalledUICulture.TwoLetterISOLanguageName;
-            myDrownDown.value = (int)Enum.Parse(typeof(Language), localLang);
+            curLanguage = (int)Enum.Parse(typeof(Language), localLang);
         }
+
+        UpdateLanguage(curLanguage);
     }
 
-    public void UpdateLanguage()
+    public void UpdateLanguage(int option)
     {
-        int option = myDrownDown.value;
         Settings.Instance.SetLanguage((Language)option);
+        curLanguage = option;
+
+        for (int i = 0; i < pieces.Length; i++)
+        {
+            if (i == curLanguage)
+            {
+                pieces[i].Select();
+            }
+            else
+            {
+                pieces[i].Deselect();
+            }
+        }
     }
 }

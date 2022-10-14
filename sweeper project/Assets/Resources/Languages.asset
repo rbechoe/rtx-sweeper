@@ -446,7 +446,7 @@ MonoBehaviour:
   - id: ui_button_reset
     translation:
     - Reset
-    - Reset
+    - Resetten
     - "Zur\xFCcksetzen"
     - Reiniciar
     - "R\xE9initialiser"
@@ -481,16 +481,16 @@ MonoBehaviour:
     - "\u092E\u0941\u0916\u094D\u092F \u092E\u0947\u0928\u094D\u092F\u0942"
   - id: ui_button_skins
     translation:
-    - Customization
-    - Maatwerk
-    - Anpassung
-    - "Personalizaci\xF3n"
-    - Personnalisation
-    - "\u30AB\u30B9\u30BF\u30DE\u30A4\u30BA"
-    - "\uC0AC\uC6A9\uC790 \uC815\uC758"
-    - "\u5B9A\u5236"
-    - "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430"
-    - "\u0905\u0928\u0941\u0915\u0942\u0932\u0928"
+    - Visuals
+    - Beelden
+    - Bilder
+    - Visuales
+    - Visuels
+    - "\u30D3\u30B8\u30E5\u30A2\u30EB"
+    - "\uBE44\uC8FC\uC5BC"
+    - "\u8996\u89BA\u6548\u679C"
+    - "\u0412\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0435 \u044D\u0444\u0444\u0435\u043A\u0442\u044B"
+    - "\u0935\u093F\u091C\u0941\u0905\u0932\u094D\u0938"
   - id: ui_button_play_again
     translation:
     - Again
@@ -649,6 +649,30 @@ MonoBehaviour:
     - "\u7248\u672C\uFF1A"
     - "\u0412\u0435\u0440\u0441\u0438\u044F:"
     - "\u0938\u0902\u0938\u094D\u0915\u0930\u0923:"
+  - id: ui_window_rtx
+    translation:
+    - RTX
+    - RTX
+    - RTX
+    - Rtx
+    - Rtx
+    - RTX
+    - RTX
+    - RTX
+    - RTX
+    - "\u0906\u0930\u091F\u0940\u090F\u0915\u094D\u0938"
+  - id: ui_window_language
+    translation:
+    - Language
+    - Taal
+    - Sprache
+    - Idioma
+    - Langue
+    - "\u8A00\u8A9E"
+    - "\uC5B8\uC5B4"
+    - "\u8A9E"
+    - "\u042F\u0437\u044B\u043A"
+    - "\u092D\u093E\u0937\u093E"
   - id: 
     translation:
     - 
