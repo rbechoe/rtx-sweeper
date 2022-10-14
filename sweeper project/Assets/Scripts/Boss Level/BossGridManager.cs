@@ -44,12 +44,6 @@ public class BossGridManager : BaseGridManager
             }
         }
 
-        difficultyStars = "Difficulty: ";
-        for (int i = 0; i < difficulty; i++)
-        {
-            difficultyStars += "*";
-        }
-
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
     }
@@ -274,8 +268,9 @@ public class BossGridManager : BaseGridManager
     protected override void SetText(AccountData data = null)
     {
         if (data == null) data = DS.GetUserData();
-            
-        infoText.text = difficultyStars + "\n" +
+
+        stars.text = "" + difficulty;
+        infoText.text = 
             "Time: " + Helpers.RoundToThreeDecimals(data.bossTime1) + "s\n" +
             "Skill: " + Helpers.RoundToThreeDecimals(data.bossEfficiency1) + "%\n" +
             "Victories: " + data.bossVictories1 + "\n";

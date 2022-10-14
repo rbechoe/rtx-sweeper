@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class BaseGridManager : MonoBehaviour
 {
@@ -34,7 +34,7 @@ public abstract class BaseGridManager : MonoBehaviour
     protected DataSerializer DS;
     public GameUI uiManager;
 
-    public TextMeshProUGUI infoText;
+    public Text infoText, stars;
 
     [Header("Level specific")]
     [Tooltip("1 = arctic, 2 = asia, 3 = desert, 4 = tutorial")]
@@ -45,7 +45,6 @@ public abstract class BaseGridManager : MonoBehaviour
     public Color defaultColor = Color.grey;
     public Color selectColor = Color.green;
 
-    protected string difficultyStars;
     protected bool firstTime = true; // used to avoid bug, clean solution needs to be fixed!
 
     protected abstract void Start();

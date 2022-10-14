@@ -14,12 +14,6 @@ public class GridManager2D : BaseGridManager
         Helpers.NestedChildToGob<Tile2D>(transform, tiles);
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
 
-        difficultyStars = "Difficulty: ";
-        for (int i = 0; i < difficulty; i++)
-        {
-            difficultyStars += "*";
-        }
-
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
     }
@@ -315,22 +309,23 @@ public class GridManager2D : BaseGridManager
         switch (area)
         {
             case 1: // arctic
+                stars.text = "" + difficulty;
                 switch (level)
                 {
                     case 1: // level 1
-                        infoText.text = difficultyStars + "\n" +
+                        infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.arcticTime1) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.arcticEfficiency1) + "%\n" +
                             "Victories: " + data.arcticVictories1 + "\n";
                         break;
                     case 2: // level 2
-                        infoText.text = difficultyStars + "\n" +
+                        infoText.text = 
                             "Time: " + Helpers.RoundToThreeDecimals(data.arcticTime2) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.arcticEfficiency2) + "%\n" +
                             "Victories: " + data.arcticVictories2 + "\n";
                         break;
                     case 3: // level 3
-                        infoText.text = difficultyStars + "\n" +
+                        infoText.text = 
                             "Time: " + Helpers.RoundToThreeDecimals(data.arcticTime3) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.arcticEfficiency3) + "%\n" +
                             "Victories: " + data.arcticVictories3 + "\n";
@@ -339,22 +334,23 @@ public class GridManager2D : BaseGridManager
                 break;
 
             case 2: // asia
+                stars.text = "" + difficulty;
                 switch (level)
                 {
                     case 1: // level 1
-                        infoText.text = difficultyStars + "\n" +
+                        infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.asiaTime1) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.asiaEfficiency1) + "%\n" +
                             "Victories: " + data.asiaVictories1 + "\n";
                         break;
                     case 2: // level 2
-                        infoText.text = difficultyStars + "\n" +
+                        infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.asiaTime2) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.asiaEfficiency2) + "%\n" +
                             "Victories: " + data.asiaVictories2 + "\n";
                         break;
                     case 3: // level 3
-                        infoText.text = difficultyStars + "\n" +
+                        infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.asiaTime3) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.asiaEfficiency3) + "%\n" +
                             "Victories: " + data.asiaVictories3 + "\n";
@@ -363,22 +359,23 @@ public class GridManager2D : BaseGridManager
                 break;
 
             case 3: // desert
+                stars.text = "" + difficulty;
                 switch (level)
                 {
                     case 1: // level 1
-                        infoText.text = difficultyStars + "\n" +
+                        infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.desertTime1) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.desertEfficiency1) + "%\n" +
                             "Victories: " + data.desertVictories1 + "\n";
                         break;
                     case 2: // level 2
-                        infoText.text = difficultyStars + "\n" +
+                        infoText.text = 
                             "Time: " + Helpers.RoundToThreeDecimals(data.desertTime2) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.desertEfficiency2) + "%\n" +
                             "Victories: " + data.desertVictories2 + "\n";
                         break;
                     case 3: // level 3
-                        infoText.text = difficultyStars + "\n" +
+                        infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.desertTime3) + "s\n" +
                             "Efficiency: " + Helpers.RoundToThreeDecimals(data.desertEfficiency3) + "%\n" +
                             "Victories: " + data.desertVictories3 + "\n";

@@ -20,12 +20,6 @@ public class GridManager3D : BaseGridManager
         Helpers.NestedChildToGob<Tile3D>(transform, tiles);
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
 
-        difficultyStars = "Difficulty: "; 
-        for (int i = 0; i < difficulty; i++)
-        {
-            difficultyStars += "*";
-        }
-
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
     }
@@ -270,7 +264,8 @@ public class GridManager3D : BaseGridManager
     {
         if (data == null) data = DS.GetUserData();
 
-        infoText.text = difficultyStars + "\n" +
+        stars.text = "" + difficulty;
+        infoText.text =
             "Time: " + Helpers.RoundToThreeDecimals(data.galaxyTime1) + "s\n" +
             "Skill: " + Helpers.RoundToThreeDecimals(data.galaxyEfficiency1) + "%\n" +
             "Victories: " + data.galaxyVictories1 + "\n";

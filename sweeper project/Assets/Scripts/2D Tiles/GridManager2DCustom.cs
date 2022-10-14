@@ -14,12 +14,6 @@ public class GridManager2DCustom : BaseGridManager
         Helpers.NestedChildToGob<Tile2D>(transform, tiles);
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
 
-        difficultyStars = "Difficulty: ";
-        for (int i = 0; i < difficulty; i++)
-        {
-            difficultyStars += "*";
-        }
-
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
     }
