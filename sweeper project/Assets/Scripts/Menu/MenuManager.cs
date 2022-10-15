@@ -246,4 +246,9 @@ public class MenuManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void OpenSkinsDLC()
+    {
+        Application.OpenURL("https://store.steampowered.com/app/2166670");
+    }
 }
