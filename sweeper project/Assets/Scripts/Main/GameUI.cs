@@ -100,7 +100,7 @@ public class GameUI : MonoBehaviour
         bombText.text = bombAmount.ToString();
     }
 
-    public void NewGame()
+    public void ReturnToMenu()
     {
         SceneManager.LoadScene("Menu");
     }
