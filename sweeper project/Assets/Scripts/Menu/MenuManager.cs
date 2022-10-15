@@ -7,17 +7,12 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     [Header("Assignables")]
-    [SerializeField]
-    private TMP_InputField xTMP;
-    [SerializeField]
-    private TMP_InputField zTMP;
-    [SerializeField]
-    private TMP_InputField bombTMP;
-    public Locker tutorial, arctic, asia, desert, islands, galaxy;
+    public Locker tutorial;
+    public Locker arctic, asia, desert, islands, galaxy;
 
     [Header("Buttons")]
     public Button playBtn;
-    public Button asiaBtn, desertBtn, bossBtn, galaxyBtn, graphicsBtn, rtxOnBtn, rtxOffBtn, gardenBtn, gardenPlusBtn, skinsBtn;
+    public Button asiaBtn, desertBtn, bossBtn, galaxyBtn, graphicsBtn, rtxOnBtn, rtxOffBtn, gardenBtn, skinsBtn;
 
     [Header("Sliders")]
     public Slider BGMSlider;
@@ -39,18 +34,16 @@ public class MenuManager : MonoBehaviour
 
     private SteamAPIManager steamAPI;
 
-    private Settings settings;
-
     private void Start()
     {
-        settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
         steamAPI = SteamAPIManager.Instance;
-        BGMSlider.value = settings.GetBGMVolume();
-        SFXSlider.value = settings.GetSFXVolume();
-        mainSFXSlider.value = settings.GetMainSFXVolume();
+
+        BGMSlider.value = Settings.Instance.GetBGMVolume();
+        SFXSlider.value = Settings.Instance.GetSFXVolume();
+        mainSFXSlider.value = Settings.Instance.GetMainSFXVolume();
 
         // enable disable correct rtx buttons
-        if (settings.GetRTX())
+        if (Settings.Instance.GetRTX())
         {
             rtxOnBtn.gameObject.SetActive(false);
             rtxOffBtn.gameObject.SetActive(true);
@@ -103,11 +96,10 @@ public class MenuManager : MonoBehaviour
         if (accountData.hasCosmetics > 0)
         { 
             gardenBtn.gameObject.SetActive(true);
-            gardenPlusBtn.gameObject.SetActive(true);
             skinsBtn.gameObject.SetActive(true);
-            settings.HasSkins();
+            Settings.Instance.HasSkins();
 
-            Color flagColor = settings.GetFlagColor();
+            Color flagColor = Settings.Instance.GetFlagColor();
             flagR.value = flagColor.r * 255;
             flagG.value = flagColor.g * 255;
             flagB.value = flagColor.b * 255;
@@ -150,9 +142,9 @@ public class MenuManager : MonoBehaviour
 
     public void Custom2D()
     {
-        xSize = int.Parse(xTMP.GetComponent<TMP_InputField>().text);
-        zSize = int.Parse(zTMP.GetComponent<TMP_InputField>().text);
-        bombAmount = int.Parse(bombTMP.GetComponent<TMP_InputField>().text);
+        xSize = 10;
+        zSize = 10;
+        bombAmount = 10;
         NewGame2D();
     }
 
@@ -163,7 +155,7 @@ public class MenuManager : MonoBehaviour
 
     public void UpdateColors()
     {
-        settings.SetFlagColor(flagColor.color);
+        Settings.Instance.SetFlagColor(flagColor.color);
     }
 
     private void NewGame2D()
@@ -228,6 +220,11 @@ public class MenuManager : MonoBehaviour
     public void LoadArctic()
     {
         SceneManager.LoadScene("Arctic");
+    }
+
+    public void LoadGarden()
+    {
+        SceneManager.LoadScene("Garden");
     }
 
     public void LoadGardenPlus()

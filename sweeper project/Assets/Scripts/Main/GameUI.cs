@@ -24,10 +24,10 @@ public class GameUI : MonoBehaviour
         loserText.SetActive(false);
         bombText.text = bombAmount.ToString();
 
-        Settings settings = GameObject.FindGameObjectWithTag("Settings").GetComponent<Settings>();
-        BGMSlider.value = settings.GetBGMVolume();
-        SFXSlider.value = settings.GetSFXVolume();
-        mainSFXSlider.value = settings.GetMainSFXVolume();
+        BGMSlider.value = Settings.Instance.GetBGMVolume();
+        SFXSlider.value = Settings.Instance.GetSFXVolume();
+        mainSFXSlider.value = Settings.Instance.GetMainSFXVolume();
+
         cameraManager = gameObject.GetComponent<CameraManager>();
     }
 
