@@ -10134,6 +10134,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7237787438859972180, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1947806621}
+    - target: {fileID: 7237787438859972180, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReturnToMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7237787438859972180, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameUI, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7282293134847743223, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -13966,7 +13978,7 @@ RectTransform:
   - {fileID: 746766848749551451}
   - {fileID: 724428168}
   m_Father: {fileID: 89998962}
-  m_RootOrder: 10
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
