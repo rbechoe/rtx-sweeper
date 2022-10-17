@@ -5,8 +5,6 @@ public class GridManager2DCustom : BaseGridManager
 {
     SteamAPIManager steamAPI;
 
-    private int difficulty;
-
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
@@ -15,7 +13,6 @@ public class GridManager2DCustom : BaseGridManager
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
 
         DS = gameObject.GetComponent<DataSerializer>();
-        SetText();
     }
 
     protected override void OnEnable()
@@ -24,7 +21,7 @@ public class GridManager2DCustom : BaseGridManager
         EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
         EventSystem<GameObject>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem.AddListener(EventType.RANDOM_GRID, ResetGame);
+        EventSystem.AddListener(EventType.RESET_GAME, ResetGame);
         EventSystem.AddListener(EventType.WIN_GAME, StopTimer);
         EventSystem.AddListener(EventType.END_GAME, StopTimer);
         EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
@@ -41,7 +38,7 @@ public class GridManager2DCustom : BaseGridManager
         EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
         EventSystem<GameObject>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGame);
+        EventSystem.RemoveListener(EventType.RESET_GAME, ResetGame);
         EventSystem.RemoveListener(EventType.WIN_GAME, StopTimer);
         EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
         EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
@@ -59,9 +56,33 @@ public class GridManager2DCustom : BaseGridManager
         if (tileClicks <= 1) steamAPI.SetAchievement(UserAchievements.tasteOfMisery);
     }
 
+    protected override void ResetGame()
+    {
+        if (inReset)
+        {
+            return;
+        }
+        else
+        {
+            inReset = true;
+            firstTile = null;
+            timeStarted = false;
+            usedFlag = false;
+            goodTiles = 0;
+            timer = 0;
+            tileClicks = 0;
+            otherClicks = 0;
+            shuffleCount = 0;
+            bombAmount = tiles.Count / bombDensity;
+            initialBombAmount = bombAmount;
+            emptyTiles = new List<GameObject>();
+        }
+    }
+
     public void SetTiles(List<GameObject> newTiles)
     {
         tiles = newTiles;
+        emptyTiles = new List<GameObject>();
     }
 
     protected override void SaveData()

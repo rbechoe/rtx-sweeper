@@ -284,6 +284,11 @@ public abstract class BaseTile : MonoBehaviour
                 gameObject.layer = 11;
                 break;
 
+            case TileStates.Empty:
+                gameObject.tag = "Empty";
+                gameObject.layer = 12;
+                break;
+
             default:
                 gameObject.tag = "Untagged";
                 gameObject.layer = 0;

@@ -12,7 +12,6 @@ namespace Tiles2D
         public GameObject flag;
 
         [Header("Statistics")]
-        public bool isDone;
         public int bombCount = 0;
 
         private int gridSize;
@@ -48,7 +47,7 @@ namespace Tiles2D
         {
             EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
             EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-            EventSystem.AddListener(EventType.RESET_GAME, ResetGame);
+            EventSystem.AddListener(EventType.RESET_GAME, CreateGrid);
             EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, AddFlag);
             EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
             EventSystem.AddListener(EventType.PICK_TILE, PickStartingTile);
@@ -59,7 +58,7 @@ namespace Tiles2D
         {
             EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
             EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-            EventSystem.RemoveListener(EventType.RESET_GAME, ResetGame);
+            EventSystem.RemoveListener(EventType.RESET_GAME, CreateGrid);
             EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
             EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
             EventSystem.RemoveListener(EventType.PICK_TILE, PickStartingTile);
@@ -83,7 +82,7 @@ namespace Tiles2D
             bombs = bombAmount;
             GameObject newTile = null;
 
-            ResetGameNoUI();
+            ResetGame();
             while(!resetDone)
             {
                 yield return new WaitForEndOfFrame();
@@ -105,6 +104,8 @@ namespace Tiles2D
                     newTile = Instantiate(tile, new Vector3(x, 0, z), Quaternion.identity);
                     if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
                     {
+                        newTile.tag = "Bomb";
+                        newTile.layer = 11;
                         newTile.GetComponent<Tile2D>().state = TileStates.Bomb;
                         bombCount++;
 
@@ -116,6 +117,8 @@ namespace Tiles2D
                     }
                     else
                     {
+                        newTile.tag = "Empty";
+                        newTile.layer = 12;
                         newTile.GetComponent<Tile2D>().state = TileStates.Empty;
                     }
 
@@ -137,7 +140,6 @@ namespace Tiles2D
             managerObj.transform.position = new Vector3(-xSize / 2f, 0, -zSize / 2f);
             gridManager.SetTiles(tiles);
 
-            isDone = true;
             EventSystem.InvokeEvent(EventType.PREPARE_GAME);
             yield return new WaitForEndOfFrame();
             StartGame();
@@ -200,23 +202,21 @@ namespace Tiles2D
             if (inReset) return;
 
             inReset = true;
-            isDone = false;
-            resetDone = false;
-            bombCount = 0;
-            firstTile = null;
-            StartCoroutine(ResetLogic(true));
-        }
-
-        public void ResetGameNoUI()
-        {
-            if (inReset) return;
-
-            inReset = true;
-            isDone = false;
             resetDone = false;
             bombCount = 0;
             firstTile = null;
             StartCoroutine(ResetLogic(false));
+        }
+
+        public void ResetGameUI()
+        {
+            if (inReset) return;
+
+            inReset = true;
+            resetDone = false;
+            bombCount = 0;
+            firstTile = null;
+            StartCoroutine(ResetLogic(true));
         }
 
         // super efficient system......not
