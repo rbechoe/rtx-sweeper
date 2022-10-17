@@ -4,6 +4,7 @@ using UnityEngine;
 public class Tile2D : BaseTile
 {
     private MeshRenderer myMesh;
+
     protected override void OnEnable()
     {
         // listen
@@ -19,6 +20,8 @@ public class Tile2D : BaseTile
         EventSystem.AddListener(EventType.WIN_GAME, EndGame);
         EventSystem.AddListener(EventType.GAME_LOSE, EndGame);
         EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem.AddListener(EventType.IN_SETTINGS, EnteredSettings);
+        EventSystem.AddListener(EventType.OUT_SETTINGS, ExitSettings);
     }
 
     protected override void OnDisable()
@@ -36,6 +39,8 @@ public class Tile2D : BaseTile
         EventSystem.RemoveListener(EventType.WIN_GAME, EndGame);
         EventSystem.RemoveListener(EventType.GAME_LOSE, EndGame);
         EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem.RemoveListener(EventType.IN_SETTINGS, EnteredSettings);
+        EventSystem.RemoveListener(EventType.OUT_SETTINGS, ExitSettings);
         vfx.gameObject.SetActive(true);
     }
 
@@ -43,7 +48,7 @@ public class Tile2D : BaseTile
     {
         UpdateMaterial(selectCol);
 
-        if (gameEnded || (bombCount == 0 && triggered))
+        if (gameEnded || (bombCount == 0 && triggered) || inSettings)
         {
             UpdateMaterial(defaultCol);
             return;

@@ -42,6 +42,8 @@ public enum EventType
     UPDATE_SFX_MAIN,    // passes float
     ENABLE_RTX,         // passes nothing
     DISABLE_RTX,        // passes nothing
+    IN_SETTINGS,        // passes nothing
+    OUT_SETTINGS,       // passes nothing
     UPDATE_LANGUAGE     // passes nothing
 }
 

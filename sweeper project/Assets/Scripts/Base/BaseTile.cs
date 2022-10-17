@@ -15,6 +15,7 @@ public abstract class BaseTile : MonoBehaviour
     protected bool previewClicked;
     protected bool canReveal;
     protected bool gameEnded;
+    protected bool inSettings;
     protected Collider[] tilesPreviewed;
 
     protected float glowIntensity = 8192; // value is in nits
@@ -230,6 +231,16 @@ public abstract class BaseTile : MonoBehaviour
         defaultCol = manager.defaultColor;
         UpdateMaterial(defaultCol);
         vfx.gameObject.SetActive(false);
+    }
+
+    protected virtual void EnteredSettings()
+    {
+        inSettings = true;
+    }
+
+    protected virtual void ExitSettings()
+    {
+        inSettings = false;
     }
 
     public virtual void TypeSpecificAction()

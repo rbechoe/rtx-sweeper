@@ -43,6 +43,8 @@ public class Tile3D : BaseTile
         EventSystem.AddListener(EventType.WIN_GAME, EndGame);
         EventSystem.AddListener(EventType.GAME_LOSE, EndGame);
         EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem.AddListener(EventType.IN_SETTINGS, EnteredSettings);
+        EventSystem.AddListener(EventType.OUT_SETTINGS, ExitSettings);
     }
 
     protected override void OnDisable()
@@ -59,6 +61,8 @@ public class Tile3D : BaseTile
         EventSystem.RemoveListener(EventType.WIN_GAME, EndGame);
         EventSystem.RemoveListener(EventType.GAME_LOSE, EndGame);
         EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem.RemoveListener(EventType.IN_SETTINGS, EnteredSettings);
+        EventSystem.RemoveListener(EventType.OUT_SETTINGS, ExitSettings);
     }
 
     private void FixedUpdate()
@@ -91,7 +95,7 @@ public class Tile3D : BaseTile
 
     private void SelectTile()
     {
-        if (triggered || !hovered) return;
+        if (triggered || !hovered || inSettings) return;
 
         if (Input.GetMouseButton(0) && triggered && !previewClicked)
         {

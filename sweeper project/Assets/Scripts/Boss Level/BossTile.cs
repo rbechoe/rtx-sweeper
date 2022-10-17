@@ -27,6 +27,8 @@ public class BossTile : BaseTile
         EventSystem.AddListener(EventType.PREPARE_GAME, ResetSelf);
         EventSystem.AddListener(EventType.UNPLAYABLE, Unplayable);
         EventSystem.AddListener(EventType.PLAYABLE, Playable);
+        EventSystem.AddListener(EventType.IN_SETTINGS, EnteredSettings);
+        EventSystem.AddListener(EventType.OUT_SETTINGS, ExitSettings);
     }
 
     protected override void OnDisable()
@@ -44,6 +46,8 @@ public class BossTile : BaseTile
         EventSystem.RemoveListener(EventType.PREPARE_GAME, ResetSelf);
         EventSystem.RemoveListener(EventType.UNPLAYABLE, Unplayable);
         EventSystem.RemoveListener(EventType.PLAYABLE, Playable);
+        EventSystem.RemoveListener(EventType.IN_SETTINGS, EnteredSettings);
+        EventSystem.RemoveListener(EventType.OUT_SETTINGS, ExitSettings);
         vfx.gameObject.SetActive(true);
     }
 
@@ -51,7 +55,7 @@ public class BossTile : BaseTile
     {
         UpdateMaterial(selectCol);
 
-        if (shuffling || gameEnded)
+        if (shuffling || gameEnded || inSettings)
         {
             UpdateMaterial(defaultCol);
             return;
