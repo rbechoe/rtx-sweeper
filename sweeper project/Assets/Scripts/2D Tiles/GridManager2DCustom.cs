@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GridManager2DCustom : BaseGridManager
@@ -9,7 +10,6 @@ public class GridManager2DCustom : BaseGridManager
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
-        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 1;
 
         Helpers.NestedChildToGob<Tile2D>(transform, tiles);
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
@@ -59,6 +59,11 @@ public class GridManager2DCustom : BaseGridManager
         if (tileClicks <= 1) steamAPI.SetAchievement(UserAchievements.tasteOfMisery);
     }
 
+    public void SetTiles(List<GameObject> newTiles)
+    {
+        tiles = newTiles;
+    }
+
     protected override void SaveData()
     {
         if (area == 4) return;
@@ -88,13 +93,12 @@ public class GridManager2DCustom : BaseGridManager
         }
 
         DS.UpdateAccountData(AD);
-        SetText();
             
         wonGame = false;
     }
 
     protected override void SetText(AccountData data = null)
     {
-        if (data == null) data = DS.GetUserData();
+        // not used in custom
     }
 }

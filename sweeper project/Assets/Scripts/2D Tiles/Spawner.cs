@@ -27,16 +27,21 @@ namespace Tiles2D
 
         private GameObject firstTile;
         private List<GameObject> emptyTiles = new List<GameObject>();
+        private bool inReset = false;
+        private bool resetDone = false;
 
         [Header("Assignables")]
         public GameObject managerObj;
         public GameObject flagObj;
+        public GameObject generateUI;
         public InputField widthText, lengthText, bombText;
+        private GridManager2DCustom gridManager;
 
         private void Start()
         {
             Vector3 position = new Vector3(xSize / 2f, (xSize + zSize / 2f) * 0.5f, zSize / 2f);
             EventSystem<Vector3>.InvokeEvent(EventType.START_POS, position);
+            gridManager = managerObj.GetComponent<GridManager2DCustom>();
         }
 
         private void OnEnable()
@@ -77,6 +82,12 @@ namespace Tiles2D
             gridSize = xSize * zSize;
             bombs = bombAmount;
             GameObject newTile = null;
+
+            ResetGameNoUI();
+            while(!resetDone)
+            {
+                yield return new WaitForEndOfFrame();
+            }
 
             int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
             int curTileCount = 0;
@@ -124,9 +135,12 @@ namespace Tiles2D
             }
             yield return new WaitForEndOfFrame();
             managerObj.transform.position = new Vector3(-xSize / 2f, 0, -zSize / 2f);
+            gridManager.SetTiles(tiles);
 
             isDone = true;
             EventSystem.InvokeEvent(EventType.PREPARE_GAME);
+            yield return new WaitForEndOfFrame();
+            StartGame();
             yield return new WaitForEndOfFrame();
         }
 
@@ -172,16 +186,41 @@ namespace Tiles2D
             }
         }
 
+        protected virtual void StartGame()
+        {
+            EventSystem.InvokeEvent(EventType.COUNT_BOMBS);
+            PickStartingTile();
+            EventSystem.InvokeEvent(EventType.START_GAME);
+            EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
+            inReset = false;
+        }
+
         private void ResetGame()
         {
+            if (inReset) return;
+
+            inReset = true;
             isDone = false;
+            resetDone = false;
             bombCount = 0;
             firstTile = null;
-            StartCoroutine(ResetLogic());
+            StartCoroutine(ResetLogic(true));
+        }
+
+        public void ResetGameNoUI()
+        {
+            if (inReset) return;
+
+            inReset = true;
+            isDone = false;
+            resetDone = false;
+            bombCount = 0;
+            firstTile = null;
+            StartCoroutine(ResetLogic(false));
         }
 
         // super efficient system......not
-        IEnumerator ResetLogic()
+        IEnumerator ResetLogic(bool enableUI = true)
         {
             emptyTiles = new List<GameObject>();
             EventSystem.InvokeEvent(EventType.END_GAME);
@@ -208,8 +247,10 @@ namespace Tiles2D
             inactiveFlags = new List<GameObject>();
             yield return new WaitForEndOfFrame();
 
-            // start spawner with current settings
-            StartCoroutine(Grid());
+            resetDone = true;
+
+            // Enable UI
+            if (enableUI) generateUI.SetActive(true);
         }
 
         private void AddFlag(Vector3[] vectors)

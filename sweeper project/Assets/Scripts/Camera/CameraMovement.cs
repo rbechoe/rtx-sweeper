@@ -12,6 +12,8 @@ public class CameraMovement : MonoBehaviour
         EventSystem.AddListener(EventType.INPUT_LEFT, MoveLeft);
         EventSystem.AddListener(EventType.INPUT_RIGHT, MoveRight);
         EventSystem.AddListener(EventType.INPUT_UP, MoveUp);
+        EventSystem.AddListener(EventType.INPUT_SCROLL_DOWN, MoveDown);
+        EventSystem.AddListener(EventType.INPUT_SCROLL_UP, MoveUp);
         EventSystem<Vector3>.AddListener(EventType.START_POS, StartPos);
 
     }
@@ -24,6 +26,8 @@ public class CameraMovement : MonoBehaviour
         EventSystem.RemoveListener(EventType.INPUT_LEFT, MoveLeft);
         EventSystem.RemoveListener(EventType.INPUT_RIGHT, MoveRight);
         EventSystem.RemoveListener(EventType.INPUT_UP, MoveUp);
+        EventSystem.RemoveListener(EventType.INPUT_SCROLL_DOWN, MoveDown);
+        EventSystem.RemoveListener(EventType.INPUT_SCROLL_UP, MoveUp);
         EventSystem<Vector3>.RemoveListener(EventType.START_POS, StartPos);
     }
 
