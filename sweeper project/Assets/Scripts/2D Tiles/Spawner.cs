@@ -67,9 +67,9 @@ namespace Tiles2D
 
         public void CreateGrid()
         {
-            bombAmount = int.Parse(bombText.text);
-            xSize = int.Parse(widthText.text);
-            zSize = int.Parse(lengthText.text);
+            bombAmount = int.Parse(((bombText.text == "") ? "" + 3 : bombText.text));
+            xSize = int.Parse(((widthText.text == "") ? "" + 5 : widthText.text));
+            zSize = int.Parse(((lengthText.text == "") ? "" + 5 : lengthText.text));
             StartCoroutine(Grid());
         }
 

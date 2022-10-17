@@ -130,6 +130,11 @@ public class GameUI : MonoBehaviour
         cameraManager.ResetToStart();
     }
 
+    public void SlowReload()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public void SetEfficiency(float value)
     {
         victorySkillText.text = "" + Math.Round(value, 3) + "%";
