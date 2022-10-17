@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e92ece5f7fe01624db68f7ddddd7abb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emptyTiles: []
   bombDensity: 6
   flagParent: {fileID: 646499388}
   progress: 0
@@ -3563,7 +3564,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1947806618}
-  - component: {fileID: 1947806620}
   - component: {fileID: 1947806619}
   - component: {fileID: 1947806621}
   m_Layer: 0
@@ -3601,7 +3601,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 5318673126723917579, guid: f0759311c5d0df049bf86c99c328b3c8, type: 3}
   flag: {fileID: 3511246584958374060, guid: 3b34af88b58bb734b9c8f84d53c76d9f, type: 3}
-  isDone: 0
   bombCount: 0
   managerObj: {fileID: 23770301}
   flagObj: {fileID: 646499388}
@@ -3609,20 +3608,6 @@ MonoBehaviour:
   widthText: {fileID: 457051396}
   lengthText: {fileID: 1972387889}
   bombText: {fileID: 485947409}
---- !u!114 &1947806620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947806617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf771484697b8ce408db107c70cd961a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridSize: 0
-  bombAmount: 10
 --- !u!114 &1947806621
 MonoBehaviour:
   m_ObjectHideFlags: 0
