@@ -8678,6 +8678,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 169387600086019096, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000015259
+      objectReference: {fileID: 0}
     - target: {fileID: 369126640536919891, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
       value: 0.99215686
@@ -9037,6 +9041,10 @@ PrefabInstance:
     - target: {fileID: 2485953054904984573, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2827920627160964257, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2926848916755401908, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
@@ -9817,6 +9825,14 @@ PrefabInstance:
     - target: {fileID: 4530744769788623014, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Color.r
       value: 0.47843137
+      objectReference: {fileID: 0}
+    - target: {fileID: 4692308712191546561, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 168
+      objectReference: {fileID: 0}
+    - target: {fileID: 4692308712191546561, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 4903016198979737075, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -13367,6 +13383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b31e6fbf3faede44a8b4fc2923979cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emptyTiles: []
   bombDensity: 5
   flagParent: {fileID: 1475351236}
   progress: 0
