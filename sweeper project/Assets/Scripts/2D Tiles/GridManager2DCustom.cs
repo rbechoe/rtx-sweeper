@@ -58,25 +58,17 @@ public class GridManager2DCustom : BaseGridManager
 
     protected override void ResetGame()
     {
-        if (inReset)
-        {
-            return;
-        }
-        else
-        {
-            inReset = true;
-            firstTile = null;
-            timeStarted = false;
-            usedFlag = false;
-            goodTiles = 0;
-            timer = 0;
-            tileClicks = 0;
-            otherClicks = 0;
-            shuffleCount = 0;
-            bombAmount = tiles.Count / bombDensity;
-            initialBombAmount = bombAmount;
-            emptyTiles = new List<GameObject>();
-        }
+        firstTile = null;
+        timeStarted = false;
+        usedFlag = false;
+        goodTiles = 0;
+        timer = 0;
+        tileClicks = 0;
+        otherClicks = 0;
+        shuffleCount = 0;
+        bombAmount = tiles.Count / bombDensity;
+        initialBombAmount = bombAmount;
+        emptyTiles = new List<GameObject>();
     }
 
     public void SetTiles(List<GameObject> newTiles)
