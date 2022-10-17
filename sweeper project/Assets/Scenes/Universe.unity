@@ -9307,7 +9307,15 @@ PrefabInstance:
       value: Game Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 4244722943252424855, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244722943252424855, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244722943252424855, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_MatchWidthOrHeight
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4244722943252424855, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
@@ -13978,7 +13986,7 @@ RectTransform:
   - {fileID: 746766848749551451}
   - {fileID: 724428168}
   m_Father: {fileID: 89998962}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
