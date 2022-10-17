@@ -115,6 +115,16 @@ public class GameUI : MonoBehaviour
         EventSystem.InvokeEvent(EventType.RESET_GAME);
     }
 
+    public void EnableRTX()
+    {
+        EventSystem.InvokeEvent(EventType.ENABLE_RTX);
+    }
+
+    public void DisableRTX()
+    {
+        EventSystem.InvokeEvent(EventType.DISABLE_RTX);
+    }
+
     public void ReloadLevel()
     {
         cameraManager.ResetToStart();

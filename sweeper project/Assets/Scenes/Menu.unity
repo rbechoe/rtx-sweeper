@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 969558174}
-  m_IndirectSpecularColor: {r: 1836.1747, g: 2641.7412, b: 3166.9805, a: 1}
+  m_IndirectSpecularColor: {r: 1840.6472, g: 2646.0996, b: 3170.8008, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -90012,6 +90012,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924960049486765, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7389621369151043414}
+    - target: {fileID: 4589924960049486765, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnableRTX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960049486765, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960049486765, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924960455339058, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.1
@@ -90023,6 +90039,22 @@ PrefabInstance:
     - target: {fileID: 4589924960455339058, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960466559658, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7389621369151043414}
+    - target: {fileID: 4589924960466559658, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DisableRTX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960466559658, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960466559658, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4589924960770583496, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
@@ -90055,6 +90087,38 @@ PrefabInstance:
     - target: {fileID: 4589924960914243231, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.0024414062
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792753092359045575, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7389621369151043414}
+    - target: {fileID: 4792753092359045575, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DisableRTX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792753092359045575, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792753092359045575, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6846042200118003468, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7389621369151043414}
+    - target: {fileID: 6846042200118003468, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnableRTX
+      objectReference: {fileID: 0}
+    - target: {fileID: 6846042200118003468, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6846042200118003468, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}

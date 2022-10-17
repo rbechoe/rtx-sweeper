@@ -275,6 +275,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 86805254014136986, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1947806621}
+    - target: {fileID: 86805254014136986, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnableRTX
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254014136986, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254014136986, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254130781085, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1947806621}
+    - target: {fileID: 86805254130781085, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DisableRTX
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254130781085, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254130781085, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 369126640536919891, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
       value: 0.44705883
@@ -1035,6 +1067,22 @@ PrefabInstance:
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 0.16078432
       objectReference: {fileID: 0}
+    - target: {fileID: 7026973994163809851, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1947806621}
+    - target: {fileID: 7026973994163809851, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnableRTX
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026973994163809851, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026973994163809851, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7867538740087154572, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
       value: 0.44705883
@@ -1286,6 +1334,22 @@ PrefabInstance:
     - target: {fileID: 8903689386321348223, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 0.745283
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936710726901557488, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1947806621}
+    - target: {fileID: 8936710726901557488, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DisableRTX
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936710726901557488, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936710726901557488, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 9177375862464006905, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
@@ -2708,7 +2772,7 @@ RectTransform:
   - {fileID: 1759545220}
   - {fileID: 953285564}
   m_Father: {fileID: 242794170}
-  m_RootOrder: 10
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
