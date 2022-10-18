@@ -138,7 +138,7 @@ namespace Tiles2D
             }
             yield return new WaitForEndOfFrame();
             managerObj.transform.position = new Vector3(-xSize / 2f, 0, -zSize / 2f);
-            gridManager.SetTiles(tiles);
+            gridManager.SetTiles(tiles, bombAmount);
 
             EventSystem.InvokeEvent(EventType.PREPARE_GAME);
             yield return new WaitForEndOfFrame();

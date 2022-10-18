@@ -66,14 +66,14 @@ public class GridManager2DCustom : BaseGridManager
         tileClicks = 0;
         otherClicks = 0;
         shuffleCount = 0;
-        bombAmount = tiles.Count / bombDensity;
-        initialBombAmount = bombAmount;
         emptyTiles = new List<GameObject>();
     }
 
-    public void SetTiles(List<GameObject> newTiles)
+    public void SetTiles(List<GameObject> newTiles, int bombCount)
     {
         tiles = newTiles;
+        bombAmount = bombCount;
+        initialBombAmount = bombCount;
         emptyTiles = new List<GameObject>();
     }
 

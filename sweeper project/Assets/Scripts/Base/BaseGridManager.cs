@@ -10,7 +10,7 @@ public abstract class BaseGridManager : MonoBehaviour
     protected List<GameObject> inactiveFlags = new List<GameObject>();
 
     protected GameObject firstTile;
-    public List<GameObject> emptyTiles = new List<GameObject>();
+    protected List<GameObject> emptyTiles = new List<GameObject>();
     protected int bombAmount;
     protected int initialBombAmount;
     protected int goodTiles = 0;
