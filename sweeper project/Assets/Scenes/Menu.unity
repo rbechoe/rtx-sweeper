@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 969558174}
-  m_IndirectSpecularColor: {r: 1840.6472, g: 2646.0996, b: 3170.8008, a: 1}
+  m_IndirectSpecularColor: {r: 1836.1747, g: 2641.7412, b: 3166.9805, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -68834,7 +68834,7 @@ GameObject:
   - component: {fileID: 1593092583}
   - component: {fileID: 1593092582}
   m_Layer: 5
-  m_Name: Garden (1)
+  m_Name: Garden
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68899,7 +68899,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1593092583}
   m_OnClick:
     m_PersistentCalls:

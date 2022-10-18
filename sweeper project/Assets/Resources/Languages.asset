@@ -446,7 +446,7 @@ MonoBehaviour:
   - id: ui_button_reset
     translation:
     - Reset
-    - Resetten
+    - Reset
     - "Zur\xFCcksetzen"
     - Reiniciar
     - "R\xE9initialiser"
@@ -753,6 +753,30 @@ MonoBehaviour:
       \u0906\u092A \u092F\u0939\u093E\u0901 \u091F\u093E\u0907\u0932\u094B\u0902
       \u0915\u094B \u091F\u0949\u0917\u0932 \u0928\u0939\u0940\u0902 \u0915\u0930
       \u0938\u0915\u0924\u0947\u0964"
+  - id: ui_window_difficulty
+    translation:
+    - Difficulty
+    - Moeilijkheid
+    - Schwierigkeit
+    - Dificultad
+    - "Difficult\xE9"
+    - "\u56F0\u96E3"
+    - "\uC5B4\uB824\uC6C0"
+    - "\u56F0\u96E3"
+    - "\u0422\u0440\u0443\u0434\u043D\u043E\u0441\u0442\u044C"
+    - "\u0915\u0920\u093F\u0928\u093E\u0908"
+  - id: ui_window_settings
+    translation:
+    - Settings
+    - Instellingen
+    - Einstellungen
+    - Ajustes
+    - "R\xE9glages"
+    - "\u8A2D\u5B9A"
+    - "\uC124\uC815"
+    - "\u8A2D\u7F6E"
+    - "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438"
+    - "\u0938\u092E\u093E\u092F\u094B\u091C\u0928"
   - id: 
     translation:
     - 
