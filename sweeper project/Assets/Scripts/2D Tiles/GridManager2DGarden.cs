@@ -8,6 +8,10 @@ public class GridManager2DGarden : BaseGridManager
     private int difficulty;
 
     public Slider difficultySlider;
+    public bool inEditMode = true;
+
+    public Color playableColor = Color.green;
+    public Color unPlayableColor = Color.red;
 
     protected override void Start()
     {
@@ -113,5 +117,15 @@ public class GridManager2DGarden : BaseGridManager
     public void UpdateDifficulty()
     {
         difficulty = 10 - (int)difficultySlider.value;
+    }
+
+    public void EnterEditMode()
+    {
+        inEditMode = true;
+    }
+
+    public void ExitEditMode()
+    {
+        inEditMode = false;
     }
 }
