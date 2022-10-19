@@ -19,7 +19,7 @@ public class GridManager2DGarden : BaseGridManager
     {
         steamAPI = SteamAPIManager.Instance;
 
-        Helpers.NestedChildToGob<Tile2D>(transform, tiles);
+        Helpers.NestedChildToGob<Tile2DGarden>(transform, tiles);
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
 
         DS = gameObject.GetComponent<DataSerializer>();
@@ -121,48 +121,48 @@ public class GridManager2DGarden : BaseGridManager
 
         for (int tileId = 0; tileId < tiles.Count - reduction; tileId++)
         {
-
             GameObject newTile = tiles[tileId];
-            Tile2DGarden tileData = GetComponent<Tile2DGarden>();
+            Tile2DGarden tileData = newTile.GetComponent<Tile2DGarden>();
             if (tileData.unplayable)
             {
-                newTile.tag = "Default";
+                newTile.tag = "Untagged";
                 newTile.layer = 0;
                 tileData.state = TileStates.Empty;
                 newTile.name = "Unplayable " + curTile;
                 reduction++;
-                continue;
-            }
-
-            // formula: based on tiles and bombs left increase chance for next tile to be bomb
-            if (bombCount < bombAmount)
-            {
-                spawnChance = (tiles.Count - curTile) / (bombAmount - bombCount);
-            }
-
-            if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
-            {
-                newTile.tag = "Bomb";
-                newTile.layer = 11;
-                tileData.state = TileStates.Bomb;
-                bombCount++;
             }
             else
             {
-                newTile.tag = "Empty";
-                newTile.layer = 12;
-                tileData.state = TileStates.Empty;
-            }
+                // formula: based on tiles and bombs left increase chance for next tile to be bomb
+                if (bombCount < bombAmount)
+                {
+                    spawnChance = (tiles.Count - curTile) / (bombAmount - bombCount);
+                }
 
-            curTile++;
-            curTileCount++;
-            newTile.name = "tile " + curTile;
+                if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
+                {
+                    newTile.tag = "Bomb";
+                    newTile.layer = 11;
+                    tileData.state = TileStates.Bomb;
+                    bombCount++;
+                }
+                else
+                {
+                    newTile.tag = "Empty";
+                    newTile.layer = 12;
+                    tileData.state = TileStates.Empty;
+                }
 
-            // continue next frame
-            if (curTileCount >= tilesPerFrame)
-            {
-                curTileCount = 0;
-                yield return new WaitForEndOfFrame();
+                curTile++;
+                curTileCount++;
+                newTile.name = "tile " + curTile;
+
+                // continue next frame
+                if (curTileCount >= tilesPerFrame)
+                {
+                    curTileCount = 0;
+                    yield return new WaitForEndOfFrame();
+                }
             }
         }
         yield return new WaitForEndOfFrame();
