@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,7 +6,7 @@ public class GridManager2DGarden : BaseGridManager
 {
     SteamAPIManager steamAPI;
 
-    private int difficulty;
+    private int difficulty = 8;
 
     public Slider difficultySlider;
     public bool inEditMode = true;
@@ -16,7 +17,6 @@ public class GridManager2DGarden : BaseGridManager
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
-        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 1;
 
         Helpers.NestedChildToGob<Tile2D>(transform, tiles);
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
@@ -107,6 +107,69 @@ public class GridManager2DGarden : BaseGridManager
         DS.UpdateAccountData(AD);
             
         wonGame = false;
+    }
+
+    protected override IEnumerator RandomizeGrid()
+    {
+        int curTile = 0;
+        int spawnChance = 0;
+        int bombCount = 0;
+        int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
+        int curTileCount = 0;
+        int reduction = 0;
+
+        for (int tileId = 0; tileId < tiles.Count - reduction; tileId++)
+        {
+
+            GameObject newTile = tiles[tileId];
+            Tile2DGarden tileData = GetComponent<Tile2DGarden>();
+            if (tileData.unplayable)
+            {
+                newTile.tag = "Default";
+                newTile.layer = 0;
+                tileData.state = TileStates.Empty;
+                newTile.name = "Unplayable " + curTile;
+                reduction++;
+                continue;
+            }
+
+            // formula: based on tiles and bombs left increase chance for next tile to be bomb
+            if (bombCount < bombAmount)
+            {
+                spawnChance = (tiles.Count - curTile) / (bombAmount - bombCount);
+            }
+
+            if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
+            {
+                newTile.tag = "Bomb";
+                newTile.layer = 11;
+                tileData.state = TileStates.Bomb;
+                bombCount++;
+            }
+            else
+            {
+                newTile.tag = "Empty";
+                newTile.layer = 12;
+                tileData.state = TileStates.Empty;
+            }
+
+            curTile++;
+            curTileCount++;
+            newTile.name = "tile " + curTile;
+
+            // continue next frame
+            if (curTileCount >= tilesPerFrame)
+            {
+                curTileCount = 0;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        yield return new WaitForEndOfFrame();
+
+        EventSystem.InvokeEvent(EventType.PREPARE_GAME);
+        yield return new WaitForEndOfFrame();
+        StartGame();
+        yield return new WaitForEndOfFrame();
     }
 
     protected override void SetText(AccountData data = null)

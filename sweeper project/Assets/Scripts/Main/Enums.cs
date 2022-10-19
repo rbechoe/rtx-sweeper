@@ -52,6 +52,5 @@ public enum TileStates
     Revealed,
     Number,
     Bomb,
-    Empty,
-    Editing
+    Empty
 }
