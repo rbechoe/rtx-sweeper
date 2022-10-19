@@ -7,6 +7,7 @@ public class GridManager2DGarden : BaseGridManager
     SteamAPIManager steamAPI;
 
     private int difficulty = 8;
+    private int reduction = 0;
 
     public Slider difficultySlider;
     public bool inEditMode = true;
@@ -116,7 +117,7 @@ public class GridManager2DGarden : BaseGridManager
         int bombCount = 0;
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
         int curTileCount = 0;
-        int reduction = 0;
+        reduction = 0;
 
         for (int tileId = 0; tileId < tiles.Count - reduction; tileId++)
         {
@@ -170,6 +171,16 @@ public class GridManager2DGarden : BaseGridManager
         yield return new WaitForEndOfFrame();
         StartGame();
         yield return new WaitForEndOfFrame();
+    }
+
+    protected override void CheckForVictory()
+    {
+        progress = goodTiles / (tiles.Count - reduction - initialBombAmount);
+        if (goodTiles == (tiles.Count - reduction - initialBombAmount))
+        {
+            wonGame = true;
+            EventSystem.InvokeEvent(EventType.WIN_GAME);
+        }
     }
 
     protected override void SetText(AccountData data = null)

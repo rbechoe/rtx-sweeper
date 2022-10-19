@@ -62,7 +62,6 @@ public abstract class BaseGridManager : MonoBehaviour
     protected virtual IEnumerator RandomizeGrid()
     {
         int curTile = 0;
-        int tilesLeft = 0;
         int spawnChance = 0;
         int bombCount = 0;
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
@@ -73,23 +72,23 @@ public abstract class BaseGridManager : MonoBehaviour
             // formula: based on tiles and bombs left increase chance for next tile to be bomb
             if (bombCount < bombAmount)
             {
-                tilesLeft = tiles.Count - curTile;
-                spawnChance = tilesLeft / (bombAmount - bombCount);
+                spawnChance = (tiles.Count - curTile) / (bombAmount - bombCount);
             }
 
             GameObject newTile = tiles[tileId];
+            BaseTile tileData = newTile.GetComponent<BaseTile>();
             if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
             {
                 newTile.tag = "Bomb";
                 newTile.layer = 11;
-                newTile.GetComponent<BaseTile>().state = TileStates.Bomb;
+                tileData.state = TileStates.Bomb;
                 bombCount++;
             }
             else
             {
                 newTile.tag = "Empty";
                 newTile.layer = 12;
-                newTile.GetComponent<BaseTile>().state = TileStates.Empty;
+                tileData.state = TileStates.Empty;
             }
 
             curTile++;
