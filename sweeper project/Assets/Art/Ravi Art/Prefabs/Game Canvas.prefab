@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &195843320782968711
 GameObject:
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &664622310219530237
 GameObject:
@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &825864725408902556
 GameObject:
@@ -1318,7 +1318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 3, y: -3}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &4244722943759886737
 GameObject:
@@ -1464,7 +1464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 3, y: -3}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &4244722945131925638
 GameObject:
@@ -1738,7 +1738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &4995141534534166898
 GameObject:
@@ -1847,7 +1847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &5102268730740673260
 GameObject:
@@ -2028,7 +2028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &6110993456392879512
 GameObject:
@@ -2341,7 +2341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &7077431624136294102
 GameObject:
@@ -2543,7 +2543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &7844895939246913658
 GameObject:
@@ -2800,7 +2800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &8772615847546650845
 GameObject:
@@ -3146,6 +3146,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4244722943252424857}
     m_Modifications:
+    - target: {fileID: 668614878098130246, guid: e8f5bfea537fd1b49a5d3aa7061748f2, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 9136421408249841208, guid: e8f5bfea537fd1b49a5d3aa7061748f2, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -3356,6 +3360,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924959042678415, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959063462210, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959093823045, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959250272251, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959299334013, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959335523675, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959370803502, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924959685872126, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -3424,6 +3456,14 @@ PrefabInstance:
       propertyPath: m_Size
       value: 0.72513866
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924960319238151, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960353367872, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924960455339058, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.1
@@ -3435,6 +3475,18 @@ PrefabInstance:
     - target: {fileID: 4589924960455339058, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960557240380, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960664663731, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960764274280, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4589924960770583496, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3448,6 +3500,14 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0.27486134
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924960784367518, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960855064867, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924960888961316, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.1
@@ -3459,6 +3519,10 @@ PrefabInstance:
     - target: {fileID: 4589924960888961316, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960897778702, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4589924960914243231, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchoredPosition.x

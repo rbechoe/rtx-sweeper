@@ -188,6 +188,16 @@ public class GridManager2DGarden : BaseGridManager
         // not used
     }
 
+    protected override void AddEmptyTile(GameObject gameobject)
+    {
+        if (gameobject.GetComponent<Tile2DGarden>().unplayable)
+        {
+            return;
+        }
+
+        emptyTiles.Add(gameobject);
+    }
+
     public void UpdateDifficulty()
     {
         difficulty = 10 - (int)difficultySlider.value;

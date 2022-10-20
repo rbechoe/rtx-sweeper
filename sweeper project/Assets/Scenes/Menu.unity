@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 969558174}
-  m_IndirectSpecularColor: {r: 1836.1747, g: 2641.7412, b: 3166.9805, a: 1}
+  m_IndirectSpecularColor: {r: 1836.1825, g: 2641.7334, b: 3166.9727, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1129,7 +1129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1001 &35492979
 PrefabInstance:
@@ -1935,7 +1935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1001 &63832413
 PrefabInstance:
@@ -9601,7 +9601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.12156863, g: 0.36078432, b: 0.02745098, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1001 &296578855
 PrefabInstance:
@@ -11266,7 +11266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.12156863, g: 0.36078432, b: 0.02745098, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!114 &354296221
 MonoBehaviour:
@@ -29076,7 +29076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &759706644 stripped
 GameObject:
@@ -44099,7 +44099,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.158, y: 0}
+  m_AnchoredPosition: {x: 35.51212, y: 0}
   m_SizeDelta: {x: 716.785, y: 44.41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &942581652
@@ -44170,7 +44170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1001 &942991885
 PrefabInstance:
@@ -44527,7 +44527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.019607844, g: 0.45882353, b: 0.39215687, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &957313787
 GameObject:
@@ -46342,7 +46342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1001 &1005057766
 PrefabInstance:
@@ -52274,7 +52274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.12156863, g: 0.36078432, b: 0.02745098, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!114 &1199822218
 MonoBehaviour:
@@ -59665,7 +59665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.12156863, g: 0.36078432, b: 0.02745098, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!114 &1284419045
 MonoBehaviour:
@@ -65903,7 +65903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.12156863, g: 0.36078432, b: 0.02745098, a: 1}
-  m_EffectDistance: {x: 4, y: -4}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!114 &1514669725
 MonoBehaviour:
@@ -89125,7 +89125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!4 &1102395959009693481
 Transform:
@@ -89564,7 +89564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!224 &3479586974368440414
 RectTransform:
@@ -89984,6 +89984,62 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0.0024414062
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924959042678415, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959042678415, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959063462210, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959063462210, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959093823045, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959093823045, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959250272251, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959250272251, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959299334013, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959299334013, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959335523675, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959335523675, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959370803502, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959370803502, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924959685872126, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -90028,6 +90084,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924960319238151, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960319238151, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960353367872, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960353367872, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924960455339058, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.1
@@ -90056,6 +90128,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924960557240380, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960557240380, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960664663731, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960664663731, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960764274280, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960764274280, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924960770583496, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -90068,6 +90164,22 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0.27486128
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924960784367518, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960784367518, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960855064867, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960855064867, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924960888961316, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.1
@@ -90079,6 +90191,14 @@ PrefabInstance:
     - target: {fileID: 4589924960888961316, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960897778702, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960897778702, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4589924960914243231, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -90229,7 +90349,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -191.37506, y: -24}
+  m_AnchoredPosition: {x: -164.02094, y: -24}
   m_SizeDelta: {x: 320, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4910614093465600965
@@ -90464,7 +90584,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 179.62491, y: -14}
+  m_AnchoredPosition: {x: 206.97903, y: -14}
   m_SizeDelta: {x: 220, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4910614093535352885
@@ -90623,8 +90743,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -224}
-  m_SizeDelta: {x: 733.1, y: 400}
+  m_AnchoredPosition: {x: 0.00004386902, y: -224}
+  m_SizeDelta: {x: 678.7195, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4910614093753853419
 GameObject:
@@ -90722,7 +90842,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &4910614093879350875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90858,7 +90978,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.624941, y: -24}
+  m_AnchoredPosition: {x: 36.979057, y: -24}
   m_SizeDelta: {x: 50, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4910614094028334993
@@ -91070,7 +91190,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 179.62488, y: 46.000015}
+  m_AnchoredPosition: {x: 206.979, y: 46.000015}
   m_SizeDelta: {x: 220, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4910614094316159092
@@ -91426,7 +91546,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 179.62494, y: 106.000015}
+  m_AnchoredPosition: {x: 206.97906, y: 106.000015}
   m_SizeDelta: {x: 220, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &4910614094573856208
@@ -91578,7 +91698,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &4910614094586254431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91931,7 +92051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &4910614094787743486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92131,8 +92251,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 201, y: -116.212}
-  m_SizeDelta: {x: 292.75, y: 125.576}
+  m_AnchoredPosition: {x: 203, y: -116.212}
+  m_SizeDelta: {x: 242.0418, y: 125.576}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4910614094965710453
 GameObject:
@@ -93849,7 +93969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.03529412, g: 0.22352941, b: 0.34901962, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!222 &8990987612958477678
 CanvasRenderer:
@@ -93939,7 +94059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.5137255, g: 0.1882353, b: 0.09411765, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!222 &8990987613245767121
 CanvasRenderer:
@@ -94617,7 +94737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!222 &8990987613822229145
 CanvasRenderer:
@@ -94826,7 +94946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.015686275, g: 0.24313726, b: 0.011764706, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!222 &8990987614395422221
 CanvasRenderer:
@@ -95099,7 +95219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.45882353, g: 0.019607844, b: 0.019607844, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!222 &8990987614565145175
 CanvasRenderer:
@@ -95208,7 +95328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.27450982, g: 0.05490196, b: 0.43137255, a: 1}
-  m_EffectDistance: {x: 5, y: -5}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!222 &8990987614731972250
 CanvasRenderer:

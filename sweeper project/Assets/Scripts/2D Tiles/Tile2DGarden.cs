@@ -227,11 +227,29 @@ public class Tile2DGarden : BaseTile
 
     public override void DoAction()
     {
+        if (unplayable)
+        {
+            UpdateMaterial(defaultCol);
+            return;
+        }
+
         StartCoroutine(FireAction());
     }
 
     public override void TypeSettings() 
     {
         myMesh = vfx.gridTile.GetComponent<MeshRenderer>();
+    }
+
+    public override void ResetSelf()
+    {
+        clickable = true;
+        triggered = false;
+        if (!unplayable)
+        {
+            defaultCol = manager.defaultColor;
+            UpdateMaterial(defaultCol);
+        }
+        vfx.gameObject.SetActive(false);
     }
 }
