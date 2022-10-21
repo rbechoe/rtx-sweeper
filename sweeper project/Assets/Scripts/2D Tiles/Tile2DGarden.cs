@@ -5,7 +5,8 @@ public class Tile2DGarden : BaseTile
 {
     private GridManager2DGarden gridManager;
     private MeshRenderer myMesh;
-    private bool editMode = true;
+    private bool gridEditMode = true;
+    private bool myEditMode = false;
     public bool unplayable = false;
 
     public Color playableColor = Color.green;
@@ -44,7 +45,26 @@ public class Tile2DGarden : BaseTile
 
     private void Update()
     {
-        editMode = gridManager.inEditMode;
+        gridEditMode = gridManager.inEditMode;
+
+        // if own state is not in edit mode but grid state is, reset self and switch to edit mode
+        if (myEditMode == false && gridEditMode == true)
+        {
+            ResetSelf(); // hard call required to prevent bugs
+            myEditMode = true;
+
+            if (!unplayable)
+            {
+                defaultCol = playableColor;
+                UpdateMaterial(defaultCol);
+            }
+        }
+
+        // make sure to switch when needed
+        if (myEditMode == true && gridEditMode == false)
+        {
+            myEditMode = false;
+        }
     }
 
     protected override void OnEnable()
@@ -88,7 +108,7 @@ public class Tile2DGarden : BaseTile
 
     protected override void OnMouseOver()
     {
-        if (editMode)
+        if (myEditMode)
         {
             UpdateMaterial(selectCol);
 
@@ -245,6 +265,7 @@ public class Tile2DGarden : BaseTile
     {
         clickable = true;
         triggered = false;
+        EnableMesh();
         if (!unplayable)
         {
             defaultCol = manager.defaultColor;

@@ -187,7 +187,7 @@ public abstract class BaseGridManager : MonoBehaviour
         }
     }
 
-    IEnumerator ResetLogic()
+    protected IEnumerator ResetLogic()
     {
         EventSystem.InvokeEvent(EventType.END_GAME);
         yield return new WaitForEndOfFrame();

@@ -24,7 +24,7 @@ public class LanguageDatabase : ScriptableObject
             }
         }
 
-        return string.Empty;
+        return "Not Localized Yet.";
     }
 
     public List<string> GetSentences(string ID)

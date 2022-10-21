@@ -35,7 +35,9 @@ public class LocalizedTextComponent : MonoBehaviour
         language = Settings.Instance.GetLanguage();
 
         if (TextIdentifier == string.Empty)
+        {
             return;
+        }
 
         if (LANGUAGE_DATABASE)
         {

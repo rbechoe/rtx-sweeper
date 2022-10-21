@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ public class GridManager2DGarden : BaseGridManager
 
     public Color playableColor = Color.green;
     public Color unPlayableColor = Color.red;
+    public GameObject flagPrefab;
 
     protected override void Start()
     {
@@ -119,7 +121,19 @@ public class GridManager2DGarden : BaseGridManager
         int curTileCount = 0;
         reduction = 0;
 
-        for (int tileId = 0; tileId < tiles.Count - reduction; tileId++)
+        // remove flags
+        foreach (GameObject flag in activeFlags)
+        {
+            Destroy(flag);
+        }
+        foreach (GameObject flag in inactiveFlags)
+        {
+            Destroy(flag);
+        }
+        activeFlags.Clear();
+        inactiveFlags.Clear();
+
+        for (int tileId = 0; tileId < tiles.Count; tileId++)
         {
             GameObject newTile = tiles[tileId];
             Tile2DGarden tileData = newTile.GetComponent<Tile2DGarden>();
@@ -145,6 +159,7 @@ public class GridManager2DGarden : BaseGridManager
                     newTile.layer = 11;
                     tileData.state = TileStates.Bomb;
                     bombCount++;
+                    AddNewFlag();
                 }
                 else
                 {
@@ -173,6 +188,14 @@ public class GridManager2DGarden : BaseGridManager
         yield return new WaitForEndOfFrame();
     }
 
+    // add flag to pool
+    private void AddNewFlag()
+    {
+        GameObject _flag = Instantiate(flagPrefab, Vector3.up * 5000, Quaternion.identity);
+        _flag.transform.parent = flagParent.transform;
+        inactiveFlags.Add(_flag);
+    }
+
     protected override void CheckForVictory()
     {
         progress = goodTiles / (tiles.Count - reduction - initialBombAmount);
@@ -180,6 +203,30 @@ public class GridManager2DGarden : BaseGridManager
         {
             wonGame = true;
             EventSystem.InvokeEvent(EventType.WIN_GAME);
+        }
+    }
+
+    protected override void ResetGame()
+    {
+        if (inReset)
+        {
+            return;
+        }
+        else
+        {
+            inReset = true;
+            firstTile = null;
+            timeStarted = false;
+            usedFlag = false;
+            goodTiles = 0;
+            timer = 0;
+            tileClicks = 0;
+            otherClicks = 0;
+            shuffleCount = 0;
+            bombAmount = tiles.Count / difficulty;
+            initialBombAmount = bombAmount;
+            emptyTiles = new List<GameObject>();
+            StartCoroutine(ResetLogic());
         }
     }
 
@@ -200,7 +247,7 @@ public class GridManager2DGarden : BaseGridManager
 
     public void UpdateDifficulty()
     {
-        difficulty = 10 - (int)difficultySlider.value;
+        difficulty = 13 - (int)difficultySlider.value;
     }
 
     public void EnterEditMode()
