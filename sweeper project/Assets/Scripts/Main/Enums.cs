@@ -44,7 +44,8 @@ public enum EventType
     DISABLE_RTX,        // passes nothing
     IN_SETTINGS,        // passes nothing
     OUT_SETTINGS,       // passes nothing
-    UPDATE_LANGUAGE     // passes nothing
+    UPDATE_LANGUAGE,    // passes nothing
+    PLAY_CLICK_SFX      // passes nothing
 }
 
 public enum TileStates

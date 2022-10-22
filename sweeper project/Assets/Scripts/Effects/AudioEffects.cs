@@ -13,6 +13,7 @@ public class AudioEffects : MonoBehaviour
         EventSystem.AddListener(EventType.WIN_GAME, GameWin);
         EventSystem.AddListener(EventType.GAME_LOSE, GameOver);
         EventSystem.AddListener(EventType.PLAY_CLICK, ClickSound);
+        EventSystem.AddListener(EventType.PLAY_CLICK_SFX, UIClick);
         EventSystem.AddListener(EventType.PLAY_FLAG, FlagPlantSound);
         EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, RemoveFlagSound);
     }
@@ -23,6 +24,7 @@ public class AudioEffects : MonoBehaviour
         EventSystem.RemoveListener(EventType.WIN_GAME, GameWin);
         EventSystem.RemoveListener(EventType.GAME_LOSE, GameOver);
         EventSystem.RemoveListener(EventType.PLAY_CLICK, ClickSound);
+        EventSystem.RemoveListener(EventType.PLAY_CLICK_SFX, UIClick);
         EventSystem.RemoveListener(EventType.PLAY_FLAG, FlagPlantSound);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlagSound);
     }

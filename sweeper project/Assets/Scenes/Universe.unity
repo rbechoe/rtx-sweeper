@@ -12805,7 +12805,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1947806618}
-  - component: {fileID: 1947806620}
   - component: {fileID: 1947806621}
   - component: {fileID: 1947806623}
   - component: {fileID: 1947806619}
@@ -12856,20 +12855,6 @@ MonoBehaviour:
   dialogueBar: {fileID: 1609720708}
   startDelay: 2
   endDelay: 4
---- !u!114 &1947806620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947806617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf771484697b8ce408db107c70cd961a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridSize: 5
-  bombAmount: 10
 --- !u!114 &1947806621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12943,9 +12928,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSources:
   - {fileID: 1863918896}
-  sfxSources:
+  sfxSources: []
+  mainSfxSources:
   - {fileID: 1863918897}
-  mainSfxSources: []
 --- !u!1001 &1960992750
 PrefabInstance:
   m_ObjectHideFlags: 0
