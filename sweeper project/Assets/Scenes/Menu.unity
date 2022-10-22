@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 969558174}
-  m_IndirectSpecularColor: {r: 1837.9359, g: 2644.2842, b: 3170.2422, a: 1}
+  m_IndirectSpecularColor: {r: 1836.1747, g: 2641.7412, b: 3166.9805, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -90040,6 +90040,10 @@ PrefabInstance:
       propertyPath: m_EffectDistance.y
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924959583512932, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924959685872126, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -90060,12 +90064,40 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924959770013247, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959927238249, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7389621369151043414}
+    - target: {fileID: 4589924959927238249, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateSFXVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959927238249, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924959927238249, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924959985126956, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4589924959985126956, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960049486764, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960049486765, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_Interactable
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4589924960049486765, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
@@ -90112,6 +90144,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924960466559656, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924960466559658, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -90126,6 +90162,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4589924960466559658, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960474575380, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7389621369151043414}
+    - target: {fileID: 4589924960474575380, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateBGMVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960474575380, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960474575380, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4589924960557240380, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
@@ -90200,6 +90252,22 @@ PrefabInstance:
       propertyPath: m_EffectDistance.y
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 4589924960910572519, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7389621369151043414}
+    - target: {fileID: 4589924960910572519, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateMainSFXVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960910572519, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589924960910572519, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4589924960914243231, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
@@ -90242,6 +90310,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+--- !u!1 &4589924960818347337 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3797472662594103385, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+  m_PrefabInstance: {fileID: 4589924960818347336}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4589924960818347338 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7029653554001218307, guid: 8b7022bb692bdc24eb6288a572b94b02, type: 3}
+  m_PrefabInstance: {fileID: 4589924960818347336}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4694394322527881805
 GameObject:
   m_ObjectHideFlags: 0
@@ -92561,6 +92639,8 @@ MonoBehaviour:
   desert: {fileID: 973731761}
   islands: {fileID: 1443959204}
   galaxy: {fileID: 904606288}
+  rtxButtons: {fileID: 4589924960818347338}
+  rtxOffText: {fileID: 4589924960818347337}
   playBtn: {fileID: 439264399}
   asiaBtn: {fileID: 8990987614530998791}
   desertBtn: {fileID: 8990987614742662900}

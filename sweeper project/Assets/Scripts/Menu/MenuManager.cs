@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
     [Header("Assignables")]
     public Locker tutorial;
     public Locker arctic, asia, desert, islands, galaxy;
+    public GameObject rtxButtons, rtxOffText;
 
     [Header("Buttons")]
     public Button playBtn;
@@ -58,11 +59,13 @@ public class MenuManager : MonoBehaviour
         string dxVersion = SystemInfo.graphicsDeviceVersion;
         if (dxVersion.Contains("Direct3D 12"))
         {
-            graphicsBtn.interactable = true;
+            rtxButtons.SetActive(true);
+            rtxOffText.SetActive(false);
         }
         else
         {
-            graphicsBtn.interactable = false;
+            rtxButtons.SetActive(false);
+            rtxOffText.SetActive(true);
         }
 
         // disable interactables based on savedata
