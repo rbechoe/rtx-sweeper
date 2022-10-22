@@ -108,17 +108,11 @@ public class SteamAPIManager : MonoBehaviour
         lbStatName.Add(LeaderboardStats.galaxyGamesWon, "lb_galaxy_games_won");
         lbStatName.Add(LeaderboardStats.galaxyGamesPlayed, "lb_galaxy_games_played");
         lbStatName.Add(LeaderboardStats.galaxy1BestTime, "lb_galaxy_1_best_time");
-
-        // check cosmetics
-        if (CheckDLC((AppId_t)2166670))
-        {
-
-        }
     }
 
     public bool CheckDLC(AppId_t id)
     {
-        if (!SteamManager.Initialized)
+        if (!SteamManager.Initialized || !SteamUser.BLoggedOn())
         {
             Debug.Log("Steam manager not initialized!");
             return false;
@@ -129,7 +123,7 @@ public class SteamAPIManager : MonoBehaviour
 
     public void SetAchievement(UserAchievements name)
     {
-        if (!SteamManager.Initialized)
+        if (!SteamManager.Initialized || !SteamUser.BLoggedOn())
         {
             Debug.Log("Steam manager not initialized!");
             return;
@@ -140,7 +134,7 @@ public class SteamAPIManager : MonoBehaviour
 
     public void SetStatInt(UserStats name, int value)
     {
-        if (!SteamManager.Initialized)
+        if (!SteamManager.Initialized || !SteamUser.BLoggedOn())
         {
             Debug.Log("Steam manager not initialized!");
             return;
@@ -151,7 +145,7 @@ public class SteamAPIManager : MonoBehaviour
 
     public void SetStatFloat(UserStats name, float value)
     {
-        if (!SteamManager.Initialized)
+        if (!SteamManager.Initialized || !SteamUser.BLoggedOn())
         {
             Debug.Log("Steam manager not initialized!");
             return;
