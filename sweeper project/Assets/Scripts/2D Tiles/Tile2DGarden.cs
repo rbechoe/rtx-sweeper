@@ -159,7 +159,7 @@ public class Tile2DGarden : BaseTile
 
                 foreach (Collider tile in allTiles)
                 {
-                    tile.GetComponent<Tile2D>()?.PreviewTileSelection();
+                    tile.GetComponent<Tile2DGarden>()?.PreviewTileSelection();
                 }
 
                 tilesPreviewed = allTiles;
@@ -183,7 +183,7 @@ public class Tile2DGarden : BaseTile
                 {
                     foreach (Collider tile in tilesPreviewed)
                     {
-                        tile.GetComponent<Tile2D>()?.DoAction();
+                        tile.GetComponent<Tile2DGarden>()?.DoAction();
                     }
                     previewClicked = false;
                     tilesPreviewed = null;
