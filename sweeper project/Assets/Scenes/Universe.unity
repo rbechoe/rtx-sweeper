@@ -8717,6 +8717,38 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 86805254716009287, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254716009287, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254716009287, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 1609720715}
+    - target: {fileID: 86805254716009287, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254716009287, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: PlayClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254716009287, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: SettingsCommunicator, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254716009287, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254716009287, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 86805255152595098, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
@@ -11154,6 +11186,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4082454674263077482, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
   m_PrefabInstance: {fileID: 1609720703}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1609720715 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2850671981683924946, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+  m_PrefabInstance: {fileID: 1609720703}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c5794b5a07938e4892ce60035ef5c53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1623438334
 GameObject:
   m_ObjectHideFlags: 0
