@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UICanvas : MonoBehaviour
 {
-    public GameObject rtxButtons, rtxOffText;
+    public GameObject rtxButtons, rtxOffText, rtxOffBtn, rtxOnBtn;
 
     private void Start()
     {
@@ -19,6 +19,17 @@ public class UICanvas : MonoBehaviour
         {
             rtxButtons.SetActive(false);
             rtxOffText.SetActive(true);
+        }
+
+        if (Settings.Instance.GetRTX())
+        {
+            rtxOnBtn.SetActive(true);
+            rtxOffBtn.SetActive(false);
+        }
+        else
+        {
+            rtxOnBtn.SetActive(false);
+            rtxOffBtn.SetActive(true);
         }
     }
 
