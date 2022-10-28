@@ -1,18 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class LevelCompleted : MonoBehaviour
 {
     public List<string> lines;
     public List<int> waitTimes;
 
-    public TextMeshProUGUI text;
+    public Text text;
     public GameObject dialogueBar;
 
     public float endDelay;
     private float totalWaitTime;
+
+    private Language language;
+
+    public static LanguageDatabase LANGUAGE_DATABASE
+    {
+        get => Resources.Load<LanguageDatabase>("Languages");
+
+        set => LANGUAGE_DATABASE = value;
+    }
+
+    private void Start()
+    {
+        language = Settings.Instance.GetLanguage();
+    }
 
     private void OnEnable()
     {
@@ -50,6 +64,6 @@ public class LevelCompleted : MonoBehaviour
 
     void Dialogue(int line)
     {
-        text.text = lines[line];
+        text.text = LANGUAGE_DATABASE.GetSentence(lines[line], language);
     }
 }

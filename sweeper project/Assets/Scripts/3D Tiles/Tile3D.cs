@@ -184,7 +184,7 @@ public class Tile3D : BaseTile
         gameObject.name = "first tile";
         defaultCol = startColor;
         startingTile = true;
-        UpdateMaterial(defaultCol, 1024);
+        UpdateMaterial(defaultCol, 8192);
     }
 
     protected override void UpdateMaterial(Color color, float intensity = -10)
@@ -277,6 +277,8 @@ public class Tile3D : BaseTile
 
     public override void TypeSpecificAction()
     {
+        if (state != TileStates.Revealed) EventSystem.InvokeEvent(EventType.REVEAL_TILE);
+
         switch (state)
         {
             case TileStates.Bomb:

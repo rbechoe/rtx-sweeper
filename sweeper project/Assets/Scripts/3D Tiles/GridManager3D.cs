@@ -12,6 +12,8 @@ public class GridManager3D : BaseGridManager
 
     public GameObject[] layers;
 
+    private int startBombAmount = 12;
+
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
@@ -95,7 +97,7 @@ public class GridManager3D : BaseGridManager
         int bombCount = 0;
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
         int curTileCount = 0; // used for optimalization
-        bombAmount = 12;
+        bombAmount = startBombAmount;
 
         foreach (GameObject layer in layers)
         {
@@ -180,9 +182,8 @@ public class GridManager3D : BaseGridManager
 
     protected override void CheckForVictory()
     {
-        // always 15 bombs total
-        progress = goodTiles / (tiles.Count - 15);
-        if (goodTiles == (tiles.Count - 15))
+        progress = goodTiles / (tiles.Count - startBombAmount);
+        if (goodTiles == (tiles.Count - startBombAmount))
         {
             wonGame = true;
             EventSystem.InvokeEvent(EventType.WIN_GAME);
