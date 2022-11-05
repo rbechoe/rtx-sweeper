@@ -206,11 +206,13 @@ public class GridManager3D : BaseGridManager
         efficiency = Mathf.Clamp(efficiency, 0, 100);
         uiManager.SetEfficiency(efficiency);
 
+        float timer = Helpers.RoundToThreeDecimals(this.timer);
         AccountData AD = DS.GetUserData();
         AD.totalClicks = AD.totalClicks + tileClicks;
         AD.gamesPlayed = AD.gamesPlayed + 1;
-        float timer = Helpers.RoundToThreeDecimals(this.timer);
         AD.totalTimePlayed = AD.totalTimePlayed + timer;
+        AD.galaxyTotalClicks = AD.galaxyTotalClicks + tileClicks;
+        AD.galaxyGamesPlayed = AD.galaxyGamesPlayed + 1;
 
         steamAPI.SetStatInt(UserStats.totalGamesPlayed, AD.gamesPlayed);
         steamAPI.SetStatInt(UserStats.totalClicks, AD.totalClicks);
@@ -229,7 +231,8 @@ public class GridManager3D : BaseGridManager
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.noFlags);
             if (!usedFlag && difficulty >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
 
-            AD.galaxyVictories += 1;
+            AD.galaxyVictories = AD.galaxyVictories + 1;
+            AD.galaxyVictories1 = AD.galaxyVictories1 + 1;
             if (timer < AD.galaxyTime1 || (timer == AD.galaxyTime1 && efficiency > AD.galaxyEfficiency1) || AD.galaxyTime1 == 0)
             {
                 AD.galaxyTime1 = timer;
@@ -252,7 +255,7 @@ public class GridManager3D : BaseGridManager
             AD.gamesLost = AD.gamesLost + 1;
         }
 
-        steamAPI.SetStatInt(UserStats.galaxy1GamesPlayed, 1);
+        steamAPI.SetStatInt(UserStats.galaxy1GamesPlayed, AD.galaxyGamesPlayed);
         steamAPI.UpdateLeaderBoard(LeaderboardStats.galaxyGamesPlayed, AD.galaxyGamesPlayed);
 
         DS.UpdateAccountData(AD);
