@@ -97,7 +97,7 @@ public class MenuManager : MonoBehaviour
             dataSerializer.UpdateAccountData(accountData);
         }
         if (accountData.hasCosmetics > 0)
-        { 
+        {
             gardenBtn.gameObject.SetActive(true);
             skinsBtn.gameObject.SetActive(true);
             Settings.Instance.HasSkins();
@@ -113,6 +113,10 @@ public class MenuManager : MonoBehaviour
             flagPicker.SetGV(flagColor.g * 255);
             flagPicker.SetBV(flagColor.b * 255);
             flagPicker.SetA(255, true);
+        }
+        else
+        {
+            skinsBtn.gameObject.SetActive(false);
         }
     }
 
