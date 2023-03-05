@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class Tile3D : BaseTile
 {
@@ -18,6 +19,8 @@ public class Tile3D : BaseTile
 
     public Material normalMat, wireframeMat;
 
+    private List<Tile3D> neighbours = new List<Tile3D>();
+
     private void Awake()
     {
         bombCountTMP = GetComponentInChildren<TMPBomb3D>();
@@ -27,6 +30,13 @@ public class Tile3D : BaseTile
         myMat.EnableKeyword("_EMISSION");
         myMat.color = defaultCol;
         myMat.SetColor("_EmissiveColor", defaultCol);
+
+        Collider[] tiles = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
+        foreach (Collider tile in tiles)
+        {
+            if (tile.gameObject == gameObject) continue;
+            neighbours.Add(tile.GetComponent<Tile3D>());
+        }
     }
 
     protected override void OnEnable()
@@ -221,23 +231,8 @@ public class Tile3D : BaseTile
             bombCountTMP.BombCount(0);
             return;
         }
+
         bombCountTMP.BombCount(bombCount);
-    }
-
-    protected override void OnMouseOver() 
-    {
-        if (!clickable || gameEnded) return;
-        hovered = true;
-
-        UpdateMaterial(selectCol, 1024);
-    }
-
-    protected override void OnMouseExit()
-    {
-        if (!clickable || gameEnded) return;
-        hovered = false;
-
-        UpdateMaterial(defaultCol, 1024);
     }
 
     public override void DoAction()
@@ -249,6 +244,42 @@ public class Tile3D : BaseTile
     {
         defaultNone = new Color(0.1f, 0.1f, 0.1f, 1f);
         gridMat = gameObject.GetComponent<Renderer>().material;
+    }
+
+    public void HighlightTextColor()
+    {
+        bombCountTMP.HighlightColor();
+    }
+
+    public void DefaultTextColor()
+    {
+        bombCountTMP.DefaultColor();
+    }
+
+    protected override void OnMouseOver()
+    {
+        if (!clickable || gameEnded) return;
+        hovered = true;
+
+        foreach(Tile3D neighbour in neighbours)
+        {
+            neighbour.HighlightTextColor();
+        }
+
+        UpdateMaterial(selectCol, 1024);
+    }
+
+    protected override void OnMouseExit()
+    {
+        if (!clickable || gameEnded) return;
+        hovered = false;
+
+        foreach (Tile3D neighbour in neighbours)
+        {
+            neighbour.DefaultTextColor();
+        }
+
+        UpdateMaterial(defaultCol, 1024);
     }
 
     private IEnumerator FireAction()
