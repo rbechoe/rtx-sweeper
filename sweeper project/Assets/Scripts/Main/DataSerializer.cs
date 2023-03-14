@@ -209,6 +209,24 @@ public class AccountData
     public float desertEfficiency3 = 0;
     public int desertVictories3 = 0;
 
+    // Anomaly
+    public int anomalyVictories = 0;
+    public int anomalyLoses = 0;
+    public int anomalyGamesPlayed = 0;
+    public int anomalyTotalClicks = 0;
+    public float anomalyTime1 = 0;
+    public int anomalyClicks1 = 0;
+    public float anomalyEfficiency1 = 0;
+    public int anomalyVictories1 = 0;
+    public float anomalyTime2 = 0;
+    public int anomalyClicks2 = 0;
+    public float anomalyEfficiency2 = 0;
+    public int anomalytVictories2 = 0;
+    public float anomalyTime3 = 0;
+    public int anomalyClicks3 = 0;
+    public float anomalyEfficiency3 = 0;
+    public int anomalyVictories3 = 0;
+
     // Tutorial
     public int tutorialVictories = 0;
 
