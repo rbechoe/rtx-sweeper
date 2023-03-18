@@ -249,6 +249,11 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("Credits");
     }
 
+    public void LoadAnomaly()
+    {
+        SceneManager.LoadScene("Anomaly");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
