@@ -226,6 +226,9 @@ public class AccountData
     public int anomalyClicks3 = 0;
     public float anomalyEfficiency3 = 0;
     public int anomalyVictories3 = 0;
+    public bool unlockedAnomaly1 = false;
+    public bool unlockedAnomaly2 = false;
+    public bool unlockedAnomaly3 = false;
 
     // Tutorial
     public int tutorialVictories = 0;

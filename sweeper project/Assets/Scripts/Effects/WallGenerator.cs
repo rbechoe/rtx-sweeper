@@ -16,9 +16,7 @@ public class WallGenerator : MonoBehaviour
     public float valueToRotateTo = 0;
     public float currentRotation = 0;
 
-    public GameObject vortex;
-
-    void Awake()
+    private void Awake()
     {
         for (int x = 0; x < width; x++)
         {
@@ -68,7 +66,7 @@ public class WallGenerator : MonoBehaviour
     {
         if (currentRotation != valueToRotateTo)
         {
-            float speed = Mathf.Clamp(Mathf.Abs((currentRotation - valueToRotateTo)) / 100f, 0.005f, 0.25f);
+            float speed = Mathf.Clamp(Mathf.Abs((currentRotation - valueToRotateTo)) / 100f, 0.005f, 0.15f);
             if (currentRotation < valueToRotateTo)
             {
                 currentRotation += speed;
