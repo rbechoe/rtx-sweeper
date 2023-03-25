@@ -5,6 +5,8 @@ public class AnomalyGridManager2D : BaseGridManager
     SteamAPIManager steamAPI;
 
     private int difficulty;
+    public bool isPartial;
+    // TODO make a manager that keeps track of all grids solved in order to complete the game
 
     protected override void Start()
     {
