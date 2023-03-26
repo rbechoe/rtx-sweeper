@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WallGenerator : MonoBehaviour
 {
+    public GameObject areaButtons;
     public GameObject wallPiece;
     public int height = 20;
     public int width = 20;
@@ -60,19 +61,23 @@ public class WallGenerator : MonoBehaviour
     public void CloseWall()
     {
         valueToRotateTo = 0;
+        areaButtons.SetActive(true);
     }
 
     private void FixedUpdate()
     {
         if (currentRotation != valueToRotateTo)
         {
-            float speed = Mathf.Clamp(Mathf.Abs((currentRotation - valueToRotateTo)) / 100f, 0.005f, 0.15f);
-            if (currentRotation < valueToRotateTo)
+            float speed = Mathf.Clamp(Mathf.Abs((currentRotation - valueToRotateTo)) / 100f, 0.01f, 0.15f);
+
+            // opening mechanism
+            if (currentRotation <= valueToRotateTo)
             {
                 currentRotation += speed;
             }
 
-            if (currentRotation > valueToRotateTo)
+            // closing mechanism
+            if (currentRotation >= valueToRotateTo)
             {
                 currentRotation -= speed;
             }

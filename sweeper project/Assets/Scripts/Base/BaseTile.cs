@@ -92,7 +92,7 @@ public abstract class BaseTile : MonoBehaviour
     protected virtual void CheckBombs()
     {
         // count all nearby bombs
-        Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 1.25f);
         int bombCount = 0;
 
         for (int i = 0; i < hitColliders.Length; i++)
@@ -179,7 +179,7 @@ public abstract class BaseTile : MonoBehaviour
         if (state == TileStates.Revealed) return;
 
         // return if there is a flag on this position
-        Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
+        Collider[] nearbyFlags = Physics.OverlapSphere(transform.position, 0.25f, flagMask);
         if (nearbyFlags.Length > 0) return;
 
         if (clickable && !triggered)
@@ -255,7 +255,7 @@ public abstract class BaseTile : MonoBehaviour
 
             case TileStates.Empty:
                 EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
-                Collider[] tiles = Physics.OverlapBox(gameObject.transform.position, new Vector3(1, 1, 1) * 1.25f, Quaternion.identity);
+                Collider[] tiles = Physics.OverlapSphere(gameObject.transform.position, 1.25f);
                 for (int i = 0; i < tiles.Length; i++)
                 {
                     tiles[i].GetComponent<BaseTile>()?.NoBombReveal();

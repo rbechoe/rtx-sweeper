@@ -58,8 +58,8 @@ public class Tile2D : BaseTile
         if (Input.GetMouseButton(0) && triggered && !previewClicked)
         {
             // use box to detect all nearby tiles that can be activated once amount bombs equals amount of flags, not more or less
-            Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, flagMask);
-            Collider[] allTiles = Physics.OverlapBox(transform.position, Vector3.one * 0.75f, Quaternion.identity, allMask);
+            Collider[] nearbyFlags = Physics.OverlapSphere(transform.position, 0.75f, flagMask);
+            Collider[] allTiles = Physics.OverlapSphere(transform.position, 0.75f, allMask);
 
             if (bombCount == nearbyFlags.Length)
             {
@@ -135,7 +135,7 @@ public class Tile2D : BaseTile
         }
 
         // return if there is a flag on this position
-        Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
+        Collider[] nearbyFlags = Physics.OverlapSphere(transform.position, 0.25f, flagMask);
         if (nearbyFlags.Length > 0)
         {
             yield break;
