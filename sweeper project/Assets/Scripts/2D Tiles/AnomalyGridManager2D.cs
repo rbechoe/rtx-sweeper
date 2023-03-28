@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class AnomalyGridManager2D : BaseGridManager
 {
-    SteamAPIManager steamAPI;
+    private SteamAPIManager steamAPI;
+
+    public AnomalyLvl2 puzzle2Manager;
 
     private int difficulty;
     public bool isPartial;
-    // TODO make a manager that keeps track of all grids solved in order to complete the game
 
     protected override void Start()
     {
@@ -52,6 +53,54 @@ public class AnomalyGridManager2D : BaseGridManager
         EventSystem.RemoveListener(EventType.OTHER_CLICK, OtherClick);
         EventSystem.RemoveListener(EventType.PLAY_FLAG, PlantFlag);
         EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
+    }
+
+    protected override void Update()
+    {
+    }
+
+    protected override void AddGoodTile(GameObject tile)
+    {
+        if (!puzzle2Manager.timeStarted)
+        {
+            puzzle2Manager.timeStarted = true;
+        }
+        goodTiles++;
+        CheckForVictory();
+    }
+
+    protected override void CheckForVictory()
+    {
+        progress = goodTiles / (tiles.Count - initialBombAmount);
+        if (goodTiles == (tiles.Count - initialBombAmount))
+        {
+            puzzle2Manager.CompleteGrid(gameObject);
+        }
+    }
+
+    protected override void TileClick()
+    {
+        puzzle2Manager.totalTileClicks++;
+    }
+
+    protected override void FlagClick(GameObject flag)
+    {
+        puzzle2Manager.totalOtherClicks++;
+    }
+
+    protected override void PlantFlag()
+    {
+        puzzle2Manager.usedFlag = true;
+    }
+
+    protected override void OtherClick()
+    {
+        puzzle2Manager.totalOtherClicks++;
+    }
+
+    protected override void StopTimer()
+    {
+        puzzle2Manager.StopTimer();
     }
 
     protected override void LoseGame()
@@ -117,42 +166,6 @@ public class AnomalyGridManager2D : BaseGridManager
                     }
                 }
                 break;
-
-            case 2: // Asia anomaly
-                AD.anomalyVictories = (wonGame) ? AD.anomalyVictories + 1 : AD.anomalyVictories;
-                AD.anomalyTotalClicks += tileClicks;
-                AD.anomalyGamesPlayed += 1;
-
-                if (wonGame)
-                {
-                    AD.anomalyVictories1 += 1;
-
-                    if (timer < AD.anomalyTime1 || (timer == AD.anomalyTime1 && efficiency > AD.anomalyEfficiency1) || AD.anomalyTime1 == 0)
-                    {
-                        AD.anomalyTime1 = timer;
-                        AD.anomalyEfficiency1 = efficiency;
-                        AD.anomalyClicks1 = tileClicks;
-                    }
-                }
-                break;
-
-            case 3: // Desert anomaly
-                AD.anomalyVictories = (wonGame) ? AD.anomalyVictories + 1 : AD.anomalyVictories;
-                AD.anomalyTotalClicks += tileClicks;
-                AD.anomalyGamesPlayed += 1;
-
-                if (wonGame)
-                {
-                    AD.anomalyVictories1 += 1;
-
-                    if (timer < AD.anomalyTime1 || (timer == AD.anomalyTime1 && efficiency > AD.anomalyEfficiency1) || AD.anomalyTime1 == 0)
-                    {
-                        AD.anomalyTime1 = timer;
-                        AD.anomalyEfficiency1 = efficiency;
-                        AD.anomalyClicks1 = tileClicks;
-                    }
-                }
-                break;
         }
 
         DS.UpdateAccountData(AD);
@@ -163,27 +176,16 @@ public class AnomalyGridManager2D : BaseGridManager
 
     protected override void SetText(AccountData data = null)
     {
+        if (isPartial)
+        {
+            return;
+        }
+
         if (data == null) data = DS.GetUserData();
 
         switch (area)
         {
-            case 1: // anomaly
-                stars.text = "" + difficulty;
-                infoText.text =
-                    "Time: " + Helpers.RoundToThreeDecimals(data.anomalyTime1) + "s\n" +
-                    "Skill: " + Helpers.RoundToThreeDecimals(data.anomalyEfficiency1) + "%\n" +
-                    "Victories: " + data.anomalyVictories1 + "\n";
-                break;
-
-            case 2: // anomaly
-                stars.text = "" + difficulty;
-                infoText.text =
-                    "Time: " + Helpers.RoundToThreeDecimals(data.anomalyTime1) + "s\n" +
-                    "Skill: " + Helpers.RoundToThreeDecimals(data.anomalyEfficiency1) + "%\n" +
-                    "Victories: " + data.anomalyVictories1 + "\n";
-                break;
-
-            case 3: // anomaly
+            case 1: // anomaly arctic
                 stars.text = "" + difficulty;
                 infoText.text =
                     "Time: " + Helpers.RoundToThreeDecimals(data.anomalyTime1) + "s\n" +

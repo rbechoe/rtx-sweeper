@@ -221,7 +221,7 @@ public class AccountData
     public float anomalyTime2 = 0;
     public int anomalyClicks2 = 0;
     public float anomalyEfficiency2 = 0;
-    public int anomalytVictories2 = 0;
+    public int anomalyVictories2 = 0;
     public float anomalyTime3 = 0;
     public int anomalyClicks3 = 0;
     public float anomalyEfficiency3 = 0;
