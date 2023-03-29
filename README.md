@@ -114,6 +114,7 @@ public static class EventSystem
             {
                 eventCollection.Add(type, Empty);
             }
+            
             if (!eventCollectionParam.ContainsKey(type))
             {
                 eventCollectionParam.Add(type, Empty);
