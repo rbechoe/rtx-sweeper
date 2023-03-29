@@ -203,6 +203,7 @@ public enum EventType
 <b>Visual sample</b></br>
 Now, with the EventSystem basics explained, this is what it looks like in game.
 [![Game Over Loop][event-system]](https://github.com/rbechoe/rtx-sweeper)
+The moment the player hits a bomb a sequence of events are triggered. This causes the timer to stop, a score to be calculated (when the player wins), steam statistics to be updated, an audio file to be played, the correct UI to show up, and the game to become non-interactable. All this within a split second without hard references to each other, but just to the event it is listening to. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
