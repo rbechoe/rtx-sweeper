@@ -137,7 +137,7 @@ An event type is simply just an entry in an enum. Each entry describes what it d
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -167,7 +167,7 @@ Project Link: [https://github.com/rbechoe/rtx-sweeper](https://github.com/rbecho
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/rbechoe/rtx-sweeper/LICENSE.txt
+[license-url]: https://github.com/rbechoe/rtx-sweeper/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&color=0072b1
 [linkedin-url]: https://www.linkedin.com/in/ravibechoe/
 [product-screenshot]: images/screenshot.png
