@@ -58,7 +58,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![RTX Sweeper Menu][product-screenshot]](https://github.com/rbechoe/rtx-sweeper)
 
 This documentation serves mainly as a description about this project for my portfolio to ensure that the important files are seen. 
 RTX Sweeper has been a passion project of mine since August 2021. I have spend countless hours since then working on this game. 
