@@ -122,7 +122,7 @@ public abstract class BaseTile : MonoBehaviour
 
     protected virtual void AddEmpty()
     {
-        EventSystem<GameObject>.InvokeEvent(EventType.ADD_EMPTY, gameObject);
+        EventSystem.eventCollectionParam[EventType.ADD_EMPTY](gameObject);
     }
 
     protected virtual void SetToDefaultCol()
@@ -245,16 +245,16 @@ public abstract class BaseTile : MonoBehaviour
 
     public virtual void TypeSpecificAction()
     {
-        if (state != TileStates.Revealed) EventSystem.InvokeEvent(EventType.REVEAL_TILE);
+        if (state != TileStates.Revealed) EventSystem.eventCollection[EventType.REVEAL_TILE]();
 
         switch (state)
         {
             case TileStates.Bomb:
-                EventSystem.InvokeEvent(EventType.GAME_LOSE);
+                EventSystem.eventCollection[EventType.GAME_LOSE]();
                 break;
 
             case TileStates.Empty:
-                EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
+                EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE](gameObject);
                 Collider[] tiles = Physics.OverlapSphere(gameObject.transform.position, 1.25f);
                 for (int i = 0; i < tiles.Length; i++)
                 {
@@ -266,7 +266,7 @@ public abstract class BaseTile : MonoBehaviour
                 break;
 
             case TileStates.Number:
-                EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
+                EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE](gameObject);
                 ShowBombAmount();
                 state = TileStates.Revealed;
                 if (rewardObj != null) rewardObj.SetActive(true);

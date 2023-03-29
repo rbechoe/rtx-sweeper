@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioEffects : MonoBehaviour
@@ -10,23 +8,23 @@ public class AudioEffects : MonoBehaviour
     private void OnEnable()
     {
         // listen
-        EventSystem.AddListener(EventType.WIN_GAME, GameWin);
-        EventSystem.AddListener(EventType.GAME_LOSE, GameOver);
-        EventSystem.AddListener(EventType.PLAY_CLICK, ClickSound);
-        EventSystem.AddListener(EventType.PLAY_CLICK_SFX, UIClick);
-        EventSystem.AddListener(EventType.PLAY_FLAG, FlagPlantSound);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, RemoveFlagSound);
+        EventSystem.eventCollection[EventType.WIN_GAME] += GameWin;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += GameOver;
+        EventSystem.eventCollection[EventType.PLAY_CLICK] += ClickSound;
+        EventSystem.eventCollection[EventType.PLAY_CLICK_SFX] += UIClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] += FlagPlantSound;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += RemoveFlagSound;
     }
 
     private void OnDisable()
     {
         // unlisten
-        EventSystem.RemoveListener(EventType.WIN_GAME, GameWin);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, GameOver);
-        EventSystem.RemoveListener(EventType.PLAY_CLICK, ClickSound);
-        EventSystem.RemoveListener(EventType.PLAY_CLICK_SFX, UIClick);
-        EventSystem.RemoveListener(EventType.PLAY_FLAG, FlagPlantSound);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlagSound);
+        EventSystem.eventCollection[EventType.WIN_GAME] -= GameWin;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= GameOver;
+        EventSystem.eventCollection[EventType.PLAY_CLICK] -= ClickSound;
+        EventSystem.eventCollection[EventType.PLAY_CLICK_SFX] -= UIClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] -= FlagPlantSound;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= RemoveFlagSound;
     }
 
     private void GameOver()
@@ -50,7 +48,7 @@ public class AudioEffects : MonoBehaviour
         audioSource.PlayOneShot(flagPlant);
     }
 
-    private void RemoveFlagSound(GameObject flag)
+    private void RemoveFlagSound(object value)
     {
         audioSource.PlayOneShot(flagRemove);
     }

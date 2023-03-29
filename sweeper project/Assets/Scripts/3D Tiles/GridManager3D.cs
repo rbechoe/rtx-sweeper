@@ -28,46 +28,47 @@ public class GridManager3D : BaseGridManager
 
     protected override void OnEnable()
     {
-        EventSystem<GameObject>.AddListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem.AddListener(EventType.RANDOM_GRID, ResetGame);
-        EventSystem.AddListener(EventType.WIN_GAME, StopTimer);
-        EventSystem.AddListener(EventType.END_GAME, StopTimer);
-        EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.AddListener(EventType.OTHER_CLICK, OtherClick);
-        EventSystem.AddListener(EventType.PLAY_FLAG, PlantFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
+        EventSystem.eventCollectionParam[EventType.PLANT_FLAG] += ActivateFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] += AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += FlagClick;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] += ResetGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] += StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] += StopTimer;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += LoseGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += StopTimer;
+        EventSystem.eventCollection[EventType.REVEAL_TILE] += TileClick;
+        EventSystem.eventCollection[EventType.OTHER_CLICK] += OtherClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] += PlantFlag;
     }
 
     protected override void OnDisable()
     {
-        EventSystem<GameObject>.RemoveListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGame);
-        EventSystem.RemoveListener(EventType.WIN_GAME, StopTimer);
-        EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.RemoveListener(EventType.OTHER_CLICK, OtherClick);
-        EventSystem.RemoveListener(EventType.PLAY_FLAG, PlantFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
+        EventSystem.eventCollectionParam[EventType.PLANT_FLAG] -= ActivateFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] -= AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= FlagClick;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] -= ResetGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] -= StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] -= StopTimer;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= LoseGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= StopTimer;
+        EventSystem.eventCollection[EventType.REVEAL_TILE] -= TileClick;
+        EventSystem.eventCollection[EventType.OTHER_CLICK] -= OtherClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] -= PlantFlag;
     }
 
     private void AddLayer()
     {
-        EventSystem.InvokeEvent(EventType.ADD_LAYER);
+        EventSystem.eventCollection[EventType.ADD_LAYER]();
         bombAmount += 3;
-        EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
+        EventSystem.eventCollectionParam[EventType.BOMB_UPDATE](bombAmount);
     }
 
     // activate a flag and place it above the tile
-    protected override void ActivateFlag(Vector3[] vectors)
+    protected override void ActivateFlag(object value)
     {
+        Vector3[] vectors = value as Vector3[];
         if (inactiveFlags.Count > 0 && bombAmount > 0)
         {
             inactiveFlags[0].transform.position = vectors[0];
@@ -80,8 +81,9 @@ public class GridManager3D : BaseGridManager
     }
 
     // remove a flag from the tile
-    public override void ReturnFlag(GameObject flag)
+    public override void ReturnFlag(object value)
     {
+        GameObject flag = value as GameObject;
         flag.transform.position = Vector3.up * 5000;
         flag.transform.parent = null;
         activeFlags.Remove(flag);
@@ -174,7 +176,7 @@ public class GridManager3D : BaseGridManager
 
         yield return new WaitForEndOfFrame();
 
-        EventSystem.InvokeEvent(EventType.PREPARE_GAME);
+        EventSystem.eventCollection[EventType.PREPARE_GAME]();
         yield return new WaitForEndOfFrame();
         StartGame();
         yield return new WaitForEndOfFrame();
@@ -186,7 +188,7 @@ public class GridManager3D : BaseGridManager
         if (goodTiles == (tiles.Count - startBombAmount))
         {
             wonGame = true;
-            EventSystem.InvokeEvent(EventType.WIN_GAME);
+            EventSystem.eventCollection[EventType.WIN_GAME]();
         }
     }
 

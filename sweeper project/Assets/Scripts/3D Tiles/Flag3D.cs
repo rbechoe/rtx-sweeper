@@ -8,18 +8,18 @@ public class Flag3D : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(1) && hovered)
         {
-            EventSystem<GameObject>.InvokeEvent(EventType.REMOVE_FLAG, gameObject);
+            EventSystem.eventCollectionParam[EventType.REMOVE_FLAG](gameObject);
         }
     }
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.END_GAME, ReSize);
+        EventSystem.eventCollection[EventType.END_GAME] += ReSize;
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.END_GAME, ReSize);
+        EventSystem.eventCollection[EventType.END_GAME] -= ReSize;
     }
 
     private void ReSize()

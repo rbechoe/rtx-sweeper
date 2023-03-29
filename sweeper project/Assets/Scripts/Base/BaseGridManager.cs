@@ -52,7 +52,7 @@ public abstract class BaseGridManager : MonoBehaviour
     protected virtual void Update()
     {
         if (timeStarted) timer += Time.deltaTime;
-        EventSystem<float>.InvokeEvent(EventType.UPDATE_TIME, timer);
+        EventSystem.eventCollectionParam[EventType.UPDATE_TIME](timer);
     }
 
     protected abstract void OnEnable();
@@ -104,15 +104,16 @@ public abstract class BaseGridManager : MonoBehaviour
         }
         yield return new WaitForEndOfFrame();
 
-        EventSystem.InvokeEvent(EventType.PREPARE_GAME);
+        EventSystem.eventCollection[EventType.PREPARE_GAME]();
         yield return new WaitForEndOfFrame();
         StartGame();
         yield return new WaitForEndOfFrame();
     }
 
     // activate a flag and place it above the tile
-    protected virtual void ActivateFlag(Vector3[] vectors)
+    protected virtual void ActivateFlag(object value)
     {
+        Vector3[] vectors = value as Vector3[];
         if (inactiveFlags.Count > 0 && bombAmount > 0)
         {
             inactiveFlags[0].transform.position = vectors[0];
@@ -124,8 +125,9 @@ public abstract class BaseGridManager : MonoBehaviour
     }
 
     // remove a flag from the tile
-    public virtual void ReturnFlag(GameObject flag)
+    public virtual void ReturnFlag(object value)
     {
+        GameObject flag = value as GameObject;
         flag.transform.position = Vector3.up * 5000;
         activeFlags.Remove(flag);
         inactiveFlags.Add(flag);
@@ -135,13 +137,13 @@ public abstract class BaseGridManager : MonoBehaviour
     protected virtual void AddFlag()
     {
         bombAmount--;
-        EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
+        EventSystem.eventCollectionParam[EventType.BOMB_UPDATE](bombAmount);
     }
 
     protected virtual void RemoveFlag()
     {
         bombAmount++;
-        EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
+        EventSystem.eventCollectionParam[EventType.BOMB_UPDATE](bombAmount);
     }
 
     protected virtual void LoseGame()
@@ -149,9 +151,9 @@ public abstract class BaseGridManager : MonoBehaviour
         loseGame = true;
     }
 
-    protected virtual void AddEmptyTile(GameObject gameobject)
+    protected virtual void AddEmptyTile(object value)
     {
-        emptyTiles.Add(gameobject);
+        emptyTiles.Add(value as GameObject);
     }
 
     protected virtual void PickStartingTile()
@@ -189,7 +191,7 @@ public abstract class BaseGridManager : MonoBehaviour
 
     protected IEnumerator ResetLogic()
     {
-        EventSystem.InvokeEvent(EventType.END_GAME);
+        EventSystem.eventCollection[EventType.END_GAME]();
         yield return new WaitForEndOfFrame();
 
         // move all active flags to inactive
@@ -208,15 +210,15 @@ public abstract class BaseGridManager : MonoBehaviour
 
     protected virtual void StartGame()
     {
-        EventSystem.InvokeEvent(EventType.COUNT_BOMBS);
+        EventSystem.eventCollection[EventType.COUNT_BOMBS]();
         PickStartingTile();
-        EventSystem.InvokeEvent(EventType.START_GAME);
-        EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
+        EventSystem.eventCollection[EventType.START_GAME]();
+        EventSystem.eventCollectionParam[EventType.BOMB_UPDATE](bombAmount);
         inReset = false;
         loseGame = false;
     }
 
-    protected virtual void AddGoodTile(GameObject tile)
+    protected virtual void AddGoodTile(object value)
     {
         if (!timeStarted)
         {
@@ -232,7 +234,7 @@ public abstract class BaseGridManager : MonoBehaviour
         if (goodTiles == (tiles.Count - initialBombAmount))
         {
             wonGame = true;
-            EventSystem.InvokeEvent(EventType.WIN_GAME);
+            EventSystem.eventCollection[EventType.WIN_GAME]();
         }
     }
 
@@ -241,7 +243,7 @@ public abstract class BaseGridManager : MonoBehaviour
         tileClicks++;
     }
 
-    protected virtual void FlagClick(GameObject flag)
+    protected virtual void FlagClick(object value)
     {
         otherClicks++;
     }

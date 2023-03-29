@@ -17,36 +17,36 @@ public class GridManager2DCustom : BaseGridManager
 
     protected override void OnEnable()
     {
-        EventSystem<GameObject>.AddListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<GameObject>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem.AddListener(EventType.RESET_GAME, ResetGame);
-        EventSystem.AddListener(EventType.WIN_GAME, StopTimer);
-        EventSystem.AddListener(EventType.END_GAME, StopTimer);
-        EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.AddListener(EventType.OTHER_CLICK, OtherClick);
-        EventSystem.AddListener(EventType.PLAY_FLAG, PlantFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] += AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.PLANT_FLAG] += ActivateFlag;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] += AddEmptyTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += FlagClick;
+        EventSystem.eventCollection[EventType.RESET_GAME] += ResetGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] += StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] += StopTimer;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += LoseGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += StopTimer;
+        EventSystem.eventCollection[EventType.REVEAL_TILE] += TileClick;
+        EventSystem.eventCollection[EventType.OTHER_CLICK] += OtherClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] += PlantFlag;
     }
 
     protected override void OnDisable()
     {
-        EventSystem<GameObject>.RemoveListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem.RemoveListener(EventType.RESET_GAME, ResetGame);
-        EventSystem.RemoveListener(EventType.WIN_GAME, StopTimer);
-        EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.RemoveListener(EventType.OTHER_CLICK, OtherClick);
-        EventSystem.RemoveListener(EventType.PLAY_FLAG, PlantFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] -= AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.PLANT_FLAG] -= ActivateFlag;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] -= AddEmptyTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= FlagClick;
+        EventSystem.eventCollection[EventType.RESET_GAME] -= ResetGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] -= StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] -= StopTimer;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= LoseGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= StopTimer;
+        EventSystem.eventCollection[EventType.REVEAL_TILE] -= TileClick;
+        EventSystem.eventCollection[EventType.OTHER_CLICK] -= OtherClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] -= PlantFlag;
     }
 
     protected override void LoseGame()

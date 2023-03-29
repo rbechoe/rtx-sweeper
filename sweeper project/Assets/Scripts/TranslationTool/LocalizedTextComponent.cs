@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,12 +20,12 @@ public class LocalizedTextComponent : MonoBehaviour
     public void Awake()
     {
         textComponent = GetComponent<Text>();
-        EventSystem.AddListener(EventType.UPDATE_LANGUAGE, RefreshLanguage);
+        EventSystem.eventCollection[EventType.UPDATE_LANGUAGE] += RefreshLanguage;
     }
 
     public void OnDestroy()
     {
-        EventSystem.RemoveListener(EventType.UPDATE_LANGUAGE, RefreshLanguage);
+        EventSystem.eventCollection[EventType.UPDATE_LANGUAGE] -= RefreshLanguage;
     }
 
     public void Start()

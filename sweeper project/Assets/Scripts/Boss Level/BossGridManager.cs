@@ -50,42 +50,42 @@ public class BossGridManager : BaseGridManager
 
     protected override void OnEnable()
     {
-        EventSystem<GameObject>.AddListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<GameObject>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem.AddListener(EventType.RANDOM_GRID, ResetGame);
-        EventSystem.AddListener(EventType.RANDOM_GRID, GameActive);
-        EventSystem.AddListener(EventType.WIN_GAME, StopTimer);
-        EventSystem.AddListener(EventType.END_GAME, StopTimer);
-        EventSystem.AddListener(EventType.END_GAME, GameInactive);
-        EventSystem.AddListener(EventType.GAME_LOSE, GameInactive);
-        EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.AddListener(EventType.OTHER_CLICK, OtherClick);
-        EventSystem.AddListener(EventType.PLAY_FLAG, PlantFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] += AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.PLANT_FLAG] += ActivateFlag;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] += AddEmptyTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += FlagClick;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] += ResetGame;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] += GameActive;
+        EventSystem.eventCollection[EventType.WIN_GAME] += StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] += StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] += GameInactive;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += GameInactive;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += StopTimer;
+        EventSystem.eventCollection[EventType.REVEAL_TILE] += TileClick;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += LoseGame;
+        EventSystem.eventCollection[EventType.OTHER_CLICK] += OtherClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] += PlantFlag;
     }
 
     protected override void OnDisable()
     {
-        EventSystem<GameObject>.RemoveListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGame);
-        EventSystem.RemoveListener(EventType.RANDOM_GRID, GameActive);
-        EventSystem.RemoveListener(EventType.WIN_GAME, StopTimer);
-        EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.RemoveListener(EventType.END_GAME, GameInactive);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, GameInactive);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.RemoveListener(EventType.OTHER_CLICK, OtherClick);
-        EventSystem.RemoveListener(EventType.PLAY_FLAG, PlantFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] -= AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.PLANT_FLAG] -= ActivateFlag;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] -= AddEmptyTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= FlagClick;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] -= ResetGame;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] -= GameActive;
+        EventSystem.eventCollection[EventType.WIN_GAME] -= StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] -= StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] -= GameInactive;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= GameInactive;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= StopTimer;
+        EventSystem.eventCollection[EventType.REVEAL_TILE] -= TileClick;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= LoseGame;
+        EventSystem.eventCollection[EventType.OTHER_CLICK] -= OtherClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] -= PlantFlag;
     }
 
     public void ShuffleGrid()
@@ -108,7 +108,7 @@ public class BossGridManager : BaseGridManager
         yield return new WaitForEndOfFrame();
 
         // Step 1: mark all tiles as unplayable
-        EventSystem.InvokeEvent(EventType.UNPLAYABLE);
+        EventSystem.eventCollection[EventType.UNPLAYABLE]();
         while (!AllChecked())
         {
             yield return new WaitForEndOfFrame();
@@ -152,7 +152,7 @@ public class BossGridManager : BaseGridManager
         yield return new WaitForEndOfFrame();
 
         // Step 4: mark all tiles as playable
-        EventSystem.InvokeEvent(EventType.PLAYABLE);
+        EventSystem.eventCollection[EventType.PLAYABLE]();
         while (!AllChecked())
         {
             yield return new WaitForEndOfFrame();

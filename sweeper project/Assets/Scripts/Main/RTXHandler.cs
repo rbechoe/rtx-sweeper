@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,14 +23,14 @@ public class RTXHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.ENABLE_RTX, EnableRTX);
-        EventSystem.AddListener(EventType.DISABLE_RTX, DisableRTX);
+        EventSystem.eventCollection[EventType.ENABLE_RTX] += EnableRTX;
+        EventSystem.eventCollection[EventType.DISABLE_RTX] += DisableRTX;
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.ENABLE_RTX, EnableRTX);
-        EventSystem.RemoveListener(EventType.DISABLE_RTX, DisableRTX);
+        EventSystem.eventCollection[EventType.ENABLE_RTX] -= EnableRTX;
+        EventSystem.eventCollection[EventType.DISABLE_RTX] -= DisableRTX;
     }
 
     private void EnableRTX()

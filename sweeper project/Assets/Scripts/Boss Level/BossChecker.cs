@@ -18,12 +18,12 @@ public class BossChecker : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem.eventCollection[EventType.COUNT_BOMBS] += CheckBombs;
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem.eventCollection[EventType.COUNT_BOMBS] -= CheckBombs;
     }
 
     private void CheckBombs()
@@ -50,7 +50,7 @@ public class BossChecker : MonoBehaviour
             if (bombCount == 0)
             {
                 // set as potential first tile
-                EventSystem<GameObject>.InvokeEvent(EventType.ADD_EMPTY, gameObject);
+                EventSystem.eventCollectionParam[EventType.ADD_EMPTY](gameObject);
                 gameObject.GetComponent<BossTile>().state = TileStates.Empty;
             }
             else

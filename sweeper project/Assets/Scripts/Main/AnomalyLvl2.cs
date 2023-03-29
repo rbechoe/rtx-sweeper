@@ -56,7 +56,7 @@ public class AnomalyLvl2 : MonoBehaviour
     private void Update()
     {
         if (timeStarted) timer += Time.deltaTime;
-        EventSystem<float>.InvokeEvent(EventType.UPDATE_TIME, timer);
+        EventSystem.eventCollectionParam[EventType.UPDATE_TIME](timer);
     }
 
     private void Reset()

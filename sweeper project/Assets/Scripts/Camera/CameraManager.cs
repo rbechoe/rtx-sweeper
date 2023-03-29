@@ -38,28 +38,28 @@ public class CameraManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.INPUT_FORWARD, MoveForward);
-        EventSystem.AddListener(EventType.INPUT_BACK, MoveBack);
-        EventSystem.AddListener(EventType.INPUT_LEFT, MoveLeft);
-        EventSystem.AddListener(EventType.INPUT_RIGHT, MoveRight);
-        EventSystem.AddListener(EventType.INPUT_UP, MoveUp);
-        EventSystem.AddListener(EventType.INPUT_DOWN, MoveDown);
-        EventSystem.AddListener(EventType.INPUT_SCROLL_DOWN, ScrollDown);
-        EventSystem.AddListener(EventType.INPUT_SCROLL_UP, ScrollUp);
-        EventSystem.AddListener(EventType.INPUT_SPEED, FastSpeed);
+        EventSystem.eventCollection[EventType.INPUT_FORWARD] += MoveForward;
+        EventSystem.eventCollection[EventType.INPUT_BACK] += MoveBack;
+        EventSystem.eventCollection[EventType.INPUT_LEFT] += MoveLeft;
+        EventSystem.eventCollection[EventType.INPUT_RIGHT] += MoveRight;
+        EventSystem.eventCollection[EventType.INPUT_UP] += MoveUp;
+        EventSystem.eventCollection[EventType.INPUT_DOWN] += MoveDown;
+        EventSystem.eventCollection[EventType.INPUT_SCROLL_DOWN] += ScrollDown;
+        EventSystem.eventCollection[EventType.INPUT_SCROLL_UP] += ScrollUp;
+        EventSystem.eventCollection[EventType.INPUT_SPEED] += FastSpeed;
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.INPUT_FORWARD, MoveForward);
-        EventSystem.RemoveListener(EventType.INPUT_BACK, MoveBack);
-        EventSystem.RemoveListener(EventType.INPUT_LEFT, MoveLeft);
-        EventSystem.RemoveListener(EventType.INPUT_RIGHT, MoveRight);
-        EventSystem.RemoveListener(EventType.INPUT_UP, MoveUp);
-        EventSystem.RemoveListener(EventType.INPUT_DOWN, MoveDown);
-        EventSystem.RemoveListener(EventType.INPUT_SCROLL_DOWN, ScrollDown);
-        EventSystem.RemoveListener(EventType.INPUT_SCROLL_UP, ScrollUp);
-        EventSystem.RemoveListener(EventType.INPUT_SPEED, FastSpeed);
+        EventSystem.eventCollection[EventType.INPUT_FORWARD] -= MoveForward;
+        EventSystem.eventCollection[EventType.INPUT_BACK] -= MoveBack;
+        EventSystem.eventCollection[EventType.INPUT_LEFT] -= MoveLeft;
+        EventSystem.eventCollection[EventType.INPUT_RIGHT] -= MoveRight;
+        EventSystem.eventCollection[EventType.INPUT_UP] -= MoveUp;
+        EventSystem.eventCollection[EventType.INPUT_DOWN] -= MoveDown;
+        EventSystem.eventCollection[EventType.INPUT_SCROLL_DOWN] -= ScrollDown;
+        EventSystem.eventCollection[EventType.INPUT_SCROLL_UP] -= ScrollUp;
+        EventSystem.eventCollection[EventType.INPUT_SPEED] -= FastSpeed;
     }
 
     private void Start()

@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
@@ -33,37 +32,37 @@ public class GameUI : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.RESET_GAME, ResetGame);
-        EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.AddListener(EventType.RANDOM_GRID, ResetGrid);
-        EventSystem.AddListener(EventType.WIN_GAME, WinGame);    
-        EventSystem<int>.AddListener(EventType.BOMB_UPDATE, SetBombsLeft);
-        EventSystem<float>.AddListener(EventType.UPDATE_TIME, SetTimer);
+        EventSystem.eventCollection[EventType.RESET_GAME] += ResetGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += LoseGame;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] += ResetGrid;
+        EventSystem.eventCollection[EventType.WIN_GAME] += WinGame;    
+        EventSystem.eventCollectionParam[EventType.BOMB_UPDATE] += SetBombsLeft;
+        EventSystem.eventCollectionParam[EventType.UPDATE_TIME] += SetTimer;
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.RESET_GAME, ResetGame);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGrid);
-        EventSystem.RemoveListener(EventType.WIN_GAME, WinGame);
-        EventSystem<int>.RemoveListener(EventType.BOMB_UPDATE, SetBombsLeft);
-        EventSystem<float>.RemoveListener(EventType.UPDATE_TIME, SetTimer);
+        EventSystem.eventCollection[EventType.RESET_GAME] -= ResetGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= LoseGame;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] -= ResetGrid;
+        EventSystem.eventCollection[EventType.WIN_GAME] -= WinGame;
+        EventSystem.eventCollectionParam[EventType.BOMB_UPDATE] -= SetBombsLeft;
+        EventSystem.eventCollectionParam[EventType.UPDATE_TIME] -= SetTimer;
     }
 
     public void UpdateBGMVolume()
     {
-        EventSystem<float>.InvokeEvent(EventType.UPDATE_BGM, BGMSlider.value);
+        EventSystem.eventCollectionParam[EventType.UPDATE_BGM](BGMSlider.value);
     }
 
     public void UpdateSFXVolume()
     {
-        EventSystem<float>.InvokeEvent(EventType.UPDATE_SFX, SFXSlider.value);
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX](SFXSlider.value);
     }
 
     public void UpdateMainSFXVolume()
     {
-        EventSystem<float>.InvokeEvent(EventType.UPDATE_SFX_MAIN, mainSFXSlider.value);
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX_MAIN](mainSFXSlider.value);
     }
 
     private void WinGame()
@@ -88,15 +87,15 @@ public class GameUI : MonoBehaviour
         victoryTimeText.text = "0";
     }
 
-    private void SetTimer(float time)
+    private void SetTimer(object value)
     {
-        currentTime = time;
+        currentTime = (float)value;
         timeText.text = "" + (int)currentTime;
     }
 
-    private void SetBombsLeft(int amount)
+    private void SetBombsLeft(object value)
     {
-        bombAmount = amount;
+        bombAmount = (int)value;
         bombText.text = bombAmount.ToString();
     }
 
@@ -112,17 +111,17 @@ public class GameUI : MonoBehaviour
 
     public void ResetGrid()
     {
-        EventSystem.InvokeEvent(EventType.RESET_GAME);
+        EventSystem.eventCollection[EventType.RESET_GAME]();
     }
 
     public void EnableRTX()
     {
-        EventSystem.InvokeEvent(EventType.ENABLE_RTX);
+        EventSystem.eventCollection[EventType.ENABLE_RTX]();
     }
 
     public void DisableRTX()
     {
-        EventSystem.InvokeEvent(EventType.DISABLE_RTX);
+        EventSystem.eventCollection[EventType.DISABLE_RTX]();
     }
 
     public void ReloadLevel()

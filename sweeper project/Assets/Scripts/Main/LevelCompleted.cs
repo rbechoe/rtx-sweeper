@@ -30,12 +30,12 @@ public class LevelCompleted : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.WIN_GAME, FireDialogue);
+        EventSystem.eventCollection[EventType.WIN_GAME] += FireDialogue;
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.WIN_GAME, FireDialogue);
+        EventSystem.eventCollection[EventType.WIN_GAME] -= FireDialogue;
     }
 
     void FireDialogue()

@@ -56,25 +56,25 @@ public class Settings : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem<float>.AddListener(EventType.UPDATE_SFX, SetSFXVolume);
-        EventSystem<float>.AddListener(EventType.UPDATE_BGM, SetBGMVolume);
-        EventSystem<float>.AddListener(EventType.UPDATE_SFX_MAIN, SetMainSFXVolume);
-        EventSystem.AddListener(EventType.ENABLE_RTX, EnableRTX);
-        EventSystem.AddListener(EventType.DISABLE_RTX, DisableRTX);
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX] += SetSFXVolume;
+        EventSystem.eventCollectionParam[EventType.UPDATE_BGM] += SetBGMVolume;
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX_MAIN] += SetMainSFXVolume;
+        EventSystem.eventCollection[EventType.ENABLE_RTX] += EnableRTX;
+        EventSystem.eventCollection[EventType.DISABLE_RTX] += DisableRTX;
     }
 
     private void OnDisable()
     {
-        EventSystem<float>.RemoveListener(EventType.UPDATE_SFX, SetSFXVolume);
-        EventSystem<float>.RemoveListener(EventType.UPDATE_BGM, SetBGMVolume);
-        EventSystem<float>.RemoveListener(EventType.UPDATE_SFX_MAIN, SetMainSFXVolume);
-        EventSystem.RemoveListener(EventType.ENABLE_RTX, EnableRTX);
-        EventSystem.RemoveListener(EventType.DISABLE_RTX, DisableRTX);
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX] -= SetSFXVolume;
+        EventSystem.eventCollectionParam[EventType.UPDATE_BGM] -= SetBGMVolume;
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX_MAIN] -= SetMainSFXVolume;
+        EventSystem.eventCollection[EventType.ENABLE_RTX] -= EnableRTX;
+        EventSystem.eventCollection[EventType.DISABLE_RTX] -= DisableRTX;
     }
 
-    public void SetSFXVolume(float value)
+    public void SetSFXVolume(object value)
     {
-        SFXVolume = value;
+        SFXVolume = (float)value;
         PlayerPrefs.SetFloat("SFX_Volume", SFXVolume);
     }
 
@@ -83,9 +83,9 @@ public class Settings : MonoBehaviour
         return SFXVolume;
     }
 
-    public void SetBGMVolume(float value)
+    public void SetBGMVolume(object value)
     {
-        BGMVolume = value;
+        BGMVolume = (float)value;
         PlayerPrefs.SetFloat("BGM_Volume", BGMVolume);
     }
 
@@ -94,9 +94,9 @@ public class Settings : MonoBehaviour
         return BGMVolume;
     }
 
-    public void SetMainSFXVolume(float value)
+    public void SetMainSFXVolume(object value)
     {
-        mainSFXVolume = value;
+        mainSFXVolume = (float)value;
         PlayerPrefs.SetFloat("Main_SFX_Volume", mainSFXVolume);
     }
 
@@ -126,7 +126,7 @@ public class Settings : MonoBehaviour
     {
         activeLanguage = language;
         PlayerPrefs.SetInt("Language", (int)language);
-        EventSystem.InvokeEvent(EventType.UPDATE_LANGUAGE);
+        EventSystem.eventCollection[EventType.UPDATE_LANGUAGE]();
     }
 
     public void SetFlagColor(Color color)

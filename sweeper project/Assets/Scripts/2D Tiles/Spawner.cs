@@ -39,30 +39,30 @@ namespace Tiles2D
         private void Start()
         {
             Vector3 position = new Vector3(xSize / 2f, (xSize + zSize / 2f) * 0.5f, zSize / 2f);
-            EventSystem<Vector3>.InvokeEvent(EventType.START_POS, position);
+            EventSystem.eventCollectionParam[EventType.START_POS](position);
             gridManager = managerObj.GetComponent<GridManager2DCustom>();
         }
 
         private void OnEnable()
         {
-            EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
-            EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-            EventSystem.AddListener(EventType.RESET_GAME, CreateGrid);
-            EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, AddFlag);
-            EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, RemoveFlag);
-            EventSystem.AddListener(EventType.PICK_TILE, PickStartingTile);
-            EventSystem<GameObject>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
+            EventSystem.eventCollectionParam[EventType.PLANT_FLAG] += ActivateFlag;
+            EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += ReturnFlag;
+            EventSystem.eventCollectionParam[EventType.PLANT_FLAG] += AddFlag;
+            EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += RemoveFlag;
+            EventSystem.eventCollectionParam[EventType.ADD_EMPTY] += AddEmptyTile;
+            EventSystem.eventCollection[EventType.PICK_TILE] += PickStartingTile;
+            EventSystem.eventCollection[EventType.RESET_GAME] += CreateGrid;
         }
 
         private void OnDisable()
         {
-            EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
-            EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-            EventSystem.RemoveListener(EventType.RESET_GAME, CreateGrid);
-            EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, AddFlag);
-            EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, RemoveFlag);
-            EventSystem.RemoveListener(EventType.PICK_TILE, PickStartingTile);
-            EventSystem<GameObject>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
+            EventSystem.eventCollectionParam[EventType.PLANT_FLAG] -= ActivateFlag;
+            EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= ReturnFlag;
+            EventSystem.eventCollectionParam[EventType.PLANT_FLAG] -= AddFlag;
+            EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= RemoveFlag;
+            EventSystem.eventCollectionParam[EventType.ADD_EMPTY] -= AddEmptyTile;
+            EventSystem.eventCollection[EventType.PICK_TILE] -= PickStartingTile;
+            EventSystem.eventCollection[EventType.RESET_GAME] -= CreateGrid;
         }
 
         public void CreateGrid()
@@ -140,7 +140,7 @@ namespace Tiles2D
             managerObj.transform.position = new Vector3(-xSize / 2f, 0, -zSize / 2f);
             gridManager.SetTiles(tiles, bombAmount);
 
-            EventSystem.InvokeEvent(EventType.PREPARE_GAME);
+            EventSystem.eventCollection[EventType.PREPARE_GAME]();
             yield return new WaitForEndOfFrame();
             StartGame();
             yield return new WaitForEndOfFrame();
@@ -155,8 +155,9 @@ namespace Tiles2D
         }
 
         // activate a flag and place it above the tile
-        private void ActivateFlag(Vector3[] vectors)
+        private void ActivateFlag(object value)
         {
+            Vector3[] vectors = value as Vector3[];
             if (inactiveFlags.Count > 0 && bombs > 0)
             {
                 inactiveFlags[0].transform.position = vectors[0];
@@ -167,16 +168,17 @@ namespace Tiles2D
         }
 
         // remove a flag from the tile
-        public void ReturnFlag(GameObject flag)
+        public void ReturnFlag(object value)
         {
+            GameObject flag = value as GameObject;
             flag.transform.position = Vector3.up * 5000;
             activeFlags.Remove(flag);
             inactiveFlags.Add(flag);
         }
 
-        private void AddEmptyTile(GameObject gameobject)
+        private void AddEmptyTile(object value)
         {
-            emptyTiles.Add(gameobject);
+            emptyTiles.Add(value as GameObject);
         }
 
         private void PickStartingTile()
@@ -190,10 +192,10 @@ namespace Tiles2D
 
         protected virtual void StartGame()
         {
-            EventSystem.InvokeEvent(EventType.COUNT_BOMBS);
+            EventSystem.eventCollection[EventType.COUNT_BOMBS]();
             PickStartingTile();
-            EventSystem.InvokeEvent(EventType.START_GAME);
-            EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombAmount);
+            EventSystem.eventCollection[EventType.START_GAME]();
+            EventSystem.eventCollectionParam[EventType.BOMB_UPDATE](bombAmount);
             inReset = false;
         }
 
@@ -223,7 +225,7 @@ namespace Tiles2D
         IEnumerator ResetLogic(bool enableUI = true)
         {
             emptyTiles = new List<GameObject>();
-            EventSystem.InvokeEvent(EventType.END_GAME);
+            EventSystem.eventCollection[EventType.END_GAME]();
 
             // remove all flags and tiles
             foreach (GameObject tile in tiles)
@@ -253,16 +255,16 @@ namespace Tiles2D
             if (enableUI) generateUI.SetActive(true);
         }
 
-        private void AddFlag(Vector3[] vectors)
+        private void AddFlag(object value)
         {
             bombs--;
-            EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombs);
+            EventSystem.eventCollectionParam[EventType.BOMB_UPDATE](bombs);
         }
 
-        private void RemoveFlag(GameObject flag)
+        private void RemoveFlag(object value)
         {
             bombs++;
-            EventSystem<int>.InvokeEvent(EventType.BOMB_UPDATE, bombs);
+            EventSystem.eventCollectionParam[EventType.BOMB_UPDATE](bombs);
         }
     }
 }

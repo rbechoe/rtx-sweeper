@@ -42,28 +42,28 @@ public class Movement3D : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.INPUT_FORWARD, RotateUp);
-        EventSystem.AddListener(EventType.INPUT_BACK, RotateDown);
-        EventSystem.AddListener(EventType.INPUT_RIGHT, RotateRight);
-        EventSystem.AddListener(EventType.INPUT_LEFT, RotateLeft);
-        EventSystem.AddListener(EventType.INPUT_UP, MoveUp);
-        EventSystem.AddListener(EventType.INPUT_DOWN, MoveDown);
-        EventSystem.AddListener(EventType.PREPARE_GAME, RotateReset);
-        EventSystem.AddListener(EventType.RANDOM_GRID, ResetGrid);
-        EventSystem.AddListener(EventType.ADD_LAYER, AddLayer);
+        EventSystem.eventCollection[EventType.INPUT_FORWARD] += RotateUp;
+        EventSystem.eventCollection[EventType.INPUT_BACK] += RotateDown;
+        EventSystem.eventCollection[EventType.INPUT_RIGHT] += RotateRight;
+        EventSystem.eventCollection[EventType.INPUT_LEFT] += RotateLeft;
+        EventSystem.eventCollection[EventType.INPUT_UP] += MoveUp;
+        EventSystem.eventCollection[EventType.INPUT_DOWN] += MoveDown;
+        EventSystem.eventCollection[EventType.PREPARE_GAME] += RotateReset;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] += ResetGrid;
+        EventSystem.eventCollection[EventType.ADD_LAYER] += AddLayer;
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.INPUT_FORWARD, RotateUp);
-        EventSystem.RemoveListener(EventType.INPUT_BACK, RotateDown);
-        EventSystem.RemoveListener(EventType.INPUT_RIGHT, RotateRight);
-        EventSystem.RemoveListener(EventType.INPUT_LEFT, RotateLeft);
-        EventSystem.RemoveListener(EventType.INPUT_UP, MoveUp);
-        EventSystem.RemoveListener(EventType.INPUT_DOWN, MoveDown);
-        EventSystem.RemoveListener(EventType.PREPARE_GAME, RotateReset);
-        EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGrid);
-        EventSystem.RemoveListener(EventType.ADD_LAYER, AddLayer);
+        EventSystem.eventCollection[EventType.INPUT_FORWARD] -= RotateUp;
+        EventSystem.eventCollection[EventType.INPUT_BACK] -= RotateDown;
+        EventSystem.eventCollection[EventType.INPUT_RIGHT] -= RotateRight;
+        EventSystem.eventCollection[EventType.INPUT_LEFT] -= RotateLeft;
+        EventSystem.eventCollection[EventType.INPUT_UP] -= MoveUp;
+        EventSystem.eventCollection[EventType.INPUT_DOWN] -= MoveDown;
+        EventSystem.eventCollection[EventType.PREPARE_GAME] -= RotateReset;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] -= ResetGrid;
+        EventSystem.eventCollection[EventType.ADD_LAYER] -= AddLayer;
     }
 
     private void Update()

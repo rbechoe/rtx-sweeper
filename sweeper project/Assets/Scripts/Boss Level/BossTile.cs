@@ -15,39 +15,39 @@ public class BossTile : BaseTile
     protected override void OnEnable()
     {
         // listen
-        EventSystem.AddListener(EventType.START_GAME, Clickable);
-        EventSystem.AddListener(EventType.END_GAME, Unclickable);
-        EventSystem.AddListener(EventType.WIN_GAME, Unclickable);
-        EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
-        EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
-        EventSystem.AddListener(EventType.WIN_GAME, EndGame);
-        EventSystem.AddListener(EventType.GAME_LOSE, EndGame);
-        EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
-        EventSystem.AddListener(EventType.END_GAME, ResetSelf);
-        EventSystem.AddListener(EventType.PREPARE_GAME, ResetSelf);
-        EventSystem.AddListener(EventType.UNPLAYABLE, Unplayable);
-        EventSystem.AddListener(EventType.PLAYABLE, Playable);
-        EventSystem.AddListener(EventType.IN_SETTINGS, EnteredSettings);
-        EventSystem.AddListener(EventType.OUT_SETTINGS, ExitSettings);
+        EventSystem.eventCollection[EventType.START_GAME] += Clickable;
+        EventSystem.eventCollection[EventType.END_GAME] += Unclickable;
+        EventSystem.eventCollection[EventType.WIN_GAME] += Unclickable;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += Unclickable;
+        EventSystem.eventCollection[EventType.PREPARE_GAME] += StartGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] += EndGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += EndGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += RevealBomb;
+        EventSystem.eventCollection[EventType.END_GAME] += ResetSelf;
+        EventSystem.eventCollection[EventType.PREPARE_GAME] += ResetSelf;
+        EventSystem.eventCollection[EventType.UNPLAYABLE] += Unplayable;
+        EventSystem.eventCollection[EventType.PLAYABLE] += Playable;
+        EventSystem.eventCollection[EventType.IN_SETTINGS] += EnteredSettings;
+        EventSystem.eventCollection[EventType.OUT_SETTINGS] += ExitSettings;
     }
 
     protected override void OnDisable()
     {
         // unlisten
-        EventSystem.RemoveListener(EventType.START_GAME, Clickable);
-        EventSystem.RemoveListener(EventType.END_GAME, Unclickable);
-        EventSystem.RemoveListener(EventType.WIN_GAME, Unclickable);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
-        EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
-        EventSystem.RemoveListener(EventType.WIN_GAME, EndGame);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, EndGame);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
-        EventSystem.RemoveListener(EventType.END_GAME, ResetSelf);
-        EventSystem.RemoveListener(EventType.PREPARE_GAME, ResetSelf);
-        EventSystem.RemoveListener(EventType.UNPLAYABLE, Unplayable);
-        EventSystem.RemoveListener(EventType.PLAYABLE, Playable);
-        EventSystem.RemoveListener(EventType.IN_SETTINGS, EnteredSettings);
-        EventSystem.RemoveListener(EventType.OUT_SETTINGS, ExitSettings);
+        EventSystem.eventCollection[EventType.START_GAME] -= Clickable;
+        EventSystem.eventCollection[EventType.END_GAME] -= Unclickable;
+        EventSystem.eventCollection[EventType.WIN_GAME] -= Unclickable;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= Unclickable;
+        EventSystem.eventCollection[EventType.PREPARE_GAME] -= StartGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] -= EndGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= EndGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= RevealBomb;
+        EventSystem.eventCollection[EventType.END_GAME] -= ResetSelf;
+        EventSystem.eventCollection[EventType.PREPARE_GAME] -= ResetSelf;
+        EventSystem.eventCollection[EventType.UNPLAYABLE] -= Unplayable;
+        EventSystem.eventCollection[EventType.PLAYABLE] -= Playable;
+        EventSystem.eventCollection[EventType.IN_SETTINGS] -= EnteredSettings;
+        EventSystem.eventCollection[EventType.OUT_SETTINGS] -= ExitSettings;
         vfx.gameObject.SetActive(true);
     }
 
@@ -93,8 +93,8 @@ public class BossTile : BaseTile
             bool didSomething = false;
             if (clickable)
             {
-                EventSystem.InvokeEvent(EventType.PLAY_CLICK);
-                EventSystem.InvokeEvent(EventType.TILE_CLICK);
+                EventSystem.eventCollection[EventType.PLAY_CLICK]();
+                EventSystem.eventCollection[EventType.TILE_CLICK]();
                 DoAction();
                 didSomething = true;
             }
@@ -111,15 +111,15 @@ public class BossTile : BaseTile
                 didSomething = true;
             }
 
-            if (!didSomething) EventSystem.InvokeEvent(EventType.OTHER_CLICK);
+            if (!didSomething) EventSystem.eventCollection[EventType.OTHER_CLICK]();
         }
 
         // right click - place flag
         if (Input.GetMouseButtonUp(1) && !triggered)
         {
-            EventSystem.InvokeEvent(EventType.PLAY_FLAG);
-            EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
-            EventSystem.InvokeEvent(EventType.OTHER_CLICK);
+            EventSystem.eventCollection[EventType.PLAY_FLAG]();
+            EventSystem.eventCollectionParam[EventType.PLANT_FLAG](new Vector3[] { transform.position, transform.eulerAngles });
+            EventSystem.eventCollection[EventType.OTHER_CLICK]();
         }
     }
 

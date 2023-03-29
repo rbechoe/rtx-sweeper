@@ -7,12 +7,12 @@ public class Checker3D : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem.eventCollection[EventType.COUNT_BOMBS] += CheckBombs;
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
+        EventSystem.eventCollection[EventType.COUNT_BOMBS] -= CheckBombs;
     }
 
     private void CheckBombs()
@@ -41,7 +41,7 @@ public class Checker3D : MonoBehaviour
         // set as potential first tile
         if (bombCount == 0 && !gameObject.CompareTag("Bomb"))
         {
-            EventSystem<GameObject>.InvokeEvent(EventType.ADD_EMPTY, gameObject);
+            EventSystem.eventCollectionParam[EventType.ADD_EMPTY](gameObject);
         }
 
         yield return new WaitForEndOfFrame();

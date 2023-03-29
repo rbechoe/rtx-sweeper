@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -22,14 +20,14 @@ public class TutoManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.WIN_GAME, EnableText);
-        EventSystem.AddListener(EventType.RANDOM_GRID, DisableText);
+        EventSystem.eventCollection[EventType.WIN_GAME] += EnableText;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] += DisableText;
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.WIN_GAME, EnableText);
-        EventSystem.RemoveListener(EventType.RANDOM_GRID, DisableText);
+        EventSystem.eventCollection[EventType.WIN_GAME] -= EnableText;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] -= DisableText;
     }
 
     void EnableText()
@@ -49,7 +47,7 @@ public class TutoManager : MonoBehaviour
 
     public void RandomizeGrid()
     {
-        EventSystem.InvokeEvent(EventType.RANDOM_GRID);
+        EventSystem.eventCollection[EventType.RANDOM_GRID]();
     }
 
     public void QuitGame()

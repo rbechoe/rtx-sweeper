@@ -6,34 +6,34 @@ public class CameraMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.AddListener(EventType.INPUT_BACK, MoveBackward);
-        EventSystem.AddListener(EventType.INPUT_DOWN, MoveDown);
-        EventSystem.AddListener(EventType.INPUT_FORWARD, MoveForward);
-        EventSystem.AddListener(EventType.INPUT_LEFT, MoveLeft);
-        EventSystem.AddListener(EventType.INPUT_RIGHT, MoveRight);
-        EventSystem.AddListener(EventType.INPUT_UP, MoveUp);
-        EventSystem.AddListener(EventType.INPUT_SCROLL_DOWN, MoveDown);
-        EventSystem.AddListener(EventType.INPUT_SCROLL_UP, MoveUp);
-        EventSystem<Vector3>.AddListener(EventType.START_POS, StartPos);
+        EventSystem.eventCollection[EventType.INPUT_BACK] += MoveBackward;
+        EventSystem.eventCollection[EventType.INPUT_DOWN] += MoveDown;
+        EventSystem.eventCollection[EventType.INPUT_FORWARD] += MoveForward;
+        EventSystem.eventCollection[EventType.INPUT_LEFT] += MoveLeft;
+        EventSystem.eventCollection[EventType.INPUT_RIGHT] += MoveRight;
+        EventSystem.eventCollection[EventType.INPUT_UP] += MoveUp;
+        EventSystem.eventCollection[EventType.INPUT_SCROLL_DOWN] += MoveDown;
+        EventSystem.eventCollection[EventType.INPUT_SCROLL_UP] += MoveUp;
+        EventSystem.eventCollectionParam[EventType.START_POS] += StartPos;
 
     }
 
     private void OnDisable()
     {
-        EventSystem.RemoveListener(EventType.INPUT_BACK, MoveBackward);
-        EventSystem.RemoveListener(EventType.INPUT_DOWN, MoveDown);
-        EventSystem.RemoveListener(EventType.INPUT_FORWARD, MoveForward);
-        EventSystem.RemoveListener(EventType.INPUT_LEFT, MoveLeft);
-        EventSystem.RemoveListener(EventType.INPUT_RIGHT, MoveRight);
-        EventSystem.RemoveListener(EventType.INPUT_UP, MoveUp);
-        EventSystem.RemoveListener(EventType.INPUT_SCROLL_DOWN, MoveDown);
-        EventSystem.RemoveListener(EventType.INPUT_SCROLL_UP, MoveUp);
-        EventSystem<Vector3>.RemoveListener(EventType.START_POS, StartPos);
+        EventSystem.eventCollection[EventType.INPUT_BACK] -= MoveBackward;
+        EventSystem.eventCollection[EventType.INPUT_DOWN] -= MoveDown;
+        EventSystem.eventCollection[EventType.INPUT_FORWARD] -= MoveForward;
+        EventSystem.eventCollection[EventType.INPUT_LEFT] -= MoveLeft;
+        EventSystem.eventCollection[EventType.INPUT_RIGHT] -= MoveRight;
+        EventSystem.eventCollection[EventType.INPUT_UP] -= MoveUp;
+        EventSystem.eventCollection[EventType.INPUT_SCROLL_DOWN] -= MoveDown;
+        EventSystem.eventCollection[EventType.INPUT_SCROLL_UP] -= MoveUp;
+        EventSystem.eventCollectionParam[EventType.START_POS] -= StartPos;
     }
 
-    private void StartPos(Vector3 position)
+    private void StartPos(object value)
     {
-        transform.position = position;
+        transform.position = (Vector3)value;
     }
 
     private void MoveLeft()

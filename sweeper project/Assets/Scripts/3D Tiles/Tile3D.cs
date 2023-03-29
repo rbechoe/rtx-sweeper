@@ -42,37 +42,37 @@ public class Tile3D : BaseTile
     protected override void OnEnable()
     {
         // listen
-        EventSystem.AddListener(EventType.START_GAME, Clickable);
-        EventSystem.AddListener(EventType.END_GAME, Unclickable);
-        EventSystem.AddListener(EventType.WIN_GAME, Unclickable);
-        EventSystem.AddListener(EventType.GAME_LOSE, Unclickable);
-        EventSystem.AddListener(EventType.GAME_LOSE, RevealBomb);
-        EventSystem.AddListener(EventType.END_GAME, ResetSelf);
-        EventSystem.AddListener(EventType.PREPARE_GAME, ResetSelf);
-        EventSystem.AddListener(EventType.PREPARE_GAME, StartGame);
-        EventSystem.AddListener(EventType.WIN_GAME, EndGame);
-        EventSystem.AddListener(EventType.GAME_LOSE, EndGame);
-        EventSystem.AddListener(EventType.COUNT_BOMBS, CheckBombs);
-        EventSystem.AddListener(EventType.IN_SETTINGS, EnteredSettings);
-        EventSystem.AddListener(EventType.OUT_SETTINGS, ExitSettings);
+        EventSystem.eventCollection[EventType.START_GAME] += Clickable;
+        EventSystem.eventCollection[EventType.END_GAME] += Unclickable;
+        EventSystem.eventCollection[EventType.WIN_GAME] += Unclickable;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += Unclickable;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += RevealBomb;
+        EventSystem.eventCollection[EventType.END_GAME] += ResetSelf;
+        EventSystem.eventCollection[EventType.PREPARE_GAME] += ResetSelf;
+        EventSystem.eventCollection[EventType.PREPARE_GAME] += StartGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] += EndGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += EndGame;
+        EventSystem.eventCollection[EventType.COUNT_BOMBS] += CheckBombs;
+        EventSystem.eventCollection[EventType.IN_SETTINGS] += EnteredSettings;
+        EventSystem.eventCollection[EventType.OUT_SETTINGS] += ExitSettings;
     }
 
     protected override void OnDisable()
     {
         // unlisten
-        EventSystem.RemoveListener(EventType.START_GAME, Clickable);
-        EventSystem.RemoveListener(EventType.END_GAME, Unclickable);
-        EventSystem.RemoveListener(EventType.WIN_GAME, Unclickable);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, Unclickable);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, RevealBomb);
-        EventSystem.RemoveListener(EventType.END_GAME, ResetSelf);
-        EventSystem.RemoveListener(EventType.PREPARE_GAME, ResetSelf);
-        EventSystem.RemoveListener(EventType.PREPARE_GAME, StartGame);
-        EventSystem.RemoveListener(EventType.WIN_GAME, EndGame);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, EndGame);
-        EventSystem.RemoveListener(EventType.COUNT_BOMBS, CheckBombs);
-        EventSystem.RemoveListener(EventType.IN_SETTINGS, EnteredSettings);
-        EventSystem.RemoveListener(EventType.OUT_SETTINGS, ExitSettings);
+        EventSystem.eventCollection[EventType.START_GAME] -= Clickable;
+        EventSystem.eventCollection[EventType.END_GAME] -= Unclickable;
+        EventSystem.eventCollection[EventType.WIN_GAME] -= Unclickable;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= Unclickable;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= RevealBomb;
+        EventSystem.eventCollection[EventType.END_GAME] -= ResetSelf;
+        EventSystem.eventCollection[EventType.PREPARE_GAME] -= ResetSelf;
+        EventSystem.eventCollection[EventType.PREPARE_GAME] -= StartGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] -= EndGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= EndGame;
+        EventSystem.eventCollection[EventType.COUNT_BOMBS] -= CheckBombs;
+        EventSystem.eventCollection[EventType.IN_SETTINGS] -= EnteredSettings;
+        EventSystem.eventCollection[EventType.OUT_SETTINGS] -= ExitSettings;
     }
 
     private void FixedUpdate()
@@ -133,8 +133,8 @@ public class Tile3D : BaseTile
             bool didSomething = false;
             if (clickable)
             {
-                EventSystem.InvokeEvent(EventType.PLAY_CLICK);
-                EventSystem.InvokeEvent(EventType.TILE_CLICK);
+                EventSystem.eventCollection[EventType.PLAY_CLICK]();
+                EventSystem.eventCollection[EventType.TILE_CLICK]();
                 DoAction();
                 didSomething = true;
             }
@@ -155,7 +155,7 @@ public class Tile3D : BaseTile
             Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
             if (nearbyFlags.Length == 0)
             {
-                if (!didSomething) EventSystem.InvokeEvent(EventType.OTHER_CLICK);
+                if (!didSomething) EventSystem.eventCollection[EventType.OTHER_CLICK]();
             }
         }
 
@@ -166,14 +166,14 @@ public class Tile3D : BaseTile
             Collider[] nearbyFlags = Physics.OverlapBox(transform.position, Vector3.one * 0.25f, Quaternion.identity, flagMask);
             if (nearbyFlags.Length > 0)
             {
-                EventSystem<GameObject>.InvokeEvent(EventType.REMOVE_FLAG, nearbyFlags[0].gameObject);
-                EventSystem.InvokeEvent(EventType.OTHER_CLICK);
+                EventSystem.eventCollectionParam[EventType.REMOVE_FLAG](nearbyFlags[0].gameObject);
+                EventSystem.eventCollection[EventType.OTHER_CLICK]();
             }
             else
             {
-                EventSystem.InvokeEvent(EventType.PLAY_FLAG);
-                EventSystem<Vector3[]>.InvokeEvent(EventType.PLANT_FLAG, new Vector3[] { transform.position, transform.eulerAngles });
-                EventSystem.InvokeEvent(EventType.OTHER_CLICK);
+                EventSystem.eventCollection[EventType.PLAY_FLAG]();
+                EventSystem.eventCollectionParam[EventType.PLANT_FLAG](new Vector3[] { transform.position, transform.eulerAngles });
+                EventSystem.eventCollection[EventType.OTHER_CLICK]();
             }
         }
     }
@@ -308,16 +308,16 @@ public class Tile3D : BaseTile
 
     public override void TypeSpecificAction()
     {
-        if (state != TileStates.Revealed) EventSystem.InvokeEvent(EventType.REVEAL_TILE);
+        if (state != TileStates.Revealed) EventSystem.eventCollection[EventType.REVEAL_TILE]();
 
         switch (state)
         {
             case TileStates.Bomb:
-                EventSystem.InvokeEvent(EventType.GAME_LOSE);
+                EventSystem.eventCollection[EventType.GAME_LOSE]();
                 break;
 
             case TileStates.Empty:
-                EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
+                EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE](gameObject);
                 Collider[] tiles = Physics.OverlapBox(gameObject.transform.position, Vector3.one * 1.25f, Quaternion.identity);
                 for (int i = 0; i < tiles.Length; i++)
                 {
@@ -327,7 +327,7 @@ public class Tile3D : BaseTile
                 break;
 
             case TileStates.Number:
-                EventSystem<GameObject>.InvokeEvent(EventType.ADD_GOOD_TILE, gameObject);
+                EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE](gameObject);
                 ShowBombAmount();
                 HideTile();
                 break;

@@ -17,39 +17,39 @@ public class AudioUpdater : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem<float>.AddListener(EventType.UPDATE_BGM, ApplyBGMSettings);
-        EventSystem<float>.AddListener(EventType.UPDATE_SFX, ApplySFXSettings);
-        EventSystem<float>.AddListener(EventType.UPDATE_SFX_MAIN, ApplyMainSFXSettings);
+        EventSystem.eventCollectionParam[EventType.UPDATE_BGM] += ApplyBGMSettings;
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX] += ApplySFXSettings;
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX_MAIN] += ApplyMainSFXSettings;
     }
 
     private void OnDisable()
     {
-        EventSystem<float>.RemoveListener(EventType.UPDATE_BGM, ApplyBGMSettings);
-        EventSystem<float>.RemoveListener(EventType.UPDATE_SFX, ApplySFXSettings);
-        EventSystem<float>.RemoveListener(EventType.UPDATE_SFX_MAIN, ApplyMainSFXSettings);
+        EventSystem.eventCollectionParam[EventType.UPDATE_BGM] -= ApplyBGMSettings;
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX] -= ApplySFXSettings;
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX_MAIN] -= ApplyMainSFXSettings;
     }
 
-    private void ApplyBGMSettings(float value)
+    private void ApplyBGMSettings(object value)
     {
         foreach(AudioSource bgm in bgmSources)
         {
-            bgm.volume = value;
+            bgm.volume = (float)value;
         }
     }
 
-    private void ApplySFXSettings(float value)
+    private void ApplySFXSettings(object value)
     {
         foreach (AudioSource sfx in sfxSources)
         {
-            sfx.volume = value;
+            sfx.volume = (float)value;
         }
     }
 
-    private void ApplyMainSFXSettings(float value)
+    private void ApplyMainSFXSettings(object value)
     {
         foreach (AudioSource sfx in mainSfxSources)
         {
-            sfx.volume = value;
+            sfx.volume = (float)value;
         }
     }
 }

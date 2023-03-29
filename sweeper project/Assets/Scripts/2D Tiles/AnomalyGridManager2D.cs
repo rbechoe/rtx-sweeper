@@ -23,84 +23,135 @@ public class AnomalyGridManager2D : BaseGridManager
 
     protected override void OnEnable()
     {
-        EventSystem<GameObject>.AddListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<GameObject>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem.AddListener(EventType.RANDOM_GRID, ResetGame);
-        EventSystem.AddListener(EventType.WIN_GAME, StopTimer);
-        EventSystem.AddListener(EventType.END_GAME, StopTimer);
-        EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.AddListener(EventType.OTHER_CLICK, OtherClick);
-        EventSystem.AddListener(EventType.PLAY_FLAG, PlantFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] += AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.PLANT_FLAG] += ActivateFlag;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] += AddEmptyTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += FlagClick;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] += ResetGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] += StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] += StopTimer;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += LoseGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += StopTimer;
+        EventSystem.eventCollection[EventType.REVEAL_TILE] += TileClick;
+        EventSystem.eventCollection[EventType.OTHER_CLICK] += OtherClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] += PlantFlag;
     }
 
     protected override void OnDisable()
     {
-        EventSystem<GameObject>.RemoveListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGame);
-        EventSystem.RemoveListener(EventType.WIN_GAME, StopTimer);
-        EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.RemoveListener(EventType.OTHER_CLICK, OtherClick);
-        EventSystem.RemoveListener(EventType.PLAY_FLAG, PlantFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] -= AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.PLANT_FLAG] -= ActivateFlag;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] -= AddEmptyTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= FlagClick;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] -= ResetGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] -= StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] -= StopTimer;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= LoseGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= StopTimer;
+        EventSystem.eventCollection[EventType.REVEAL_TILE] -= TileClick;
+        EventSystem.eventCollection[EventType.OTHER_CLICK] -= OtherClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] -= PlantFlag;
     }
 
     protected override void Update()
     {
     }
 
-    protected override void AddGoodTile(GameObject tile)
+    protected override void AddGoodTile(object value)
     {
-        if (!puzzle2Manager.timeStarted)
+        if (puzzle2Manager == null)
         {
-            puzzle2Manager.timeStarted = true;
+            base.AddGoodTile(value);
         }
-        goodTiles++;
-        CheckForVictory();
+        else
+        {
+            if (!puzzle2Manager.timeStarted)
+            {
+                puzzle2Manager.timeStarted = true;
+            }
+            goodTiles++;
+            CheckForVictory();
+        }
     }
 
     protected override void CheckForVictory()
     {
-        progress = goodTiles / (tiles.Count - initialBombAmount);
-        if (goodTiles == (tiles.Count - initialBombAmount))
+        if (puzzle2Manager == null)
         {
-            puzzle2Manager.CompleteGrid(gameObject);
+            base.CheckForVictory();
+        }
+        else
+        {
+            progress = goodTiles / (tiles.Count - initialBombAmount);
+            if (goodTiles == (tiles.Count - initialBombAmount))
+            {
+                puzzle2Manager.CompleteGrid(gameObject);
+            }
         }
     }
 
     protected override void TileClick()
     {
-        puzzle2Manager.totalTileClicks++;
+        if (puzzle2Manager == null)
+        {
+            base.TileClick();
+        }
+        else
+        {
+            puzzle2Manager.totalTileClicks++;
+        }
     }
 
-    protected override void FlagClick(GameObject flag)
+    protected override void FlagClick(object value)
     {
-        puzzle2Manager.totalOtherClicks++;
+        if (puzzle2Manager == null)
+        {
+            base.FlagClick(value);
+        }
+        else
+        {
+            puzzle2Manager.totalOtherClicks++;
+        }
     }
 
     protected override void PlantFlag()
     {
-        puzzle2Manager.usedFlag = true;
+        if (puzzle2Manager == null)
+        {
+            base.PlantFlag();
+        }
+        else
+        {
+            puzzle2Manager.usedFlag = true;
+        }
+
     }
 
     protected override void OtherClick()
     {
-        puzzle2Manager.totalOtherClicks++;
+
+        if (puzzle2Manager == null)
+        {
+            base.OtherClick();
+        }
+        else
+        {
+            puzzle2Manager.totalOtherClicks++;
+        }
     }
 
     protected override void StopTimer()
     {
-        puzzle2Manager.StopTimer();
+        if (puzzle2Manager == null)
+        {
+            base.StopTimer();
+        }
+        else
+        {
+            puzzle2Manager.StopTimer();
+        }
     }
 
     protected override void LoseGame()

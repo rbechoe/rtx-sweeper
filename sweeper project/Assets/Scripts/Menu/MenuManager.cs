@@ -181,17 +181,17 @@ public class MenuManager : MonoBehaviour
 
     public void UpdateBGMVolume()
     {
-        EventSystem<float>.InvokeEvent(EventType.UPDATE_BGM, BGMSlider.value);
+        EventSystem.eventCollectionParam[EventType.UPDATE_BGM](BGMSlider.value);
     }
 
     public void UpdateSFXVolume()
     {
-        EventSystem<float>.InvokeEvent(EventType.UPDATE_SFX, SFXSlider.value);
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX](SFXSlider.value);
     }
 
     public void UpdateMainSFXVolume()
     {
-        EventSystem<float>.InvokeEvent(EventType.UPDATE_SFX_MAIN, mainSFXSlider.value);
+        EventSystem.eventCollectionParam[EventType.UPDATE_SFX_MAIN](mainSFXSlider.value);
     }
 
     public void SaveSettings()
@@ -201,12 +201,12 @@ public class MenuManager : MonoBehaviour
 
     public void EnableRTX()
     {
-        EventSystem.InvokeEvent(EventType.ENABLE_RTX);
+        EventSystem.eventCollection[EventType.ENABLE_RTX]();
     }
 
     public void DisableRTX()
     {
-        EventSystem.InvokeEvent(EventType.DISABLE_RTX);
+        EventSystem.eventCollection[EventType.DISABLE_RTX]();
     }
 
     public void LoadAsia()

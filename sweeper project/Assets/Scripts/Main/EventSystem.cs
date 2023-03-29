@@ -1,68 +1,32 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
-// event system without arguments
 public static class EventSystem
 {
-    private static Dictionary<EventType, System.Action> eventDictionary = new Dictionary<EventType, System.Action>();
+    public static Dictionary<EventType, Action> eventCollection = new Dictionary<EventType, Action>();
+    public static Dictionary<EventType, Action<object>> eventCollectionParam = new Dictionary<EventType, Action<object>>();
 
-    public static void AddListener(EventType type, System.Action function)
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+    public static void FillDictionary()
     {
-        if (!eventDictionary.ContainsKey(type))
+        eventCollection.Clear();
+        eventCollectionParam.Clear();
+
+        foreach (EventType type in Enum.GetValues(typeof(EventType)))
         {
-            eventDictionary.Add(type, null);
-        }
-
-        eventDictionary[type] += (function);
-    }
-
-    public static void RemoveListener(EventType type, System.Action function)
-    {
-        if (eventDictionary.ContainsKey(type))
-        {
-            eventDictionary[type] -= (function);
-        }
-    }
-
-    // execute event for all those listening
-    public static void InvokeEvent(EventType type)
-    {
-        if (eventDictionary.ContainsKey(type))
-        {
-            eventDictionary[type]?.Invoke();
-        }
-    }
-}
-
-// event system that takes arguments
-public static class EventSystem<T>
-{
-    private static Dictionary<EventType, System.Action<T>> eventDictionary = new Dictionary<EventType, System.Action<T>>();
-
-    public static void AddListener(EventType type, System.Action<T> function)
-    {
-        if (!eventDictionary.ContainsKey(type))
-        {
-            eventDictionary.Add(type, null);
-        }
-
-        eventDictionary[type] += (function);
-    }
-
-    public static void RemoveListener(EventType type, System.Action<T> function)
-    {
-        if (eventDictionary.ContainsKey(type))
-        {
-            eventDictionary[type] -= (function);
+            if (!eventCollection.ContainsKey(type))
+            {
+                eventCollection.Add(type, Empty);
+            }
+            if (!eventCollectionParam.ContainsKey(type))
+            {
+                eventCollectionParam.Add(type, Empty);
+            }
         }
     }
 
-    // execute event for all those listening
-    public static void InvokeEvent(EventType type, T arg)
-    {
-        if (eventDictionary.ContainsKey(type))
-        {
-            eventDictionary[type]?.Invoke(arg);
-        }
-    }
+    private static void Empty() { }
+
+    private static void Empty(object value) { }
 }

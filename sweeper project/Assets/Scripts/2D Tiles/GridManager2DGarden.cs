@@ -29,36 +29,36 @@ public class GridManager2DGarden : BaseGridManager
 
     protected override void OnEnable()
     {
-        EventSystem<GameObject>.AddListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Vector3[]>.AddListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<GameObject>.AddListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem.AddListener(EventType.RANDOM_GRID, ResetGame);
-        EventSystem.AddListener(EventType.WIN_GAME, StopTimer);
-        EventSystem.AddListener(EventType.END_GAME, StopTimer);
-        EventSystem.AddListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.AddListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.AddListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.AddListener(EventType.OTHER_CLICK, OtherClick);
-        EventSystem.AddListener(EventType.PLAY_FLAG, PlantFlag);
-        EventSystem<GameObject>.AddListener(EventType.REMOVE_FLAG, FlagClick);
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] += AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.PLANT_FLAG] += ActivateFlag;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] += AddEmptyTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += FlagClick;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] += ResetGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] += StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] += StopTimer;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += LoseGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] += StopTimer;
+        EventSystem.eventCollection[EventType.REVEAL_TILE] += TileClick;
+        EventSystem.eventCollection[EventType.OTHER_CLICK] += OtherClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] += PlantFlag;
     }
 
     protected override void OnDisable()
     {
-        EventSystem<GameObject>.RemoveListener(EventType.ADD_GOOD_TILE, AddGoodTile);
-        EventSystem<Vector3[]>.RemoveListener(EventType.PLANT_FLAG, ActivateFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, ReturnFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.ADD_EMPTY, AddEmptyTile);
-        EventSystem.RemoveListener(EventType.RANDOM_GRID, ResetGame);
-        EventSystem.RemoveListener(EventType.WIN_GAME, StopTimer);
-        EventSystem.RemoveListener(EventType.END_GAME, StopTimer);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, LoseGame);
-        EventSystem.RemoveListener(EventType.GAME_LOSE, StopTimer);
-        EventSystem.RemoveListener(EventType.REVEAL_TILE, TileClick);
-        EventSystem.RemoveListener(EventType.OTHER_CLICK, OtherClick);
-        EventSystem.RemoveListener(EventType.PLAY_FLAG, PlantFlag);
-        EventSystem<GameObject>.RemoveListener(EventType.REMOVE_FLAG, FlagClick);
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] -= AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.PLANT_FLAG] -= ActivateFlag;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] -= AddEmptyTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= FlagClick;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] -= ResetGame;
+        EventSystem.eventCollection[EventType.WIN_GAME] -= StopTimer;
+        EventSystem.eventCollection[EventType.END_GAME] -= StopTimer;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= LoseGame;
+        EventSystem.eventCollection[EventType.GAME_LOSE] -= StopTimer;
+        EventSystem.eventCollection[EventType.REVEAL_TILE] -= TileClick;
+        EventSystem.eventCollection[EventType.OTHER_CLICK] -= OtherClick;
+        EventSystem.eventCollection[EventType.PLAY_FLAG] -= PlantFlag;
     }
 
     protected override void LoseGame()
@@ -182,7 +182,7 @@ public class GridManager2DGarden : BaseGridManager
         }
         yield return new WaitForEndOfFrame();
 
-        EventSystem.InvokeEvent(EventType.PREPARE_GAME);
+        EventSystem.eventCollection[EventType.PREPARE_GAME]();
         yield return new WaitForEndOfFrame();
         StartGame();
         yield return new WaitForEndOfFrame();
@@ -202,7 +202,7 @@ public class GridManager2DGarden : BaseGridManager
         if (goodTiles == (tiles.Count - reduction - initialBombAmount))
         {
             wonGame = true;
-            EventSystem.InvokeEvent(EventType.WIN_GAME);
+            EventSystem.eventCollection[EventType.WIN_GAME]();
         }
     }
 
@@ -235,8 +235,9 @@ public class GridManager2DGarden : BaseGridManager
         // not used
     }
 
-    protected override void AddEmptyTile(GameObject gameobject)
+    protected override void AddEmptyTile(object value)
     {
+        GameObject gameobject = value as GameObject;
         if (gameobject.GetComponent<Tile2DGarden>().unplayable)
         {
             return;

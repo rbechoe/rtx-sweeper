@@ -29,7 +29,7 @@ public class InputManager : MonoBehaviour
         {
             if (Input.GetKey(keybinding.Key))
             {
-                EventSystem.InvokeEvent(keybinding.Value);
+                EventSystem.eventCollection[keybinding.Value]();
             }
         }
 
@@ -38,20 +38,21 @@ public class InputManager : MonoBehaviour
         {
             if (Input.GetKeyUp(keybinding.Key))
             {
-                EventSystem.InvokeEvent(keybinding.Value);
+                EventSystem.eventCollection[keybinding.Value]();
             }
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f) // zoom in 
         {
-            EventSystem.InvokeEvent(EventType.INPUT_SCROLL_DOWN);
+            EventSystem.eventCollection[EventType.INPUT_SCROLL_DOWN]();
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0f) // zoom out
         {
-            EventSystem.InvokeEvent(EventType.INPUT_SCROLL_UP);
+            EventSystem.eventCollection[EventType.INPUT_SCROLL_UP]();
         }
     }
 
+    [System.Obsolete]
     private void OnApplicationQuit()
     {
         // ensure that ragequit is triggered
