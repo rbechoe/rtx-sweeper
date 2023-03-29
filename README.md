@@ -95,16 +95,111 @@ In RTX Sweeper I have made a lot of systems in order to ensure that the game fun
 ### EventSystem
 
 My EventSystem is a simple yet effective system that gives me full control over when something happens. This is inspired by the <a href="https://en.wikipedia.org/wiki/Publish–subscribe_pattern">PubSub</a> design pattern.
-The EventSytem works with Listeners, Invokers, and EventTypes. 
+The <a href="https://github.com/rbechoe/rtx-sweeper/blob/main/sweeper%20project/Assets/Scripts/Main/EventSystem.cs">EventSytem</a> works with Listeners, Invokers, and EventTypes. 
+```csharp
+public static class EventSystem
+{
+    public static Dictionary<EventType, Action> eventCollection = new Dictionary<EventType, Action>();
+    public static Dictionary<EventType, Action<object>> eventCollectionParam = new Dictionary<EventType, Action<object>>();
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+    public static void FillDictionary()
+    {
+        eventCollection.Clear();
+        eventCollectionParam.Clear();
+
+        foreach (EventType type in Enum.GetValues(typeof(EventType)))
+        {
+            if (!eventCollection.ContainsKey(type))
+            {
+                eventCollection.Add(type, Empty);
+            }
+            if (!eventCollectionParam.ContainsKey(type))
+            {
+                eventCollectionParam.Add(type, Empty);
+            }
+        }
+    }
+
+    private static void Empty() { }
+
+    private static void Empty(object value) { }
+}
+```
+The EventSystem has dictionaries with, as the keys, each possible event type. These get filled with an empty value. This is required in order to make this work so that the subscribers can listen.
 
 <b>Listeners</b></br>
-Subscribes to a specific event type, with or without a parameter. Whenever that event gets invoked, the method listening to it will be executed.
+Methods subscribe to a specific event type, with or without a parameter. Whenever that event gets invoked, the method listening to it will be executed.
+```csharp
+private void OnEnable()
+{
+    EventSystem.eventCollection[EventType.UPDATE_BGM] += ApplyBGMSettings; // has no parameter
+    EventSystem.eventCollectionParam[EventType.UPDATE_BGM] += ApplyBGMSettings;
+}
+```
+To prevent reference exceptions they also need to be removed whenever the listener becomes disabled. It is essentially memory management that you are doing.
+```csharp
+private void OnDisable()
+{
+    EventSystem.eventCollection[EventType.UPDATE_BGM] -= ApplyBGMSettings; // has no parameter
+    EventSystem.eventCollectionParam[EventType.UPDATE_BGM] -= ApplyBGMSettings;
+}
+```
+There are 2 types of listeners for now. One without a paremeter.
+```csharp
+private void ApplyBGMSettings()
+{
+    foreach(AudioSource bgm in bgmSources)
+    {
+        bgm.volume = someValue;
+    }
+}
+```
+And one with. For this one it is important that the parameter is of type <b>object</b>. This ensures a generic setup for the Eventsystem. In order to make the parameter usable it has to be casted to a specic type, such as a float in this sample.
+```csharp
+private void ApplyBGMSettings(object value)
+{
+    foreach(AudioSource bgm in bgmSources)
+    {
+        bgm.volume = (float)value;
+    }
+}
+```
 
 <b>Invokers</b></br>
 At specific points in the game I need to invoke an event type, for example when the game finishes. At this point everything listening to it will be executed. When you click on a bomb you will trigger the GameOver event type. This will ensure that you see the right window and that the timers and interactables stop functioning.
+There are 2 ways to invoke an event type, without parameters it looks like this.
+```csharp
+public void UpdateBGMVolume()
+{
+    EventSystem.eventCollectionParam[EventType.UPDATE_BGM]();
+}
+```
+With a parameter it looks like this. All listeners will receive the value from the parameter. Do note that listeners with a parameter are in a different dictionary than those without. Sometimes they have to listen to the same event, but they can choose to do nothing with the given parameter.
+```csharp
+public void UpdateBGMVolume()
+{
+    EventSystem.eventCollectionParam[EventType.UPDATE_BGM](BGMSlider.value);
+}
+```
 
 <b>EventTypes</b></br>
 An event type is simply just an entry in an enum. Each entry describes what it does and has a comment about whether it passes a parameter or not. 
+```csharp
+public enum EventType
+{
+    // gameplay related
+    BOMB_UPDATE,        // passes int
+    UPDATE_TIME,        // passes float
+    START_POS,          // passes vector3
+    PLANT_FLAG,         // passes vector3[]
+    ADD_EMPTY,          // passes gameobject
+    COUNT_BOMBS,        // passes nothing
+    // gameflow related
+    PREPARE_GAME,       // passes nothing
+    RANDOM_GRID,        // passes nothing
+}
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
