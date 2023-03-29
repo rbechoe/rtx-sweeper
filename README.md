@@ -10,9 +10,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="github resources/RTX Sweeper Logo.png" alt="Logo" width="80" height="80">
-  </a>
+  <img src="github resources/RTX Sweeper Logo.png" alt="Logo" width="80" height="80">
 
   <h3 align="center">RTX Sweeper</h3>
 
