@@ -11,7 +11,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="github resources/RTX Sweeper Logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">RTX Sweeper</h3>
@@ -188,7 +188,7 @@ Project Link: [https://github.com/rbechoe/rtx-sweeper](https://github.com/rbecho
 [license-url]: https://github.com/rbechoe/rtx-sweeper/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&color=0072b1
 [linkedin-url]: https://www.linkedin.com/in/ravibechoe/
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: https://github.com/rbechoe/rtx-sweeper/blob/main/github%20resources/RTX%20Screenshot%20Menu.jpg
 [Unity.com]: https://img.shields.io/badge/Unity3D-35495E?style=for-the-badge&logo=unity&logoColor=ffffff
 [Unity-url]: https://unity.com
 [VS.com]: https://img.shields.io/badge/visual%20studio-35495E?style=for-the-badge&logo=visualstudio&logoColor=b65fcf
