@@ -200,6 +200,10 @@ public enum EventType
 }
 ```
 
+<b>Visual sample</b></br>
+Now, with the EventSystem basics explained, this is what it looks like in game.
+[![Game Over Loop][event-system]](https://github.com/rbechoe/rtx-sweeper)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -283,6 +287,7 @@ Project Link: [https://github.com/rbechoe/rtx-sweeper](https://github.com/rbecho
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&color=0072b1
 [linkedin-url]: https://www.linkedin.com/in/ravibechoe/
 [product-screenshot]: https://github.com/rbechoe/rtx-sweeper/blob/main/github%20resources/RTX%20Screenshot%20Menu.jpg
+[event-system]: https://github.com/rbechoe/rtx-sweeper/blob/main/github%20resources/Game%20Over%20Loop.gif
 [Unity.com]: https://img.shields.io/badge/Unity3D-35495E?style=for-the-badge&logo=unity&logoColor=ffffff
 [Unity-url]: https://unity.com
 [VS.com]: https://img.shields.io/badge/visual%20studio-35495E?style=for-the-badge&logo=visualstudio&logoColor=b65fcf
