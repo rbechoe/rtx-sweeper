@@ -158,6 +158,24 @@ Project Link: [https://github.com/rbechoe/rtx-sweeper](https://github.com/rbecho
 <a name="readme-acknowledgments"></a>
 ## Acknowledgments
 
+<b>Friends that helped</b><br>
+* [Kris de Haas's Assets & Ideas](https://k4b4448.artstation.com)
+* [Nathalie Verduin's UI](https://nathalieverduinart.jimdo.com)
+* [Geoffrey Hendrikx's Localisation](http://www.geoffreyhendrikx.com/)
+* [Yasmin van Rooijen's Animals](https://www.artstation.com/yasminvanrooijen)
+* [Caspar Gelderman's Caustics](https://caspargelderman.games)
+
+<b>Asset Store stuff</b><br>
+* [SineVFX](https://assetstore.unity.com/packages/vfx/particles/spells/top-down-effects-191455)
+* [Sabri Ayes](https://assetstore.unity.com/packages/3d/props/weapons/free-missile-72692)
+* [IGIIID](https://assetstore.unity.com/packages/3d/vehicles/air/super-spitfire-53217)
+* [CH Assets](https://assetstore.unity.com/packages/3d/environments/landscapes/lowpoly-style-ultra-pack-108275)
+* [D.K.V. studio](https://assetstore.unity.com/packages/2d/textures-materials/water/simple-water-shader-hdrp-207454)
+* [Avionx](https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633)
+* [Wild Mage Games](https://assetstore.unity.com/packages/tools/utilities/ultimate-screenshot-creator-82008)
+
+<b>Other</b><br>
+* [Steamworks](https://partner.steamgames.com)
 * [Othneil Drew's readme template](https://github.com/othneildrew/Best-README-Template)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
