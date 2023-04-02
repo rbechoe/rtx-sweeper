@@ -107,8 +107,11 @@ public class Tile2DAnomaly : BaseTile
                     Collider[] tileFlags = Physics.OverlapSphere(tile.transform.position, 0.25f, flagMask);
                     if (tileFlags.Length == 0)
                     {
+                        if (tile.GetComponent<Tile2DAnomaly>().state != TileStates.Revealed)
+                        {
+                            actionsInvoked++;
+                        }
                         tile.GetComponent<Tile2DAnomaly>()?.DoAction();
-                        actionsInvoked++;
                     }
                 }
                 if (actionsInvoked > 0) EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
