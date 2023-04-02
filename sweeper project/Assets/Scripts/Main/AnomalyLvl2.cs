@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AnomalyLvl2 : MonoBehaviour
 {
-    public List<GameObject> unsolvedPuzzles = new List<GameObject>();
-    public List<GameObject> solvedPuzzles = new List<GameObject>();
+    public List<AnomalyGridManager2D> unsolvedPuzzles = new List<AnomalyGridManager2D>();
+    public List<AnomalyGridManager2D> solvedPuzzles = new List<AnomalyGridManager2D>();
     public int activePuzzle = 0;
     public int switchCount = 0;
     public int switchTreshold = 3;
@@ -15,7 +14,7 @@ public class AnomalyLvl2 : MonoBehaviour
     public Text infoText, stars;
     public DataSerializer DS;
 
-    public Transform activeSpot, inactiveSpot, solvedSpot;
+    public Transform activeSpot, inactiveSpot, solvedSpot, lastSpot;
 
     private float timer = 0;
     public bool timeStarted = false;
@@ -27,6 +26,16 @@ public class AnomalyLvl2 : MonoBehaviour
 
     private SteamAPIManager steamAPI;
 
+    private void OnEnable()
+    {
+        EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK] += ClickedTile;
+    }
+
+    private void OnDisable()
+    {
+        EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK] -= ClickedTile;
+    }
+
     private void Awake()
     {
         SetText();
@@ -36,11 +45,13 @@ public class AnomalyLvl2 : MonoBehaviour
     {
         steamAPI = SteamAPIManager.Instance;
 
-        foreach (GameObject puzzle in unsolvedPuzzles)
-        {
-            puzzle.transform.position = inactiveSpot.position;
-        }
-        unsolvedPuzzles[activePuzzle].transform.position = activeSpot.position;
+        unsolvedPuzzles[0].transform.position = activeSpot.position;
+        unsolvedPuzzles[1].transform.position = inactiveSpot.position;
+        unsolvedPuzzles[2].transform.position = lastSpot.position;
+
+        unsolvedPuzzles[0].gridActive = true;
+        unsolvedPuzzles[1].gridActive = false;
+        unsolvedPuzzles[2].gridActive = false;
     }
 
     private void SetText()
@@ -62,32 +73,54 @@ public class AnomalyLvl2 : MonoBehaviour
     private void Reset()
     {
         timer = 0;
+        activePuzzle = 0;
+        switchCount = 0;
         totalTileClicks = 0;
         totalOtherClicks = 0;
         timeStarted = false;
         wonGame = false;
+
+        unsolvedPuzzles[0].transform.position = activeSpot.position;
+        unsolvedPuzzles[1].transform.position = inactiveSpot.position;
+        unsolvedPuzzles[2].transform.position = lastSpot.position;
+
+        unsolvedPuzzles[0].gridActive = true;
+        unsolvedPuzzles[1].gridActive = false;
+        unsolvedPuzzles[2].gridActive = false;
     }
 
     public void ClickedTile()
     {
         switchCount++;
 
+        int prevPuzzle = activePuzzle;
         if (switchCount >= switchTreshold)
         {
             activePuzzle++;
             switchCount = 0;
         }
 
-        if (activePuzzle > unsolvedPuzzles.Count)
+        if (activePuzzle >= unsolvedPuzzles.Count)
         {
             activePuzzle = 0;
         }
 
-        foreach(GameObject puzzle in unsolvedPuzzles)
+        if (prevPuzzle != activePuzzle)
         {
-            puzzle.transform.position = inactiveSpot.position;
+            unsolvedPuzzles[prevPuzzle].transform.position = lastSpot.position;
+            unsolvedPuzzles[activePuzzle].transform.position = activeSpot.position;
+
+            int nextPuzzle = activePuzzle + 1;
+            if (nextPuzzle >= unsolvedPuzzles.Count)
+            {
+                nextPuzzle = 0;
+            }
+            unsolvedPuzzles[nextPuzzle].transform.position = inactiveSpot.position;
+
+            unsolvedPuzzles[prevPuzzle].gridActive = false;
+            unsolvedPuzzles[activePuzzle].gridActive = true;
+            unsolvedPuzzles[nextPuzzle].gridActive = false;
         }
-        unsolvedPuzzles[activePuzzle].transform.position = activeSpot.position;
     }
 
     public virtual void StopTimer()
@@ -96,7 +129,7 @@ public class AnomalyLvl2 : MonoBehaviour
         SaveData();
     }
 
-    public void CompleteGrid(GameObject grid)
+    public void CompleteGrid(AnomalyGridManager2D grid)
     {
         unsolvedPuzzles.Remove(grid);
         solvedPuzzles.Add(grid);

@@ -45,7 +45,8 @@ public enum EventType
     IN_SETTINGS,        // passes nothing
     OUT_SETTINGS,       // passes nothing
     UPDATE_LANGUAGE,    // passes nothing
-    PLAY_CLICK_SFX      // passes nothing
+    PLAY_CLICK_SFX,     // passes nothing
+    MOUSE_LEFT_CLICK,   // passes nothing
 }
 
 public enum TileStates

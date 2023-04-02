@@ -15,6 +15,10 @@ public class AnomalyGridManager2D : BaseGridManager
         difficulty = (10 - bombDensity) + (tiles.Count / 200) + 1;
 
         Helpers.NestedChildToGob<Tile2D>(transform, tiles);
+        if (tiles.Count == 0)
+        {
+            Helpers.NestedChildToGob<Tile2DAnomaly>(transform, tiles);
+        }
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
 
         DS = gameObject.GetComponent<DataSerializer>();
@@ -23,10 +27,8 @@ public class AnomalyGridManager2D : BaseGridManager
 
     protected override void OnEnable()
     {
-        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] += AddGoodTile;
         EventSystem.eventCollectionParam[EventType.PLANT_FLAG] += ActivateFlag;
         EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += ReturnFlag;
-        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] += AddEmptyTile;
         EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += FlagClick;
         EventSystem.eventCollection[EventType.RANDOM_GRID] += ResetGame;
         EventSystem.eventCollection[EventType.WIN_GAME] += StopTimer;
@@ -40,10 +42,8 @@ public class AnomalyGridManager2D : BaseGridManager
 
     protected override void OnDisable()
     {
-        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] -= AddGoodTile;
         EventSystem.eventCollectionParam[EventType.PLANT_FLAG] -= ActivateFlag;
         EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= ReturnFlag;
-        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] -= AddEmptyTile;
         EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= FlagClick;
         EventSystem.eventCollection[EventType.RANDOM_GRID] -= ResetGame;
         EventSystem.eventCollection[EventType.WIN_GAME] -= StopTimer;
@@ -59,11 +59,16 @@ public class AnomalyGridManager2D : BaseGridManager
     {
     }
 
-    protected override void AddGoodTile(object value)
+    public void AddTile(GameObject value)
+    {
+        AddEmptyTile(value);
+    }
+
+    public void AddSafeTile(object value)
     {
         if (puzzle2Manager == null)
         {
-            base.AddGoodTile(value);
+            AddGoodTile(value);
         }
         else
         {
@@ -87,7 +92,7 @@ public class AnomalyGridManager2D : BaseGridManager
             progress = goodTiles / (tiles.Count - initialBombAmount);
             if (goodTiles == (tiles.Count - initialBombAmount))
             {
-                puzzle2Manager.CompleteGrid(gameObject);
+                puzzle2Manager.CompleteGrid(this);
             }
         }
     }

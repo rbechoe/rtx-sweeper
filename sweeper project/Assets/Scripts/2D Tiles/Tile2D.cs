@@ -87,6 +87,7 @@ public class Tile2D : BaseTile
             {
                 EventSystem.eventCollection[EventType.PLAY_CLICK]();
                 EventSystem.eventCollection[EventType.TILE_CLICK]();
+                EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
                 DoAction();
                 didSomething = true;
             }

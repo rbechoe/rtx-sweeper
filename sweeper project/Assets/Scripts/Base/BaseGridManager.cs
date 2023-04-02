@@ -30,6 +30,7 @@ public abstract class BaseGridManager : MonoBehaviour
     protected int shuffleCount;
     protected float timer;
     public float progress;
+    public bool gridActive = true;
 
     protected DataSerializer DS;
     public GameUI uiManager;
@@ -113,11 +114,17 @@ public abstract class BaseGridManager : MonoBehaviour
     // activate a flag and place it above the tile
     protected virtual void ActivateFlag(object value)
     {
+        if (!gridActive)
+        {
+            return;
+        }
+
         Vector3[] vectors = value as Vector3[];
         if (inactiveFlags.Count > 0 && bombAmount > 0)
         {
             inactiveFlags[0].transform.position = vectors[0];
             inactiveFlags[0].transform.eulerAngles = vectors[1];
+            inactiveFlags[0].transform.parent = transform;
             activeFlags.Add(inactiveFlags[0]);
             inactiveFlags.RemoveAt(0);
             AddFlag();
@@ -129,6 +136,7 @@ public abstract class BaseGridManager : MonoBehaviour
     {
         GameObject flag = value as GameObject;
         flag.transform.position = Vector3.up * 5000;
+        flag.transform.parent = flagParent.transform;
         activeFlags.Remove(flag);
         inactiveFlags.Add(flag);
         RemoveFlag();
