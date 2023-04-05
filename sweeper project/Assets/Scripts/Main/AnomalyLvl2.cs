@@ -29,11 +29,13 @@ public class AnomalyLvl2 : MonoBehaviour
     private void OnEnable()
     {
         EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK] += ClickedTile;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] += ResetGame;
     }
 
     private void OnDisable()
     {
         EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK] -= ClickedTile;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] += ResetGame;
     }
 
     private void Awake()
@@ -70,7 +72,7 @@ public class AnomalyLvl2 : MonoBehaviour
         EventSystem.eventCollectionParam[EventType.UPDATE_TIME](timer);
     }
 
-    private void Reset()
+    private void ResetGame()
     {
         timer = 0;
         activePuzzle = 0;
@@ -107,19 +109,18 @@ public class AnomalyLvl2 : MonoBehaviour
 
         if (prevPuzzle != activePuzzle)
         {
-            unsolvedPuzzles[prevPuzzle].transform.position = lastSpot.position;
-            unsolvedPuzzles[activePuzzle].transform.position = activeSpot.position;
-
             int nextPuzzle = activePuzzle + 1;
             if (nextPuzzle >= unsolvedPuzzles.Count)
             {
                 nextPuzzle = 0;
             }
             unsolvedPuzzles[nextPuzzle].transform.position = inactiveSpot.position;
+            unsolvedPuzzles[prevPuzzle].transform.position = lastSpot.position;
+            unsolvedPuzzles[activePuzzle].transform.position = activeSpot.position;
 
+            unsolvedPuzzles[nextPuzzle].gridActive = false;
             unsolvedPuzzles[prevPuzzle].gridActive = false;
             unsolvedPuzzles[activePuzzle].gridActive = true;
-            unsolvedPuzzles[nextPuzzle].gridActive = false;
         }
     }
 
@@ -157,8 +158,11 @@ public class AnomalyLvl2 : MonoBehaviour
         steamAPI.SetStatInt(UserStats.totalGamesPlayed, AD.gamesPlayed);
         steamAPI.SetStatInt(UserStats.totalClicks, AD.totalClicks);
 
-        steamAPI.UpdateLeaderBoard(LeaderboardStats.clicks, AD.totalClicks);
-        steamAPI.UpdateLeaderBoard(LeaderboardStats.gamesPlayed, AD.gamesPlayed);
+        if (totalTileClicks > 0)
+        {
+            steamAPI.UpdateLeaderBoard(LeaderboardStats.clicks, AD.totalClicks);
+            steamAPI.UpdateLeaderBoard(LeaderboardStats.gamesPlayed, AD.gamesPlayed);
+        }
 
         if (wonGame)
         {
