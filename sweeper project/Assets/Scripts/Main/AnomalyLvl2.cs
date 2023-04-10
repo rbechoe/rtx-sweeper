@@ -93,7 +93,7 @@ public class AnomalyLvl2 : MonoBehaviour
     public void ClickedTile()
     {
         switchCount++;
-        if (switchCount >= unsolvedPuzzles.Count)
+        if (switchCount >= unsolvedPuzzles.Count && unsolvedPuzzles.Count > 0)
         {
             activePuzzle++;
             switchCount = 0;
@@ -101,6 +101,12 @@ public class AnomalyLvl2 : MonoBehaviour
             AnomalyGridManager2D grid = unsolvedPuzzles[0];
             unsolvedPuzzles.Remove(grid);
             unsolvedPuzzles.Add(grid);
+
+            // prevents grids getting in each other even if for a single frame
+            for (int i = 0; i < unsolvedPuzzles.Count; i++)
+            {
+                unsolvedPuzzles[i].transform.position = Vector3.up * 1000 * i;
+            }
 
             for (int i = 0; i < unsolvedPuzzles.Count; i++)
             {
@@ -136,13 +142,12 @@ public class AnomalyLvl2 : MonoBehaviour
         grid.gridActive = false;
         grid.transform.position = solvedSpot.position;
         switchCount = 5;
-        ClickedTile();
 
         if (unsolvedPuzzles.Count == 0)
         {
-            timeStarted = false;
+            EventSystem.eventCollection[EventType.WIN_GAME]();
             wonGame = true;
-            SaveData();
+            StopTimer();
         }
     }
 

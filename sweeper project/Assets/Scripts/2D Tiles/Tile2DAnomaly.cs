@@ -116,7 +116,6 @@ public class Tile2DAnomaly : BaseTile
                 }
                 if (actionsInvoked > 0 && clicked)
                 {
-                    Debug.Log(gameObject.name, gameObject);
                     EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
                 }
 
@@ -149,8 +148,6 @@ public class Tile2DAnomaly : BaseTile
 
     private IEnumerator FireAction()
     {
-        yield return new WaitForEndOfFrame(); 
-
         if (triggered)
         {
             yield break;
@@ -169,7 +166,9 @@ public class Tile2DAnomaly : BaseTile
         UpdateMaterial(defaultCol, 1);
 
         if (!gameObject.CompareTag("Bomb"))
+        {
             myMesh.enabled = false;
+        }
 
         TypeSpecificAction();
 
@@ -183,7 +182,6 @@ public class Tile2DAnomaly : BaseTile
         switch (state)
         {
             case TileStates.Bomb:
-                Debug.Log("Clicked a bomb? ", gameObject);
                 EventSystem.eventCollection[EventType.GAME_LOSE]();
                 break;
 
@@ -200,7 +198,6 @@ public class Tile2DAnomaly : BaseTile
                 if (clicked)
                 {
                     EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
-                    Debug.Log(gameObject.name, gameObject);
                 }
                 break;
 
@@ -214,7 +211,6 @@ public class Tile2DAnomaly : BaseTile
                     if (clicked)
                     {
                         EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
-                        Debug.Log(gameObject.name, gameObject);
                     }
                 }
                 break;

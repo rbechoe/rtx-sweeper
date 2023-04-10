@@ -68,11 +68,13 @@ public class GameUI : MonoBehaviour
     private void WinGame()
     {
         victoryTimeText.text = "" + Math.Round(currentTime, 3).ToString("N3");
+        loserText.SetActive(false);
         victoryText.SetActive(true);
     }
 
     private void LoseGame()
     {
+        victoryText.SetActive(false);
         loserText.SetActive(true);
     }
 
