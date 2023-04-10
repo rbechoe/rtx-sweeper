@@ -114,7 +114,11 @@ public class Tile2DAnomaly : BaseTile
                         tile.GetComponent<Tile2DAnomaly>()?.DoAction();
                     }
                 }
-                if (actionsInvoked > 0) EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
+                if (actionsInvoked > 0 && clicked)
+                {
+                    Debug.Log(gameObject.name, gameObject);
+                    EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
+                }
 
                 previewClicked = false;
                 tilesPreviewed = null;
@@ -143,7 +147,6 @@ public class Tile2DAnomaly : BaseTile
         gridMat?.SetColor("_BaseColor", color);
     }
 
-    public int flagsOnMe = 0;
     private IEnumerator FireAction()
     {
         yield return new WaitForEndOfFrame(); 
@@ -155,7 +158,6 @@ public class Tile2DAnomaly : BaseTile
 
         // return if there is a flag on this position
         Collider[] nearbyFlags = Physics.OverlapSphere(transform.position, 0.25f, flagMask);
-        flagsOnMe = nearbyFlags.Length;
         if (nearbyFlags.Length > 0)
         {
             yield break;
@@ -170,6 +172,8 @@ public class Tile2DAnomaly : BaseTile
             myMesh.enabled = false;
 
         TypeSpecificAction();
+
+        clicked = false;
     }
 
     public override void TypeSpecificAction()
@@ -179,6 +183,7 @@ public class Tile2DAnomaly : BaseTile
         switch (state)
         {
             case TileStates.Bomb:
+                Debug.Log("Clicked a bomb? ", gameObject);
                 EventSystem.eventCollection[EventType.GAME_LOSE]();
                 break;
 
@@ -192,7 +197,11 @@ public class Tile2DAnomaly : BaseTile
                 state = TileStates.Revealed;
                 if (rewardObj != null) rewardObj.SetActive(true);
                 if (breakObj != null) breakObj.SetActive(false);
-                if (clicked) EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
+                if (clicked)
+                {
+                    EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
+                    Debug.Log(gameObject.name, gameObject);
+                }
                 break;
 
             case TileStates.Number:
@@ -201,11 +210,15 @@ public class Tile2DAnomaly : BaseTile
                 state = TileStates.Revealed;
                 if (rewardObj != null) rewardObj.SetActive(true);
                 if (breakObj != null) breakObj.SetActive(false);
-                if (clicked) EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
+                {
+                    if (clicked)
+                    {
+                        EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
+                        Debug.Log(gameObject.name, gameObject);
+                    }
+                }
                 break;
         }
-
-        clicked = false;
     }
 
     private void EnableMesh()

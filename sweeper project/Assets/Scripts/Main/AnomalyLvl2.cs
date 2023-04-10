@@ -8,7 +8,6 @@ public class AnomalyLvl2 : MonoBehaviour
     public List<AnomalyGridManager2D> solvedPuzzles = new List<AnomalyGridManager2D>();
     public int activePuzzle = 0;
     public int switchCount = 0;
-    public int switchTreshold = 3;
     public int difficulty = 10;
 
     public Text infoText, stars;
@@ -94,33 +93,33 @@ public class AnomalyLvl2 : MonoBehaviour
     public void ClickedTile()
     {
         switchCount++;
-
-        int prevPuzzle = activePuzzle;
-        if (switchCount >= switchTreshold)
+        if (switchCount >= unsolvedPuzzles.Count)
         {
             activePuzzle++;
             switchCount = 0;
-        }
 
-        if (activePuzzle >= unsolvedPuzzles.Count)
-        {
-            activePuzzle = 0;
-        }
+            AnomalyGridManager2D grid = unsolvedPuzzles[0];
+            unsolvedPuzzles.Remove(grid);
+            unsolvedPuzzles.Add(grid);
 
-        if (prevPuzzle != activePuzzle)
-        {
-            int nextPuzzle = activePuzzle + 1;
-            if (nextPuzzle >= unsolvedPuzzles.Count)
+            for (int i = 0; i < unsolvedPuzzles.Count; i++)
             {
-                nextPuzzle = 0;
+                if (i == 0)
+                {
+                    unsolvedPuzzles[i].transform.position = activeSpot.position;
+                    unsolvedPuzzles[i].gridActive = true;
+                }
+                if (i == 1)
+                {
+                    unsolvedPuzzles[i].transform.position = lastSpot.position;
+                    unsolvedPuzzles[i].gridActive = false;
+                }
+                if (i == 2)
+                {
+                    unsolvedPuzzles[i].transform.position = inactiveSpot.position;
+                    unsolvedPuzzles[i].gridActive = false;
+                }
             }
-            unsolvedPuzzles[nextPuzzle].transform.position = inactiveSpot.position;
-            unsolvedPuzzles[prevPuzzle].transform.position = lastSpot.position;
-            unsolvedPuzzles[activePuzzle].transform.position = activeSpot.position;
-
-            unsolvedPuzzles[nextPuzzle].gridActive = false;
-            unsolvedPuzzles[prevPuzzle].gridActive = false;
-            unsolvedPuzzles[activePuzzle].gridActive = true;
         }
     }
 
@@ -134,7 +133,10 @@ public class AnomalyLvl2 : MonoBehaviour
     {
         unsolvedPuzzles.Remove(grid);
         solvedPuzzles.Add(grid);
+        grid.gridActive = false;
         grid.transform.position = solvedSpot.position;
+        switchCount = 5;
+        ClickedTile();
 
         if (unsolvedPuzzles.Count == 0)
         {
@@ -143,6 +145,7 @@ public class AnomalyLvl2 : MonoBehaviour
             SaveData();
         }
     }
+
     private void SaveData()
     {
         float efficiency = 1f * totalTileClicks / (totalTileClicks + totalOtherClicks) * 100f;
