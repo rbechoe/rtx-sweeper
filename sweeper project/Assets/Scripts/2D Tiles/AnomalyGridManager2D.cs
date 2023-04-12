@@ -57,6 +57,10 @@ public class AnomalyGridManager2D : BaseGridManager
 
     protected override void Update()
     {
+        if (!isPartial)
+        {
+            base.Update();
+        }
     }
 
     public void AddTile(GameObject value)

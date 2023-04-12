@@ -51,6 +51,12 @@ public class Tile2DAnomaly : BaseTile
         transform.parent.GetComponent<AnomalyGridManager2D>().AddTile(gameObject);
     }
 
+    public Collider[] nearbyFlags;
+    private void Update()
+    {
+        nearbyFlags = Physics.OverlapSphere(transform.position, 0.4f, flagMask);
+    }
+
     protected override void OnMouseOver()
     {
         UpdateMaterial(selectCol);
@@ -65,7 +71,6 @@ public class Tile2DAnomaly : BaseTile
         if (Input.GetMouseButton(0) && triggered && !previewClicked)
         {
             // use box to detect all nearby tiles that can be activated once amount bombs equals amount of flags, not more or less
-            Collider[] nearbyFlags = Physics.OverlapSphere(transform.position, 0.75f, flagMask);
             Collider[] allTiles = Physics.OverlapSphere(transform.position, 0.75f, allMask);
 
             if (bombCount == nearbyFlags.Length)
@@ -106,15 +111,11 @@ public class Tile2DAnomaly : BaseTile
                 int actionsInvoked = 0;
                 foreach (Collider tile in tilesPreviewed)
                 {
-                    Collider[] tileFlags = Physics.OverlapSphere(tile.transform.position, 0.4f, flagMask);
-                    if (tileFlags.Length == 0)
+                    if (tile.GetComponent<Tile2DAnomaly>().state != TileStates.Revealed && tile.GetComponent<Tile2DAnomaly>().nearbyFlags.Length == 0)
                     {
-                        if (tile.GetComponent<Tile2DAnomaly>().state != TileStates.Revealed)
-                        {
-                            actionsInvoked++;
-                        }
-                        tile.GetComponent<Tile2DAnomaly>()?.DoAction();
+                        actionsInvoked++;
                     }
+                    tile.GetComponent<Tile2DAnomaly>()?.DoAction();
                 }
                 if (actionsInvoked > 0 && clicked && !clickedAction)
                 {
@@ -142,14 +143,13 @@ public class Tile2DAnomaly : BaseTile
     protected override void UpdateMaterial(Color color, float intensity = -10)
     {
         if (intensity == -10) intensity = glowIntensity;
-            
+
         if (!triggered) gridMat?.SetColor("_EmissiveColor", color * intensity);
         if (triggered) gridMat?.SetColor("_EmissiveColor", color * 0);
 
         gridMat?.SetColor("_BaseColor", color);
     }
 
-    public Collider[] flags;
     private IEnumerator FireAction()
     {
         if (triggered)
@@ -158,8 +158,6 @@ public class Tile2DAnomaly : BaseTile
         }
 
         // return if there is a flag on this position
-        Collider[] nearbyFlags = Physics.OverlapSphere(transform.position, 0.4f, flagMask);
-        flags = nearbyFlags;
         if (nearbyFlags.Length > 0)
         {
             yield break;
@@ -182,7 +180,10 @@ public class Tile2DAnomaly : BaseTile
 
     public override void TypeSpecificAction()
     {
-        if (state != TileStates.Revealed) EventSystem.eventCollection[EventType.REVEAL_TILE]();
+        if (state != TileStates.Revealed)
+        {
+            EventSystem.eventCollection[EventType.REVEAL_TILE]();
+        }
 
         switch (state)
         {
