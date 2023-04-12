@@ -87,7 +87,6 @@ public class Tile2D : BaseTile
             {
                 EventSystem.eventCollection[EventType.PLAY_CLICK]();
                 EventSystem.eventCollection[EventType.TILE_CLICK]();
-                Debug.Log(gameObject.name, gameObject);
                 EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
                 DoAction();
                 didSomething = true;
@@ -137,7 +136,7 @@ public class Tile2D : BaseTile
         }
 
         // return if there is a flag on this position
-        Collider[] nearbyFlags = Physics.OverlapSphere(transform.position, 0.25f, flagMask);
+        Collider[] nearbyFlags = Physics.OverlapSphere(transform.position, 0.35f, flagMask);
         if (nearbyFlags.Length > 0)
         {
             yield break;

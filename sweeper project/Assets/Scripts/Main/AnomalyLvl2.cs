@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +7,6 @@ public class AnomalyLvl2 : MonoBehaviour
 {
     public List<AnomalyGridManager2D> unsolvedPuzzles = new List<AnomalyGridManager2D>();
     public List<AnomalyGridManager2D> solvedPuzzles = new List<AnomalyGridManager2D>();
-    public int activePuzzle = 0;
     public int switchCount = 0;
     public int difficulty = 10;
 
@@ -22,6 +22,7 @@ public class AnomalyLvl2 : MonoBehaviour
     public int totalTileClicks, totalOtherClicks;
     public bool usedFlag = false;
     private bool wonGame = false;
+    private bool switching = false;
 
     private SteamAPIManager steamAPI;
 
@@ -45,14 +46,6 @@ public class AnomalyLvl2 : MonoBehaviour
     private void Start()
     {
         steamAPI = SteamAPIManager.Instance;
-
-        unsolvedPuzzles[0].transform.position = activeSpot.position;
-        unsolvedPuzzles[1].transform.position = inactiveSpot.position;
-        unsolvedPuzzles[2].transform.position = lastSpot.position;
-
-        unsolvedPuzzles[0].gridActive = true;
-        unsolvedPuzzles[1].gridActive = false;
-        unsolvedPuzzles[2].gridActive = false;
     }
 
     private void SetText()
@@ -74,12 +67,18 @@ public class AnomalyLvl2 : MonoBehaviour
     private void ResetGame()
     {
         timer = 0;
-        activePuzzle = 0;
         switchCount = 0;
         totalTileClicks = 0;
         totalOtherClicks = 0;
         timeStarted = false;
         wonGame = false;
+        switching = false;
+
+        foreach (AnomalyGridManager2D grid in solvedPuzzles)
+        {
+            unsolvedPuzzles.Add(grid);
+        }
+        solvedPuzzles.Clear();
 
         unsolvedPuzzles[0].transform.position = activeSpot.position;
         unsolvedPuzzles[1].transform.position = inactiveSpot.position;
@@ -92,41 +91,55 @@ public class AnomalyLvl2 : MonoBehaviour
 
     public void ClickedTile()
     {
+        if (switching)
+        {
+            return;
+        }
+
         switchCount++;
         if (switchCount >= unsolvedPuzzles.Count && unsolvedPuzzles.Count > 0)
         {
-            activePuzzle++;
-            switchCount = 0;
+            switching = true;
+            StartCoroutine(SwitchGrids());
+        }
+    }
 
-            AnomalyGridManager2D grid = unsolvedPuzzles[0];
-            unsolvedPuzzles.Remove(grid);
-            unsolvedPuzzles.Add(grid);
+    private IEnumerator SwitchGrids()
+    {
+        switchCount = 0;
 
-            // prevents grids getting in each other even if for a single frame
-            for (int i = 0; i < unsolvedPuzzles.Count; i++)
+        yield return new WaitForEndOfFrame();
+
+        AnomalyGridManager2D grid = unsolvedPuzzles[0];
+        unsolvedPuzzles.Remove(grid);
+        unsolvedPuzzles.Add(grid);
+
+        // prevents grids getting in each other even if for a single frame
+        for (int i = 0; i < unsolvedPuzzles.Count; i++)
+        {
+            unsolvedPuzzles[i].transform.position = Vector3.up * 1000 * i;
+        }
+
+        for (int i = 0; i < unsolvedPuzzles.Count; i++)
+        {
+            if (i == 0)
             {
-                unsolvedPuzzles[i].transform.position = Vector3.up * 1000 * i;
+                unsolvedPuzzles[i].transform.position = activeSpot.position;
+                unsolvedPuzzles[i].gridActive = true;
             }
-
-            for (int i = 0; i < unsolvedPuzzles.Count; i++)
+            if (i == 1)
             {
-                if (i == 0)
-                {
-                    unsolvedPuzzles[i].transform.position = activeSpot.position;
-                    unsolvedPuzzles[i].gridActive = true;
-                }
-                if (i == 1)
-                {
-                    unsolvedPuzzles[i].transform.position = lastSpot.position;
-                    unsolvedPuzzles[i].gridActive = false;
-                }
-                if (i == 2)
-                {
-                    unsolvedPuzzles[i].transform.position = inactiveSpot.position;
-                    unsolvedPuzzles[i].gridActive = false;
-                }
+                unsolvedPuzzles[i].transform.position = lastSpot.position;
+                unsolvedPuzzles[i].gridActive = false;
+            }
+            if (i == 2)
+            {
+                unsolvedPuzzles[i].transform.position = inactiveSpot.position;
+                unsolvedPuzzles[i].gridActive = false;
             }
         }
+
+        switching = false;
     }
 
     public virtual void StopTimer()

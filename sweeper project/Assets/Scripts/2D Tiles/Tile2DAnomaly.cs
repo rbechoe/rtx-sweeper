@@ -5,6 +5,7 @@ public class Tile2DAnomaly : BaseTile
 {
     private MeshRenderer myMesh;
     private bool clicked;
+    private bool clickedAction = false;
 
     protected override void OnEnable()
     {
@@ -93,6 +94,7 @@ public class Tile2DAnomaly : BaseTile
             {
                 EventSystem.eventCollection[EventType.PLAY_CLICK]();
                 EventSystem.eventCollection[EventType.TILE_CLICK]();
+                clickedAction = false;
                 clicked = true;
                 DoAction();
                 didSomething = true;
@@ -104,7 +106,7 @@ public class Tile2DAnomaly : BaseTile
                 int actionsInvoked = 0;
                 foreach (Collider tile in tilesPreviewed)
                 {
-                    Collider[] tileFlags = Physics.OverlapSphere(tile.transform.position, 0.25f, flagMask);
+                    Collider[] tileFlags = Physics.OverlapSphere(tile.transform.position, 0.4f, flagMask);
                     if (tileFlags.Length == 0)
                     {
                         if (tile.GetComponent<Tile2DAnomaly>().state != TileStates.Revealed)
@@ -114,9 +116,10 @@ public class Tile2DAnomaly : BaseTile
                         tile.GetComponent<Tile2DAnomaly>()?.DoAction();
                     }
                 }
-                if (actionsInvoked > 0 && clicked)
+                if (actionsInvoked > 0 && clicked && !clickedAction)
                 {
                     EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
+                    clickedAction = true;
                 }
 
                 previewClicked = false;
@@ -146,6 +149,7 @@ public class Tile2DAnomaly : BaseTile
         gridMat?.SetColor("_BaseColor", color);
     }
 
+    public Collider[] flags;
     private IEnumerator FireAction()
     {
         if (triggered)
@@ -154,7 +158,8 @@ public class Tile2DAnomaly : BaseTile
         }
 
         // return if there is a flag on this position
-        Collider[] nearbyFlags = Physics.OverlapSphere(transform.position, 0.25f, flagMask);
+        Collider[] nearbyFlags = Physics.OverlapSphere(transform.position, 0.4f, flagMask);
+        flags = nearbyFlags;
         if (nearbyFlags.Length > 0)
         {
             yield break;
@@ -182,38 +187,31 @@ public class Tile2DAnomaly : BaseTile
         switch (state)
         {
             case TileStates.Bomb:
+                Debug.Log("Clicked bomb", gameObject);
                 EventSystem.eventCollection[EventType.GAME_LOSE]();
-                break;
+                return;
 
             case TileStates.Empty:
-                transform.parent.GetComponent<AnomalyGridManager2D>().AddSafeTile(gameObject);
                 Collider[] tiles = Physics.OverlapSphere(gameObject.transform.position, 1.25f);
                 for (int i = 0; i < tiles.Length; i++)
                 {
-                    tiles[i].GetComponent<BaseTile>()?.NoBombReveal();
-                }
-                state = TileStates.Revealed;
-                if (rewardObj != null) rewardObj.SetActive(true);
-                if (breakObj != null) breakObj.SetActive(false);
-                if (clicked)
-                {
-                    EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
+                    tiles[i].GetComponent<Tile2DAnomaly>()?.NoBombReveal();
                 }
                 break;
 
             case TileStates.Number:
-                transform.parent.GetComponent<AnomalyGridManager2D>().AddSafeTile(gameObject);
                 ShowBombAmount();
-                state = TileStates.Revealed;
-                if (rewardObj != null) rewardObj.SetActive(true);
-                if (breakObj != null) breakObj.SetActive(false);
-                {
-                    if (clicked)
-                    {
-                        EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
-                    }
-                }
                 break;
+        }
+
+        transform.parent.GetComponent<AnomalyGridManager2D>().AddSafeTile(gameObject);
+        state = TileStates.Revealed;
+        if (rewardObj != null) rewardObj.SetActive(true);
+        if (breakObj != null) breakObj.SetActive(false);
+        if (clicked && !clickedAction)
+        {
+            EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
+            clickedAction = true;
         }
     }
 
