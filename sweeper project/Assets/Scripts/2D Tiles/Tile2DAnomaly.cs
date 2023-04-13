@@ -52,9 +52,11 @@ public class Tile2DAnomaly : BaseTile
     }
 
     public Collider[] nearbyFlags;
+    public Collider[] hasFlag;
     private void Update()
     {
-        nearbyFlags = Physics.OverlapSphere(transform.position, 0.4f, flagMask);
+        nearbyFlags = Physics.OverlapSphere(transform.position, 0.75f, flagMask);
+        hasFlag = Physics.OverlapSphere(transform.position, 0.4f, flagMask);
     }
 
     protected override void OnMouseOver()
@@ -111,12 +113,17 @@ public class Tile2DAnomaly : BaseTile
                 int actionsInvoked = 0;
                 foreach (Collider tile in tilesPreviewed)
                 {
-                    if (tile.GetComponent<Tile2DAnomaly>().state != TileStates.Revealed && tile.GetComponent<Tile2DAnomaly>().nearbyFlags.Length == 0)
+                    if (!tile.GetComponent<Tile2DAnomaly>())
+                    {
+                        continue;
+                    }
+                    if (tile.GetComponent<Tile2DAnomaly>().state != TileStates.Revealed && tile.GetComponent<Tile2DAnomaly>().hasFlag.Length == 0)
                     {
                         actionsInvoked++;
                     }
                     tile.GetComponent<Tile2DAnomaly>()?.DoAction();
                 }
+
                 if (actionsInvoked > 0 && clicked && !clickedAction)
                 {
                     EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK]();
@@ -158,7 +165,7 @@ public class Tile2DAnomaly : BaseTile
         }
 
         // return if there is a flag on this position
-        if (nearbyFlags.Length > 0)
+        if (hasFlag.Length > 0)
         {
             yield break;
         }
