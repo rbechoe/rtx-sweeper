@@ -38,7 +38,7 @@ public class HexManager : MonoBehaviour
                 position.x *= 1.1f;
                 GameObject hex = Instantiate(hexPrefab, transform.position, Quaternion.identity);
                 hex.transform.parent = transform;
-                hex.transform.localEulerAngles = new Vector3(90, 0, 0);
+                hex.transform.localEulerAngles = new Vector3(270, 0, 0);
                 hex.transform.localPosition = position;
                 hexList.Add(hex);
 
@@ -102,9 +102,9 @@ public class HexManager : MonoBehaviour
 
                 for (int j = 0; j < hexRows[i].rowList.Count; j++)
                 {
-                    Vector3 hexPos = hexRows[i].rowList[j].transform.position;
+                    Vector3 hexPos = hexRows[i].rowList[j].transform.localPosition;
                     hexPos.z = hexFloats[hexRows[i].index];
-                    hexRows[i].rowList[j].transform.position = hexPos;
+                    hexRows[i].rowList[j].transform.localPosition = hexPos;
                 }
                 yield return new WaitForEndOfFrame();
             }

@@ -195,7 +195,6 @@ public class Tile2DAnomaly : BaseTile
         switch (state)
         {
             case TileStates.Bomb:
-                Debug.Log("Clicked bomb", gameObject);
                 EventSystem.eventCollection[EventType.GAME_LOSE]();
                 return;
 
