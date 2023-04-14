@@ -8,6 +8,7 @@ public enum EventType
     ADD_EMPTY,          // passes gameobject
     REMOVE_FLAG,        // passes gameobject
     ADD_GOOD_TILE,      // passes gameobject
+    REMOVE_GOOD_TILE,   // passes gameobject
     COUNT_BOMBS,        // passes nothing  
     PICK_TILE,          // passes nothing
     PLAY_CLICK,         // passes nothing

@@ -225,6 +225,7 @@ public class HexTileAnomaly : BaseTile
     public void ResetTile()
     {
         state = TileStates.Empty;
+        EventSystem.eventCollectionParam[EventType.REMOVE_GOOD_TILE](gameObject);
         ResetSelf();
         EnableMesh();
         StartGame();

@@ -55,7 +55,7 @@ public class HexManager : MonoBehaviour
 
         if (waveCd <= 0)
         {
-            waveCd = 0.075f;
+            waveCd = 0.1f;
 
             zeroDepthIndex++;
             firstDepthIndex++;

@@ -22,6 +22,7 @@ public class GridManagerHex : BaseGridManager
     protected override void OnEnable()
     {
         EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] += AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_GOOD_TILE] += RemoveGoodTile;
         EventSystem.eventCollectionParam[EventType.PLANT_FLAG] += ActivateFlag;
         EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += ReturnFlag;
         EventSystem.eventCollectionParam[EventType.ADD_EMPTY] += AddEmptyTile;
@@ -39,6 +40,7 @@ public class GridManagerHex : BaseGridManager
     protected override void OnDisable()
     {
         EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] -= AddGoodTile;
+        EventSystem.eventCollectionParam[EventType.REMOVE_GOOD_TILE] -= RemoveGoodTile;
         EventSystem.eventCollectionParam[EventType.PLANT_FLAG] -= ActivateFlag;
         EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= ReturnFlag;
         EventSystem.eventCollectionParam[EventType.ADD_EMPTY] -= AddEmptyTile;
@@ -56,6 +58,11 @@ public class GridManagerHex : BaseGridManager
     public void AddTile(GameObject value)
     {
         AddEmptyTile(value);
+    }
+
+    protected virtual void RemoveGoodTile(object value)
+    {
+        goodTiles--;
     }
 
     // activate a flag and place it above the tile

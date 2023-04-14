@@ -66,5 +66,4 @@ public class KrisEffect : MonoBehaviour
         waitTime = Random.Range(0, 100) / 100f;
         showTime = Random.Range(50, 150) / 100f;
     }
-
 }
