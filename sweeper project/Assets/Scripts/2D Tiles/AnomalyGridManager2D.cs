@@ -224,6 +224,21 @@ public class AnomalyGridManager2D : BaseGridManager
                         AD.anomalyEfficiency1 = efficiency;
                         AD.anomalyClicks1 = tileClicks;
                     }
+
+                    if (!puzzle2Manager)
+                    {
+                        steamAPI.SetStatInt(UserStats.anomalyGamesWon, AD.anomalyVictories);
+                        steamAPI.UpdateLeaderBoard(LeaderboardStats.anomalyGamesWon, AD.anomalyVictories);
+
+                        steamAPI.SetStatInt(UserStats.anomaly1Victories, AD.anomalyVictories1);
+                        steamAPI.UpdateLeaderBoard(LeaderboardStats.anomaly1BestTime, (int)(AD.anomalyTime1 * 1000));
+                    }
+                }
+
+                if (!puzzle2Manager)
+                {
+                    steamAPI.SetStatInt(UserStats.anomalyGamesPlayed, AD.anomalyGamesPlayed);
+                    steamAPI.UpdateLeaderBoard(LeaderboardStats.anomalyGamesPlayed, AD.anomalyGamesPlayed);
                 }
                 break;
         }

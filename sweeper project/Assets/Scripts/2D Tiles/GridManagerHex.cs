@@ -121,19 +121,23 @@ public class GridManagerHex : BaseGridManager
             if (timer < 10) steamAPI.SetAchievement(UserAchievements.speedrunPro);
             if (timer < 20) steamAPI.SetAchievement(UserAchievements.speedrun);
 
-            // TODO trigger Baarn achievement
-
             steamAPI.SetStatInt(UserStats.totalGamesWon, AD.gamesWon);
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.noFlags);
             if (!usedFlag && difficulty >= 5) steamAPI.SetAchievement(UserAchievements.noFlagsPlus);
 
             steamAPI.UpdateLeaderBoard(LeaderboardStats.gamesWon, AD.gamesWon);
             steamAPI.UpdateLeaderBoard(LeaderboardStats.timePlayed, (int)(AD.totalTimePlayed / 60f));
+
+            steamAPI.SetStatInt(UserStats.anomaly3Victories, AD.anomalyVictories3);
+            steamAPI.UpdateLeaderBoard(LeaderboardStats.anomaly3BestTime, (int)(AD.anomalyTime3 * 1000));
         }
         else
         {
             AD.gamesLost = AD.gamesLost + 1;
         }
+
+        steamAPI.SetStatInt(UserStats.anomalyGamesPlayed, AD.anomalyGamesPlayed);
+        steamAPI.UpdateLeaderBoard(LeaderboardStats.anomalyGamesPlayed, AD.anomalyGamesPlayed);
 
         AD.anomalyVictories = (wonGame) ? AD.anomalyVictories + 1 : AD.anomalyVictories;
         AD.anomalyTotalClicks += tileClicks;

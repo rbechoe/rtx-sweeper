@@ -215,7 +215,16 @@ public class AnomalyLvl2 : MonoBehaviour
                 AD.anomalyEfficiency2 = efficiency;
                 AD.anomalyClicks2 = totalTileClicks;
             }
+
+            steamAPI.SetStatInt(UserStats.anomaly2Victories, AD.anomalyVictories2);
+            steamAPI.UpdateLeaderBoard(LeaderboardStats.anomaly2BestTime, (int)(AD.anomalyTime2 * 1000));
+
+            steamAPI.SetStatInt(UserStats.anomalyGamesWon, AD.anomalyVictories);
+            steamAPI.UpdateLeaderBoard(LeaderboardStats.anomalyGamesWon, AD.anomalyVictories);
         }
+
+        steamAPI.SetStatInt(UserStats.anomalyGamesPlayed, AD.anomalyGamesPlayed);
+        steamAPI.UpdateLeaderBoard(LeaderboardStats.anomalyGamesPlayed, AD.anomalyGamesPlayed);
 
         DS.UpdateAccountData(AD);
         SetText();

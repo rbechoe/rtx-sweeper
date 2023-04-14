@@ -35,6 +35,7 @@ public class SteamAPIManager : MonoBehaviour
         apiAchName.Add(UserAchievements.speedrunPro, "Speedrun Pro");
         apiAchName.Add(UserAchievements.kris, "k4b4448");
         apiAchName.Add(UserAchievements.ragequit, "Ragequit");
+        apiAchName.Add(UserAchievements.anomalySolved, "Anomaly Solved.");
         // populating stats
         apiStatName.Add(UserStats.totalGamesPlayed, "total_games_played");
         apiStatName.Add(UserStats.totalGamesWon, "total_games_won");
@@ -82,6 +83,17 @@ public class SteamAPIManager : MonoBehaviour
         apiStatName.Add(UserStats.galaxy1Victories, "galaxy_1_victories");
         apiStatName.Add(UserStats.galaxy1BestTime, "galaxy_1_best_time");
         apiStatName.Add(UserStats.galaxy1GamesPlayed, "galaxy_1_games_played");
+        apiStatName.Add(UserStats.anomalyGamesWon, "anomaly_games_won");
+        apiStatName.Add(UserStats.anomalyGamesPlayed, "anomaly_games_played");
+        apiStatName.Add(UserStats.anomaly1Victories, "anomaly_1_victories");
+        apiStatName.Add(UserStats.anomaly1BestTime, "anomaly_1_best_time");
+        apiStatName.Add(UserStats.anomaly1GamesPlayed, "anomaly_1_games_played");
+        apiStatName.Add(UserStats.anomaly2Victories, "anomaly_2_victories");
+        apiStatName.Add(UserStats.anomaly2BestTime, "anomaly_2_best_time");
+        apiStatName.Add(UserStats.anomaly2GamesPlayed, "anomalya_2_games_played");
+        apiStatName.Add(UserStats.anomaly3Victories, "anomaly_3_victories");
+        apiStatName.Add(UserStats.anomaly3BestTime, "anomaly_3_best_time");
+        apiStatName.Add(UserStats.anomaly3GamesPlayed, "anomaly_3_games_played");
         // populating leaderboards
         lbStatName.Add(LeaderboardStats.clicks, "lb_clicks");
         lbStatName.Add(LeaderboardStats.gamesPlayed, "lb_games_played");
@@ -108,6 +120,11 @@ public class SteamAPIManager : MonoBehaviour
         lbStatName.Add(LeaderboardStats.galaxyGamesWon, "lb_galaxy_games_won");
         lbStatName.Add(LeaderboardStats.galaxyGamesPlayed, "lb_galaxy_games_played");
         lbStatName.Add(LeaderboardStats.galaxy1BestTime, "lb_galaxy_1_best_time");
+        lbStatName.Add(LeaderboardStats.anomalyGamesWon, "lb_anomaly_games_won");
+        lbStatName.Add(LeaderboardStats.anomalyGamesPlayed, "lb_anomaly_games_played");
+        lbStatName.Add(LeaderboardStats.anomaly1BestTime, "lb_anomaly_1_best_time");
+        lbStatName.Add(LeaderboardStats.anomaly2BestTime, "lb_anomaly_2_best_time");
+        lbStatName.Add(LeaderboardStats.anomaly3BestTime, "lb_anomaly_3_best_time");
     }
 
     public bool CheckDLC(AppId_t id)
@@ -239,7 +256,8 @@ public enum UserAchievements
     speedrun,
     speedrunPro,
     kris,
-    ragequit
+    ragequit,
+    anomalySolved
 }
 
 public enum UserStats
@@ -289,7 +307,18 @@ public enum UserStats
     galaxyGamesPlayed,
     galaxy1Victories,
     galaxy1BestTime,
-    galaxy1GamesPlayed
+    galaxy1GamesPlayed,
+    anomalyGamesWon,
+    anomalyGamesPlayed,
+    anomaly1Victories,
+    anomaly1BestTime,
+    anomaly1GamesPlayed,
+    anomaly2Victories,
+    anomaly2BestTime,
+    anomaly2GamesPlayed,
+    anomaly3Victories,
+    anomaly3BestTime,
+    anomaly3GamesPlayed,
 }
 
 public enum LeaderboardStats
@@ -318,5 +347,10 @@ public enum LeaderboardStats
     islands1BestTime,
     galaxyGamesWon,
     galaxyGamesPlayed,
-    galaxy1BestTime
+    galaxy1BestTime,
+    anomalyGamesWon,
+    anomalyGamesPlayed,
+    anomaly1BestTime,
+    anomaly2BestTime,
+    anomaly3BestTime,
 }
