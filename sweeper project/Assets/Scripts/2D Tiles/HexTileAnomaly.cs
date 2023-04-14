@@ -7,6 +7,9 @@ public class HexTileAnomaly : BaseTile
     private bool clicked;
     private bool clickedAction = false;
 
+    public Collider[] nearbyFlags;
+    public Collider[] hasFlag;
+
     protected override void OnEnable()
     {
         // listen
@@ -51,8 +54,6 @@ public class HexTileAnomaly : BaseTile
         transform.parent.GetComponent<GridManagerHex>().AddTile(gameObject);
     }
 
-    public Collider[] nearbyFlags;
-    public Collider[] hasFlag;
     private void Update()
     {
         nearbyFlags = Physics.OverlapSphere(transform.position, 1.25f, flagMask);
@@ -169,6 +170,65 @@ public class HexTileAnomaly : BaseTile
 
         if (!vfx.gameObject.activeSelf) vfx.gameObject.SetActive(true);
         vfx.UpdateEffect(bombCount);
+    }
+
+    public void SpreadInfection()
+    {
+        if (state != TileStates.Bomb || hasFlag.Length > 0)
+        {
+            return;
+        }
+
+        Collider[] neighbourHexes = Physics.OverlapSphere(transform.position, 1.25f, allMask);
+        foreach (Collider hex in neighbourHexes)
+        {
+            HexTileAnomaly hexComponent = hex.GetComponent<HexTileAnomaly>();
+            if (hexComponent != null && hexComponent.state == TileStates.Revealed)
+            {
+                hexComponent.ResetTile();
+                break;
+            }
+        }
+    }
+
+    protected override void CheckBombs()
+    {
+        // count all nearby bombs
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 1.2f);
+        int bombCount = 0;
+
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].gameObject == gameObject) continue;
+            if (hitColliders[i].gameObject.CompareTag("Bomb"))
+            {
+                bombCount++;
+            }
+        }
+
+        if (state != TileStates.Bomb && state != TileStates.Revealed)
+        {
+            if (bombCount > 0)
+            {
+                state = TileStates.Number;
+            }
+            else
+            {
+                AddEmpty();
+                state = TileStates.Empty;
+            }
+        }
+
+        UpdateBombAmount(bombCount);
+    }
+
+    public void ResetTile()
+    {
+        state = TileStates.Empty;
+        ResetSelf();
+        EnableMesh();
+        StartGame();
+        CheckBombs();
     }
 
     private IEnumerator FireAction()

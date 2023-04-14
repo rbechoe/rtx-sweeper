@@ -105,7 +105,14 @@ public class HexManager : MonoBehaviour
                     Vector3 hexPos = hexRows[i].rowList[j].transform.localPosition;
                     hexPos.z = hexFloats[hexRows[i].index];
                     hexRows[i].rowList[j].transform.localPosition = hexPos;
+
+                    HexTileAnomaly hexComponent = hexRows[i].rowList[j].GetComponent<HexTileAnomaly>();
+                    if (hexComponent != null && hexComponent.state == TileStates.Bomb)
+                    {
+                        hexComponent.SpreadInfection();
+                    }
                 }
+
                 yield return new WaitForEndOfFrame();
             }
         }

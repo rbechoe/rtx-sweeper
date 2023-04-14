@@ -9,10 +9,11 @@ public class GridManagerHex : BaseGridManager
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
-        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 5;
 
         Helpers.NestedChildToGob<HexTileAnomaly>(transform, tiles);
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
+
+        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 10;
 
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
