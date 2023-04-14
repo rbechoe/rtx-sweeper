@@ -57,6 +57,11 @@ public class WallGenerator : MonoBehaviour
         valueToRotateTo = -20;
     }
 
+    public void FireKris()
+    {
+        EventSystem.eventCollection[EventType.KRIS_EGG]();
+    }
+
     [ContextMenu("Close")]
     public void CloseWall()
     {

@@ -9,10 +9,11 @@ public class GridManager2D : BaseGridManager
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
-        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 1;
 
         Helpers.NestedChildToGob<Tile2D>(transform, tiles);
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
+
+        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 1;
 
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
@@ -316,19 +317,19 @@ public class GridManager2D : BaseGridManager
                         infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.arcticTime1) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.arcticEfficiency1) + "%\n" +
-                            "Victories: " + data.arcticVictories1 + "\n";
+                            "Victories: " + data.arcticVictories1;
                         break;
                     case 2: // level 2
                         infoText.text = 
                             "Time: " + Helpers.RoundToThreeDecimals(data.arcticTime2) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.arcticEfficiency2) + "%\n" +
-                            "Victories: " + data.arcticVictories2 + "\n";
+                            "Victories: " + data.arcticVictories2;
                         break;
                     case 3: // level 3
                         infoText.text = 
                             "Time: " + Helpers.RoundToThreeDecimals(data.arcticTime3) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.arcticEfficiency3) + "%\n" +
-                            "Victories: " + data.arcticVictories3 + "\n";
+                            "Victories: " + data.arcticVictories3;
                         break;
                 }
                 break;
@@ -341,19 +342,19 @@ public class GridManager2D : BaseGridManager
                         infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.asiaTime1) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.asiaEfficiency1) + "%\n" +
-                            "Victories: " + data.asiaVictories1 + "\n";
+                            "Victories: " + data.asiaVictories1;
                         break;
                     case 2: // level 2
                         infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.asiaTime2) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.asiaEfficiency2) + "%\n" +
-                            "Victories: " + data.asiaVictories2 + "\n";
+                            "Victories: " + data.asiaVictories2;
                         break;
                     case 3: // level 3
                         infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.asiaTime3) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.asiaEfficiency3) + "%\n" +
-                            "Victories: " + data.asiaVictories3 + "\n";
+                            "Victories: " + data.asiaVictories3;
                         break;
                 }
                 break;
@@ -366,19 +367,19 @@ public class GridManager2D : BaseGridManager
                         infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.desertTime1) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.desertEfficiency1) + "%\n" +
-                            "Victories: " + data.desertVictories1 + "\n";
+                            "Victories: " + data.desertVictories1;
                         break;
                     case 2: // level 2
                         infoText.text = 
                             "Time: " + Helpers.RoundToThreeDecimals(data.desertTime2) + "s\n" +
                             "Skill: " + Helpers.RoundToThreeDecimals(data.desertEfficiency2) + "%\n" +
-                            "Victories: " + data.desertVictories2 + "\n";
+                            "Victories: " + data.desertVictories2;
                         break;
                     case 3: // level 3
                         infoText.text =
                             "Time: " + Helpers.RoundToThreeDecimals(data.desertTime3) + "s\n" +
                             "Efficiency: " + Helpers.RoundToThreeDecimals(data.desertEfficiency3) + "%\n" +
-                            "Victories: " + data.desertVictories3 + "\n";
+                            "Victories: " + data.desertVictories3;
                         break;
                 }
                 break;

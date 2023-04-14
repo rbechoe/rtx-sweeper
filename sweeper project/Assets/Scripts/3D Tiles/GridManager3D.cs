@@ -17,10 +17,11 @@ public class GridManager3D : BaseGridManager
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
-        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 3;
 
         Helpers.NestedChildToGob<Tile3D>(transform, tiles);
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
+        
+        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 3;
 
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
@@ -274,6 +275,6 @@ public class GridManager3D : BaseGridManager
         infoText.text =
             "Time: " + Helpers.RoundToThreeDecimals(data.galaxyTime1) + "s\n" +
             "Skill: " + Helpers.RoundToThreeDecimals(data.galaxyEfficiency1) + "%\n" +
-            "Victories: " + data.galaxyVictories1 + "\n";
+            "Victories: " + data.galaxyVictories1;
     }
 }

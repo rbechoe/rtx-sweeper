@@ -47,6 +47,7 @@ public enum EventType
     UPDATE_LANGUAGE,    // passes nothing
     PLAY_CLICK_SFX,     // passes nothing
     MOUSE_LEFT_CLICK,   // passes nothing
+    KRIS_EGG,           // passes nothing
 }
 
 public enum TileStates

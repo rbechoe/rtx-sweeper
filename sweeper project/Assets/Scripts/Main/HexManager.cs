@@ -18,6 +18,8 @@ public class HexManager : MonoBehaviour
     private int thirdDepthIndex = 3;
     private int fourthDepthIndex = 4;
 
+    private float waveCd = 0.1f;
+
     private void Start()
     {
         hexFloats = new float[width];
@@ -45,20 +47,22 @@ public class HexManager : MonoBehaviour
                 hexRows[x].rowList.Add(hex);
             }
         }
-
-        StartCoroutine(Wave());
-
     }
 
-    private IEnumerator Wave()
+    private void Update()
     {
-        while (true)
+        waveCd -= Time.deltaTime;
+
+        if (waveCd <= 0)
         {
+            waveCd = 0.075f;
+
             zeroDepthIndex++;
             firstDepthIndex++;
             secondDepthIndex++;
             thirdDepthIndex++;
             fourthDepthIndex++;
+
             if (zeroDepthIndex >= hexFloats.Length)
             {
                 zeroDepthIndex = 0;
@@ -112,8 +116,6 @@ public class HexManager : MonoBehaviour
                         hexComponent.SpreadInfection();
                     }
                 }
-
-                yield return new WaitForEndOfFrame();
             }
         }
     }

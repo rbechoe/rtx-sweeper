@@ -21,8 +21,10 @@ public class GridManagerHex : BaseGridManager
 
     protected override void OnEnable()
     {
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] += AddGoodTile;
         EventSystem.eventCollectionParam[EventType.PLANT_FLAG] += ActivateFlag;
         EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] += AddEmptyTile;
         EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] += FlagClick;
         EventSystem.eventCollection[EventType.RANDOM_GRID] += ResetGame;
         EventSystem.eventCollection[EventType.WIN_GAME] += StopTimer;
@@ -36,8 +38,10 @@ public class GridManagerHex : BaseGridManager
 
     protected override void OnDisable()
     {
+        EventSystem.eventCollectionParam[EventType.ADD_GOOD_TILE] -= AddGoodTile;
         EventSystem.eventCollectionParam[EventType.PLANT_FLAG] -= ActivateFlag;
         EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= ReturnFlag;
+        EventSystem.eventCollectionParam[EventType.ADD_EMPTY] -= AddEmptyTile;
         EventSystem.eventCollectionParam[EventType.REMOVE_FLAG] -= FlagClick;
         EventSystem.eventCollection[EventType.RANDOM_GRID] -= ResetGame;
         EventSystem.eventCollection[EventType.WIN_GAME] -= StopTimer;
@@ -169,6 +173,6 @@ public class GridManagerHex : BaseGridManager
         infoText.text =
             "Time: " + Helpers.RoundToThreeDecimals(data.anomalyTime3) + "s\n" +
             "Skill: " + Helpers.RoundToThreeDecimals(data.anomalyEfficiency3) + "%\n" +
-            "Victories: " + data.anomalyVictories3 + "\n";
+            "Victories: " + data.anomalyVictories3;
     }
 }

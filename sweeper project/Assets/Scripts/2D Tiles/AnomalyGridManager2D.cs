@@ -12,7 +12,6 @@ public class AnomalyGridManager2D : BaseGridManager
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
-        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 1;
 
         Helpers.NestedChildToGob<Tile2D>(transform, tiles);
         if (tiles.Count == 0)
@@ -20,6 +19,8 @@ public class AnomalyGridManager2D : BaseGridManager
             Helpers.NestedChildToGob<Tile2DAnomaly>(transform, tiles);
         }
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
+        
+        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 1;
 
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
@@ -265,7 +266,7 @@ public class AnomalyGridManager2D : BaseGridManager
                 infoText.text =
                     "Time: " + Helpers.RoundToThreeDecimals(data.anomalyTime1) + "s\n" +
                     "Skill: " + Helpers.RoundToThreeDecimals(data.anomalyEfficiency1) + "%\n" +
-                    "Victories: " + data.anomalyVictories1 + "\n";
+                    "Victories: " + data.anomalyVictories1;
                 break;
         }
     }

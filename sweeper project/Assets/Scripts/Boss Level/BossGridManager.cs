@@ -19,7 +19,6 @@ public class BossGridManager : BaseGridManager
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
-        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 3; // base +3 due to boss stage
 
         flagMask = LayerMask.GetMask("Flag");
         canShuffle = true;
@@ -43,6 +42,8 @@ public class BossGridManager : BaseGridManager
                 inactiveFlags.Add(child.gameObject);
             }
         }
+
+        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 3; // base +3 due to boss stage
 
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
@@ -273,7 +274,7 @@ public class BossGridManager : BaseGridManager
         infoText.text = 
             "Time: " + Helpers.RoundToThreeDecimals(data.bossTime1) + "s\n" +
             "Skill: " + Helpers.RoundToThreeDecimals(data.bossEfficiency1) + "%\n" +
-            "Victories: " + data.bossVictories1 + "\n";
+            "Victories: " + data.bossVictories1;
     }
 
     private void GameActive()
