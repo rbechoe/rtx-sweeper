@@ -170,6 +170,7 @@ MonoBehaviour:
   bombDensity: 6
   flagParent: {fileID: 646499388}
   progress: 0
+  gridActive: 1
   uiManager: {fileID: 1947806621}
   infoText: {fileID: 0}
   stars: {fileID: 0}
@@ -288,6 +289,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 86805253395652484, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805253395652484, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805253523126539, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805253523126539, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805253698514233, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805253698514233, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 86805253702374096, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -311,6 +336,30 @@ PrefabInstance:
     - target: {fileID: 86805253703948200, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.0024414062
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805253745518612, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805253745518612, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805253811639977, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805253811639977, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805253832904543, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805253832904543, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 86805254014136986, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -360,6 +409,22 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 86805254260858487, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254260858487, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254293838128, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254293838128, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 86805254674175838, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -408,6 +473,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 86805254970556274, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805254970556274, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255017855093, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255017855093, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255020644280, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255020644280, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 86805255042737145, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.0024414062
@@ -419,6 +508,38 @@ PrefabInstance:
     - target: {fileID: 86805255152595098, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255247515673, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255247515673, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255281445996, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255281445996, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255318718026, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255318718026, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255363978956, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86805255363978956, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 369126640536919891, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
@@ -480,9 +601,25 @@ PrefabInstance:
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 0.16078432
       objectReference: {fileID: 0}
+    - target: {fileID: 735415420470151116, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 735415420470151116, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 1245843705402993510, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325016322895684352, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325016322895684352, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2065532389424343827, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: TextIdentifier
@@ -732,6 +869,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2543876291626416528, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2543876291626416528, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3115628411384947772, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3115628411384947772, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 3726285798808265794, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
       value: 0.44705883
@@ -871,6 +1024,14 @@ PrefabInstance:
     - target: {fileID: 4082454674263077482, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.028686523
+      objectReference: {fileID: 0}
+    - target: {fileID: 4183805588718268853, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4183805588718268853, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4244722943252424853, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Name
@@ -1060,6 +1221,14 @@ PrefabInstance:
       propertyPath: TextIdentifier
       value: ui_button_grid_create
       objectReference: {fileID: 0}
+    - target: {fileID: 4620908675596019867, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620908675596019867, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 4903016198979737075, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 12.499756
@@ -1187,6 +1356,38 @@ PrefabInstance:
     - target: {fileID: 5585499728927392861, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604287698645918987, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604287698645918987, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5922710661108155656, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5922710661108155656, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6084930272341433172, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6084930272341433172, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6203986533137214820, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6203986533137214820, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6323678091658883033, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Color.a
@@ -1324,6 +1525,14 @@ PrefabInstance:
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 0.16078432
       objectReference: {fileID: 0}
+    - target: {fileID: 6903817541069186458, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903817541069186458, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7026973994163809851, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1419,6 +1628,14 @@ PrefabInstance:
     - target: {fileID: 7867538740087154572, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168561502560061172, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168561502560061172, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8506418089307374828, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
@@ -1559,6 +1776,14 @@ PrefabInstance:
     - target: {fileID: 8506418089307374828, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547817906152736373, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547817906152736373, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8865640842836125472, guid: f0e610e906a018d4d9922c6257eb37b3, type: 3}
       propertyPath: m_Colors.m_NormalColor.b

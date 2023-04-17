@@ -35,7 +35,7 @@ public class AnomalyLvl2 : MonoBehaviour
     private void OnDisable()
     {
         EventSystem.eventCollection[EventType.MOUSE_LEFT_CLICK] -= ClickedTile;
-        EventSystem.eventCollection[EventType.RANDOM_GRID] += ResetGame;
+        EventSystem.eventCollection[EventType.RANDOM_GRID] -= ResetGame;
     }
 
     private void Awake()
