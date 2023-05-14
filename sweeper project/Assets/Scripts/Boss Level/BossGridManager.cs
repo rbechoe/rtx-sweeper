@@ -202,9 +202,6 @@ public class BossGridManager : BaseGridManager
         float timer = Helpers.RoundToThreeDecimals(this.timer);
         AD.totalTimePlayed = AD.totalTimePlayed + timer;
 
-        if (timer < 10) steamAPI.SetAchievement(UserAchievements.speedrunPro);
-        if (timer < 20) steamAPI.SetAchievement(UserAchievements.speedrun);
-
         steamAPI.SetStatInt(UserStats.totalGamesPlayed, AD.gamesPlayed);
         steamAPI.SetStatInt(UserStats.totalClicks, AD.totalClicks);
 
@@ -216,6 +213,9 @@ public class BossGridManager : BaseGridManager
         if (wonGame)
         {
             AD.gamesWon = AD.gamesWon + 1;
+
+            if (timer < 10) steamAPI.SetAchievement(UserAchievements.speedrunPro);
+            if (timer < 20) steamAPI.SetAchievement(UserAchievements.speedrun);
 
             steamAPI.SetStatInt(UserStats.totalGamesWon, AD.gamesWon);
             if (!usedFlag) steamAPI.SetAchievement(UserAchievements.kris);
