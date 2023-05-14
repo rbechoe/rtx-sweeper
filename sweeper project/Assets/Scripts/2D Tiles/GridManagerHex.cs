@@ -128,6 +128,16 @@ public class GridManagerHex : BaseGridManager
         if (wonGame)
         {
             AD.gamesWon = AD.gamesWon + 1;
+            AD.anomalyVictories3 += 1;
+
+            if (timer < AD.anomalyTime3 || (timer == AD.anomalyTime3 && efficiency > AD.anomalyEfficiency3) || AD.anomalyTime3 == 0)
+            {
+                AD.anomalyTime3 = timer;
+                AD.anomalyEfficiency3 = efficiency;
+                AD.anomalyClicks3 = tileClicks;
+
+                steamAPI.SetStatFloat(UserStats.anomaly3BestTime, timer);
+            }
 
             if (timer < 10) steamAPI.SetAchievement(UserAchievements.speedrunPro);
             if (timer < 20) steamAPI.SetAchievement(UserAchievements.speedrun);
@@ -153,18 +163,6 @@ public class GridManagerHex : BaseGridManager
         AD.anomalyVictories = (wonGame) ? AD.anomalyVictories + 1 : AD.anomalyVictories;
         AD.anomalyTotalClicks += tileClicks;
         AD.anomalyGamesPlayed += 1;
-
-        if (wonGame)
-        {
-            AD.anomalyVictories3 += 1;
-
-            if (timer < AD.anomalyTime3 || (timer == AD.anomalyTime3 && efficiency > AD.anomalyEfficiency3) || AD.anomalyTime3 == 0)
-            {
-                AD.anomalyTime3 = timer;
-                AD.anomalyEfficiency3 = efficiency;
-                AD.anomalyClicks3 = tileClicks;
-            }
-        }
 
         DS.UpdateAccountData(AD);
         SetText();
