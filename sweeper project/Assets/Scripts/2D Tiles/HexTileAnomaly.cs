@@ -7,9 +7,6 @@ public class HexTileAnomaly : BaseTile
     private bool clicked;
     private bool clickedAction = false;
 
-    public Collider[] nearbyFlags;
-    public Collider[] hasFlag;
-
     protected override void OnEnable()
     {
         // listen

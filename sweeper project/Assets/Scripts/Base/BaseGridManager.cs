@@ -238,7 +238,7 @@ public abstract class BaseGridManager : MonoBehaviour
 
     protected virtual void CheckForVictory()
     {
-        progress = goodTiles / (tiles.Count - initialBombAmount);
+        progress = (float)goodTiles / (tiles.Count - initialBombAmount);
         if (goodTiles == (tiles.Count - initialBombAmount))
         {
             wonGame = true;

@@ -12,8 +12,6 @@ public class GridManager3D : BaseGridManager
 
     public GameObject[] layers;
 
-    private int startBombAmount = 12;
-
     protected override void Start()
     {
         steamAPI = SteamAPIManager.Instance;
@@ -21,7 +19,7 @@ public class GridManager3D : BaseGridManager
         Helpers.NestedChildToGob<Tile3D>(transform, tiles);
         Helpers.NestedChildToGob<Flag2D>(flagParent.transform, inactiveFlags);
         
-        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 3;
+        difficulty = (10 - bombDensity) + (tiles.Count / 200) + 5;
 
         DS = gameObject.GetComponent<DataSerializer>();
         SetText();
@@ -59,13 +57,6 @@ public class GridManager3D : BaseGridManager
         EventSystem.eventCollection[EventType.PLAY_FLAG] -= PlantFlag;
     }
 
-    private void AddLayer()
-    {
-        EventSystem.eventCollection[EventType.ADD_LAYER]();
-        bombAmount += 3;
-        EventSystem.eventCollectionParam[EventType.BOMB_UPDATE](bombAmount);
-    }
-
     // activate a flag and place it above the tile
     protected override void ActivateFlag(object value)
     {
@@ -92,90 +83,42 @@ public class GridManager3D : BaseGridManager
         RemoveFlag();
     }
 
-    // place 3 bombs per layer
     protected override IEnumerator RandomizeGrid()
     {
-        int curTile = 0;
-        int spawnChance = 0;
-        int bombCount = 0;
         int tilesPerFrame = SystemInfo.processorCount * 4; // spawn more tiles based on core count
-        int curTileCount = 0; // used for optimalization
-        bombAmount = startBombAmount;
+        int depth = -4;
 
         foreach (GameObject layer in layers)
         {
+            depth++;
+            bombAmount = 5;
+
             for (int i = 0; i < layer.transform.childCount; i++)
             {
-                // formula: based on tiles and bombs left increase chance for next tile to be bomb
-                if (bombCount < bombAmount)
-                {
-                    // 5 = amount of layers
-                    spawnChance = (layer.transform.childCount * 5 - curTile) / (bombAmount - bombCount);
-                }
-
                 GameObject newTile = layer.transform.GetChild(i).transform.gameObject;
-                
-                if (bombCount < bombAmount && Random.Range(0, spawnChance) == 0)
-                {
-                    newTile.tag = "Bomb";
-                    newTile.layer = 11;
-                    newTile.GetComponent<BaseTile>().state = TileStates.Bomb;
-                    bombCount++;
-                }
-                else
-                {
-                    newTile.tag = "Empty";
-                    newTile.layer = 12;
-                    newTile.GetComponent<BaseTile>().state = TileStates.Empty;
+                newTile.name = "tile " + i;
 
-                    // Less than 26 neighbours means that it is a tile on the edge
-                    Collider[] hits = Physics.OverlapBox(newTile.transform.position, Vector3.one * 0.75f);
-                    if (hits.Length < 26)
-                    {
-                        emptyTiles.Add(newTile);
-                    }
-                }
-
-                curTile++;
-                curTileCount++;
-                newTile.name = "tile " + curTile;
-
-                // continue next frame
-                if (curTileCount >= tilesPerFrame)
-                {
-                    curTileCount = 0;
-                    yield return new WaitForEndOfFrame();
-                }
+                newTile.tag = "Empty";
+                newTile.layer = 12;
+                newTile.GetComponent<BaseTile>().state = TileStates.Empty;
             }
-        }
-        yield return new WaitForEndOfFrame();
 
-        // Build new list based on fully empty tiles, select random as start, or use random from first list of no true empty
-        List<GameObject> trueEmpty = new List<GameObject>();
-        foreach(GameObject tile in emptyTiles)
-        {
-            Collider[] hits = Physics.OverlapBox(tile.transform.position, Vector3.one * 0.75f);
-            bool hadBomb = false;
-            foreach (Collider col in hits)
+            if (depth == -3 || depth == 3)
             {
-                if (col.gameObject.layer == 11)
-                {
-                    hadBomb = true;
-                }
-            }
-            if (!hadBomb)
-            {
-                trueEmpty.Add(tile);
+                continue;
             }
 
+            for (int i = 0; i < bombAmount; i++)
+            {
+                // choose random locations within the grid to place bomb
+                Vector3 checkPos = new Vector3(Random.Range(0,5) - 2, depth, Random.Range(0, 5) - 2);
+                PlaceBomb(checkPos);
+            }
             yield return new WaitForEndOfFrame();
         }
-        if (trueEmpty.Count > 0)
-        {
-            emptyTiles = trueEmpty;
-        }
-
         yield return new WaitForEndOfFrame();
+        bombAmount = GameObject.FindGameObjectsWithTag("Bomb").Length;
+        initialBombAmount = bombAmount;
 
         EventSystem.eventCollection[EventType.PREPARE_GAME]();
         yield return new WaitForEndOfFrame();
@@ -183,13 +126,22 @@ public class GridManager3D : BaseGridManager
         yield return new WaitForEndOfFrame();
     }
 
-    protected override void CheckForVictory()
+    private void PlaceBomb(Vector3 position)
     {
-        progress = goodTiles / (tiles.Count - startBombAmount);
-        if (goodTiles == (tiles.Count - startBombAmount))
+        Collider[] hits = Physics.OverlapBox(position, Vector3.one * 0.25f);
+
+        if (hits.Length > 0)
         {
-            wonGame = true;
-            EventSystem.eventCollection[EventType.WIN_GAME]();
+            if (hits[0].gameObject.tag == "Bomb")
+            {
+                PlaceBomb(new Vector3(Random.Range(0, 5) - 2, position.y, Random.Range(0, 5) - 2));
+            }
+            else
+            {
+                hits[0].gameObject.tag = "Bomb";
+                hits[0].gameObject.layer = 11;
+                hits[0].gameObject.GetComponent<BaseTile>().state = TileStates.Bomb;
+            }
         }
     }
 

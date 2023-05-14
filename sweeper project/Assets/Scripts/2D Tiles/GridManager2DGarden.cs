@@ -198,7 +198,7 @@ public class GridManager2DGarden : BaseGridManager
 
     protected override void CheckForVictory()
     {
-        progress = goodTiles / (tiles.Count - reduction - initialBombAmount);
+        progress = (float)goodTiles / (tiles.Count - reduction - initialBombAmount);
         if (goodTiles == (tiles.Count - reduction - initialBombAmount))
         {
             wonGame = true;

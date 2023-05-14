@@ -94,7 +94,7 @@ public class AnomalyGridManager2D : BaseGridManager
         }
         else
         {
-            progress = goodTiles / (tiles.Count - initialBombAmount);
+            progress = (float)goodTiles / (tiles.Count - initialBombAmount);
             if (goodTiles == (tiles.Count - initialBombAmount))
             {
                 puzzle2Manager.CompleteGrid(this);

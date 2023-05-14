@@ -29,6 +29,9 @@ public abstract class BaseTile : MonoBehaviour
     public GameObject rewardObj; // show object after clearing tile
     public GameObject breakObj; // remove object when clicking on tile
 
+    public Collider[] nearbyFlags;
+    public Collider[] hasFlag;
+
     protected virtual void Start()
     {
         vfx = GetComponentInChildren<VFXManipulator>();
