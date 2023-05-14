@@ -217,7 +217,8 @@ The moment the player hits a bomb a sequence of events are triggered. This cause
 - [x] Version 1.12: General update
 - [x] DLC: Cosmetics
 - [x] Version 1.3: Upping the standards
-- [ ] Version 1.5: The Anomaly arrives
+- [x] Version 1.4: The Anomaly arrives
+- [ ] Version 1.5: Huge QOL update
 - [ ] Version 1.55: Huge Cosmetics update
 - [ ] Version 1.6: Environmental puzzle improvements
 - [ ] Version 1.65: Settings
