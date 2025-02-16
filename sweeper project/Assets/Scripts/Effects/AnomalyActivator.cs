@@ -7,9 +7,12 @@ public class AnomalyActivator : MonoBehaviour
     public DataSerializer serializer;
     private AccountData myData;
 
+    public GameObject gameUI;
+
     private void Start()
     {
         myData = serializer.GetUserData();
+        gameUI.SetActive(false);
         if (myData.bossVictories == 0)
         {
             gameObject.SetActive(false);
@@ -35,5 +38,15 @@ public class AnomalyActivator : MonoBehaviour
             serializer.UpdateAccountData(myData);
             SceneManager.LoadScene("Anomaly");
         }
+    }
+
+    private void OnMouseEnter()
+    {
+        gameUI.SetActive(true);
+    }
+
+    private void OnMouseExit()
+    {
+        gameUI.SetActive(false);
     }
 }
