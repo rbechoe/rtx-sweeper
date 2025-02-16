@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AnomalyDuck : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class AnomalyDuck : MonoBehaviour
         if (hovered && Input.GetMouseButtonDown(0))
         {
             steamAPI.SetAchievement(UserAchievements.anomalySolved);
+            SceneManager.LoadScene("Anomaly");
         }
     }
 
